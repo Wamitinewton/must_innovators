@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "meruinnovators"
 include(":app")
- 
+include(":auth")
+include(":common_ui")
+include(":core")
