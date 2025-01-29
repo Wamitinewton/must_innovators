@@ -35,7 +35,5 @@ fun DependencyHandler.hilt() {
     kapt(Dependencies.hiltCompiler)
 }
 
-fun DependencyHandler.auth() {
-    implementation(project(":auth"))
 
-}
+
