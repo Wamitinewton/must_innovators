@@ -50,6 +50,12 @@ dependencies {
     kapt(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltNavigation)
 
+    //Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
 
    implementation(project(":core"))
 
