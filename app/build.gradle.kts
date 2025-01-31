@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -13,6 +15,27 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        val properties = Properties()
+        try {
+            val keystoreFile = rootProject.file("keys.properties")
+            if (keystoreFile.exists()) {
+                properties.load(keystoreFile.inputStream())
+            } else {
+                throw GradleException("keys.properties file not found")
+            }
+        } catch (e: Exception) {
+            logger.warn("Warning: ${e.message}")
+        }
+
+        val backendUrl = properties.getProperty("BACKEND_URL")
+            ?: throw GradleException("BACKEND_URL not found in keys.properties")
+
+
+
+        buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
+
+
+
         applicationId = "com.newton.meruinnovators"
         minSdk = 24
         targetSdk = 34
@@ -41,6 +64,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -71,6 +95,13 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     kapt(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltNavigation)
+
+    //Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
 
     implementation(project(":auth"))
     implementation(project(":core"))
