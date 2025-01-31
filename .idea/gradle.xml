@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/common_ui" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/database" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
