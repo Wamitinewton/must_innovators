@@ -3,7 +3,6 @@ package com.newton.core.utils
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 
 sealed class RemoteText {
