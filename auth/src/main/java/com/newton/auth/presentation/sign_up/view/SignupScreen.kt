@@ -9,33 +9,53 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.auth.R
+import com.newton.common_ui.R
 import com.newton.common_ui.ui.CButton
 import com.newton.common_ui.ui.DefaultTextInput
+import com.newton.common_ui.ui.PasswordTextInput
 import com.newton.meruinnovators.ui.theme.AlegreyaSansFontFamily
 
 @Composable
 fun SignupScreen() {
-//    var firstName by remember { mutableStateOf("") }
-//    var lastName by remember { mutableStateOf("") }
-//    var email by remember { mutableStateOf("") }
-//    var userName by remember { mutableStateOf("") }
-//    var registrationNo by remember { mutableStateOf("") }
-//    var courseName by remember { mutableStateOf("") }
-//    var password by remember { mutableStateOf("") }
-//    var confirmPassword by remember { mutableStateOf("") }
+    val scrollState = rememberScrollState()
+
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var userName by remember { mutableStateOf("") }
+    var registrationNo by remember { mutableStateOf("") }
+    var courseName by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
+    // Error states
+    var firstNameError by remember { mutableStateOf<String?>(null) }
+    var lastNameError by remember { mutableStateOf<String?>(null) }
+    var emailError by remember { mutableStateOf<String?>(null) }
+    var userNameError by remember { mutableStateOf<String?>(null) }
+    var registrationError by remember { mutableStateOf<String?>(null) }
+    var courseNameError by remember { mutableStateOf<String?>(null) }
+    var passwordError by remember { mutableStateOf<String?>(null) }
+    var confirmPasswordError by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -50,10 +70,10 @@ fun SignupScreen() {
                )
 
            Column(
-               horizontalAlignment = Alignment.CenterHorizontally,
                modifier = Modifier
                    .fillMaxSize()
-                   .padding(horizontal = 24.dp)
+                   .verticalScroll(scrollState)
+                   .padding(horizontal = 14.dp)
            ) {
                Image(painter = painterResource(id = R.drawable.logo),
                    contentDescription = null,
@@ -85,53 +105,80 @@ fun SignupScreen() {
                        .padding(bottom = 24.dp)
                )
 
+
                DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "first name",
-                   onSubmitted = {}
+                   onInputChanged = {
+                       firstName = it
+                   },
+                   inputText = firstName,
+                   label = "first name",
+                   onSubmitted = {},
+                   isError = firstNameError != null,
+                   imeAction = ImeAction.Next
                )
                DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "last name",
-                   onSubmitted = {}
+                   onInputChanged = {
+                       lastName = it
+                   },
+                   inputText = lastName,
+                   label = "last name",
+                   onSubmitted = {},
+                   isError = lastNameError != null,
+                   errorMessage = lastNameError,
+                   imeAction = ImeAction.Next
                )
                DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "email",
-                   onSubmitted = {}
+                   onInputChanged = {
+                       email = it
+                   },
+                   inputText = email,
+                   label = "email",
+                   onSubmitted = {},
+                   imeAction = ImeAction.Next
+
                )
                DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "user name",
-                   onSubmitted = {}
+                   onInputChanged = {
+                       userName = it
+                   },
+                   inputText = userName,
+                   label = "user name",
+                   onSubmitted = {},
+                   imeAction = ImeAction.Next
                )
                DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "registration no",
-                   onSubmitted = {}
+                   onInputChanged = {
+                       registrationNo = it
+                   },
+                   inputText = registrationNo,
+                   label = "registration no",
+                   onSubmitted = {},
+                   imeAction = ImeAction.Next
                )
                DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "Course name",
-                   onSubmitted = {}
+                   onInputChanged = {
+                       courseName = it
+                   },
+                   inputText = courseName,
+                   label = "Course name",
+                   onSubmitted = {},
+                   imeAction = ImeAction.Next
                )
-               DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "password",
-                   onSubmitted = {}
+               PasswordTextInput(
+                   onValueChange = {
+                       password = it
+                   },
+                   value = password,
+                   label = "password",
+                   imeAction = ImeAction.Next
                )
-               DefaultTextInput(
-                   onInputChanged = {},
-                   inputText = "",
-                   hint = "confirm password",
-                   onSubmitted = {}
+               PasswordTextInput(
+                   onValueChange = {
+                       confirmPassword = it
+                   },
+                   value = confirmPassword,
+                   label = "confirm password",
+                   imeAction = ImeAction.Next
                )
 
                Spacer(modifier = Modifier.height(24.dp))

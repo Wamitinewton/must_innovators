@@ -35,7 +35,7 @@ fun CButton(
         Text(
             text = text,
             style = TextStyle(
-                fontSize = 22.sp,
+                fontSize = 17.sp,
                 fontFamily = AlegreyaFontFamily,
                 fontWeight = FontWeight(500),
                 color = ThemeUtils.AppColors.Background.themed()
