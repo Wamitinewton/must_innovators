@@ -13,9 +13,10 @@ plugins {
 android {
     namespace = "com.newton.meruinnovators"
     compileSdk = 34
+    val properties = Properties()
+
 
     defaultConfig {
-        val properties = Properties()
         try {
             val keystoreFile = rootProject.file("keys.properties")
             if (keystoreFile.exists()) {
@@ -31,8 +32,8 @@ android {
             ?: throw GradleException("BACKEND_URL not found in keys.properties")
 
 
-
         buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
+
 
 
 
@@ -46,9 +47,25 @@ android {
 
     }
 
+    signingConfigs {
+
+        create("release") {
+            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE") ?: throw GradleException("store file not found in keys.properties")
+            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD") ?: throw GradleException("store password not found in keys.properties")
+            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS") ?: throw GradleException("key alias not found in keys.properties")
+            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD") ?: throw GradleException("alias pwd not found in keys.properties")
+
+            storeFile = file(keystoreFile)
+            storePassword = keystorePassword
+            keyAlias = keyalias
+            keyPassword = keyaliasPassword
+        }
+    }
     buildTypes {
-        release {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
+            isCrunchPngs = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.common_ui.ui.DefaultTextInput
 import com.newton.common_ui.ui.PasswordTextInput
@@ -76,6 +77,7 @@ fun SignupForm(
                 onRegistrationNoChanged(it)
             },
             inputText = registrationNo,
+            keyboardType = KeyboardType.Text,
             label = "registration no",
             onSubmitted = {},
             imeAction = ImeAction.Next,
