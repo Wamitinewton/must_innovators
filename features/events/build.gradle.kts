@@ -1,49 +1,22 @@
-import java.util.Properties
-
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.newton.meruinnovators"
+    namespace = "com.newton.events"
     compileSdk = 34
 
     defaultConfig {
-        val properties = Properties()
-        try {
-            val keystoreFile = rootProject.file("keys.properties")
-            if (keystoreFile.exists()) {
-                properties.load(keystoreFile.inputStream())
-            } else {
-                throw GradleException("keys.properties file not found")
-            }
-        } catch (e: Exception) {
-            logger.warn("Warning: ${e.message}")
-        }
-
-        val backendUrl = properties.getProperty("BACKEND_URL")
-            ?: throw GradleException("BACKEND_URL not found in keys.properties")
-
-
-
-        buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
-
-
-
-        applicationId = "com.newton.meruinnovators"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = 16
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -62,20 +35,13 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+//    implementation(libs.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -86,15 +52,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-
-    //hilt
+    //Hilt
     implementation(Dependencies.hiltAndroid)
     kapt(Dependencies.hiltCompiler)
+
+
     implementation(Dependencies.hiltNavigation)
+    implementation(Dependencies.composeNavigation)
 
     //Retrofit
     implementation(Dependencies.retrofit)
@@ -103,10 +67,5 @@ dependencies {
     implementation(Dependencies.kotlinxSerialization)
 
 
-    implementation(project(":auth"))
     implementation(project(":core"))
-    implementation(project(":common_ui"))
-    implementation(project(":events"))
 }
-
-
