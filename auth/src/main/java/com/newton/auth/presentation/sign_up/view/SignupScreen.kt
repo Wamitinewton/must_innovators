@@ -60,19 +60,10 @@ fun SignupScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { padding ->
-       Box(modifier = Modifier
-           .fillMaxSize()
-           .padding(padding)) {
-           Image(painter = painterResource(R.drawable.bg1),
-               contentDescription = null,
-               modifier = Modifier
-                   .fillMaxWidth()
-                   .height(190.dp)
-                   .align(Alignment.BottomCenter)
-               )
 
-           Column(
+        Column(
                modifier = Modifier
+                   .padding(padding)
                    .fillMaxSize()
                    .verticalScroll(scrollState)
                    .padding(horizontal = 14.dp),
@@ -168,7 +159,7 @@ fun SignupScreen(
            }
        }
     }
-}
+
 
 @Composable
 fun AuthHeader() {

@@ -102,6 +102,9 @@ dependencies {
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
+    //coil
+    implementation(Dependencies.coil)
+
 
     implementation(project(":auth"))
     implementation(project(":core"))
