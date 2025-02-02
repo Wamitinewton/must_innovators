@@ -93,20 +93,16 @@ object ThemeUtils {
         darkTheme: Boolean = isSystemInDarkTheme(),
         content: @Composable () -> Unit
     ) {
-        val colorScheme = if (darkTheme) {
-            DarkColorPalette
-        } else {
-            LightColorPalette
-        }
+        val colorScheme = LightColorPalette
 
-        val view = LocalView.current
-        if (!view.isInEditMode) {
-            SideEffect {
-                val window = (view.context as Activity).window
-                window.statusBarColor = colorScheme.primary.toArgb()
-                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-            }
-        }
+//        val view = LocalView.current
+//        if (!view.isInEditMode) {
+//            SideEffect {
+//                val window = (view.context as Activity).window
+//                window.statusBarColor = colorScheme.primary.toArgb()
+//                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+//            }
+//        }
 
         MaterialTheme(
             colorScheme = colorScheme,

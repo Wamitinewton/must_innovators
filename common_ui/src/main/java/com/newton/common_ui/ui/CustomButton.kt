@@ -2,6 +2,8 @@ package com.newton.common_ui.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -16,21 +18,22 @@ import androidx.compose.ui.unit.sp
 import com.newton.meruinnovators.ui.theme.AlegreyaFontFamily
 import com.newton.meruinnovators.ui.theme.ThemeUtils
 import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
+import com.newton.meruinnovators.ui.theme.lightGrayColor
 
 @Composable
-fun CButton(
+fun CustomButton(
     onClick: () -> Unit = {},
     text: String,
 ) {
     Button(
         onClick = onClick,
-        shape = MaterialTheme.shapes.large,
+        shape = RoundedCornerShape(14.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF7C9A92)
+            containerColor = Color.Black
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(52.dp)
+            .padding(bottom = 24.dp)
     ) {
         Text(
             text = text,
@@ -38,7 +41,7 @@ fun CButton(
                 fontSize = 17.sp,
                 fontFamily = AlegreyaFontFamily,
                 fontWeight = FontWeight(500),
-                color = ThemeUtils.AppColors.Background.themed()
+                color = lightGrayColor
             )
         )
     }

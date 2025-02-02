@@ -3,10 +3,13 @@ package com.newton.common_ui.ui
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -22,6 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.R
+import com.newton.meruinnovators.ui.theme.PurpleGrey40
 
 @Composable
 fun DefaultTextInput(
@@ -36,10 +40,16 @@ fun DefaultTextInput(
     onImeAction: () -> Unit = {},
     onSubmitted: (() -> Unit)? = null
 ) {
-      TextField(
+      OutlinedTextField(
           value = inputText,
+          shape = RoundedCornerShape(14.dp),
           onValueChange = onInputChanged,
-          label = { Text(label) },
+          label = { Text(
+              text = label,
+              style = MaterialTheme.typography.bodyMedium.copy(
+                  color = PurpleGrey40
+              )
+          ) },
           singleLine = true,
           modifier = modifier.fillMaxWidth(),
           isError = isError,
@@ -69,10 +79,16 @@ fun PasswordTextInput(
     var passwordVisible by remember { mutableStateOf(false) }
 
 
-        TextField(
+        OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            label = { Text(label) },
+            shape = RoundedCornerShape(14.dp),
+            label = { Text(
+                text = label,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = PurpleGrey40
+                )
+            ) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             isError = isError,

@@ -83,6 +83,9 @@ dependencies {
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
+    //coil
+    implementation(Dependencies.coil)
+
 
    implementation(project(":core"))
    implementation(project(":common_ui"))

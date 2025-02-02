@@ -96,7 +96,6 @@ class NetworkConfiguration(private val context: Context) {
     private fun hasInternetConnection(): Boolean {
         return try {
             val url = URL("https://8.8.8.8") // Google DNS
-            (url.openConnection() as? HttpURLConnection)?.run {  }
             val connection = url.openConnection() as HttpURLConnection
             connection.setRequestProperty("User-Agent", "Android")
             connection.setRequestProperty("Connection", "Close")

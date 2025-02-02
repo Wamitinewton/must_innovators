@@ -1,16 +1,24 @@
 package com.newton.auth.presentation.sign_up.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,22 +28,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
+import com.newton.auth.presentation.utils.SocialAuthentication
 import com.newton.common_ui.R
-import com.newton.common_ui.ui.CButton
+import com.newton.common_ui.ui.CustomButton
 import com.newton.common_ui.ui.DefaultTextInput
 import com.newton.common_ui.ui.PasswordTextInput
-import com.newton.meruinnovators.ui.theme.AlegreyaSansFontFamily
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(
+    signupViewModel: SignupViewModel = hiltViewModel()
+) {
     val scrollState = rememberScrollState()
 
     var firstName by remember { mutableStateOf("") }
@@ -47,20 +56,13 @@ fun SignupScreen() {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    // Error states
-    var firstNameError by remember { mutableStateOf<String?>(null) }
-    var lastNameError by remember { mutableStateOf<String?>(null) }
-    var emailError by remember { mutableStateOf<String?>(null) }
-    var userNameError by remember { mutableStateOf<String?>(null) }
-    var registrationError by remember { mutableStateOf<String?>(null) }
-    var courseNameError by remember { mutableStateOf<String?>(null) }
-    var passwordError by remember { mutableStateOf<String?>(null) }
-    var confirmPasswordError by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { padding ->
-       Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+       Box(modifier = Modifier
+           .fillMaxSize()
+           .padding(padding)) {
            Image(painter = painterResource(R.drawable.bg1),
                contentDescription = null,
                modifier = Modifier
@@ -73,38 +75,18 @@ fun SignupScreen() {
                modifier = Modifier
                    .fillMaxSize()
                    .verticalScroll(scrollState)
-                   .padding(horizontal = 14.dp)
+                   .padding(horizontal = 14.dp),
+               horizontalAlignment = Alignment.CenterHorizontally
            ) {
-               Image(painter = painterResource(id = R.drawable.logo),
-                   contentDescription = null,
-                   modifier = Modifier
-                       .padding(top = 54.dp)
-                       .height(100.dp)
-                       .align(Alignment.Start)
-                       .offset(x = (-20).dp)
+
+           AuthHeader()
+
+               SocialAuthentication(
+                   onGoogleLogin = {},
+                   onGithubLogin = {}
                )
 
-               Text(text = "Sign Up",
-                   style = TextStyle(
-                       fontSize = 28.sp,
-                       fontFamily = AlegreyaSansFontFamily,
-                       fontWeight = FontWeight(500),
-                       color = Color.White
-                   ),
-                   modifier = Modifier.align(Alignment.Start)
-               )
-
-               Text(text = "Sign up now to get engaged in our community",
-                   style = TextStyle(
-                       fontSize = 20.sp,
-                       fontFamily = AlegreyaSansFontFamily,
-                       color = Color(0xB2FFFFFF)
-                   ),
-                   modifier = Modifier
-                       .align(Alignment.Start)
-                       .padding(bottom = 24.dp)
-               )
-
+               OrContinueWith()
 
                DefaultTextInput(
                    onInputChanged = {
@@ -113,7 +95,7 @@ fun SignupScreen() {
                    inputText = firstName,
                    label = "first name",
                    onSubmitted = {},
-                   isError = firstNameError != null,
+                   isError = true,
                    imeAction = ImeAction.Next
                )
                DefaultTextInput(
@@ -123,8 +105,7 @@ fun SignupScreen() {
                    inputText = lastName,
                    label = "last name",
                    onSubmitted = {},
-                   isError = lastNameError != null,
-                   errorMessage = lastNameError,
+                   isError = true,
                    imeAction = ImeAction.Next
                )
                DefaultTextInput(
@@ -183,11 +164,61 @@ fun SignupScreen() {
 
                Spacer(modifier = Modifier.height(24.dp))
 
-               CButton(text = "Sign up")
+               CustomButton(text = "Sign up")
            }
        }
     }
 }
+
+@Composable
+fun AuthHeader() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 24.dp, top = 30.dp),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(
+            onClick = {}
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back"
+            )
+        }
+        Spacer(modifier = Modifier.width(30.dp))
+        Text(
+            text = "Sign Up",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontSize = 18.sp,
+            ),
+        )
+    }
+}
+
+@Composable
+fun OrContinueWith() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp, top = 24.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
+        )
+        Text("Or continue with email")
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 8.dp)
+        )
+    }
+}
+
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
