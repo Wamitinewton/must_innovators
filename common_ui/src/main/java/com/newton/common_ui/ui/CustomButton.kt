@@ -24,9 +24,11 @@ import com.newton.meruinnovators.ui.theme.lightGrayColor
 fun CustomButton(
     onClick: () -> Unit = {},
     text: String,
+    enabled: Boolean
 ) {
     Button(
         onClick = onClick,
+        enabled = enabled,
         shape = RoundedCornerShape(14.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Black

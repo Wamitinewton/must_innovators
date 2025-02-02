@@ -5,14 +5,17 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
-class NetworkConfiguration(private val context: Context) {
+class NetworkConfiguration(context: Context) {
 
     private val connectivityManager: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -25,10 +28,10 @@ class NetworkConfiguration(private val context: Context) {
     fun observeNetworkStatus(): Flow<NetworkStatus> = callbackFlow {
         val callBack = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
-                if (hasInternetConnection()) {
-                    trySend(NetworkStatus.Available)
-                } else {
-                    trySend(NetworkStatus.NoInternet)
+                // Launch in IO dispatcher for network check
+                launch(Dispatchers.IO) {
+                    val hasInternet = hasInternetConnection()
+                    trySend(if (hasInternet) NetworkStatus.Available else NetworkStatus.NoInternet)
                 }
             }
 
@@ -46,15 +49,17 @@ class NetworkConfiguration(private val context: Context) {
 
         connectivityManager.registerNetworkCallback(request, callBack)
 
-        if (isNetworkAvailable()) {
-            if (hasInternetConnection()) {
-                trySend(NetworkStatus.Available)
-            } else {
-                trySend(NetworkStatus.NoInternet)
-            }
-        } else {
-            trySend(NetworkStatus.Unavailable)
-        }
+       launch(Dispatchers.IO) {
+           if (isNetworkAvailable()) {
+               if (hasInternetConnection()) {
+                   trySend(NetworkStatus.Available)
+               } else {
+                   trySend(NetworkStatus.NoInternet)
+               }
+           } else {
+               trySend(NetworkStatus.Unavailable)
+           }
+       }
 
         awaitClose {
             connectivityManager.unregisterNetworkCallback(callBack)
@@ -93,8 +98,8 @@ class NetworkConfiguration(private val context: Context) {
      * Checks if there is actual internet connectivity
      * by making a lightweight request
      */
-    private fun hasInternetConnection(): Boolean {
-        return try {
+    private suspend fun hasInternetConnection(): Boolean = withContext(Dispatchers.IO) {
+         try {
             val url = URL("https://8.8.8.8") // Google DNS
             val connection = url.openConnection() as HttpURLConnection
             connection.setRequestProperty("User-Agent", "Android")
@@ -110,7 +115,7 @@ class NetworkConfiguration(private val context: Context) {
     /**
      * Get detailed network error message based on current status
      */
-    fun getNetworkErrorMessage(): String {
+    suspend fun getNetworkErrorMessage(): String {
         return when {
             !isNetworkAvailable() ->
                 "No network connection available. Please check your device's network settings."

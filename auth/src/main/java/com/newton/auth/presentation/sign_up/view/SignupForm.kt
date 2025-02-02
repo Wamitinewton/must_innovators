@@ -18,16 +18,24 @@ fun SignupForm(
     onLastnameChanged: (String) -> Unit,
     email: String,
     onEmailChanged: (String) -> Unit,
+    emailError: String?,
+    isEmailError: Boolean = false,
     userName: String,
     onUsernameChanged: (String) -> Unit,
     registrationNo: String,
     onRegistrationNoChanged: (String) -> Unit,
+    regNoError: String?,
+    isRegNoError: Boolean = false,
     courseName: String,
     onCourseNameChanged: (String) -> Unit,
     password: String,
     onPasswordChanged: (String) -> Unit,
+    passwordError: String?,
+    isPasswordError: Boolean = false,
     confirmPassword: String,
     onConfirmPasswordChanged: (String) -> Unit,
+    confirmPwdError: String?,
+    isConfirmPwdError: Boolean = false,
 ) {
     Column {
         val focusManager = LocalFocusManager.current
@@ -55,6 +63,8 @@ fun SignupForm(
             onInputChanged = {
                 onEmailChanged(it)
             },
+            isError = isEmailError,
+            errorMessage = emailError,
             inputText = email,
             label = "email",
             onSubmitted = {},
@@ -76,6 +86,8 @@ fun SignupForm(
             onInputChanged = {
                 onRegistrationNoChanged(it)
             },
+            isError = isRegNoError,
+            errorMessage = regNoError,
             inputText = registrationNo,
             keyboardType = KeyboardType.Text,
             label = "registration no",
@@ -87,6 +99,7 @@ fun SignupForm(
             onInputChanged = {
                 onCourseNameChanged(it)
             },
+
             inputText = courseName,
             label = "Course name",
             onSubmitted = {},
@@ -97,6 +110,8 @@ fun SignupForm(
             onValueChange = {
                 onPasswordChanged(it)
             },
+            isError = isPasswordError,
+            errorMessage = passwordError,
             value = password,
             label = "password",
             imeAction = ImeAction.Next
@@ -105,6 +120,8 @@ fun SignupForm(
             onValueChange = {
                 onConfirmPasswordChanged(it)
             },
+            isError = isConfirmPwdError,
+            errorMessage = confirmPwdError,
             value = confirmPassword,
             label = "confirm password",
             imeAction = ImeAction.Next

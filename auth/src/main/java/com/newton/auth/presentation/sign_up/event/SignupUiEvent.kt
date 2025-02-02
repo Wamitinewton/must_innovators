@@ -12,3 +12,7 @@ sealed class SignupUiEvent {
     data object SignUp: SignupUiEvent()
     data object ClearError: SignupUiEvent()
 }
+
+sealed class NavigationEvent {
+   data object NavigateToLogin: NavigationEvent()
+}
