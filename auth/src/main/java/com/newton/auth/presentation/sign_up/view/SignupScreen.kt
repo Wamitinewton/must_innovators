@@ -1,8 +1,6 @@
 package com.newton.auth.presentation.sign_up.view
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,23 +21,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
 import com.newton.auth.presentation.utils.SocialAuthentication
-import com.newton.common_ui.R
 import com.newton.common_ui.ui.CustomButton
-import com.newton.common_ui.ui.DefaultTextInput
-import com.newton.common_ui.ui.PasswordTextInput
 
 @Composable
 fun SignupScreen(
@@ -47,32 +39,17 @@ fun SignupScreen(
 ) {
     val scrollState = rememberScrollState()
 
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var userName by remember { mutableStateOf("") }
-    var registrationNo by remember { mutableStateOf("") }
-    var courseName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
+    val uiState by signupViewModel.authUiState.collectAsStateWithLifecycle()
+
 
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { padding ->
-       Box(modifier = Modifier
-           .fillMaxSize()
-           .padding(padding)) {
-           Image(painter = painterResource(R.drawable.bg1),
-               contentDescription = null,
-               modifier = Modifier
-                   .fillMaxWidth()
-                   .height(190.dp)
-                   .align(Alignment.BottomCenter)
-               )
 
-           Column(
+        Column(
                modifier = Modifier
+                   .padding(padding)
                    .fillMaxSize()
                    .verticalScroll(scrollState)
                    .padding(horizontal = 14.dp),
@@ -88,79 +65,40 @@ fun SignupScreen(
 
                OrContinueWith()
 
-               DefaultTextInput(
-                   onInputChanged = {
-                       firstName = it
-                   },
-                   inputText = firstName,
-                   label = "first name",
-                   onSubmitted = {},
-                   isError = true,
-                   imeAction = ImeAction.Next
-               )
-               DefaultTextInput(
-                   onInputChanged = {
-                       lastName = it
-                   },
-                   inputText = lastName,
-                   label = "last name",
-                   onSubmitted = {},
-                   isError = true,
-                   imeAction = ImeAction.Next
-               )
-               DefaultTextInput(
-                   onInputChanged = {
-                       email = it
-                   },
-                   inputText = email,
-                   label = "email",
-                   onSubmitted = {},
-                   imeAction = ImeAction.Next
-
-               )
-               DefaultTextInput(
-                   onInputChanged = {
-                       userName = it
-                   },
-                   inputText = userName,
-                   label = "user name",
-                   onSubmitted = {},
-                   imeAction = ImeAction.Next
-               )
-               DefaultTextInput(
-                   onInputChanged = {
-                       registrationNo = it
-                   },
-                   inputText = registrationNo,
-                   label = "registration no",
-                   onSubmitted = {},
-                   imeAction = ImeAction.Next
-               )
-               DefaultTextInput(
-                   onInputChanged = {
-                       courseName = it
-                   },
-                   inputText = courseName,
-                   label = "Course name",
-                   onSubmitted = {},
-                   imeAction = ImeAction.Next
-               )
-               PasswordTextInput(
-                   onValueChange = {
-                       password = it
-                   },
-                   value = password,
-                   label = "password",
-                   imeAction = ImeAction.Next
-               )
-               PasswordTextInput(
-                   onValueChange = {
-                       confirmPassword = it
-                   },
-                   value = confirmPassword,
-                   label = "confirm password",
-                   imeAction = ImeAction.Next
-               )
+             SignupForm(
+                 firstName = uiState.firstNameInput!!,
+                 onFirstnameChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.FirstNameChanged(it))
+                 },
+                 lastName = uiState.lastNameInput!!,
+                 onLastnameChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.LastNameChanged(it))
+                 },
+                 email = uiState.emailInput!!,
+                 onEmailChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.EmailChanged(it))
+                 },
+                 userName = uiState.userName!!,
+                 onUsernameChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.UsernameChanged(it))
+                 },
+                 registrationNo = uiState.registrationNo!!,
+                 onRegistrationNoChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.RegistrationNoChanged(it))
+                 },
+                 courseName = uiState.courseName!!,
+                 onCourseNameChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.CourseChanged(it))
+                 },
+                 password = uiState.passwordInput!!,
+                 onPasswordChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.PasswordChanged(it))
+                 },
+                 confirmPassword = uiState.confirmPassword!!,
+                 onConfirmPasswordChanged = {
+                     signupViewModel.onEvent(SignupUiEvent.ConfirmPasswordChanged(it))
+                 }
+             )
 
                Spacer(modifier = Modifier.height(24.dp))
 
@@ -168,7 +106,7 @@ fun SignupScreen(
            }
        }
     }
-}
+
 
 @Composable
 fun AuthHeader() {
