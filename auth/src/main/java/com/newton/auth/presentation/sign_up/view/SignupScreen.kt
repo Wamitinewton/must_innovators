@@ -1,165 +1,92 @@
 package com.newton.auth.presentation.sign_up.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import android.content.Context
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.newton.auth.presentation.sign_up.event.SignupUiEvent
+import androidx.navigation.NavHostController
+import com.newton.auth.presentation.sign_up.event.NavigationEvent
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
-import com.newton.auth.presentation.utils.SocialAuthentication
-import com.newton.common_ui.ui.CustomButton
+import com.newton.auth.presentation.utils.LoadingDialog
+import com.newton.common_ui.ui.NetworkMonitor
+import com.newton.core.navigation.NavigationRoutes
+import com.newton.core.network.NetworkConfiguration
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignupScreen(
-    signupViewModel: SignupViewModel = hiltViewModel()
-) {
-    val scrollState = rememberScrollState()
+    signupViewModel: SignupViewModel = hiltViewModel(),
+    navHostController: NavHostController,
 
+) {
     val uiState by signupViewModel.authUiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val networkConfiguration = NetworkConfiguration(context)
+
+    NetworkMonitor(
+        networkConfiguration = networkConfiguration,
+        snackbarHostState = snackbarHostState
+    )
+
+    LaunchedEffect(Unit) {
+        signupViewModel.navigateToLogin.collect { event ->
+            when(event) {
+                NavigationEvent.NavigateToLogin -> {
+                    navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(uiState.errorMessage) {
+        uiState.errorMessage?.let { error ->
+            scope.launch {
+                snackbarHostState.showSnackbar(
+                    message = error,
+                    duration = SnackbarDuration.Short
+                )
+            }
+        }
+    }
 
 
 
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            SignupContent(
+                uiState = uiState,
+                onEvent = signupViewModel::onEvent,
+                onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) }
+            )
+            if (uiState.isLoading) {
+                LoadingDialog()
+            }
+        }
 
-        Column(
-               modifier = Modifier
-                   .padding(padding)
-                   .fillMaxSize()
-                   .verticalScroll(scrollState)
-                   .padding(horizontal = 14.dp),
-               horizontalAlignment = Alignment.CenterHorizontally
-           ) {
-
-           AuthHeader()
-
-               SocialAuthentication(
-                   onGoogleLogin = {},
-                   onGithubLogin = {}
-               )
-
-               OrContinueWith()
-
-             SignupForm(
-                 firstName = uiState.firstNameInput!!,
-                 onFirstnameChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.FirstNameChanged(it))
-                 },
-                 lastName = uiState.lastNameInput!!,
-                 onLastnameChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.LastNameChanged(it))
-                 },
-                 email = uiState.emailInput!!,
-                 onEmailChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.EmailChanged(it))
-                 },
-                 userName = uiState.userName!!,
-                 onUsernameChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.UsernameChanged(it))
-                 },
-                 registrationNo = uiState.registrationNo!!,
-                 onRegistrationNoChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.RegistrationNoChanged(it))
-                 },
-                 courseName = uiState.courseName!!,
-                 onCourseNameChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.CourseChanged(it))
-                 },
-                 password = uiState.passwordInput!!,
-                 onPasswordChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.PasswordChanged(it))
-                 },
-                 confirmPassword = uiState.confirmPassword!!,
-                 onConfirmPasswordChanged = {
-                     signupViewModel.onEvent(SignupUiEvent.ConfirmPasswordChanged(it))
-                 }
-             )
-
-               Spacer(modifier = Modifier.height(24.dp))
-
-               CustomButton(text = "Sign up")
-           }
        }
     }
 
 
-@Composable
-fun AuthHeader() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 24.dp, top = 30.dp),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(
-            onClick = {}
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back"
-            )
-        }
-        Spacer(modifier = Modifier.width(30.dp))
-        Text(
-            text = "Sign Up",
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontSize = 18.sp,
-            ),
-        )
-    }
-}
 
-@Composable
-fun OrContinueWith() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp, top = 24.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        HorizontalDivider(
-            modifier = Modifier
-                .weight(1f)
-                .padding(end = 8.dp)
-        )
-        Text("Or continue with email")
-        HorizontalDivider(
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 8.dp)
-        )
-    }
-}
-
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
-@Composable
-fun SignupScreenPreview() {
-    SignupScreen()
-}

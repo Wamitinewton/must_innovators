@@ -20,9 +20,11 @@ class AuthRepositoryImpl @Inject constructor(
             if (response.message == "") {
                 val user = response.data.toResponseData()
                 emit(Resource.Success(data = user))
+                emit(Resource.Loading(false))
             } else {
                 val message = response.data.nonFieldErrors?.first()
                 emit(Resource.Error(message = message ?: "Unknown error occurred"))
+                emit(Resource.Loading(false))
             }
         } catch (e: Exception) {
             emit(Resource.Error(message = e.message.toString()))
