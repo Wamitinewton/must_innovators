@@ -61,7 +61,6 @@ object InputValidators {
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                 ")+"
     )
-    private val registrationNumberRegex = Regex("^[0-9/]+$")
 
     /**
      * Validates if the input is a valid email address
@@ -71,17 +70,6 @@ object InputValidators {
             ValidationResult(true)
         } else {
             ValidationResult(false, "Invalid email format")
-        }
-    }
-
-    /**
-     * Validates if the input is a valid registration number
-     */
-    fun validateRegistrationNumber(regNo: String): ValidationResult {
-        return if (regNo.matches(registrationNumberRegex)){
-            ValidationResult(true)
-        } else {
-            ValidationResult(false, "Invalid registration number format")
         }
     }
 
