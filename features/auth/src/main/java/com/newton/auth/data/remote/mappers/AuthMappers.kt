@@ -8,7 +8,6 @@ fun SignupResponse.toResponseData(): SignupDto {
         firstName = firstName,
         lastname = lastName,
         email = email,
-        username = userName,
         password = password,
     )
 }
@@ -18,7 +17,6 @@ fun SignupDto.toResponseData(): SignupResponse {
         firstName = firstName,
         lastName = lastname,
         email = email,
-        userName = username,
         password = password,
         nonFieldErrors = nonFieldErrors
     )

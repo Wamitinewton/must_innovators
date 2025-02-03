@@ -50,17 +50,8 @@ class SignupViewModel @Inject constructor(
             is SignupUiEvent.FirstNameChanged -> firstNameChanged(event.firstName)
             is SignupUiEvent.LastNameChanged -> lastNameChanged(event.lastname)
             is SignupUiEvent.PasswordChanged -> passwordChanged(event.password)
-            is SignupUiEvent.RegistrationNoChanged -> {
-                val validationResult = InputValidators.validateRegistrationNumber(event.regNo)
-                _signUpState.update { currentState ->
-                    currentState.copy(
-                        registrationNo = event.regNo,
-                        registrationNoError = validationResult.errorMessage
-                    )
-                }
-            }
+
             is SignupUiEvent.SignUp ->createUserWithEmailAndPassword()
-            is SignupUiEvent.UsernameChanged -> userNameChanged(event.username)
         }
     }
 
@@ -69,7 +60,6 @@ class SignupViewModel @Inject constructor(
             emailError = null,
             passwordError = null,
             confirmPasswordError = null,
-            registrationNoError = null,
             errorMessage = null
         ) }
     }
@@ -108,12 +98,6 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private fun userNameChanged(userName: String) {
-        _signUpState.update { currentState ->
-            currentState.copy(userName = userName)
-        }
-    }
-
     private fun isFormValid(): Boolean {
         val emailValidation = _signUpState.value.emailInput.let { InputValidators.validateEmail(it) }
         val passwordValidation = _signUpState.value.passwordInput.let { PasswordValidator.validatePassword(it) }
@@ -125,25 +109,19 @@ class SignupViewModel @Inject constructor(
                 )
             }
         }
-        val regNoValidation = _signUpState.value.registrationNo.let {
-            InputValidators.validateRegistrationNumber(
-                it
-            )
-        }
+
 
         _signUpState.update { currentState ->
             currentState.copy(
                 emailError = emailValidation.errorMessage,
                 passwordError = passwordValidation.errorMessage,
                 confirmPasswordError = confirmPasswordValidation.errorMessage,
-                registrationNoError = regNoValidation.errorMessage
             )
         }
 
         return emailValidation.isValid  &&
                 passwordValidation.isValid  &&
-                confirmPasswordValidation.isValid &&
-                regNoValidation.isValid
+                confirmPasswordValidation.isValid
     }
 
     private fun createUserWithEmailAndPassword() {
@@ -158,9 +136,7 @@ class SignupViewModel @Inject constructor(
                     firstName  = _signUpState.value.firstNameInput,
                     lastName = _signUpState.value.lastNameInput,
                     email = _signUpState.value.emailInput,
-                    userName = _signUpState.value.userName,
                     password = _signUpState.value.passwordInput,
-                    registration_no = _signUpState.value.registrationNo,
                     course = _signUpState.value.courseName,
                 )
                 authRepository.createUserWithEmailAndPassword(

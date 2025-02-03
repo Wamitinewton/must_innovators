@@ -20,12 +20,6 @@ fun SignupForm(
     onEmailChanged: (String) -> Unit,
     emailError: String?,
     isEmailError: Boolean = false,
-    userName: String,
-    onUsernameChanged: (String) -> Unit,
-    registrationNo: String,
-    onRegistrationNoChanged: (String) -> Unit,
-    regNoError: String?,
-    isRegNoError: Boolean = false,
     courseName: String,
     onCourseNameChanged: (String) -> Unit,
     password: String,
@@ -71,29 +65,6 @@ fun SignupForm(
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
 
-        )
-        DefaultTextInput(
-            onInputChanged = {
-                onUsernameChanged(it)
-            },
-            inputText = userName,
-            label = "user name",
-            onSubmitted = {},
-            imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
-        )
-        DefaultTextInput(
-            onInputChanged = {
-                onRegistrationNoChanged(it)
-            },
-            isError = isRegNoError,
-            errorMessage = regNoError,
-            inputText = registrationNo,
-            keyboardType = KeyboardType.Text,
-            label = "registration no",
-            onSubmitted = {},
-            imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
         )
         DefaultTextInput(
             onInputChanged = {

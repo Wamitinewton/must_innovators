@@ -68,14 +68,6 @@ fun SignupContent(
             },
             emailError = uiState.emailError,
             isEmailError = uiState.emailError != null,
-            userName = uiState.userName,
-            onUsernameChanged = {
-                onEvent(SignupUiEvent.UsernameChanged(it))
-            },
-            registrationNo = uiState.registrationNo,
-            onRegistrationNoChanged = {
-                onEvent(SignupUiEvent.RegistrationNoChanged(it))
-            },
             courseName = uiState.courseName,
             onCourseNameChanged = {
                 onEvent(SignupUiEvent.CourseChanged(it))
@@ -91,8 +83,6 @@ fun SignupContent(
                     it,
                 ))
             },
-            regNoError = uiState.registrationNoError,
-            isRegNoError = uiState.registrationNoError != null,
             passwordError = uiState.passwordError,
             isPasswordError = uiState.passwordError != null,
             confirmPwdError = uiState.confirmPasswordError,

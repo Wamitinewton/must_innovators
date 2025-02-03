@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MeruinnovatorsTheme {
-               Surface(modifier = Modifier.safeContentPadding(), color = Color(0xFF253334)) {
+               Surface(modifier = Modifier.safeContentPadding()) {
                    MeruInnovatorsNavigation(navigationSubGraphs = navigationSubGraphs)
                }
             }
