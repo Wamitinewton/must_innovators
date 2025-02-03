@@ -122,12 +122,10 @@ dependencies {
     //coil
     implementation(Dependencies.coil)
 
-
-    implementation(project(":auth"))
+    implementation(project(":features:auth"))
     implementation(project(":core"))
     implementation(project(":common_ui"))
-
-
+    implementation(project(":features:events"))
 }
 
 
