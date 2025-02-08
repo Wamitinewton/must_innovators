@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.meruinnovators.ui.theme.ThemeUtils
 import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
@@ -97,7 +97,9 @@ fun OnboardingScreen(
                      }
                      Spacer(modifier = Modifier.width(20.dp))
                      OutlinedButton(
-                         onClick = {},
+                         onClick = {
+                             navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                         },
                          modifier = Modifier.height(50.dp),
                      ){
                          Text("Login")

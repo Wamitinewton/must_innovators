@@ -1,17 +1,18 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.database"
-    compileSdk = 34
+    namespace = "com.newton.database"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 16
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        consumerProguardFiles("consumer-rules.pro")
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -40,4 +41,21 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Hilt
+    implementation(Dependencies.hiltAndroid)
+    kapt(Dependencies.hiltCompiler)
+
+
+
+    //room
+    implementation(Dependencies.roomKtx)
+    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.roomRuntime)
+
+
+
+
+    implementation(Dependencies.gsonCoverter)
+
 }

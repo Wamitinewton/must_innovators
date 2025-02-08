@@ -2,6 +2,7 @@ package com.newton.meruinnovators.di
 
 import android.content.Context
 import com.newton.auth.navigation.AuthNavigationApi
+import com.newton.events.navigation.EventsNavigationApi
 import com.newton.meruinnovators.BuildConfig
 import com.newton.meruinnovators.navigation.NavigationSubGraphs
 import dagger.Module
@@ -20,9 +21,10 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     fun provideNavigationSubGraphs(
-        authNavigationApi: AuthNavigationApi
+        authNavigationApi: AuthNavigationApi,
+        eventsNavigationApi: EventsNavigationApi
     ): NavigationSubGraphs {
-        return NavigationSubGraphs(authNavigationApi)
+        return NavigationSubGraphs(authNavigationApi,eventsNavigationApi)
     }
 
     @Provides

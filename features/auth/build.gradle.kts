@@ -84,7 +84,8 @@ dependencies {
     implementation(Dependencies.kotlinxSerialization)
 
     //coil
-    implementation(Dependencies.coil)
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.coilNetwork)
 
 
    implementation(project(":core"))

@@ -66,6 +66,16 @@ dependencies {
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
+    // Coil
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.coilNetwork)
+
+    // swipe to refresh
+    implementation(Dependencies.swipeRefresh)
+
+
+
 
     implementation(project(":core"))
+    implementation(project(":database"))
 }
