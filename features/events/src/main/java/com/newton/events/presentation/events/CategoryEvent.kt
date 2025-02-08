@@ -1,4 +1,5 @@
 package com.newton.events.presentation.events
 
-class CategoryEvent {
+sealed class CategoryEvent{
+    data class OnCategorySelected(val category: String) : CategoryEvent()
 }

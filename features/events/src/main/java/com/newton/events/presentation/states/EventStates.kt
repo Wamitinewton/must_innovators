@@ -1,9 +1,10 @@
-package com.newton.events.presentation
+package com.newton.events.presentation.states
 
-import com.newton.events.models.Event
+import com.newton.events.domain.models.Event
 
-class EventStates {
+data class EventStates (
     val events: List<Event> = emptyList(),
     val isLoading: Boolean = false,
-    val isRefreshing: Boolean = false
-}
+    val isRefreshing: Boolean = false,
+    val errorMessage: String = ""
+)

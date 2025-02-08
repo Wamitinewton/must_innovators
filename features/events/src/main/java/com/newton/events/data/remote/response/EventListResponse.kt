@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EventListResponse(
     @SerialName("data")
-    val `data`: Data = Data(),
+    val data: Data = Data(),
     @SerialName("message")
     val message: String = "",
     @SerialName("status")

@@ -1,5 +1,7 @@
 package com.newton.events.data.remote
 
+import com.newton.events.data.remote.response.EventListResponse
+import com.newton.events.data.remote.response.EventResponse
 import com.newton.events.domain.models.Event
 import com.newton.events.domain.models.EventRequest
 import okhttp3.Response
@@ -10,28 +12,28 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-interface EventService {
-    @GET("events/{id}")
+interface EventApi {
+    @GET(EventEndPoint.GET_EVENT_BY_ID)
     suspend fun getEventById(
         @Path("id") id: Int
-    ): Response<Event>
+    ): EventResponse
 
-    @GET("events")
-    suspend fun getAllEvents(): Response<List<Event>>
+    @GET(EventEndPoint.GET_ALL_EVENTS)
+    suspend fun getAllEvents(): EventListResponse
 
-    @PUT("events/{id}")
+    @PUT(EventEndPoint.UPDATE_EVENT)
     suspend fun updateEvent(
         @Path("id") id: Int,
         @Body request: EventRequest
-    ): Response<Event>
+    ): EventResponse
 
-    @DELETE("events/{id}")
+    @DELETE(EventEndPoint.DELETE_EVENT)
     suspend fun deleteEvent(
         @Path("id") id: Int
-    ): Response<Unit>
+    ): EventResponse
 
-    @POST("events")
+    @POST(EventEndPoint.CREATE_EVENT)
     suspend fun createEvent(
         @Body request: EventRequest
-    ): Response<Event>
+    ): EventResponse
 }

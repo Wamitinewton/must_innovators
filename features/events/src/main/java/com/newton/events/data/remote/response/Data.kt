@@ -13,5 +13,5 @@ data class Data(
     @SerialName("previous")
     val previous: String = "",
     @SerialName("results")
-    val results: List<Result> = listOf()
+    val results: List<EventData> = listOf()
 )

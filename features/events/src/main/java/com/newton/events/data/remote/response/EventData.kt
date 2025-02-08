@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Event(
+data class EventData(
     @SerialName("category")
     val category: String = "",
     @SerialName("contact_email")
@@ -22,6 +22,8 @@ data class Event(
     val isVirtual: Boolean = false,
     @SerialName("location")
     val location: String = "",
+    @SerialName("members")
+    val members: Int = 0,
     @SerialName("name")
     val name: String = "",
     @SerialName("organizer")

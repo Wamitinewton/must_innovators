@@ -1,4 +1,4 @@
-package com.newton.events.models
+package com.newton.events.domain.models
 
 data class Event(
     val contactEmail: String,
