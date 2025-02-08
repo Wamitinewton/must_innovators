@@ -18,7 +18,8 @@ object Dependencies {
     const val work = "androidx.work:work-runtime-ktx"
     const val hiltWorker = "androidx.hilt:hilt-work"
     const val timber = "com.jakewharton.timber:timber"
-    const val coil = "io.coil-kt:coil-compose:2.2.2"
+    const val coilCompose = "io.coil-kt.coil3:coil-compose:3.1.0"
+    const val coilNetwork = "io.coil-kt.coil3:coil-network-okhttp:3.1.0"
     const val lottieCompose = "com.airbnb.android:lottie-compose:5.0.3"
     const val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
     const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha18"
@@ -30,7 +31,7 @@ object Dependencies {
     const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
     const val pager = "com.google.accompanist:accompanist-pager:0.24.10-beta"
     const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:0.18.0"
-    const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha"
+    const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:0.36.0"
     const val accompanistPermissions = "com.google.accompanist:accompanist-permissions:0.32.0"
 }
 
