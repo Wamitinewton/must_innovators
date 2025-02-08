@@ -1,10 +1,13 @@
 package com.newton.meruinnovators.di
 
 import android.content.Context
-import coil.ImageLoader
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import coil.util.DebugLogger
+import coil3.ImageLoader
+import coil3.disk.DiskCache
+import coil3.disk.directory
+import coil3.memory.MemoryCache
+import coil3.request.allowRgb565
+import coil3.request.crossfade
+import coil3.util.DebugLogger
 import com.newton.meruinnovators.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -23,8 +26,8 @@ object CoilModule {
     ): ImageLoader {
         return ImageLoader.Builder(context)
             .memoryCache {
-                MemoryCache.Builder(context)
-                    .maxSizePercent(0.25)
+                MemoryCache.Builder()
+                    .maxSizePercent(context,0.25)
                     .build()
             }
             .diskCache {
@@ -33,7 +36,7 @@ object CoilModule {
                     .maxSizePercent(0.02)
                     .build()
             }
-            .respectCacheHeaders(false)
+//            .respectCacheHeaders(false)
             .crossfade(true)
             .crossfade(300)
             .allowRgb565(true)
