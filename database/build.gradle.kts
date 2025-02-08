@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.database"
-    compileSdk = 34
+    namespace = "com.newton.database"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 16
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        consumerProguardFiles("consumer-rules.pro")
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {

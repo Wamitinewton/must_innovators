@@ -12,7 +12,7 @@ plugins {
 
 android {
     namespace = "com.newton.meruinnovators"
-    compileSdk = 34
+    compileSdk = 35
     val properties = Properties()
 
 
@@ -120,7 +120,8 @@ dependencies {
     implementation(Dependencies.kotlinxSerialization)
 
     //coil
-    implementation(Dependencies.coil)
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.coilNetwork)
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
