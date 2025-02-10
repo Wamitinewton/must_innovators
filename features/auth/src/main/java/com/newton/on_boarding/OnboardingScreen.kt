@@ -98,7 +98,7 @@ fun OnboardingScreen(
                      Spacer(modifier = Modifier.width(20.dp))
                      OutlinedButton(
                          onClick = {
-                             navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                             navHostController.navigate(NavigationRoutes.LoginRoute.routes)
                          },
                          modifier = Modifier.height(50.dp),
                      ){

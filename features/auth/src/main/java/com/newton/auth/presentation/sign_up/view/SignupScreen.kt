@@ -1,6 +1,5 @@
 package com.newton.auth.presentation.sign_up.view
 
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -78,7 +77,7 @@ fun SignupScreen(
             SignupContent(
                 uiState = uiState,
                 onEvent = signupViewModel::onEvent,
-                onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) }
+                onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
             )
             if (uiState.isLoading) {
                 LoadingDialog()

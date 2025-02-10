@@ -10,10 +10,10 @@ plugins {
 
 android {
     namespace = "com.newton.events"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 16
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
