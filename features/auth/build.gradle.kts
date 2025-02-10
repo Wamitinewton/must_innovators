@@ -11,10 +11,10 @@ plugins {
 
 android {
     namespace = "com.newton.auth"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -83,9 +83,17 @@ dependencies {
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
+    //Workmanager
+    implementation(Dependencies.work)
+    implementation(Dependencies.hiltWorker)
+
     //coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
+
+    implementation(Dependencies.crypto_datastore)
+
+    implementation(Dependencies.timber)
 
 
    implementation(project(":core"))

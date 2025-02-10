@@ -1,6 +1,5 @@
 package com.newton.events.di
 
-import com.newton.database.dao.EventDao
 import com.newton.events.data.remote.EventApi
 import com.newton.events.data.repository.EventRepositoryImpl
 import com.newton.events.domain.repository.EventRepository
@@ -33,9 +32,9 @@ object EventModule {
 
     @Provides
     @Singleton
-    fun providesEventRepository(api:EventApi,dao:EventDao):EventRepository{
+    fun providesEventRepository(api:EventApi):EventRepository{
         return EventRepositoryImpl(
-            api, dao
+            api
         )
     }
 

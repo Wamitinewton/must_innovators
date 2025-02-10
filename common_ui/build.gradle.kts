@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "com.newton.common_ui"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

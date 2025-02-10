@@ -1,5 +1,6 @@
 package com.newton.auth.presentation.sign_up.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +33,8 @@ import com.newton.common_ui.ui.CustomButton
 fun SignupContent(
     uiState: SignupViewmodelState,
     onEvent: (SignupUiEvent) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    navigateToEvents: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -89,7 +91,7 @@ fun SignupContent(
             isConfirmPwdError = uiState.confirmPasswordError != null
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         CustomButton(
             text = "Sign up",
@@ -98,6 +100,19 @@ fun SignupContent(
             },
             enabled = !uiState.isLoading
         )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 11.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = "Forgot password?",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable {  }
+            )
+        }
     }
 }
 

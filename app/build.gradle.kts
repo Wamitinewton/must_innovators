@@ -38,8 +38,8 @@ android {
 
 
         applicationId = "com.newton.meruinnovators"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 28
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -118,6 +118,13 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
+
+    //worker
+    implementation(Dependencies.work)
+    implementation(Dependencies.hiltWorker)
+
+    //Timber
+    implementation(Dependencies.timber)
 
     //coil
     implementation(Dependencies.coilCompose)

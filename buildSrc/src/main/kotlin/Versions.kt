@@ -13,4 +13,5 @@ object Versions {
     const val composeNav = "2.8.2"
     const val timber = "5.0.1"
     const val dataStorePrefs = "1.1.1"
+    const val workRuntimeKtx = "2.10.0"
 }
