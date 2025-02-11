@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.auth.domain.models.sign_up.SignupRequest
 import com.newton.auth.domain.repositories.AuthRepository
-import com.newton.auth.presentation.sign_up.event.NavigationEvent
+import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
 import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.auth.presentation.sign_up.state.SignupViewmodelState
 import com.newton.core.utils.InputValidators
@@ -25,7 +25,7 @@ class SignupViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ): ViewModel() {
 
-    private val _navigateToLogin = Channel<NavigationEvent>()
+    private val _navigateToLogin = Channel<SignUpNavigationEvent>()
     val navigateToLogin = _navigateToLogin.receiveAsFlow()
 
     private val _signUpState: MutableStateFlow<SignupViewmodelState> = MutableStateFlow(SignupViewmodelState())
@@ -156,7 +156,7 @@ class SignupViewModel @Inject constructor(
                                     errorMessage = null,
                                     signupResponse = result.data
                                 )
-                                _navigateToLogin.send(NavigationEvent.NavigateToLogin)
+                                _navigateToLogin.send(SignUpNavigationEvent.NavigateToLogin)
                             }
                         }
                     }

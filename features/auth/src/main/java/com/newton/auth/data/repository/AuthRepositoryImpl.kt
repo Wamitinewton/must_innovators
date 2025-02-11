@@ -14,93 +14,160 @@ import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.core.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import retrofit2.HttpException as RetrofitHttpException
 import timber.log.Timber
+import java.io.IOException
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val sessionManager: SessionManager
-): AuthRepository {
+) : AuthRepository {
 
     init {
-        runBlocking {
-            AuthTokenHolder.initializeTokens(sessionManager)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                AuthTokenHolder.initializeTokens(sessionManager)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to initialize tokens")
+            }
         }
     }
 
     override suspend fun createUserWithEmailAndPassword(signupRequest: SignupRequest): Flow<Resource<SignupResponse>> = flow {
-        emit(Resource.Loading(true))
         try {
+            emit(Resource.Loading(true))
             val response = authService.signUp(signupRequest)
-            if (response.message == "") {
-                val user = response.data.toResponseData()
-                emit(Resource.Success(data = user))
-                emit(Resource.Loading(false))
-            } else {
-                val message = response.data.nonFieldErrors?.first()
-                emit(Resource.Error(message = message ?: "Unknown error occurred"))
-                emit(Resource.Loading(false))
+
+            when {
+                response.message.isEmpty() -> {
+                    val user = response.data.toResponseData()
+                    emit(Resource.Success(data = user))
+                }
+                else -> {
+                    val message = response.data.nonFieldErrors?.firstOrNull() ?: "Unknown error occurred"
+                    emit(Resource.Error(message = message))
+                }
             }
+        } catch (e: RetrofitHttpException) {
+            emit(Resource.Error(message = handleHttpError(e)))
+        } catch (e: IOException) {
+            emit(Resource.Error(message = "Network error: Please check your internet connection"))
         } catch (e: Exception) {
-            emit(Resource.Error(message = e.message.toString()))
+            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
+        } finally {
+            emit(Resource.Loading(false))
         }
     }
 
     override suspend fun loginWithEmailAndPassword(loginRequest: LoginRequest): Flow<Resource<LoginResultData>> = flow {
-        emit(Resource.Loading(true))
         try {
+            emit(Resource.Loading(true))
             val response = authService.login(loginRequest)
-            if (response.message == "") {
-                val loggedInUser = response.data
-                emit(Resource.Success(data = loggedInUser))
-                emit(Resource.Loading(false))
+
+            when {
+                response.message.isEmpty() -> {
+                    val loggedInUser = response.data
+                    emit(Resource.Success(data = loggedInUser))
+                }
+                else -> {
+                    emit(Resource.Error(message = "Login failed: ${response.message}"))
+                }
             }
+        } catch (e: RetrofitHttpException) {
+            emit(Resource.Error(message = handleHttpError(e)))
+        } catch (e: IOException) {
+            emit(Resource.Error(message = "Network error: Please check your internet connection"))
         } catch (e: Exception) {
-            emit(Resource.Error(e.message ?: "An error has occurred. Try again later"))
+            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
+        } finally {
+            emit(Resource.Loading(false))
         }
     }
 
     override suspend fun refreshTokensFromServer(): LoginResponse? {
-       return try {
-           val refreshToken = getRefreshToken()
-           val response = authService.refreshTokens(refreshToken)
-           response
-       } catch (e: HttpException) {
-           Timber.e(message = "Connection Failed!")
-           null
-       }
+        return try {
+            val refreshToken = getRefreshToken() ?: throw TokenRefreshException("No refresh token available")
+            val response = authService.refreshTokens(refreshToken)
+
+            if (response.message.isEmpty()) {
+                response
+            } else {
+                throw TokenRefreshException("Token refresh failed: ${response.message}")
+            }
+        } catch (e: HttpException) {
+            Timber.e(e, "HTTP error during token refresh")
+            null
+        } catch (e: IOException) {
+            Timber.e(e, "Network error during token refresh")
+            null
+        } catch (e: TokenRefreshException) {
+            Timber.e(e, "Token refresh failed")
+            null
+        } catch (e: Exception) {
+            Timber.e(e, "Unexpected error during token refresh")
+            null
+        }
     }
 
     override suspend fun storeAuthTokens(accessToken: String, refreshToken: String) {
-        AuthTokenHolder.accessToken = accessToken
-        AuthTokenHolder.refreshToken = refreshToken
-        sessionManager.saveTokens(
-            accessToken,
-            refreshToken
-        )
+        try {
+            AuthTokenHolder.accessToken = accessToken
+            AuthTokenHolder.refreshToken = refreshToken
+            sessionManager.saveTokens(accessToken, refreshToken)
 
-        // Debug: Check token persistence
-        val savedAccessToken = sessionManager.fetchAccessToken()
-        val savedRefreshToken = sessionManager.fetchRefreshToken()
-        Timber.d("Tokens saved successfully: AccessToken=$savedAccessToken, RefreshToken=$savedRefreshToken")
+            // Verify token persistence
+            verifyTokenPersistence()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to store auth tokens")
+            throw TokenStorageException("Failed to store authentication tokens", e)
+        }
     }
 
     override suspend fun updateAuthTokens(accessToken: String, refreshToken: String) {
-        AuthTokenHolder.accessToken = accessToken
-        AuthTokenHolder.refreshToken = refreshToken
-        sessionManager.updateTokens(
-            accessToken,
-            refreshToken
-        )
+        try {
+            AuthTokenHolder.accessToken = accessToken
+            AuthTokenHolder.refreshToken = refreshToken
+            sessionManager.updateTokens(accessToken, refreshToken)
+
+            // Verify token persistence
+            verifyTokenPersistence()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to update auth tokens")
+            throw TokenStorageException("Failed to update authentication tokens", e)
+        }
     }
 
-    override fun getAccessToken(): String? {
-        return AuthTokenHolder.accessToken
+    override fun getAccessToken(): String? = AuthTokenHolder.accessToken
+
+    override fun getRefreshToken(): String? = AuthTokenHolder.refreshToken
+
+    private fun handleHttpError(error: RetrofitHttpException): String {
+        return when (error.code()) {
+            400 -> "Invalid request: Please check your input"
+            401 -> "Unauthorized: Please log in again"
+            403 -> "Access denied"
+            404 -> "Resource not found"
+            500, 502, 503 -> "Server error: Please try again later"
+            else -> "Network error: ${error.message()}"
+        }
     }
 
-    override fun getRefreshToken(): String? {
-        return AuthTokenHolder.refreshToken
+    private fun verifyTokenPersistence() {
+        val savedAccessToken = sessionManager.fetchAccessToken()
+        val savedRefreshToken = sessionManager.fetchRefreshToken()
+
+        if (savedAccessToken != AuthTokenHolder.accessToken || savedRefreshToken != AuthTokenHolder.refreshToken) {
+            Timber.e("Token persistence verification failed")
+            throw TokenStorageException("Token persistence verification failed")
+        }
+
+        Timber.d("Tokens saved successfully: AccessToken=$savedAccessToken, RefreshToken=$savedRefreshToken")
     }
 
+    private class TokenRefreshException(message: String) : Exception(message)
+    private class TokenStorageException(message: String, cause: Throwable? = null) : Exception(message, cause)
 }
