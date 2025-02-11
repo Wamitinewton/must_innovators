@@ -19,9 +19,9 @@ object EventDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideEventDatabase(@ApplicationContext context: Context): EventDatabase {
+    fun provideEventDatabase(app: Application): EventDatabase {
         return Room.databaseBuilder(
-            context,
+            app,
             EventDatabase::class.java,
             DATABASE_NAME
         )

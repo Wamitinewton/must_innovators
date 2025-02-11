@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -35,7 +37,7 @@ fun EventCard(event: Event, onClick: () -> Unit) {
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(top = 8.dp, end = 8.dp, start = 8.dp)
             .clickable { onClick() }
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
@@ -49,9 +51,21 @@ fun EventCard(event: Event, onClick: () -> Unit) {
                     .clip(RoundedCornerShape(8.dp))
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(event.title, color = Color.Red, fontSize = 18.sp)
+            Text(
+                event.title,
+                color = Color.Red,
+                fontSize = 18.sp,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(event.description, color = Color.White, fontSize = 14.sp, maxLines = 3)
+            Text(
+                event.description,
+                color = Color.White,
+                fontSize = 14.sp,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.DateRange, contentDescription = "Date", tint = Color.White)
@@ -67,7 +81,9 @@ fun EventCard(event: Event, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(12.dp))
             Button(
                 onClick = { },
-                colors = ButtonDefaults.buttonColors().copy(containerColor = Color(0xFF4CAF50))
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors().copy(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Text("RSVP", color = Color.White)
             }

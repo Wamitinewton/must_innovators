@@ -8,7 +8,6 @@ import androidx.navigation.navigation
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 import com.newton.events.presentation.view.EventsScreen
-import com.newton.events.presentation.viewmodel.CategoryViewModel
 import com.newton.events.presentation.viewmodel.EventViewModel
 
 class EventsNavigationApiImpl: EventsNavigationApi {
@@ -21,9 +20,8 @@ class EventsNavigationApiImpl: EventsNavigationApi {
             startDestination = NavigationRoutes.EventsRoute.routes
         ){
             composable(route = NavigationRoutes.EventsRoute.routes) {
-                val categoryViewModel = hiltViewModel<CategoryViewModel>()
                 val eventViewModel = hiltViewModel<EventViewModel>()
-                EventsScreen(categoryViewModel = categoryViewModel, eventViewModel = eventViewModel)
+                EventsScreen(eventViewModel = eventViewModel)
             }
         }
     }
