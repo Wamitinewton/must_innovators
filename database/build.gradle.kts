@@ -50,7 +50,7 @@ dependencies {
 
 
     //room
-    implementation(Dependencies.roomKtx)
+//    implementation(Dependencies.roomKtx)
     kapt(Dependencies.roomCompiler)
     implementation(Dependencies.roomRuntime)
 

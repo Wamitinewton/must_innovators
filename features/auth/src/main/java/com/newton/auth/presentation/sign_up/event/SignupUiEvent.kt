@@ -9,6 +9,7 @@ sealed class SignupUiEvent {
     data class CourseChanged(val course: String): SignupUiEvent()
     data object SignUp: SignupUiEvent()
     data object ClearError: SignupUiEvent()
+    data class UsernameChanged(val username: String):SignupUiEvent()
 }
 
 sealed class SignUpNavigationEvent {

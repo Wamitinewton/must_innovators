@@ -46,6 +46,10 @@ fun SignupContent(
         OrContinueWith()
 
         SignupForm(
+            username = uiState.userName,
+            onUsernameChanged = {
+                onEvent(SignupUiEvent.UsernameChanged(it))
+            },
             firstName = uiState.firstNameInput,
             onFirstnameChanged = {
                 onEvent(SignupUiEvent.FirstNameChanged(it))
@@ -79,6 +83,7 @@ fun SignupContent(
             isPasswordError = uiState.passwordError != null,
             confirmPwdError = uiState.confirmPasswordError,
             isConfirmPwdError = uiState.confirmPasswordError != null
+
         )
 
         Spacer(modifier = Modifier.height(15.dp))

@@ -45,6 +45,7 @@ class SignupViewModel @Inject constructor(
                     )
                 }
             }
+            is SignupUiEvent.UsernameChanged -> userNameChanged(event.username)
             is SignupUiEvent.CourseChanged -> courseNameChanged(event.course)
             is SignupUiEvent.EmailChanged -> validateEmail(event.email)
             is SignupUiEvent.FirstNameChanged -> firstNameChanged(event.firstName)
@@ -52,6 +53,7 @@ class SignupViewModel @Inject constructor(
             is SignupUiEvent.PasswordChanged -> passwordChanged(event.password)
 
             is SignupUiEvent.SignUp ->createUserWithEmailAndPassword()
+
         }
     }
 
@@ -87,6 +89,12 @@ class SignupViewModel @Inject constructor(
             currentState.copy(lastNameInput = lastName)
         }
     }
+    private fun userNameChanged(userName: String) {
+        _signUpState.update { currentState ->
+            currentState.copy(userName = userName)
+        }
+    }
+
 
     private fun passwordChanged(password: String) {
         val validationResult = PasswordValidator.validatePassword(password)
@@ -137,6 +145,7 @@ class SignupViewModel @Inject constructor(
                     email = _signUpState.value.emailInput,
                     password = _signUpState.value.passwordInput,
                     course = _signUpState.value.courseName,
+                    username = _signUpState.value.userName,
                 )
                 authRepository.createUserWithEmailAndPassword(
                     signUpRequest
