@@ -8,6 +8,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -50,10 +51,14 @@ android {
     signingConfigs {
 
         create("release") {
-            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE") ?: throw GradleException("store file not found in keys.properties")
-            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD") ?: throw GradleException("store password not found in keys.properties")
-            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS") ?: throw GradleException("key alias not found in keys.properties")
-            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD") ?: throw GradleException("alias pwd not found in keys.properties")
+            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE")
+                ?: throw GradleException("store file not found in keys.properties")
+            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD")
+                ?: throw GradleException("store password not found in keys.properties")
+            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS")
+                ?: throw GradleException("key alias not found in keys.properties")
+            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD")
+                ?: throw GradleException("alias pwd not found in keys.properties")
 
             storeFile = file(keystoreFile)
             storePassword = keystorePassword
@@ -129,6 +134,8 @@ dependencies {
     //coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
+
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
 
     implementation(project(":features:auth"))
     implementation(project(":core"))

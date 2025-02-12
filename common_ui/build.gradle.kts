@@ -57,6 +57,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Lottie loader
+    implementation(Dependencies.lottieCompose)
+
     implementation(project(":core"))
 
 }

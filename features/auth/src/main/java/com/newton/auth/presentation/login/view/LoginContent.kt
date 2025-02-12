@@ -1,29 +1,34 @@
-package com.newton.auth.presentation.sign_up.view
+package com.newton.auth.presentation.login.view
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.newton.auth.presentation.sign_up.event.SignupUiEvent
-import com.newton.auth.presentation.sign_up.state.SignupViewmodelState
+import com.newton.auth.presentation.login.event.LoginEvent
+import com.newton.auth.presentation.login.state.LoginViewModelState
 import com.newton.auth.presentation.utils.AuthHeader
 import com.newton.auth.presentation.utils.OrContinueWith
 import com.newton.auth.presentation.utils.SocialAuthentication
 import com.newton.common_ui.ui.CustomButton
 
 @Composable
-fun SignupContent(
-    uiState: SignupViewmodelState,
-    onEvent: (SignupUiEvent) -> Unit,
+fun LoginContent(
+    uiState: LoginViewModelState,
+    onEvent: (LoginEvent) -> Unit,
     onBackClick: () -> Unit,
-    navigateToEvents: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -32,66 +37,53 @@ fun SignupContent(
             .padding(horizontal = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         AuthHeader(
             onBackButtonClick = onBackClick,
-            headerText = "Sign up"
+            headerText = "Log In"
         )
 
         SocialAuthentication(
-            onGoogleLogin = {},
-            onGithubLogin = {}
+            onGithubLogin = {},
+            onGoogleLogin = {}
         )
 
         OrContinueWith()
 
-        SignupForm(
-            firstName = uiState.firstNameInput,
-            onFirstnameChanged = {
-                onEvent(SignupUiEvent.FirstNameChanged(it))
-            },
-            lastName = uiState.lastNameInput,
-            onLastnameChanged = {
-                onEvent(SignupUiEvent.LastNameChanged(it))
-            },
+        LoginForm(
             email = uiState.emailInput,
             onEmailChanged = {
-                onEvent(SignupUiEvent.EmailChanged(it))
+                onEvent(LoginEvent.EmailChanged(it))
             },
             emailError = uiState.emailError,
             isEmailError = uiState.emailError != null,
-            courseName = uiState.courseName,
-            onCourseNameChanged = {
-                onEvent(SignupUiEvent.CourseChanged(it))
-            },
             password = uiState.passwordInput,
             onPasswordChanged = {
-                onEvent(SignupUiEvent.PasswordChanged(it))
+                onEvent(LoginEvent.PasswordChanged(it))
             },
-            confirmPassword = uiState.confirmPassword,
-            onConfirmPasswordChanged = {
-                onEvent(
-                    SignupUiEvent.ConfirmPasswordChanged(
-                    it,
-                ))
-            },
-            passwordError = uiState.passwordError,
             isPasswordError = uiState.passwordError != null,
-            confirmPwdError = uiState.confirmPasswordError,
-            isConfirmPwdError = uiState.confirmPasswordError != null
+            passwordError = uiState.passwordError
         )
 
         Spacer(modifier = Modifier.height(15.dp))
 
         CustomButton(
-            text = "Sign up",
+            text = "Log In",
             onClick = {
-                onEvent(SignupUiEvent.SignUp)
+                onEvent(LoginEvent.Login)
             },
             enabled = !uiState.isLoading
         )
-
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 11.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = "Forgot password?",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable {  }
+            )
+        }
     }
 }
-
-

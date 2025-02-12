@@ -1,7 +1,5 @@
 package com.newton.auth.presentation.login.view_model
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.auth.data.data_store.SessionManager
@@ -35,7 +33,7 @@ class LoginViewModel @Inject constructor(
     val loggedInUser: StateFlow<Any?> get() = _loggedInUser
 
     private val _navigateToHomeScreen = Channel<LoginNavigationEvent>()
-    val navigateToLogin = _navigateToHomeScreen.receiveAsFlow()
+    val navigateToHomeScreen = _navigateToHomeScreen.receiveAsFlow()
 
     private val _loginUiState:MutableStateFlow<LoginViewModelState> = MutableStateFlow(LoginViewModelState())
     val loginUiState: StateFlow<LoginViewModelState> get() = _loginUiState
@@ -157,7 +155,6 @@ class LoginViewModel @Inject constructor(
                     isLoading = false
                 )
             }
-
             _navigateToHomeScreen.send(LoginNavigationEvent.NavigateToHomeScreen)
         } catch (e: Exception) {
             _loginUiState.update {

@@ -1,12 +1,10 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android") // Add this line
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.newton.database"
+    namespace = "com.newton.paging"
     compileSdk = 35
 
     defaultConfig {
@@ -42,23 +40,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    //Hilt
-    implementation(Dependencies.hiltAndroid)
-    kapt(Dependencies.hiltCompiler)
-
-
-
-    //room
-    implementation(Dependencies.roomKtx)
-    kapt(Dependencies.roomCompiler)
-    implementation(Dependencies.roomRuntime)
-
-
-
-
-    implementation(Dependencies.gsonCoverter)
-
-    implementation(project(":features:auth"))
-
 }
