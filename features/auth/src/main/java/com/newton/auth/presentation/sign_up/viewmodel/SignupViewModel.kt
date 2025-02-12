@@ -154,7 +154,7 @@ class SignupViewModel @Inject constructor(
                                 _signUpState.value = _signUpState.value.copy(
                                     isLoading = false,
                                     errorMessage = null,
-                                    signupResponse = result.data
+                                    success = result.message
                                 )
                                 _navigateToLogin.send(SignUpNavigationEvent.NavigateToLogin)
                             }

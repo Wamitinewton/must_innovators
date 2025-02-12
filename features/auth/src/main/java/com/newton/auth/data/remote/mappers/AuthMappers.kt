@@ -1,9 +1,9 @@
 package com.newton.auth.data.remote.mappers
 
 import com.newton.auth.data.remote.authResponse.sign_up.SignupDto
-import com.newton.auth.domain.models.sign_up.SignupResponse
+import com.newton.auth.domain.models.sign_up.UserDataResponse
 
-fun SignupResponse.toResponseData(): SignupDto {
+fun UserDataResponse.toResponseData(): SignupDto {
     return SignupDto(
         firstName = firstName,
         lastname = lastName,
@@ -12,8 +12,8 @@ fun SignupResponse.toResponseData(): SignupDto {
     )
 }
 
-fun SignupDto.toResponseData(): SignupResponse {
-    return SignupResponse(
+fun SignupDto.toResponseData(): UserDataResponse {
+    return UserDataResponse(
         firstName = firstName,
         lastName = lastname,
         email = email,

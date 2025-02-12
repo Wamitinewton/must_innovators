@@ -8,6 +8,7 @@ import androidx.navigation.navigation
 import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.on_boarding.OnboardingScreen
 import com.newton.auth.presentation.sign_up.view.SignupScreen
+import com.newton.auth.presentation.sign_up.view.SignupSuccessScreen
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
@@ -19,7 +20,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Auth.route,
-            startDestination = NavigationRoutes.OnboardingRoute.routes
+            startDestination = NavigationRoutes.SignupSuccessRoute.routes
         ){
             composable(route = NavigationRoutes.SignupRoute.routes) {
                 val signupViewModel = hiltViewModel<SignupViewModel>()
@@ -34,6 +35,11 @@ class AuthNavigationApiImpl: AuthNavigationApi {
             composable(route = NavigationRoutes.LoginRoute.routes) {
                 LoginScreen()
             }
+
+            composable(route = NavigationRoutes.SignupSuccessRoute.routes) {
+                SignupSuccessScreen(navHostController = navHostController)
+            }
+
         }
     }
 }

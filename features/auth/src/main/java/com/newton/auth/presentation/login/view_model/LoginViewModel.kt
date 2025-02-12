@@ -157,7 +157,6 @@ class LoginViewModel @Inject constructor(
                     isLoading = false
                 )
             }
-
             _navigateToHomeScreen.send(LoginNavigationEvent.NavigateToHomeScreen)
         } catch (e: Exception) {
             _loginUiState.update {

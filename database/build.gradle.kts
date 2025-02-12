@@ -59,4 +59,6 @@ dependencies {
 
     implementation(Dependencies.gsonCoverter)
 
+    implementation(project(":features:auth"))
+
 }

@@ -10,6 +10,7 @@ import com.newton.auth.domain.models.login.LoginResponse
 import com.newton.auth.domain.models.login.LoginResultData
 import com.newton.auth.domain.models.sign_up.SignupRequest
 import com.newton.auth.domain.models.sign_up.SignupResponse
+import com.newton.auth.domain.models.sign_up.UserDataResponse
 import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.core.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -42,16 +43,7 @@ class AuthRepositoryImpl @Inject constructor(
             emit(Resource.Loading(true))
             val response = authService.signUp(signupRequest)
 
-            when {
-                response.message.isEmpty() -> {
-                    val user = response.data.toResponseData()
-                    emit(Resource.Success(data = user))
-                }
-                else -> {
-                    val message = response.data.nonFieldErrors?.firstOrNull() ?: "Unknown error occurred"
-                    emit(Resource.Error(message = message))
-                }
-            }
+            emit(Resource.Success(data = response))
         } catch (e: RetrofitHttpException) {
             emit(Resource.Error(message = handleHttpError(e)))
         } catch (e: IOException) {
