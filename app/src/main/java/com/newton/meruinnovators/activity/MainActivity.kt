@@ -6,12 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.newton.auth.data.work_manager.scheduleTokenRefreshWork
 import com.newton.meruinnovators.navigation.MeruInnovatorsNavigation
 import com.newton.meruinnovators.navigation.NavigationSubGraphs
-import com.newton.meruinnovators.ui.theme.ThemeUtils
 import com.newton.meruinnovators.ui.theme.ThemeUtils.MeruinnovatorsTheme
-import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,9 +20,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        scheduleTokenRefreshWork(applicationContext)
         setContent {
             MeruinnovatorsTheme {
-               Surface(modifier = Modifier.safeContentPadding(), color = Color(0xFF253334)) {
+               Surface(modifier = Modifier.safeContentPadding()) {
                    MeruInnovatorsNavigation(navigationSubGraphs = navigationSubGraphs)
                }
             }

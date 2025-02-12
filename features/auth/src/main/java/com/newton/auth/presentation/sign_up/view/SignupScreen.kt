@@ -1,6 +1,5 @@
 package com.newton.auth.presentation.sign_up.view
 
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.newton.auth.presentation.sign_up.event.NavigationEvent
+import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
 import com.newton.auth.presentation.utils.LoadingDialog
 import com.newton.common_ui.ui.NetworkMonitor
@@ -46,8 +45,8 @@ fun SignupScreen(
     LaunchedEffect(Unit) {
         signupViewModel.navigateToLogin.collect { event ->
             when(event) {
-                NavigationEvent.NavigateToLogin -> {
-                    navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                SignUpNavigationEvent.NavigateToSuccess -> {
+                    navHostController.navigate(NavigationRoutes.SignupSuccessRoute.routes)
                 }
             }
         }
@@ -78,7 +77,7 @@ fun SignupScreen(
             SignupContent(
                 uiState = uiState,
                 onEvent = signupViewModel::onEvent,
-                onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) }
+                onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
             )
             if (uiState.isLoading) {
                 LoadingDialog()

@@ -1,11 +1,7 @@
 package com.newton.events.data.repository
 
 import com.newton.core.utils.Resource
-import com.newton.database.dao.EventDao
 import com.newton.events.data.mappers.toDomainEvent
-import com.newton.events.data.mappers.toEventEntity
-import com.newton.events.data.mappers.toEventList
-import com.newton.events.data.mappers.toEventModel
 import com.newton.events.data.mappers.toListOfEvent
 import com.newton.events.data.remote.EventApi
 import com.newton.events.domain.models.Event
@@ -18,7 +14,6 @@ import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(
     private val api: EventApi,
-    private val dao: EventDao,
 ) : EventRepository {
     override fun refreshEvents(): Flow<Resource<List<Event>>> = flow {
         emit(Resource.Loading(true))
@@ -27,9 +22,6 @@ class EventRepositoryImpl @Inject constructor(
             emit(Resource.Loading(false))
             if (response.status == "success") {
                 emit(Resource.Success(response.data.results.toListOfEvent()))
-                response.data.results.map { eventData ->
-                    dao.insertEvent(eventData.toEventEntity())
-                }
             } else {
                 emit(Resource.Error(response.message))
             }
@@ -41,19 +33,12 @@ class EventRepositoryImpl @Inject constructor(
     override suspend fun getEventById(id: Int): Flow<Resource<Event>> = flow {
         emit(Resource.Loading(true))
         try {
-            val cachedEvent = dao.getEventById(id)
-            if (cachedEvent.equals(null)) {
-                val response = api.getEventById(id)
-                emit(Resource.Loading(false))
-                if (response.status == "success") {
-                    emit(Resource.Success(response.data.toDomainEvent()))
-                    dao.insertEvent(response.data.toEventEntity())
-                } else {
-                    emit(Resource.Error(response.message))
-                }
+            val response = api.getEventById(id)
+            emit(Resource.Loading(false))
+            if (response.status == "success") {
+                emit(Resource.Success(response.data.toDomainEvent()))
             } else {
-                emit(Resource.Loading(false))
-                emit(Resource.Success(cachedEvent.toEventModel()))
+                emit(Resource.Error(response.message))
             }
 
         } catch (e: Exception) {
@@ -64,22 +49,13 @@ class EventRepositoryImpl @Inject constructor(
     override fun getAllEvents(): Flow<Resource<List<Event>>> = flow {
         emit(Resource.Loading(true))
         try {
-            val cachedEvent = dao.getAllEvents()
-            if (cachedEvent.isEmpty()) {
                 val response = api.getAllEvents()
                 emit(Resource.Loading(false))
                 if (response.status == "success") {
                     emit(Resource.Success(response.data.results.toListOfEvent()))
-                    response.data.results.map { eventData ->
-                        dao.insertEvent(eventData.toEventEntity())
-                    }
                 } else {
                     emit(Resource.Error(response.message))
                 }
-            } else {
-                emit(Resource.Loading(false))
-                emit(Resource.Success(cachedEvent.toEventList()))
-            }
 
         } catch (e: Exception) {
             emit(handleError(e))
@@ -93,7 +69,6 @@ class EventRepositoryImpl @Inject constructor(
             emit(Resource.Loading(false))
             if (response.status == "success") {
                 emit(Resource.Success(response.data.toDomainEvent()))
-                dao.updateEvent(response.data.toEventEntity())
             } else {
                 emit(Resource.Error(response.message))
             }
@@ -109,7 +84,6 @@ class EventRepositoryImpl @Inject constructor(
             val response = api.deleteEvent(id)
             if (response.status == "success") {
                 emit(Resource.Success(response.message))
-                dao.deleteEvent(id)
             } else {
                 emit(Resource.Error(response.message))
             }
@@ -125,7 +99,6 @@ class EventRepositoryImpl @Inject constructor(
             emit(Resource.Loading(false))
             if (response.status == "success") {
                 emit(Resource.Success(response.data.toDomainEvent()))
-                dao.insertEvent(response.data.toEventEntity())
             } else {
                 emit(Resource.Error(response.message))
             }
@@ -147,3 +120,4 @@ class EventRepositoryImpl @Inject constructor(
         }
     }
 }
+

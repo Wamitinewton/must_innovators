@@ -38,8 +38,8 @@ android {
 
 
         applicationId = "com.newton.meruinnovators"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 28
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -50,10 +50,14 @@ android {
     signingConfigs {
 
         create("release") {
-            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE") ?: throw GradleException("store file not found in keys.properties")
-            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD") ?: throw GradleException("store password not found in keys.properties")
-            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS") ?: throw GradleException("key alias not found in keys.properties")
-            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD") ?: throw GradleException("alias pwd not found in keys.properties")
+            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE")
+                ?: throw GradleException("store file not found in keys.properties")
+            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD")
+                ?: throw GradleException("store password not found in keys.properties")
+            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS")
+                ?: throw GradleException("key alias not found in keys.properties")
+            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD")
+                ?: throw GradleException("alias pwd not found in keys.properties")
 
             storeFile = file(keystoreFile)
             storePassword = keystorePassword
@@ -118,10 +122,19 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
+    implementation(Dependencies.okhttp_logger)
+
+    //worker
+    implementation(Dependencies.work)
+    implementation(Dependencies.hiltWorker)
+
+    //Timber
+    implementation(Dependencies.timber)
 
     //coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
+
 
     implementation(project(":features:auth"))
     implementation(project(":core"))

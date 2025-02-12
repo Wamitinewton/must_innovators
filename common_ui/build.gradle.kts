@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "com.newton.common_ui"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,6 +56,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Lottie loader
+    implementation(Dependencies.lottieCompose)
 
     implementation(project(":core"))
 

@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.newton.core.navigation.NavigationRoutes
+import com.newton.meruinnovators.ui.theme.ThemeUtils
+import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 
 @Composable
 fun OnboardingScreen(
@@ -45,7 +47,7 @@ fun OnboardingScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.3f))
+                .background(ThemeUtils.AppColors.Background.themed().copy(alpha = 0.2f))
         )
 
         Box(
@@ -53,7 +55,7 @@ fun OnboardingScreen(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                .background(Color.White.copy(alpha = 0.95f))
+                .background(ThemeUtils.AppColors.Background.themed())
                 .padding(17.dp)
         ) {
             Column(
@@ -96,7 +98,7 @@ fun OnboardingScreen(
                      Spacer(modifier = Modifier.width(20.dp))
                      OutlinedButton(
                          onClick = {
-                             navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                             navHostController.navigate(NavigationRoutes.LoginRoute.routes)
                          },
                          modifier = Modifier.height(50.dp),
                      ){
