@@ -130,7 +130,6 @@ class SignupViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-//            _signUpState.update { it.copy(isLoading = true, errorMessage = null) }
             try {
                 val signUpRequest = SignupRequest(
                     firstName  = _signUpState.value.firstNameInput,
@@ -148,7 +147,7 @@ class SignupViewModel @Inject constructor(
                                 _signUpState.value = _signUpState.value.copy(errorMessage = result.message)
                             }
                             is Resource.Loading -> {
-                                _signUpState.value = _signUpState.value.copy(isLoading = true)
+                                _signUpState.value = _signUpState.value.copy(isLoading = result.isLoading)
                             }
                             is Resource.Success -> {
                                 _signUpState.value = _signUpState.value.copy(
@@ -156,7 +155,7 @@ class SignupViewModel @Inject constructor(
                                     errorMessage = null,
                                     success = result.message
                                 )
-                                _navigateToLogin.send(SignUpNavigationEvent.NavigateToLogin)
+                                _navigateToLogin.send(SignUpNavigationEvent.NavigateToSuccess)
                             }
                         }
                     }

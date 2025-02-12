@@ -12,5 +12,5 @@ sealed class SignupUiEvent {
 }
 
 sealed class SignUpNavigationEvent {
-   data object NavigateToLogin: SignUpNavigationEvent()
+   data object NavigateToSuccess: SignUpNavigationEvent()
 }

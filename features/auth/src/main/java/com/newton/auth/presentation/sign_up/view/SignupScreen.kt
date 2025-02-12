@@ -45,8 +45,8 @@ fun SignupScreen(
     LaunchedEffect(Unit) {
         signupViewModel.navigateToLogin.collect { event ->
             when(event) {
-                SignUpNavigationEvent.NavigateToLogin -> {
-                    navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                SignUpNavigationEvent.NavigateToSuccess -> {
+                    navHostController.navigate(NavigationRoutes.SignupSuccessRoute.routes)
                 }
             }
         }

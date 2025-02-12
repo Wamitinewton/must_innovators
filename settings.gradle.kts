@@ -28,3 +28,4 @@ include(
     ":features:events",
     ":features:auth"
 )
+include(":paging")

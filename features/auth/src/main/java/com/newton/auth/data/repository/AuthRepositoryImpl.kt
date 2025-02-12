@@ -3,25 +3,23 @@ package com.newton.auth.data.repository
 import coil3.network.HttpException
 import com.newton.auth.data.data_store.SessionManager
 import com.newton.auth.data.remote.authApiService.AuthService
-import com.newton.auth.data.remote.mappers.toResponseData
 import com.newton.auth.data.token_holder.AuthTokenHolder
 import com.newton.auth.domain.models.login.LoginRequest
 import com.newton.auth.domain.models.login.LoginResponse
 import com.newton.auth.domain.models.login.LoginResultData
 import com.newton.auth.domain.models.sign_up.SignupRequest
 import com.newton.auth.domain.models.sign_up.SignupResponse
-import com.newton.auth.domain.models.sign_up.UserDataResponse
 import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.core.utils.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import retrofit2.HttpException as RetrofitHttpException
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
+import retrofit2.HttpException as RetrofitHttpException
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
@@ -59,16 +57,7 @@ class AuthRepositoryImpl @Inject constructor(
         try {
             emit(Resource.Loading(true))
             val response = authService.login(loginRequest)
-
-            when {
-                response.message.isEmpty() -> {
-                    val loggedInUser = response.data
-                    emit(Resource.Success(data = loggedInUser))
-                }
-                else -> {
-                    emit(Resource.Error(message = "Login failed: ${response.message}"))
-                }
-            }
+            emit(Resource.Success(data = response.data))
         } catch (e: RetrofitHttpException) {
             emit(Resource.Error(message = handleHttpError(e)))
         } catch (e: IOException) {
