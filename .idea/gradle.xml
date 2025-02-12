@@ -29,6 +29,7 @@
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/auth" />
             <option value="$PROJECT_DIR$/features/events" />
+            <option value="$PROJECT_DIR$/paging" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

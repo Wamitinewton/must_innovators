@@ -12,6 +12,8 @@ import com.newton.common_ui.ui.PasswordTextInput
 
 @Composable
 fun SignupForm(
+    username: String,
+    onUsernameChanged: (String) -> Unit,
     firstName: String,
     onFirstnameChanged: (String) -> Unit,
     lastName: String,
@@ -49,6 +51,16 @@ fun SignupForm(
             },
             inputText = lastName,
             label = "last name",
+            onSubmitted = {},
+            imeAction = ImeAction.Next,
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+        )
+        DefaultTextInput(
+            onInputChanged = {
+                onUsernameChanged(it)
+            },
+            inputText = username,
+            label = "Username",
             onSubmitted = {},
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }

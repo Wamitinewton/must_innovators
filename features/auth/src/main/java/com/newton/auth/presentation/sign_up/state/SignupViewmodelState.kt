@@ -3,6 +3,7 @@ package com.newton.auth.presentation.sign_up.state
 import com.newton.auth.domain.models.sign_up.UserDataResponse
 
 data class SignupViewmodelState(
+    val userName:String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val firstNameInput: String = "",

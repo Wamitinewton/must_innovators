@@ -15,7 +15,7 @@ object Dependencies {
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
-
+    const val extendedIcons = "androidx.compose.material:material-icons-extended:1.7.7"
     const val work = "androidx.work:work-runtime-ktx:${Versions.workRuntimeKtx}"
     const val hiltWorker = "androidx.hilt:hilt-work:${Versions.hiltNavigationCompose}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
