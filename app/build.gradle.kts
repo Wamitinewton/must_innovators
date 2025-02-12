@@ -8,7 +8,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -136,7 +135,6 @@ dependencies {
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
-    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
