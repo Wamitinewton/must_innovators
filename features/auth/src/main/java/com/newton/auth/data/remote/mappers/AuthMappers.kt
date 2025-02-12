@@ -5,8 +5,8 @@ import com.newton.auth.domain.models.sign_up.UserDataResponse
 
 fun UserDataResponse.toResponseData(): SignupDto {
     return SignupDto(
-        firstName = firstName,
-        lastname = lastName,
+        firstname = firstname,
+        lastname = lastname,
         email = email,
         password = password,
     )
@@ -14,8 +14,8 @@ fun UserDataResponse.toResponseData(): SignupDto {
 
 fun SignupDto.toResponseData(): UserDataResponse {
     return UserDataResponse(
-        firstName = firstName,
-        lastName = lastname,
+        firstname = firstname,
+        lastname = lastname,
         email = email,
         password = password,
         nonFieldErrors = nonFieldErrors

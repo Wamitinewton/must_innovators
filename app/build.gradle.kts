@@ -123,6 +123,7 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
+    implementation(Dependencies.okhttp_logger)
 
     //worker
     implementation(Dependencies.work)
