@@ -132,8 +132,8 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val signUpRequest = SignupRequest(
-                    firstName  = _signUpState.value.firstNameInput,
-                    lastName = _signUpState.value.lastNameInput,
+                    firstname  = _signUpState.value.firstNameInput,
+                    lastname = _signUpState.value.lastNameInput,
                     email = _signUpState.value.emailInput,
                     password = _signUpState.value.passwordInput,
                     course = _signUpState.value.courseName,

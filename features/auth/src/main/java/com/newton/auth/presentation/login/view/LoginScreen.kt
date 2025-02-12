@@ -45,7 +45,7 @@ fun LoginScreen(
         loginViewModel.navigateToHomeScreen.collect { event ->
             when(event) {
                 LoginNavigationEvent.NavigateToHomeScreen -> {
-                    navHostController.navigate("")
+                    navHostController.navigate(NavigationRoutes.SignupSuccessRoute.routes)
                 }
             }
         }

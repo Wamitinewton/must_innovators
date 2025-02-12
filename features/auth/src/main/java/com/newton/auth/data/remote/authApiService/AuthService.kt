@@ -1,6 +1,5 @@
 package com.newton.auth.data.remote.authApiService
 
-import com.newton.auth.data.remote.authResponse.sign_up.SignupResponseDto
 import com.newton.auth.domain.models.login.LoginRequest
 import com.newton.auth.domain.models.login.LoginResponse
 import com.newton.auth.domain.models.sign_up.SignupRequest

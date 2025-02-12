@@ -170,6 +170,9 @@ class LoginViewModel @Inject constructor(
    private fun checkLoginStatus() {
        viewModelScope.launch {
            val token = AuthTokenHolder.accessToken ?: authRepository.getAccessToken()
+           val refresh = AuthTokenHolder.refreshToken ?: authRepository.getRefreshToken()
+           Timber.d("You are using token: $token")
+           Timber.d("You are using refresh token: $refresh")
            _isUserLoggedIn.value = !token.isNullOrEmpty()
        }
    }

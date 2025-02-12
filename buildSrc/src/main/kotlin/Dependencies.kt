@@ -25,6 +25,7 @@ object Dependencies {
     const val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
     const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha18"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val okhttp_logger = "com.squareup.okhttp3:logging-interceptor:4.12.0"
     const val gsonCoverter = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
     const val retrofit2Converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofit2KotlinxSerializationConverter}"
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialization}"
