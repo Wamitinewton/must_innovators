@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetUserData(
-    val data: Data,
+    val data: UserData,
     val message: String,
     val status: String
 )
 
 @Serializable
-data class Data(
+data class UserData(
     val course: String,
     val email: String,
     val first_name: String,

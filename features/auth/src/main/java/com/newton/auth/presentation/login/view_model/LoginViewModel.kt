@@ -71,6 +71,7 @@ class LoginViewModel @Inject constructor(
                         passwordError = null
                     )
                 }
+                validatePasswordInput()
             }
         }
     }
