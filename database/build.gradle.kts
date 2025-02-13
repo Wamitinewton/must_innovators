@@ -43,22 +43,16 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
     //Hilt
     implementation(Dependencies.hiltAndroid)
     kapt(Dependencies.hiltCompiler)
 
-
-
-    //room
-    implementation(Dependencies.roomKtx)
-    kapt(Dependencies.roomCompiler)
-    implementation(Dependencies.roomRuntime)
-
-
-
-
     implementation(Dependencies.gsonCoverter)
-
     implementation(project(":features:auth"))
 
 }

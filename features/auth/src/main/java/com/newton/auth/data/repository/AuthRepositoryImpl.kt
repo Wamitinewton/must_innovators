@@ -4,6 +4,7 @@ import coil3.network.HttpException
 import com.newton.auth.data.data_store.SessionManager
 import com.newton.auth.data.remote.authApiService.AuthService
 import com.newton.auth.data.token_holder.AuthTokenHolder
+import com.newton.auth.domain.models.get_user.GetUserData
 import com.newton.auth.domain.models.login.LoginRequest
 import com.newton.auth.domain.models.login.LoginResponse
 import com.newton.auth.domain.models.login.LoginResultData
@@ -74,11 +75,7 @@ class AuthRepositoryImpl @Inject constructor(
             val refreshToken = getRefreshToken() ?: throw TokenRefreshException("No refresh token available")
             val response = authService.refreshTokens(refreshToken)
 
-            if (response.message.isEmpty()) {
-                response
-            } else {
-                throw TokenRefreshException("Token refresh failed: ${response.message}")
-            }
+            response
         } catch (e: HttpException) {
             Timber.e(e, "HTTP error during token refresh")
             null
@@ -114,11 +111,26 @@ class AuthRepositoryImpl @Inject constructor(
             AuthTokenHolder.refreshToken = refreshToken
             sessionManager.updateTokens(accessToken, refreshToken)
 
-            // Verify token persistence
             verifyTokenPersistence()
         } catch (e: Exception) {
             Timber.e(e, "Failed to update auth tokens")
             throw TokenStorageException("Failed to update authentication tokens", e)
+        }
+    }
+
+    override suspend fun getUserData(): Flow<Resource<GetUserData>> = flow {
+        try {
+            emit(Resource.Loading(true))
+            val response = authService.getUserData()
+            emit(Resource.Success(data = response))
+        }catch (e: RetrofitHttpException) {
+            emit(Resource.Error(message = handleHttpError(e)))
+        } catch (e: IOException) {
+            emit(Resource.Error(message = "Network error: Please check your internet connection"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
+        } finally {
+            emit(Resource.Loading(false))
         }
     }
 

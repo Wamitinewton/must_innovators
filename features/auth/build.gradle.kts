@@ -96,7 +96,9 @@ dependencies {
     implementation(Dependencies.timber)
 
 
-   implementation(project(":core"))
+
+
+    implementation(project(":core"))
    implementation(project(":common_ui"))
 
 }

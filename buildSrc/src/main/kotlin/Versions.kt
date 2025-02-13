@@ -5,7 +5,7 @@ object Versions {
     const val hilt = "2.51.1"
     const val hiltNavigationCompose = "1.2.0"
     const val okHttp = "5.0.0-alpha.2"
-    const val room = "2.5.0"
+    const val room = "2.6.1"
     const val kotlinXSerialization = "1.6.3"
     const val retrofit2KotlinxSerializationConverter = "0.8.0"
     const val converterGson = "2.11.0"

@@ -1,5 +1,7 @@
 package com.newton.meruinnovators.di
 
+import android.content.Context
+import com.newton.auth.authInterceptor.AuthInterceptor
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.events.navigation.EventsNavigationApi
 import com.newton.meruinnovators.BuildConfig
@@ -7,6 +9,7 @@ import com.newton.meruinnovators.navigation.NavigationSubGraphs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -32,8 +35,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient =
+    fun provideHttpClient(
+        @ApplicationContext context: Context
+    ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(context = context))
             .addInterceptor(loggingInterceptor)
             .callTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
