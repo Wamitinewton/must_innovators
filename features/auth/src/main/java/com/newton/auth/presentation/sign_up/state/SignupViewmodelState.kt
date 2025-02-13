@@ -1,6 +1,7 @@
 package com.newton.auth.presentation.sign_up.state
 
 data class SignupViewmodelState(
+    val userName:String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val firstNameInput: String = "",

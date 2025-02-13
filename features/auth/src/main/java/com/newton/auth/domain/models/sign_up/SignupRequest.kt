@@ -8,5 +8,6 @@ data class SignupRequest(
     val lastname: String,
     val email: String,
     val password: String,
+    val username: String,
     val course: String? = null,
 )

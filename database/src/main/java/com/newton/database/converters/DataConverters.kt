@@ -16,4 +16,7 @@ class DataConverters {
     fun toUserData(userDataString: String?): GetUserData? {
         return Gson().fromJson(userDataString, object : TypeToken<GetUserData>() {}.type)
     }
+
+//    @TypeConverters
+//    fun toListEntity(value: List)
 }

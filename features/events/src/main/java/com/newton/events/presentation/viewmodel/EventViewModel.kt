@@ -5,15 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.newton.core.utils.Resource
 import com.newton.events.domain.models.Event
 import com.newton.events.domain.usecases.EventUseCase
+import com.newton.events.presentation.events.EventsEvent
 import com.newton.events.presentation.states.EventStates
+import com.newton.events.presentation.states.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +22,12 @@ class EventViewModel @Inject constructor(
 ) : ViewModel() {
     private val _eventState = MutableStateFlow(EventStates())
     val eventState: StateFlow<EventStates> = _eventState
+
+    private val _searchState= MutableStateFlow(SearchState())
+    val searchState: StateFlow<SearchState> = _searchState
+
+    private val _categoryState= MutableStateFlow(SearchState())
+    val categoryState: StateFlow<SearchState> = _categoryState
 
     private val seenEvents = mutableListOf<Event>()
 
@@ -46,6 +50,16 @@ class EventViewModel @Inject constructor(
             }
         }
     }
+
+    fun onEvent(event: EventsEvent){
+        when(event){
+            is EventsEvent.SearchInputChanged -> searchInputChanged(event.searchInput)
+            is EventsEvent.OnCategorySelected -> selectedCategory(event.category)
+        }
+    }
+
+
+
     fun loadMoreEvents() {
         viewModelScope.launch {
             if (_eventState.value.isLoading) return@launch
@@ -74,6 +88,16 @@ class EventViewModel @Inject constructor(
 
                 is Resource.Loading -> state.copy(isLoading = event.isLoading)
             }
+        }
+    }
+    private fun searchInputChanged(searchInput: String) {
+        _searchState.update { currentState ->
+            currentState.copy(searchInput = searchInput)
+        }
+    }
+    private fun selectedCategory(selectedCategory: String) {
+        _eventState.update { currentState ->
+            currentState.copy(selectedCategory = selectedCategory)
         }
     }
 }

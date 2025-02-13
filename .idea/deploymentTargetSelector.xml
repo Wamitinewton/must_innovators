@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-02-01T09:37:44.795105077Z">
+        <DropdownSelection timestamp="2025-02-12T20:52:42.123619090Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=UKO7UGGUMJ4955ZL" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/kali/.config/.android/avd/Pixel8.avd" />
             </handle>
           </Target>
         </DropdownSelection>
