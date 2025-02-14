@@ -1,8 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android") // Add this line
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -45,13 +45,13 @@ dependencies {
 
     //Hilt
     implementation(Dependencies.hiltAndroid)
-    kapt(Dependencies.hiltCompiler)
+    ksp(Dependencies.hiltCompiler)
 
 
 
     //room
-//    implementation(Dependencies.roomKtx)
-    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.roomKtx)
+    ksp(Dependencies.roomCompiler)
     implementation(Dependencies.roomRuntime)
 
 

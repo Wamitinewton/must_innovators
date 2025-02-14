@@ -17,6 +17,7 @@ android {
 
 
     defaultConfig {
+        multiDexEnabled = true
         try {
             val keystoreFile = rootProject.file("keys.properties")
             if (keystoreFile.exists()) {
@@ -141,6 +142,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":common_ui"))
     implementation(project(":features:events"))
+    implementation(project(":database"))
 }
 
 
