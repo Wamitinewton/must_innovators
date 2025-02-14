@@ -2,6 +2,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -43,4 +45,10 @@ dependencies {
 
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
+
+    //Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
 }

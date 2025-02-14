@@ -4,14 +4,18 @@ import coil3.network.HttpException
 import com.newton.auth.data.data_store.SessionManager
 import com.newton.auth.data.remote.authApiService.AuthService
 import com.newton.auth.data.token_holder.AuthTokenHolder
-import com.newton.auth.domain.models.get_user.GetUserData
 import com.newton.auth.domain.models.login.LoginRequest
 import com.newton.auth.domain.models.login.LoginResponse
 import com.newton.auth.domain.models.login.LoginResultData
 import com.newton.auth.domain.models.sign_up.SignupRequest
 import com.newton.auth.domain.models.sign_up.SignupResponse
 import com.newton.auth.domain.repositories.AuthRepository
+import com.newton.core.domain.models.GetUserData
+import com.newton.core.domain.models.UserData
 import com.newton.core.utils.Resource
+import com.newton.database.dao.UserDao
+import com.newton.database.mappers.toAuthedUser
+import com.newton.database.mappers.toUserEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +28,8 @@ import retrofit2.HttpException as RetrofitHttpException
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val userDao: UserDao
 ) : AuthRepository {
 
     init {
@@ -137,6 +142,13 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getAccessToken(): String? = AuthTokenHolder.accessToken
 
     override fun getRefreshToken(): String? = AuthTokenHolder.refreshToken
+    override suspend fun getLoggedInUser(): UserData? {
+        return userDao.getUser()?.toAuthedUser()
+    }
+
+    override suspend fun storeLoggedInUser(userData: UserData) {
+        return userDao.insertUser(userData.toUserEntity())
+    }
 
     private fun handleHttpError(error: RetrofitHttpException): String {
         return when (error.code()) {

@@ -1,12 +1,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android") // Add this line
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
     alias(libs.plugins.kotlin.compose)
-
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -71,7 +70,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //Hilt
     implementation(Dependencies.hiltAndroid)
-    kapt(Dependencies.hiltCompiler)
+    ksp(Dependencies.hiltCompiler)
 
 
     implementation(Dependencies.hiltNavigation)
@@ -95,10 +94,9 @@ dependencies {
 
     implementation(Dependencies.timber)
 
-
-
-
     implementation(project(":core"))
-   implementation(project(":common_ui"))
+    implementation(project(":common_ui"))
+    implementation(project(":database"))
+
 
 }

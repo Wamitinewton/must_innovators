@@ -2,11 +2,12 @@ package com.newton.auth.presentation.login.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.domain.models.get_user.GetUserData
 import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.auth.presentation.login.event.GetUserDataEvent
 import com.newton.auth.presentation.login.state.GetUserDataViewModelState
+import com.newton.core.domain.models.GetUserData
 import com.newton.core.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,8 +15,9 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@HiltViewModel
 class GetUserDataViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ): ViewModel() {
 
     private val _getUserDataState: MutableStateFlow<GetUserDataViewModelState> = MutableStateFlow(
@@ -27,15 +29,42 @@ class GetUserDataViewModel @Inject constructor(
         getUserData()
     }
 
+
+
     fun onEvent(event: GetUserDataEvent) {
         when(event) {
             GetUserDataEvent.GetUserEvent -> {
-                getUserData()
+                fetchRemoteUser()
             }
         }
     }
 
     private fun getUserData() {
+        viewModelScope.launch {
+            try {
+                val localUser = authRepository.getLoggedInUser()
+                if (localUser != null) {
+                    _getUserDataState.update {
+                        it.copy(
+                            isLoading = false,
+                            userData = localUser
+                        )
+                    }
+                }
+
+                fetchRemoteUser()
+            } catch (e: Exception) {
+                _getUserDataState.update {
+                    it.copy(
+                        errorMessage = "Failed to fetch user data",
+                        isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
+    private fun fetchRemoteUser() {
         viewModelScope.launch {
             authRepository.getUserData().collect { result ->
                 when(result) {
@@ -58,7 +87,7 @@ class GetUserDataViewModel @Inject constructor(
         }
     }
 
-    private fun handleGetUserSuccess(getUserData: GetUserData) {
+    private suspend fun handleGetUserSuccess(getUserData: GetUserData) {
         try {
             _getUserDataState.update {
                 it.copy(
@@ -68,6 +97,8 @@ class GetUserDataViewModel @Inject constructor(
                     userData = getUserData.data
                 )
             }
+            val user = getUserData.data
+            authRepository.storeLoggedInUser(user)
         } catch (e: Exception) {
             _getUserDataState.update {
                 it.copy(
