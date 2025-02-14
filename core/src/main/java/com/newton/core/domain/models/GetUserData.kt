@@ -1,5 +1,4 @@
-package com.newton.auth.domain.models.get_user
-
+package com.newton.core.domain.models
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,5 +14,6 @@ data class UserData(
     val email: String,
     val first_name: String,
     val last_name: String,
-    val username: String
+    val username: String,
+    val id: Int? = null
 )

@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.newton.auth.presentation.login.event.LoginNavigationEvent
@@ -42,10 +41,10 @@ fun LoginScreen(
     )
 
     LaunchedEffect(Unit) {
-        loginViewModel.navigateToHomeScreen.collect { event ->
+        loginViewModel.navigateToLoginSuccess.collect { event ->
             when(event) {
-                LoginNavigationEvent.NavigateToHomeScreen -> {
-                    navHostController.navigate(NavigationRoutes.SignupSuccessRoute.routes)
+                LoginNavigationEvent.NavigateToLoginSuccess -> {
+                    navHostController.navigate(NavigationRoutes.UserDataLoadingRoute.routes)
                 }
             }
         }

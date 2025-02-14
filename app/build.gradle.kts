@@ -4,10 +4,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -115,7 +115,7 @@ dependencies {
 
     //hilt
     implementation(Dependencies.hiltAndroid)
-    kapt(Dependencies.hiltCompiler)
+    ksp(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltNavigation)
 
     //Retrofit

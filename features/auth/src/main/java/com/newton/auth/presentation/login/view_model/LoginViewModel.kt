@@ -32,8 +32,8 @@ class LoginViewModel @Inject constructor(
     private val _loggedInUser = MutableStateFlow<Any?>(null)
     val loggedInUser: StateFlow<Any?> get() = _loggedInUser
 
-    private val _navigateToHomeScreen = Channel<LoginNavigationEvent>()
-    val navigateToHomeScreen = _navigateToHomeScreen.receiveAsFlow()
+    private val _navigateToLoginSuccess = Channel<LoginNavigationEvent>()
+    val navigateToLoginSuccess = _navigateToLoginSuccess.receiveAsFlow()
 
     private val _loginUiState:MutableStateFlow<LoginViewModelState> = MutableStateFlow(LoginViewModelState())
     val loginUiState: StateFlow<LoginViewModelState> get() = _loginUiState
@@ -156,7 +156,7 @@ class LoginViewModel @Inject constructor(
                     isLoading = false
                 )
             }
-            _navigateToHomeScreen.send(LoginNavigationEvent.NavigateToHomeScreen)
+            _navigateToLoginSuccess.send(LoginNavigationEvent.NavigateToLoginSuccess)
         } catch (e: Exception) {
             _loginUiState.update {
                 it.copy(

@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.auth.presentation.login.view.LoginScreen
+import com.newton.auth.presentation.login.view.UserDataLoadingScreen
+import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import com.newton.auth.presentation.login.view_model.LoginViewModel
 import com.newton.on_boarding.OnboardingScreen
 import com.newton.auth.presentation.sign_up.view.SignupScreen
@@ -45,6 +47,15 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 SignupSuccessScreen(navHostController = navHostController)
             }
 
+            composable(route = NavigationRoutes.UserDataLoadingRoute.routes) {
+                val userViewModel = hiltViewModel<GetUserDataViewModel>()
+                UserDataLoadingScreen(
+                    viewModel = userViewModel,
+                    onNavigateToHome = {
+                        navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                    }
+                )
+            }
         }
     }
 }

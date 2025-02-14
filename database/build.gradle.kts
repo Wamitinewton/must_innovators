@@ -54,11 +54,7 @@ dependencies {
     ksp(Dependencies.roomCompiler)
     implementation(Dependencies.roomRuntime)
 
-
-
-
     implementation(Dependencies.gsonCoverter)
 
-    implementation(project(":features:auth"))
-
+    implementation(project(":core"))
 }

@@ -8,5 +8,5 @@ sealed class LoginEvent {
 }
 
 sealed class LoginNavigationEvent {
-    data object NavigateToHomeScreen: LoginNavigationEvent()
+    data object NavigateToLoginSuccess: LoginNavigationEvent()
 }
