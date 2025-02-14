@@ -71,7 +71,7 @@ class GetUserDataViewModel @Inject constructor(
         } catch (e: Exception) {
             _getUserDataState.update {
                 it.copy(
-                    errorMessage = "Failed to save login credentials: ${e.message}",
+                    errorMessage = "Failed to get user credentials: ${e.message}",
                     isLoading = false,
                 )
             }
