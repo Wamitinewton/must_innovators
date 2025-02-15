@@ -1,6 +1,6 @@
 package com.newton.auth.presentation.login.state
 
-import com.newton.auth.domain.models.login.LoginResultData
+import com.newton.core.domain.models.auth_models.LoginResultData
 
 data class LoginViewModelState(
     val isLoading: Boolean = false,

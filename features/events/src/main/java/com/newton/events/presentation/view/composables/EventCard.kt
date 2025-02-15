@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.newton.events.domain.models.Event
+import com.newton.meruinnovators.ui.theme.ThemeUtils
+import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 
 
 @Composable
@@ -52,16 +54,18 @@ fun EventCard(event: Event, onClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                event.title,
-                color = Color.Red,
+                text = event.title,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = ThemeUtils.AppColors.Text.themed()
+                ),
                 fontSize = 18.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                event.description,
-                color = Color.White,
+                text =  event.description,
+                style = MaterialTheme.typography.headlineSmall,
                 fontSize = 14.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
@@ -83,7 +87,7 @@ fun EventCard(event: Event, onClick: () -> Unit) {
                 onClick = { },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally),
-                colors = ButtonDefaults.buttonColors().copy(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                colors = ButtonDefaults.buttonColors().copy(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text("RSVP", color = Color.White)
             }

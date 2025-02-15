@@ -1,6 +1,6 @@
 package com.newton.auth.presentation.login.state
 
-import com.newton.core.domain.models.UserData
+import com.newton.core.domain.models.auth_models.UserData
 
 
 data class GetUserDataViewModelState(

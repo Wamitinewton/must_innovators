@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.auth.presentation.login.event.GetUserDataEvent
 import com.newton.auth.presentation.login.state.GetUserDataViewModelState
-import com.newton.core.domain.models.GetUserData
+import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
