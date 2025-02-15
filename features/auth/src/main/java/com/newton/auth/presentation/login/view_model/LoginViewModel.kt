@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.auth.data.data_store.SessionManager
 import com.newton.auth.data.token_holder.AuthTokenHolder
-import com.newton.auth.domain.models.login.LoginRequest
-import com.newton.auth.domain.models.login.LoginResultData
+import com.newton.core.domain.models.auth_models.LoginRequest
+import com.newton.core.domain.models.auth_models.LoginResultData
 import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.auth.presentation.login.event.LoginEvent
 import com.newton.auth.presentation.login.event.LoginNavigationEvent

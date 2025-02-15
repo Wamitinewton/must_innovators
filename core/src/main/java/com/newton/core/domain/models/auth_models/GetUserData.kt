@@ -1,4 +1,4 @@
-package com.newton.core.domain.models
+package com.newton.core.domain.models.auth_models
 import kotlinx.serialization.Serializable
 
 @Serializable

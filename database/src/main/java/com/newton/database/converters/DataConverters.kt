@@ -3,7 +3,7 @@ package com.newton.database.converters
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.newton.core.domain.models.GetUserData
+import com.newton.core.domain.models.auth_models.GetUserData
 
 class DataConverters {
     @TypeConverter

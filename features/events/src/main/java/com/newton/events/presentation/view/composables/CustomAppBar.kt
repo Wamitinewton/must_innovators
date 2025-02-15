@@ -17,8 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -49,6 +47,7 @@ fun CustomAppBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
             Row(
@@ -108,18 +107,17 @@ fun CustomAppBar(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(16.dp))
                     .clip(RoundedCornerShape(16.dp))
             )
         }
-        Spacer(Modifier.height(2.dp))
+        Spacer(Modifier.height(8.dp))
         LazyRow(modifier = Modifier.fillMaxWidth()) {
             items(categories) { category ->
                 val isSelected = category == selectedCategory
                 Box(modifier = Modifier
-                    .padding(end = 8.dp)
+                    .padding(end = 8.dp, start = 8.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSecondary)
+                    .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondary)
                     .clickable {
                         onEvent(EventsEvent.OnCategorySelected(category))
                     }

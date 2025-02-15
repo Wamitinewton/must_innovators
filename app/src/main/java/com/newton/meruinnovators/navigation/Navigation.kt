@@ -5,8 +5,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.newton.auth.presentation.login.view_model.LoginViewModel
@@ -22,12 +20,11 @@ fun MeruInnovatorsNavigation(
     val isUserLoggedIn by loginViewModel.isUserLoggedIn.collectAsState()
     NavHost(
         navController = navHostController,
-        startDestination = NavigationSubGraphRoutes.Auth.route
-//        startDestination = if (isUserLoggedIn) {
-//            NavigationSubGraphRoutes.Event.route
-//        } else {
-//            NavigationSubGraphRoutes.Auth.route
-//        }
+        startDestination = if (isUserLoggedIn) {
+            NavigationSubGraphRoutes.Event.route
+        } else {
+            NavigationSubGraphRoutes.Auth.route
+        }
     ) {
         navigationSubGraphs.authNavigationApi.registerGraph(
             navHostController = navHostController,

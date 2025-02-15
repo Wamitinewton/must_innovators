@@ -1,11 +1,11 @@
 package com.newton.auth.data.remote.authApiService
 
 import com.newton.auth.di.Authenticated
-import com.newton.auth.domain.models.login.LoginRequest
-import com.newton.auth.domain.models.login.LoginResponse
-import com.newton.auth.domain.models.sign_up.SignupRequest
-import com.newton.auth.domain.models.sign_up.SignupResponse
-import com.newton.core.domain.models.GetUserData
+import com.newton.core.domain.models.auth_models.LoginRequest
+import com.newton.core.domain.models.auth_models.LoginResponse
+import com.newton.core.domain.models.auth_models.SignupRequest
+import com.newton.core.domain.models.auth_models.SignupResponse
+import com.newton.core.domain.models.auth_models.GetUserData
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

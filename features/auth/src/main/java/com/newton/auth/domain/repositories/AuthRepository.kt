@@ -1,12 +1,12 @@
 package com.newton.auth.domain.repositories
 
-import com.newton.auth.domain.models.login.LoginRequest
-import com.newton.auth.domain.models.login.LoginResponse
-import com.newton.auth.domain.models.login.LoginResultData
-import com.newton.auth.domain.models.sign_up.SignupRequest
-import com.newton.auth.domain.models.sign_up.SignupResponse
-import com.newton.core.domain.models.GetUserData
-import com.newton.core.domain.models.UserData
+import com.newton.core.domain.models.auth_models.LoginRequest
+import com.newton.core.domain.models.auth_models.LoginResponse
+import com.newton.core.domain.models.auth_models.LoginResultData
+import com.newton.core.domain.models.auth_models.SignupRequest
+import com.newton.core.domain.models.auth_models.SignupResponse
+import com.newton.core.domain.models.auth_models.GetUserData
+import com.newton.core.domain.models.auth_models.UserData
 import com.newton.core.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
