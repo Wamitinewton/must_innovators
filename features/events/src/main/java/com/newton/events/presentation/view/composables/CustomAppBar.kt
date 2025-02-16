@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.events.presentation.events.EventsEvent
 
 
 @Composable
@@ -42,7 +41,6 @@ fun CustomAppBar(
     selectedCategory: String,
     categories: List<String>,
     searchInput: String,
-    onEvent: (EventsEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -83,7 +81,7 @@ fun CustomAppBar(
             TextField(
                 value = searchInput,
                 onValueChange = {
-                    onEvent(EventsEvent.SearchInputChanged(it))
+
                 },
                 placeholder = { Text("Search") },
                 leadingIcon = {
@@ -119,7 +117,7 @@ fun CustomAppBar(
                     .clip(RoundedCornerShape(16.dp))
                     .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondary)
                     .clickable {
-                        onEvent(EventsEvent.OnCategorySelected(category))
+
                     }
                     .padding(horizontal = 12.dp, vertical = 8.dp)) {
                     Text(text = category, fontSize = 14.sp)

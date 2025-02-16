@@ -28,13 +28,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.newton.events.domain.models.Event
+import com.newton.core.domain.models.event_models.EventsData
 import com.newton.meruinnovators.ui.theme.ThemeUtils
 import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 
 
 @Composable
-fun EventCard(event: Event, onClick: () -> Unit) {
+fun EventCard(event: EventsData, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
@@ -44,7 +44,7 @@ fun EventCard(event: Event, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             AsyncImage(
-                model = event.image,
+                model = event.imageUrl,
                 contentDescription = "Event Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

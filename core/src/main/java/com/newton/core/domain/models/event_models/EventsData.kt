@@ -1,11 +1,9 @@
-package com.newton.database.entities
+package com.newton.core.domain.models.event_models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
-@Entity(tableName = "events")
-data class EventEntity(
-    @PrimaryKey
+@Serializable
+data class EventsData(
     val id: Int,
     val imageUrl: String? = "",
     val name: String,
@@ -16,6 +14,5 @@ data class EventEntity(
     val location: String,
     val organizer: String,
     val contactEmail: String,
-    val isVirtual: Boolean,
-    val page: Int
+    val isVirtual: Boolean
 )
