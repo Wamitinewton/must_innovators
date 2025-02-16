@@ -53,6 +53,7 @@ dependencies {
     implementation(Dependencies.roomKtx)
     ksp(Dependencies.roomCompiler)
     implementation(Dependencies.roomRuntime)
+    implementation("androidx.room:room-paging:2.6.1")
 
     implementation(Dependencies.gsonCoverter)
 

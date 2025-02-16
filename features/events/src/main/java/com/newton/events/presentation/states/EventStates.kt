@@ -1,21 +1,12 @@
 package com.newton.events.presentation.states
 
-import com.newton.events.domain.models.Event
+import androidx.paging.PagingData
+import com.newton.core.domain.models.event_models.EventsData
+import kotlinx.coroutines.flow.Flow
 
-data class EventStates (
-    val events: List<Event> = emptyList(),
-    val isLoading: Boolean = false,
-    val isRefreshing: Boolean = false,
-    val errorMessage: String = "",
-    val selectedCategory: String = "All",
-    val categories: List<String> = listOf(
-        "All",
-        "Android",
-        "Cyber Security",
-        "Web development",
-        "Robotics",
-        "UI & UX",
-        "Data Science",
-        "AI and ML"
-    )
-)
+sealed class EventStates {
+    data object Initial : EventStates()
+    data object Loading : EventStates()
+    data class Success(val events: Flow<PagingData<EventsData>>) : EventStates()
+    data class Error(val message: String) : EventStates()
+}

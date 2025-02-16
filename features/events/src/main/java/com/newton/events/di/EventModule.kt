@@ -1,9 +1,6 @@
 package com.newton.events.di
 
 import com.newton.events.data.remote.EventApi
-import com.newton.events.data.repository.EventRepositoryImpl
-import com.newton.events.domain.repository.EventRepository
-import com.newton.events.domain.usecases.EventUseCase
 import com.newton.events.navigation.EventsNavigationApi
 import com.newton.events.navigation.EventsNavigationApiImpl
 import dagger.Module
@@ -30,18 +27,5 @@ object EventModule {
         return retrofit.create(EventApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun providesEventRepository(api:EventApi):EventRepository{
-        return EventRepositoryImpl(
-            api
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideEventUseCase(repository: EventRepository): EventUseCase{
-        return EventUseCase(repository)
-    }
 
 }
