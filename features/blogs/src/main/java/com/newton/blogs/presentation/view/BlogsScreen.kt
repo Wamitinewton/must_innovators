@@ -1,4 +1,4 @@
-package com.example.blogs.presentation.view
+package com.newton.blogs.presentation.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun BlogsScreen(modifier: Modifier = Modifier) {
-//    Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
-        Box {
-            Text("Blogs Screen")
+    Scaffold(modifier = Modifier.fillMaxSize()) { values->
+        Box(modifier = Modifier.padding(top = values.calculateTopPadding(), bottom = values.calculateBottomPadding())){
+            Text(text = "Blogs Screen")
         }
-//    }
+    }
 }

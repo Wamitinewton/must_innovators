@@ -1,4 +1,4 @@
-package com.example.blogs
+package com.newton.blogs
 
 import org.junit.Test
 

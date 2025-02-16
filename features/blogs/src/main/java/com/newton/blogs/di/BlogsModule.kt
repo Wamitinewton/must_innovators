@@ -1,6 +1,6 @@
-package com.example.blogs.di
+package com.newton.blogs.di
 
-import com.example.blogs.navigation.BlogsNavigationApi
+import com.newton.blogs.navigation.BlogsNavigationApi
 import com.newton.events.navigation.BlogsNavigationApiImpl
 import dagger.Module
 import dagger.Provides

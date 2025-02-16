@@ -1,4 +1,4 @@
-package com.example.blogs.navigation
+package com.newton.blogs.navigation
 
 import com.newton.core.navigation.NavigationApi
 

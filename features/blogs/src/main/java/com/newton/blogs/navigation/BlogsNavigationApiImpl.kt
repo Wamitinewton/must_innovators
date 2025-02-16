@@ -4,8 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.blogs.navigation.BlogsNavigationApi
-import com.example.blogs.presentation.view.BlogsScreen
+import com.newton.blogs.navigation.BlogsNavigationApi
+import com.newton.blogs.presentation.view.BlogsScreen
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 

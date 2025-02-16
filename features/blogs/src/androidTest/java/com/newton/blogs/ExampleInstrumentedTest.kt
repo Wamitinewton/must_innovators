@@ -1,4 +1,4 @@
-package com.example.blogs
+package com.newton.blogs
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
