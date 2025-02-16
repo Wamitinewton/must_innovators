@@ -5,23 +5,22 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.newton.account.navigation.AccountNavigationApi
+import com.newton.account.presentation.view.AccountScreen
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
-import com.newton.events.presentation.view.EventsScreen
-import com.newton.events.presentation.viewmodel.EventViewModel
 
-class EventsNavigationApiImpl: EventsNavigationApi {
+class AccountNavigationApiImpl: AccountNavigationApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navHostController: NavHostController,
     ) {
         navGraphBuilder.navigation(
-            route = NavigationSubGraphRoutes.Event.route,
-            startDestination = NavigationRoutes.EventsRoute.routes
+            route = NavigationSubGraphRoutes.Account.route,
+            startDestination = NavigationRoutes.AccountRoute.routes
         ){
-            composable(route = NavigationRoutes.EventsRoute.routes) {
-                val eventViewModel = hiltViewModel<EventViewModel>()
-                EventsScreen(eventViewModel = eventViewModel)
+            composable(route = NavigationRoutes.AccountRoute.routes) {
+                AccountScreen()
             }
         }
     }
