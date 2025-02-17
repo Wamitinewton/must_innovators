@@ -3,12 +3,10 @@ package com.newton.meruinnovators.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.newton.auth.data.work_manager.scheduleTokenRefreshWork
-import com.newton.events.presentation.viewmodel.EventViewModel
 import com.newton.meruinnovators.navigation.MeruInnovatorsNavigation
 import com.newton.meruinnovators.navigation.NavigationSubGraphs
 import com.newton.meruinnovators.ui.theme.ThemeUtils.MeruinnovatorsTheme
@@ -19,7 +17,6 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigationSubGraphs: NavigationSubGraphs
-
 
 
 
