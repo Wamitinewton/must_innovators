@@ -1,8 +1,5 @@
 package com.newton.events.di
 
-import com.newton.database.dao.EventDao
-import com.newton.database.dao.EventRemoteKeysDao
-import com.newton.database.db.AppDatabase
 import com.newton.events.data.remote.EventApi
 import com.newton.events.data.repository.EventRepositoryImpl
 import com.newton.events.domain.repository.EventRepository
@@ -19,8 +16,5 @@ object EventRepositoryModule {
     @Singleton
     fun provideEventRepository(
         eventApi: EventApi,
-        appDatabase: AppDatabase,
-        eventDao: EventDao,
-        remoteKeysDao: EventRemoteKeysDao
-    ): EventRepository = EventRepositoryImpl(eventApi, appDatabase, eventDao, remoteKeysDao)
+    ): EventRepository = EventRepositoryImpl(eventApi)
 }

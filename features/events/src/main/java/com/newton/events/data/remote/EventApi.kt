@@ -9,6 +9,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface EventApi {
     @GET(EventEndPoint.GET_EVENT_BY_ID)
@@ -18,8 +19,8 @@ interface EventApi {
 
     @GET(EventEndPoint.GET_ALL_EVENTS)
     suspend fun getAllEvents(
-        @Query("page") page: Int,
-        @Query("page_size") pageSize: Int
+        @Query("page") page: Int = 1,
+        @Query("page_siz") pageSize: Int = 10
     ): com.newton.core.data.dto.EventApiResponse<EventResponse>
 
     @PUT(EventEndPoint.UPDATE_EVENT)
