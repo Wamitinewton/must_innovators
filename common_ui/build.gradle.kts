@@ -60,8 +60,12 @@ dependencies {
     //Lottie loader
     implementation(Dependencies.lottieCompose)
 
+    //navigation
+    implementation(Dependencies.hiltNavigation)
+    implementation(Dependencies.composeNavigation)
+
+    // extended icons
     implementation(Dependencies.extendedIcons)
 
     implementation(project(":core"))
-
 }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
 }
@@ -10,7 +11,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 16
+        minSdk =  28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -48,14 +49,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // navigation
-    implementation(Dependencies.hiltNavigation)
-    implementation(Dependencies.composeNavigation)
-
     //Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
+
+    //navigation
+    implementation(Dependencies.hiltNavigation)
+    implementation(Dependencies.composeNavigation)
 
     implementation(project(":core"))
 }

@@ -1,7 +1,7 @@
 package com.newton.account.di
 
 import com.newton.account.navigation.AccountNavigationApi
-import com.newton.events.navigation.AccountNavigationApiImpl
+import com.newton.account.navigation.AccountNavigationApiImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

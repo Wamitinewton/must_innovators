@@ -1,7 +1,7 @@
 package com.newton.home.di
 
-import com.newton.events.navigation.HomeNavigationApi
-import com.newton.events.navigation.HomeNavigationApiImpl
+import com.newton.home.navigation.HomeNavigationApi
+import com.newton.home.navigation.HomeNavigationApiImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

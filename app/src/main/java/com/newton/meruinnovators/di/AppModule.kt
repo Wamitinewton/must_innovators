@@ -1,9 +1,12 @@
 package com.newton.meruinnovators.di
 
 import android.content.Context
+import com.newton.account.navigation.AccountNavigationApi
 import com.newton.auth.authInterceptor.AuthInterceptor
 import com.newton.auth.navigation.AuthNavigationApi
+import com.newton.blogs.navigation.BlogsNavigationApi
 import com.newton.events.navigation.EventsNavigationApi
+import com.newton.home.navigation.HomeNavigationApi
 import com.newton.meruinnovators.BuildConfig
 import com.newton.meruinnovators.navigation.NavigationSubGraphs
 import dagger.Module
@@ -25,12 +28,22 @@ object AppModule {
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
+
     @Provides
     fun provideNavigationSubGraphs(
         authNavigationApi: AuthNavigationApi,
-        eventsNavigationApi: EventsNavigationApi
+        eventsNavigationApi: EventsNavigationApi,
+        homeNavigationApi: HomeNavigationApi,
+        blogsNavigationApi: BlogsNavigationApi,
+        accountNavigationApi: AccountNavigationApi
     ): NavigationSubGraphs {
-        return NavigationSubGraphs(authNavigationApi,eventsNavigationApi)
+        return NavigationSubGraphs(
+            authNavigationApi,
+            eventsNavigationApi,
+            homeNavigationApi,
+            blogsNavigationApi,
+            accountNavigationApi
+        )
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package com.newton.events.navigation
+package com.newton.home.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController

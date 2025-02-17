@@ -1,4 +1,4 @@
-package com.newton.events.navigation
+package com.newton.home.navigation
 
 import com.newton.core.navigation.NavigationApi
 

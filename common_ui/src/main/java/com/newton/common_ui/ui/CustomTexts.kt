@@ -24,7 +24,6 @@ fun CustomTextLabelSmall(
             color = textColor,
             fontSize = 9.sp,
             fontWeight = FontWeight.W300,
-            fontFamily = FontFamily.Cursive,
             lineHeight = 14.sp
         ),
         textAlign = TextAlign.Start
