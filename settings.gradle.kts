@@ -26,6 +26,9 @@ include(
     ":core",
     ":database",
     ":features:events",
-    ":features:auth"
+    ":features:auth",
+    ":paging",
+    ":features:home",
+    ":features:account",
+    ":features:blogs"
 )
-include(":paging")
