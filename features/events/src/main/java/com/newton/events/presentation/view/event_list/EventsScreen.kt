@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view
+package com.newton.events.presentation.view.event_list
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -25,14 +25,18 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.common_ui.ui.AnimatedErrorScreen
 import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.common_ui.ui.PaginationLoadingIndicator
+import com.newton.core.domain.models.event_models.EventsData
 import com.newton.events.presentation.view.composables.CustomAppBar
 import com.newton.events.presentation.view.composables.EventCardAnimation
 import com.newton.events.presentation.viewmodel.EventViewModel
+import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 
 @Composable
 fun EventsScreen(
     modifier: Modifier = Modifier,
-    eventViewModel: EventViewModel
+    eventViewModel: EventViewModel,
+    sharedViewModel: EventsSharedViewModel,
+    onEventClick: (EventsData) -> Unit
 ) {
     val pagingItems = eventViewModel.events.collectAsLazyPagingItems()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -77,13 +81,13 @@ fun EventsScreen(
                         ) {
                             items(
                                 count = pagingItems.itemCount,
-                                key = { index ->
-                                    pagingItems[index]?.id ?: index.toString() }
                             ) {index ->
                                 pagingItems[index]?.let { events ->
                                     EventCardAnimation(
                                         event = events,
-                                        onClick = {}
+                                        onClick = {
+                                            onEventClick(events)
+                                        }
                                     )
                                 }
                             }
