@@ -13,6 +13,8 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigationSubGraphs: NavigationSubGraphs
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scheduleTokenRefreshWork(applicationContext)
@@ -20,4 +22,5 @@ class MainActivity : ComponentActivity() {
             RootScreen(navigationSubGraphs)
         }
     }
+
 }

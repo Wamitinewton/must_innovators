@@ -29,8 +29,4 @@ object AppDatabaseModule {
     @Provides
     @Singleton
     fun provideUserDao(db: AppDatabase) = db.userDao
-
-    @Provides
-    @Singleton
-    fun provideEventDao(db: AppDatabase) = db.eventDao
 }

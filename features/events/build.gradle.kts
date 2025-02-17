@@ -69,8 +69,15 @@ dependencies {
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
-    // swipe to refresh
-    implementation(Dependencies.swipeRefresh)
+    // paging
+    implementation(Dependencies.pagingCompose)
+    implementation(Dependencies.pagingRuntime)
+
+            //room
+    implementation(Dependencies.roomKtx)
+    ksp(Dependencies.roomCompiler)
+    implementation(Dependencies.roomRuntime)
+    implementation("androidx.room:room-paging:2.6.1")
 
 
 
