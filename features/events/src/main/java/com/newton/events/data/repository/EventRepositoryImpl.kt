@@ -23,7 +23,7 @@ class EventRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
-                prefetchDistance = 2,
+                prefetchDistance = 1,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { EventPagingSource(api) }

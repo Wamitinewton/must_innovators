@@ -1,5 +1,6 @@
 package com.newton.events.navigation
 
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -7,8 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
-import com.newton.events.presentation.view.EventsScreen
+import com.newton.events.presentation.view.event_details.EventDetailsScreen
+import com.newton.events.presentation.view.event_list.EventsScreen
 import com.newton.events.presentation.viewmodel.EventViewModel
+import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 
 class EventsNavigationApiImpl: EventsNavigationApi {
     override fun registerGraph(
@@ -20,8 +23,30 @@ class EventsNavigationApiImpl: EventsNavigationApi {
             startDestination = NavigationRoutes.EventsRoute.routes
         ){
             composable(route = NavigationRoutes.EventsRoute.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                }
                 val eventViewModel = hiltViewModel<EventViewModel>()
-                EventsScreen(eventViewModel = eventViewModel)
+                val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
+                EventsScreen(
+                    eventViewModel = eventViewModel,
+                    sharedViewModel = sharedViewModel,
+                    onEventClick = { eventsData ->
+                        sharedViewModel.setSelectedEvent(eventsData)
+                        navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)
+                    }
+                )
+            }
+
+            composable(route = NavigationRoutes.EventDetailsRoute.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                }
+                val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
+                EventDetailsScreen(
+                    viewModel = sharedViewModel,
+                    onBackPressed = { navHostController.navigateUp() }
+                )
             }
         }
     }
