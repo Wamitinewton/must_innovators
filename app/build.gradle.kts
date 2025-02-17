@@ -136,12 +136,19 @@ dependencies {
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
+    // system ui
+    implementation(Dependencies.systemUi)
+
+    implementation(Dependencies.extendedIcons)
 
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
     implementation(project(":common_ui"))
     implementation(project(":features:events"))
+    implementation(project(":features:blogs"))
+    implementation(project(":features:account"))
+    implementation(project(":features:home"))
     implementation(project(":database"))
 }
 

@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.newton.auth.presentation.login.view_model.LoginViewModel
@@ -12,20 +13,18 @@ import com.newton.core.navigation.NavigationSubGraphRoutes
 
 @Composable
 fun MeruInnovatorsNavigation(
-    modifier: Modifier = Modifier,
     navigationSubGraphs: NavigationSubGraphs,
-    loginViewModel: LoginViewModel = viewModel()
+    loginViewModel: LoginViewModel = viewModel(),
+    navHostController: NavHostController
 ) {
-    val navHostController = rememberNavController()
     val isUserLoggedIn by loginViewModel.isUserLoggedIn.collectAsState()
     NavHost(
         navController = navHostController,
-        startDestination = NavigationSubGraphRoutes.Event.route
-//        startDestination = if (isUserLoggedIn) {
-//            NavigationSubGraphRoutes.Event.route
-//        } else {
-//            NavigationSubGraphRoutes.Auth.route
-//        }
+        startDestination = if (isUserLoggedIn) {
+            NavigationSubGraphRoutes.Home.route
+        } else {
+            NavigationSubGraphRoutes.Auth.route
+        }
     ) {
         navigationSubGraphs.authNavigationApi.registerGraph(
             navHostController = navHostController,
@@ -35,6 +34,19 @@ fun MeruInnovatorsNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
+        navigationSubGraphs.accountNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.blogsNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.homeNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+
     }
 
 }
