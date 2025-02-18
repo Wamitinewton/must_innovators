@@ -20,11 +20,12 @@ fun MeruInnovatorsNavigation(
     val isUserLoggedIn by loginViewModel.isUserLoggedIn.collectAsState()
     NavHost(
         navController = navHostController,
-        startDestination = if (isUserLoggedIn) {
-            NavigationSubGraphRoutes.Home.route
-        } else {
-            NavigationSubGraphRoutes.Auth.route
-        }
+        startDestination = NavigationSubGraphRoutes.Home.route
+//        startDestination = if (isUserLoggedIn) {
+//            NavigationSubGraphRoutes.Home.route
+//        } else {
+//            NavigationSubGraphRoutes.Auth.route
+//        }
     ) {
         navigationSubGraphs.authNavigationApi.registerGraph(
             navHostController = navHostController,
