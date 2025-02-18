@@ -34,6 +34,9 @@ object Dependencies {
     const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:0.18.0"
     const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:0.36.0"
     const val accompanistPermissions = "com.google.accompanist:accompanist-permissions:0.32.0"
+    const val jaro_winkler = "info.debatty:java-string-similarity:2.0.0"
+    const val material_icons_core = "androidx.compose.material:material-icons-core:1.2.0"
+    const val material_icons_extended = "androidx.compose.material:material-icons-extended:1.2.0"
 }
 
 

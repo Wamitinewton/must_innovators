@@ -36,9 +36,10 @@ fun EventsScreen(
     modifier: Modifier = Modifier,
     eventViewModel: EventViewModel,
     sharedViewModel: EventsSharedViewModel,
-    onEventClick: (EventsData) -> Unit
+    onEventClick: (EventsData) -> Unit,
+    onSearchClick: () -> Unit
 ) {
-    val pagingItems = eventViewModel.events.collectAsLazyPagingItems()
+    val pagingItems = eventViewModel.searchEvents.collectAsLazyPagingItems()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -46,9 +47,7 @@ fun EventsScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CustomAppBar(
-                selectedCategory = "",
-                categories = emptyList(),
-                searchInput = ""
+               onSearchCardClick = onSearchClick
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
