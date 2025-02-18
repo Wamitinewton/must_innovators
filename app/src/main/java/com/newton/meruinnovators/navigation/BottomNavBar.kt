@@ -46,11 +46,17 @@ fun BottomNavigationBar(navController: NavHostController,currentDestination: Nav
                 isSelected = selected,
                 destination = destination,
                 onClick = {
-                    destination.route.let {
-                        navController.navigate(it) {
-                            launchSingleTop = true
-                        }
-                    }
+                    /**
+                     * Only navigate if the destination is not already selected
+                     */
+
+                   if (!selected) {
+                       destination.route.let {
+                           navController.navigate(it) {
+                               launchSingleTop = true
+                           }
+                       }
+                   }
 
                 }
             )
