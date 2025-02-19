@@ -149,6 +149,7 @@ dependencies {
     implementation(project(":features:blogs"))
     implementation(project(":features:account"))
     implementation(project(":features:home"))
+    implementation(project(":features:admin"))
     implementation(project(":database"))
 }
 
