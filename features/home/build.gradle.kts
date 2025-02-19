@@ -57,5 +57,9 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.coilNetwork)
+
     implementation(project(":core"))
+    implementation(project(":features:events"))
 }
