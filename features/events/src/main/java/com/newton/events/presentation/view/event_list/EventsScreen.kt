@@ -29,16 +29,16 @@ import com.newton.core.domain.models.event_models.EventsData
 import com.newton.events.presentation.view.composables.CustomAppBar
 import com.newton.events.presentation.view.composables.EventCardAnimation
 import com.newton.events.presentation.viewmodel.EventViewModel
-import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 
 @Composable
 fun EventsScreen(
     modifier: Modifier = Modifier,
     eventViewModel: EventViewModel,
-    sharedViewModel: EventsSharedViewModel,
-    onEventClick: (EventsData) -> Unit
+    onEventClick: (EventsData) -> Unit,
+    onSearchClick: () -> Unit,
+    onRsvpClick: () -> Unit
 ) {
-    val pagingItems = eventViewModel.events.collectAsLazyPagingItems()
+    val pagingItems = eventViewModel.searchEvents.collectAsLazyPagingItems()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -46,9 +46,7 @@ fun EventsScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CustomAppBar(
-                selectedCategory = "",
-                categories = emptyList(),
-                searchInput = ""
+               onSearchCardClick = onSearchClick
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -87,7 +85,8 @@ fun EventsScreen(
                                         event = events,
                                         onClick = {
                                             onEventClick(events)
-                                        }
+                                        },
+                                        onRsvpClick = onRsvpClick
                                     )
                                 }
                             }

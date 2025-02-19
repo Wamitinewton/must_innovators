@@ -2,7 +2,6 @@ package com.newton.auth.presentation.login.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.data.data_store.SessionManager
 import com.newton.auth.data.token_holder.AuthTokenHolder
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResultData
@@ -26,7 +25,6 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val sessionManager: SessionManager,
 ): ViewModel() {
 
     private val _loggedInUser = MutableStateFlow<Any?>(null)

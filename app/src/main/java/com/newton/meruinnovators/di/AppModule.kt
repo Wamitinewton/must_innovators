@@ -68,7 +68,7 @@ object AppModule {
     @Singleton
     fun provideMeruInnovatorsApi(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://7h3pspsq-8000.uks1.devtunnels.ms/")
+            .baseUrl(BuildConfig.BACKEND_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

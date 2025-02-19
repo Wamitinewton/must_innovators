@@ -15,4 +15,5 @@ sealed class NavigationRoutes(val routes: String) {
     data object AdminEvents: NavigationRoutes("admin_events")
     data object AdminFeedbacks: NavigationRoutes("admin_feedbacks")
     data object AdminSettings: NavigationRoutes("admin_settings")
+    data object EventSearchScreen: NavigationRoutes("event_search")
 }

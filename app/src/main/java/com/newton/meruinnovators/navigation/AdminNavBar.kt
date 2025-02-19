@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import com.newton.core.navigation.NavigationRoutes
 
 
 @Composable
@@ -30,9 +31,12 @@ fun AdminNavBar(navController: NavHostController, currentDestination: NavDestina
                 isSelected = selected,
                 destination = destination,
                 onClick = {
-                    destination.route.let {
-                        navController.navigate(it) {
-                            launchSingleTop = true
+                    if (!selected) {
+                        destination.route.let {
+                            navController.navigate(it) {
+                                launchSingleTop = true
+                                popUpTo(NavigationRoutes.AdminDashboard.routes)
+                            }
                         }
                     }
                 }

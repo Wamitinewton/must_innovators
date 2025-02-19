@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
 
@@ -41,16 +42,22 @@ fun BottomNavigationBar(navController: NavHostController,currentDestination: Nav
         bottomNavigationDestinations.forEach { destination ->
             val selected = currentDestination?.hierarchy?.any {
                 it.route == destination.route
-            } ?: false
+            } ?: true
             BottomNavItem(
                 isSelected = selected,
                 destination = destination,
                 onClick = {
-                    destination.route.let {
-                        navController.navigate(it) {
-                            launchSingleTop = true
-                        }
-                    }
+                    /**
+                     * Only navigate if the destination is not already selected
+                     */
+                   if (!selected) {
+                       destination.route.let {
+                           navController.navigate(it) {
+                               launchSingleTop = true
+                               popUpTo(NavigationRoutes.HomeRoute.routes)
+                           }
+                       }
+                   }
 
                 }
             )
