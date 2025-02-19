@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.events.domain.models.Event
 import com.newton.home.domain.models.AboutUs
 import com.newton.home.domain.models.Partner
 import com.newton.home.domain.models.Testimonial

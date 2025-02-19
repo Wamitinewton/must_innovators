@@ -37,7 +37,8 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                     },
                     onSearchClick = {
                         navHostController.navigate(NavigationRoutes.EventSearchScreen.routes)
-                    }
+                    },
+                    onRsvpClick = {}
                 )
             }
 
