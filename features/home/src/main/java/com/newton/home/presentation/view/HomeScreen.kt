@@ -8,9 +8,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,9 +27,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.newton.common_ui.composables.MeruInnovatorsAppBar
+import com.newton.core.navigation.NavigationRoutes
+import com.newton.events.domain.models.Event
 import com.newton.home.domain.models.AboutUs
 import com.newton.home.domain.models.Partner
 import com.newton.home.domain.models.Testimonial
@@ -30,9 +44,30 @@ import com.newton.home.presentation.view.composables.TestimonialsSection
 import com.newton.home.presentation.view.composables.UpcomingEventsSection
 
 @Composable
-fun HomeScreen() {
-    Scaffold {
-        val configuration = LocalConfiguration.current
+fun HomeScreen(
+    navController: NavController
+) {
+    val configuration = LocalConfiguration.current
+    Scaffold(
+        topBar = {
+            MeruInnovatorsAppBar(
+                title = "MUST Innovators",
+                actions = {
+                    Box(modifier = Modifier.padding(8.dp).clip(CircleShape).clickable {
+                        navController.navigate(NavigationRoutes.AdminDashboard.routes)
+                    }){
+                        Icon(imageVector = Icons.Filled.AdminPanelSettings, contentDescription = "Admin panel")
+                    }
+
+                    Box(modifier = Modifier.padding(8.dp).clip(CircleShape).clickable {
+
+                    }){
+                            Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
+                    }
+                }
+            )
+        }
+    ) {
         Box(
             modifier = Modifier.padding(it)
                 .padding(horizontal = 8.dp)
@@ -50,11 +85,12 @@ fun HomeScreen() {
                         Box(
                             modifier = Modifier
                                 .clip(MaterialTheme.shapes.large)
-                                .background(color = MaterialTheme.colorScheme.secondaryContainer)
-                                .padding(horizontal = 12.dp, vertical = 5.dp)
                                 .clickable {
 
                                 }
+                                .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                                .padding(horizontal = 12.dp, vertical = 5.dp)
+
                         ) {
                             Text("ALL", style = MaterialTheme.typography.titleMedium)
                         }

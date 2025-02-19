@@ -18,7 +18,7 @@ class HomeNavigationApiImpl: HomeNavigationApi {
             startDestination = NavigationRoutes.HomeRoute.routes
         ){
             composable(route = NavigationRoutes.HomeRoute.routes) {
-                HomeScreen()
+                HomeScreen(navHostController)
             }
         }
     }

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.newton.home"
+    namespace = "com.newton.admin"
     compileSdk = 35
 
     defaultConfig {
-        minSdk =  28
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -49,6 +48,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
     //Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
@@ -63,6 +63,4 @@ dependencies {
     implementation(Dependencies.extendedIcons)
 
     implementation(project(":core"))
-    implementation(project(":features:events"))
-    implementation(project(":common_ui"))
 }
