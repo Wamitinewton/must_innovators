@@ -107,7 +107,8 @@ fun EventSearchScreen(
                                         event = events,
                                         onClick = {
                                             onEventClick(events)
-                                        }
+                                        },
+                                        onRsvpClick = {}
                                     )
                                 }
                             }
