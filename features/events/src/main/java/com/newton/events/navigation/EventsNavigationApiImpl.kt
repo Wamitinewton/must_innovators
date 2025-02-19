@@ -31,7 +31,6 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                 val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
                 EventsScreen(
                     eventViewModel = eventViewModel,
-                    sharedViewModel = sharedViewModel,
                     onEventClick = { eventsData ->
                         sharedViewModel.setSelectedEvent(eventsData)
                         navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)

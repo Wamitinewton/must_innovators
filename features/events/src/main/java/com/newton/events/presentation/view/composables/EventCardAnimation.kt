@@ -18,7 +18,8 @@ import com.newton.core.domain.models.event_models.EventsData
 @Composable
 fun EventCardAnimation(
     event: EventsData,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onRsvpClick: () -> Unit
 ) {
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnimation by animateFloatAsState(
@@ -42,7 +43,8 @@ fun EventCardAnimation(
     ) {
         EventCard(
             event = event,
-            onClick = onClick
+            onClick = onClick,
+            onRsvpClick = onRsvpClick
         )
     }
 }

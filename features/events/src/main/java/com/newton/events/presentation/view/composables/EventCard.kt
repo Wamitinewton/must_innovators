@@ -34,7 +34,11 @@ import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 
 
 @Composable
-fun EventCard(event: EventsData, onClick: () -> Unit) {
+fun EventCard(
+    event: EventsData,
+    onClick: () -> Unit,
+    onRsvpClick: () -> Unit
+    ) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
@@ -84,7 +88,7 @@ fun EventCard(event: EventsData, onClick: () -> Unit) {
             }
             Spacer(modifier = Modifier.height(12.dp))
             Button(
-                onClick = { },
+                onClick = onRsvpClick,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors().copy(containerColor = MaterialTheme.colorScheme.primary)
