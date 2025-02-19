@@ -60,6 +60,9 @@ dependencies {
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
+    implementation(Dependencies.extendedIcons)
+
     implementation(project(":core"))
     implementation(project(":features:events"))
+    implementation(project(":common_ui"))
 }
