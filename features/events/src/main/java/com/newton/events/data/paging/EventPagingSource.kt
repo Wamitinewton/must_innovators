@@ -3,10 +3,10 @@
     import androidx.paging.PagingSource
     import androidx.paging.PagingState
     import com.newton.core.domain.models.event_models.EventsData
+    import com.newton.core.utils.CustomErrorManager
+    import com.newton.core.utils.toException
     import com.newton.events.data.mappers.EventMappers.toDomainEvent
     import com.newton.events.data.remote.EventApi
-    import retrofit2.HttpException
-    import java.io.IOException
 
     class EventPagingSource(
         private val api: EventApi
@@ -33,7 +33,6 @@
 
                     val nextKey = if (response.data.next != null) currentPage + 1 else null
                     val prevKey = if (currentPage > 1) currentPage - 1 else null
-
                     LoadResult.Page(
                         data = events,
                         prevKey = prevKey,
@@ -42,12 +41,8 @@
                 } else {
                     LoadResult.Error(Exception(response.message))
                 }
-            } catch (e: IOException) {
-                LoadResult.Error(e)
-            } catch (e: HttpException) {
-                LoadResult.Error(e)
             } catch (e: Exception) {
-                LoadResult.Error(e)
+                LoadResult.Error(CustomErrorManager.from(e).toException())
             }
         }
     }

@@ -4,14 +4,18 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.event_models.RegistrationResponse
 import com.newton.core.utils.Resource
+import com.newton.events.data.mappers.EventMappers.toEventRegistration
 import com.newton.events.data.paging.EventPagingSource
 import com.newton.events.data.remote.EventApi
 import com.newton.events.domain.models.Event
+import com.newton.events.domain.models.EventRegistrationRequest
 import com.newton.events.domain.models.EventRequest
 import com.newton.events.domain.repository.EventRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
@@ -30,13 +34,26 @@ class EventRepositoryImpl @Inject constructor(
         ).flow
     }
 
+    override suspend fun registerForEvent(eventId: Int ,registrationRequest: EventRegistrationRequest): Flow<Resource<RegistrationResponse>> = flow {
+       emit(Resource.Loading(true))
+        try {
+            val response = api.registerForEvent(eventId = eventId, registrationRequest = registrationRequest)
+            emit(Resource.Success(data = response.data.toEventRegistration()))
+        }catch (e: HttpException) {
+            emit(Resource.Error(message = handleHttpError(e)))
+        } catch (e: IOException) {
+            emit(Resource.Error(message = "Network error: Please check your internet connection"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
+        } finally {
+            emit(Resource.Loading(false))
+        }
+    }
 
 
     override suspend fun getEventById(id: Int): Flow<Resource<Event>> = flow {
 
     }
-
-
 
     override suspend fun updateEvent(id: Int, request: EventRequest): Flow<Resource<Event>> = flow {
 
@@ -56,19 +73,17 @@ class EventRepositoryImpl @Inject constructor(
 
     }
 
-
-    private fun <T> handleError(exception: Throwable): Resource<T> {
-        return when (exception) {
-
-            is IOException -> Resource.Error(
-                "IO error: ${exception.message ?: "Unknown IO error"}"
-            )
-
-            else -> Resource.Error(
-                exception.message ?: "Unknown error occurred"
-            )
+    private fun handleHttpError(error: HttpException): String {
+        return when (error.code()) {
+            400 -> "Invalid request: Please check your input"
+            401 -> "Unauthorized: Please log in again"
+            403 -> "Access denied"
+            404 -> "Resource not found"
+            500, 502, 503 -> "Server error: Please try again later"
+            else -> "Network error: ${error.message()}"
         }
     }
+
 
     companion object {
         const val NETWORK_PAGE_SIZE = 10

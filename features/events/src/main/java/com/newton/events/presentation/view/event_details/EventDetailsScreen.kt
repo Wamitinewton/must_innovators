@@ -1,6 +1,5 @@
 package com.newton.events.presentation.view.event_details
 
-import android.widget.Space
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -56,7 +54,7 @@ import coil3.request.crossfade
 import com.newton.common_ui.ui.AnimatedErrorScreen
 import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.core.utils.formatDateTime
-import com.newton.events.presentation.states.EventStates
+import com.newton.events.presentation.states.EventDetailsState
 import com.newton.events.presentation.view.composables.EventDetailCard
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 
@@ -96,17 +94,17 @@ fun EventDetailsScreen(
         }
     ) { padding ->
         when(uiState) {
-            is EventStates.Error -> {
+            is EventDetailsState.Error -> {
                 AnimatedErrorScreen(
-                    message = (uiState as EventStates.Error).message,
+                    message = (uiState as EventDetailsState.Error).message,
                     onRetry = {}
                 )
             }
-            EventStates.Initial -> {
+            EventDetailsState.Initial -> {
                 LoadingIndicator()
             }
-            is EventStates.Success -> {
-                val event = (uiState as EventStates.Success).event
+            is EventDetailsState.Success -> {
+                val event = (uiState as EventDetailsState.Success).event
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

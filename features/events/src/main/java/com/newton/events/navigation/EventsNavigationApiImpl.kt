@@ -10,6 +10,7 @@ import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 import com.newton.events.presentation.view.event_details.EventDetailsScreen
 import com.newton.events.presentation.view.event_list.EventsScreen
+import com.newton.events.presentation.view.search_events.EventSearchScreen
 import com.newton.events.presentation.viewmodel.EventViewModel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 
@@ -30,10 +31,12 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                 val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
                 EventsScreen(
                     eventViewModel = eventViewModel,
-                    sharedViewModel = sharedViewModel,
                     onEventClick = { eventsData ->
                         sharedViewModel.setSelectedEvent(eventsData)
                         navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)
+                    },
+                    onSearchClick = {
+                        navHostController.navigate(NavigationRoutes.EventSearchScreen.routes)
                     }
                 )
             }
@@ -46,6 +49,22 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                 EventDetailsScreen(
                     viewModel = sharedViewModel,
                     onBackPressed = { navHostController.navigateUp() }
+                )
+            }
+
+            composable(route = NavigationRoutes.EventSearchScreen.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                }
+                val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
+                val eventViewModel = hiltViewModel<EventViewModel>()
+                EventSearchScreen(
+                    viewModel = eventViewModel,
+                    onBackPress = { navHostController.navigateUp() },
+                    onEventClick = { eventsData ->
+                        sharedViewModel.setSelectedEvent(eventsData)
+                        navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)
+                    }
                 )
             }
         }
