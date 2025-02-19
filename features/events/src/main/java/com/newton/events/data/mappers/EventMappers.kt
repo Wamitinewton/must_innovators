@@ -4,6 +4,7 @@ import com.newton.core.data.dto.EventDto
 import com.newton.core.data.dto.EventRegistrationResponseDto
 import com.newton.core.domain.models.event_models.EventsData
 import com.newton.core.domain.models.event_models.RegistrationResponse
+import com.newton.database.entities.EventEntity
 
 
 object EventMappers {
@@ -37,6 +38,35 @@ object EventMappers {
             uid = uid
         )
     }
+
+    fun EventEntity.toDomainEvent() = EventsData(
+        id = id,
+        imageUrl = imageUrl,
+        name = name,
+        category = category,
+        title = title,
+        description = description,
+        date = date,
+        location = location,
+        organizer = organizer,
+        contactEmail = contactEmail,
+        isVirtual = isVirtual
+    )
+
+    fun EventsData.toEntity(pageNumber: Int) = EventEntity(
+        id = id,
+        imageUrl = imageUrl,
+        name = name,
+        category = category,
+        title = title,
+        description = description,
+        date = date,
+        location = location,
+        organizer = organizer,
+        contactEmail = contactEmail,
+        isVirtual = isVirtual,
+        pageNumber = pageNumber
+    )
 
 }
 

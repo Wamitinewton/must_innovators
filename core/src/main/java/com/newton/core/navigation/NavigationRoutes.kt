@@ -12,4 +12,5 @@ sealed class NavigationRoutes(val routes: String) {
     data object HomeRoute: NavigationRoutes("home_screen")
     data object EventDetailsRoute: NavigationRoutes("event_details")
     data object EventSearchScreen: NavigationRoutes("event_search")
+    data object EventRegistrationScreen: NavigationRoutes("event_registration")
 }

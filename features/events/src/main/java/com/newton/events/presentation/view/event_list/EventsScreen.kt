@@ -86,7 +86,10 @@ fun EventsScreen(
                                         onClick = {
                                             onEventClick(events)
                                         },
-                                        onRsvpClick = onRsvpClick
+                                        onRsvpClick = {
+                                            onEventClick(events)
+                                            onRsvpClick()
+                                        }
                                     )
                                 }
                             }

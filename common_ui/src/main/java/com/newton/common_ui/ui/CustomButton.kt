@@ -1,10 +1,12 @@
 package com.newton.common_ui.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,5 +43,28 @@ fun CustomButton(
                 color = lightGrayColor
             )
         )
+    }
+}
+
+@Composable
+fun PrimaryButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        enabled = enabled
+    ) {
+        Text(text = text)
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.newton.core.domain.models.event_models.EventsData
 import com.newton.home.domain.models.AboutUs
 import com.newton.home.domain.models.Partner
 import com.newton.home.domain.models.Testimonial
@@ -149,29 +150,31 @@ val sampleAboutUs = AboutUs(
     description = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
 )
 val sampleEvents = listOf(
-    Event(
+    EventsData(
         id = 1,
         title = "Android Hackathon",
         description = "Are you passionate about Android development and eager to explore the power of Kotlin? Join our vibrant community of developers, learners, and enthusiasts who are dedicated to mastering Android app development using Kotlin. Whether you're a beginner or an experienced developer, our club offers a collaborative space to learn, share, and grow together.",
         date = "12th October",
         contactEmail = "emmanuel@gmail.com",
-        image = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
         isVirtual = true,
         location = "ECA21",
         name = "Robotics session",
         organizer = "Jairus Kibisu",
+        category = "Robotics"
     ),
-    Event(
+    EventsData(
         id = 2,
         title = "AI Workshop",
         description = "Hands-on workshop on ML & AI basics",
         date = "20th October",
         contactEmail = "emmanuel@gmail.com",
-        image = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
         isVirtual = false,
         location = "ECA21",
         name = "Robotics session",
         organizer = "Grace Ngari",
+        category = "Android",
     )
 )
 val sampleTestimonials = listOf(

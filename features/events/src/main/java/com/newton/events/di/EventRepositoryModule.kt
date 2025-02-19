@@ -1,5 +1,7 @@
 package com.newton.events.di
 
+import com.newton.core.network.NetworkConfiguration
+import com.newton.database.db.AppDatabase
 import com.newton.events.data.remote.EventApi
 import com.newton.events.data.repository.EventRepositoryImpl
 import com.newton.events.domain.repository.EventRepository
@@ -16,5 +18,7 @@ object EventRepositoryModule {
     @Singleton
     fun provideEventRepository(
         eventApi: EventApi,
-    ): EventRepository = EventRepositoryImpl(eventApi)
+        db: AppDatabase,
+        networkConfiguration: NetworkConfiguration
+    ): EventRepository = EventRepositoryImpl(eventApi, db, networkConfiguration)
 }

@@ -16,4 +16,3 @@ data class EventsData(
     val contactEmail: String,
     val isVirtual: Boolean
 )
-

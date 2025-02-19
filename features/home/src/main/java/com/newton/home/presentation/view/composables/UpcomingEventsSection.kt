@@ -27,11 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.events.domain.models.Event
+import com.newton.core.domain.models.event_models.EventsData
 
 @Composable
 fun UpcomingEventsSection(
-    events: List<Event>,
+    events: List<EventsData>,
     onRSVPClick: (Int) -> Unit,
     configuration: Configuration
 ) {
