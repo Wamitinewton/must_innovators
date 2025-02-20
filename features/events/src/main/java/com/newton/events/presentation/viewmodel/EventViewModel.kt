@@ -139,7 +139,7 @@ class EventViewModel @Inject constructor(
     private fun calculateSimilarity(eventsData: EventsData, query: String): Double {
         val normalizedKey = query.lowercase()
         return maxOf(
-            jaroWinkler.similarity(eventsData.title.lowercase(), normalizedKey) * 1.0,
+            jaroWinkler.similarity(eventsData.name.lowercase(), normalizedKey) * 1.0,
             jaroWinkler.similarity(eventsData.description.lowercase(), normalizedKey) * 0.7,
             jaroWinkler.similarity(eventsData.location.lowercase(), normalizedKey) * 0.5
         )

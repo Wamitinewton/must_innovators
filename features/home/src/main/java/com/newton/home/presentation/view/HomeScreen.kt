@@ -6,20 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.newton.core.domain.models.event_models.EventsData
 import com.newton.home.domain.models.AboutUs
@@ -152,7 +147,6 @@ val sampleAboutUs = AboutUs(
 val sampleEvents = listOf(
     EventsData(
         id = 1,
-        title = "Android Hackathon",
         description = "Are you passionate about Android development and eager to explore the power of Kotlin? Join our vibrant community of developers, learners, and enthusiasts who are dedicated to mastering Android app development using Kotlin. Whether you're a beginner or an experienced developer, our club offers a collaborative space to learn, share, and grow together.",
         date = "12th October",
         contactEmail = "emmanuel@gmail.com",
@@ -165,7 +159,6 @@ val sampleEvents = listOf(
     ),
     EventsData(
         id = 2,
-        title = "AI Workshop",
         description = "Hands-on workshop on ML & AI basics",
         date = "20th October",
         contactEmail = "emmanuel@gmail.com",

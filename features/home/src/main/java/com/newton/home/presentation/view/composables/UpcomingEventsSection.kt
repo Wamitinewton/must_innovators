@@ -45,7 +45,7 @@ fun UpcomingEventsSection(
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(text = event.title, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(text = event.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     Box (modifier = Modifier.height((configuration.screenHeightDp*0.2).dp)){
                         Text(text = event.description)
                     }

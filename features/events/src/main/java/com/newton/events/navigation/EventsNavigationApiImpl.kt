@@ -26,6 +26,12 @@ class EventsNavigationApiImpl: EventsNavigationApi {
             route = NavigationSubGraphRoutes.Event.route,
             startDestination = NavigationRoutes.EventsRoute.routes
         ){
+            /**
+             * In this case, we are using parent entry for the Shared viewmodel
+             * To ensure that we do not create multiple view model instances
+             * Which might cause stagnated loading state when fetching data
+             */
+
             composable(route = NavigationRoutes.EventsRoute.routes) {
                 val parentEntry = remember(it) {
                     navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)

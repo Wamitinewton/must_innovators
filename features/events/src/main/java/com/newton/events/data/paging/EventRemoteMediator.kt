@@ -30,19 +30,14 @@
         private val networkConfiguration: NetworkConfiguration
     ) : RemoteMediator<Int, EventEntity>() {
         private val eventDao = db.eventDao
-        private var isInitialized = false
+
+        /**
+         * This is an initiate function override to initiate refreshing of events
+         * In case The cache has been timed out
+         * This is great to ensure user is up to date with the latest events
+         */
 
         override suspend fun initialize(): InitializeAction {
-            if (!isInitialized) {
-                networkConfiguration.observeNetworkStatus()
-                    .first { status ->
-                        when(status) {
-                            NetworkStatus.Available -> true
-                            else -> eventDao.getLastPage() != null
-                        }
-                    }
-            }
-
             val lastUpdateTimeStamp = eventDao.getPageTimeStamp(PagingConstants.STARTING_PAGE_INDEX)
                 ?: return InitializeAction.LAUNCH_INITIAL_REFRESH
 
@@ -69,6 +64,9 @@
                 }
 
                 val page = when (loadType) {
+                    /**
+                     * In case of refresh we start loading from initial page of data
+                     */
                     LoadType.REFRESH -> PagingConstants.STARTING_PAGE_INDEX
                     LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                     LoadType.APPEND -> {

@@ -13,11 +13,10 @@ import com.newton.database.db.AppDatabase
 import com.newton.events.data.mappers.EventMappers.toDomainEvent
 import com.newton.events.data.mappers.EventMappers.toEventRegistration
 import com.newton.events.data.paging.EventRemoteMediator
-import com.newton.events.data.paging.PagingConstants
+import com.newton.events.data.paging.PagingConstants.NETWORK_PAGE_SIZE
 import com.newton.events.data.remote.EventApi
 import com.newton.events.domain.models.Event
 import com.newton.events.domain.models.EventRegistrationRequest
-import com.newton.events.domain.models.EventRequest
 import com.newton.events.domain.repository.EventRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -39,8 +38,8 @@ class EventRepositoryImpl @Inject constructor(
                 pageSize = NETWORK_PAGE_SIZE,
                 prefetchDistance = 1,
                 enablePlaceholders = false,
-                maxSize = PagingConstants.NETWORK_PAGE_SIZE * 3,
-                initialLoadSize = PagingConstants.NETWORK_PAGE_SIZE
+                maxSize = NETWORK_PAGE_SIZE * 3,
+                initialLoadSize = NETWORK_PAGE_SIZE
             ),
             remoteMediator = EventRemoteMediator(api, db, networkConfiguration),
             pagingSourceFactory = {
@@ -72,23 +71,6 @@ class EventRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun updateEvent(id: Int, request: EventRequest): Flow<Resource<Event>> = flow {
-
-    }
-
-    override suspend fun deleteEvent(id: Int): Flow<Resource<String>> = flow {
-        emit(Resource.Loading(true))
-        try {
-
-
-        } catch (e: Exception) {
-            throw Exception(e.localizedMessage ?: "An error occurred")
-        }
-    }
-
-    override suspend fun createEvent(request: EventRequest): Flow<Resource<Event>> = flow {
-
-    }
 
     private fun handleHttpError(error: HttpException): String {
         return when (error.code()) {
@@ -101,9 +83,5 @@ class EventRepositoryImpl @Inject constructor(
         }
     }
 
-
-    companion object {
-        const val NETWORK_PAGE_SIZE = 10
-    }
 }
 

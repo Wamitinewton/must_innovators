@@ -27,9 +27,6 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
 ): ViewModel() {
 
-    private val _loggedInUser = MutableStateFlow<Any?>(null)
-    val loggedInUser: StateFlow<Any?> get() = _loggedInUser
-
     private val _navigateToLoginSuccess = Channel<LoginNavigationEvent>()
     val navigateToLoginSuccess = _navigateToLoginSuccess.receiveAsFlow()
 
@@ -168,11 +165,12 @@ class LoginViewModel @Inject constructor(
 
    private fun checkLoginStatus() {
        viewModelScope.launch {
-           val token = AuthTokenHolder.accessToken ?: authRepository.getAccessToken()
-           val refresh = AuthTokenHolder.refreshToken ?: authRepository.getRefreshToken()
+           val token = authRepository.getAccessToken()
+           val refresh = authRepository.getRefreshToken()
            Timber.d("You are using token: $token")
            Timber.d("You are using refresh token: $refresh")
-           _isUserLoggedIn.value = !token.isNullOrEmpty()
+           _isUserLoggedIn.update { !token.isNullOrEmpty() }
+
        }
    }
 }

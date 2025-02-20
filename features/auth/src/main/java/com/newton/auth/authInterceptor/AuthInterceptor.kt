@@ -13,6 +13,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
 
+
 class AuthInterceptor(context: Context) : Interceptor {
 
     private val sessionManager = SessionManager(context)

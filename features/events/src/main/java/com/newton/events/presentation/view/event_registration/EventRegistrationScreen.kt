@@ -67,7 +67,7 @@ fun EventRegistrationScreen(
     val formState by eventRsvpViewmodel.formState.collectAsState()
     val validationState by eventRsvpViewmodel.validationState.collectAsState()
 
-    val educationLevels = listOf("1 year", "2 years", "3 years", "4 years", "5+ years")
+    val educationLevels = listOf("1", "2", "3", "4",)
     val context = LocalContext.current
     var expectations by remember { mutableStateOf("") }
 
@@ -92,7 +92,7 @@ fun EventRegistrationScreen(
             is RegistrationState.Success -> {
                 Toast.makeText(
                     context,
-                    "Successfully registered for ${event.title}",
+                    "Successfully registered for ${event.name}",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -160,6 +160,13 @@ fun EventRegistrationScreen(
                     value = formState.email,
                     label = "Email Address",
                     leadingIcon = Icons.Default.Person3,
+                    contentDescription = "Email"
+                )
+
+                ReadOnlyTextField(
+                    value = formState.course,
+                    label = "Course",
+                    leadingIcon = Icons.Default.School,
                     contentDescription = "Email"
                 )
 

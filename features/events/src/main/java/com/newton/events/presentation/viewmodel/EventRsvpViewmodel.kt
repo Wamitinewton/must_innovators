@@ -150,7 +150,10 @@ class EventRsvpViewmodel @Inject constructor(
         return RegistrationValidationResult(isFormValid)
     }
 
-
+    /**
+     * In case of successful registration, we want to clear form data
+     * Before navigating users to event details screen
+     */
     private fun resetForm() {
         _formState.value = EventRegistrationFormState(
             firstName = _formState.value.firstName,
