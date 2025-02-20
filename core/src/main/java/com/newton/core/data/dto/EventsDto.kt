@@ -20,7 +20,7 @@ data class EventResponse(
 @Serializable
 data class EventDto(
     val id: Int,
-    val image_url: String? = "",
+    val image_url: String,
     val name: String,
     val category: String,
     val title: String,

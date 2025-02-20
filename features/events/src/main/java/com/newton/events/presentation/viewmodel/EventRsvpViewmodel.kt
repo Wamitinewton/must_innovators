@@ -161,7 +161,7 @@ class EventRsvpViewmodel @Inject constructor(
             email = _formState.value.email,
             course = _formState.value.course,
             phoneNumber = "",
-            educationLevel = "1 year",
+            educationLevel = "1",
             expectations = ""
         )
 

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class EventEntity(
     @PrimaryKey
     val id: Int,
-    val imageUrl: String?,
+    val imageUrl: String,
     val name: String,
     val category: String,
     val description: String,

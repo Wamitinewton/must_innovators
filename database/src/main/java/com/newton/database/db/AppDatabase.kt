@@ -11,7 +11,7 @@ import com.newton.database.entities.UserEntity
 
 @Database(
     entities = [UserEntity::class, EventEntity::class],
-    version = 11,
+    version = 12,
     exportSchema = false
 )
 

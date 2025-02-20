@@ -8,7 +8,7 @@ data class EventRegistrationFormState(
     val email: String = "",
     val phoneNumber: String = "",
     val course: String = "",
-    val educationLevel: String = "1 year",
+    val educationLevel: String = "1",
     val expectations: String = ""
 )
 
