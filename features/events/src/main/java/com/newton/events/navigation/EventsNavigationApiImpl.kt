@@ -13,6 +13,7 @@ import com.newton.events.presentation.view.event_details.EventDetailsScreen
 import com.newton.events.presentation.view.event_list.EventsScreen
 import com.newton.events.presentation.view.event_registration.EventRegistrationScreen
 import com.newton.events.presentation.view.search_events.EventSearchScreen
+import com.newton.events.presentation.view.ticket_screen.RegisteredEventsScreen
 import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventViewModel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
@@ -24,7 +25,7 @@ class EventsNavigationApiImpl: EventsNavigationApi {
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Event.route,
-            startDestination = NavigationRoutes.EventsRoute.routes
+            startDestination = NavigationRoutes.EventTicketsRoute.routes
         ){
             /**
              * In this case, we are using parent entry for the Shared viewmodel
@@ -94,6 +95,13 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                     eventsSharedViewModel = sharedViewModel,
                     userDataViewModel = getUserDataViewModel,
                     eventRsvpViewmodel = eventRsvpViewmodel
+                )
+            }
+
+            composable(route = NavigationRoutes.EventTicketsRoute.routes) {
+                RegisteredEventsScreen(
+                    onBackPressed = {},
+                    onTicketSelected = {}
                 )
             }
         }
