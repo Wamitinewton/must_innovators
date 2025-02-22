@@ -64,6 +64,12 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
+    implementation(Dependencies.kotlinxDatetime)
+
+
+    implementation(Dependencies.coilNetwork)
+    implementation(Dependencies.coilCompose)
+
     // extended icons
     implementation(Dependencies.extendedIcons)
 

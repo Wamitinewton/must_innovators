@@ -40,5 +40,6 @@ fun MeruInnovatorsAppBar(
         title = {
             Text(title, style = MaterialTheme.typography.titleMedium)
         }
+
     )
 }
