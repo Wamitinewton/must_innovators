@@ -1,16 +1,16 @@
-package com.newton.admin.domain.models
+package com.newton.core.domain.models.event_models
 
-import androidx.compose.ui.graphics.drawscope.Stroke
+import java.io.File
 
 data class AddEventRequest (
     val name: String,
     val category:String,
     val description:String,
-    val image:String,
+    val image:File,
     val date: String,
     val location: String,
     val organizer:String,
-    val contact_email:String,
+    val contactEmail:String,
     val title:String,
     val isVirtual:Boolean,
 )
