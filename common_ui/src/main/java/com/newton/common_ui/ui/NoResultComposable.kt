@@ -15,7 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmptySearchResults(modifier: Modifier = Modifier)
+fun EmptySearchResults(
+    modifier: Modifier = Modifier,
+    message: String
+)
 {
     Column(
         modifier = modifier.padding(32.dp),
@@ -29,7 +32,7 @@ fun EmptySearchResults(modifier: Modifier = Modifier)
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
-            text = "No data found",
+            text = message,
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

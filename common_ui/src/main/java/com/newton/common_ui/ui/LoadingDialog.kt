@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.utils
+package com.newton.common_ui.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

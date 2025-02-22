@@ -51,4 +51,7 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
+
+    implementation(Dependencies.work)
+    implementation(Dependencies.hiltWorker)
 }

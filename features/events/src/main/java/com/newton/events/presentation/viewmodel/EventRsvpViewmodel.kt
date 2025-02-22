@@ -7,15 +7,18 @@ import com.newton.core.utils.Resource
 import com.newton.core.utils.ValidationResult
 import com.newton.events.domain.models.EventRegistrationRequest
 import com.newton.events.domain.repository.EventRepository
+import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventRegistrationFormState
 import com.newton.events.presentation.states.RegistrationState
 import com.newton.events.presentation.states.RegistrationValidationResult
 import com.newton.events.presentation.states.RegistrationValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +26,10 @@ import javax.inject.Inject
 class EventRsvpViewmodel @Inject constructor(
     private val repository: EventRepository
 ): ViewModel() {
+    // Channel for success event
+    private val _rsvpEvents = Channel<RsvpEvent>()
+    val rsvpEvent = _rsvpEvents.receiveAsFlow()
+
     // UI State for reg
     private val _registrationState = MutableStateFlow<RegistrationState>(RegistrationState.Initial)
     val registrationState: StateFlow<RegistrationState> = _registrationState
@@ -62,6 +69,7 @@ class EventRsvpViewmodel @Inject constructor(
                         _registrationState.value = RegistrationState.Error(
                             result.message ?: "An Error occuured"
                         )
+                        _rsvpEvents.send(RsvpEvent.ShowError)
                     }
                     is Resource.Loading -> {
                         _registrationState.value = RegistrationState.Loading(result.isLoading)
@@ -69,6 +77,8 @@ class EventRsvpViewmodel @Inject constructor(
                     is Resource.Success -> {
                         result.data?.let { response ->
                             _registrationState.value = RegistrationState.Success(response)
+
+                            _rsvpEvents.send(RsvpEvent.ShowSuccessBottomSheet(response))
                             resetForm()
                         }
                     }

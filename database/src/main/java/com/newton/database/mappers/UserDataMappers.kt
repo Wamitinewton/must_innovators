@@ -8,7 +8,7 @@ fun UserEntity.toAuthedUser(): UserData {
         course = course,
         email = email,
         first_name = firstName,
-        last_name = firstName,
+        last_name = lastName,
         username = userName
     )
 }

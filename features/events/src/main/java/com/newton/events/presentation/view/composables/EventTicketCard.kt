@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
@@ -47,10 +48,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.newton.common_ui.ui.CopyableText
+import com.newton.core.utils.ShareManager
 import com.newton.core.utils.formatDateTime
 import com.newton.events.domain.models.TicketColorScheme
 import com.newton.events.presentation.view.ticket_screen.EventTicket
 import com.newton.events.presentation.view.ticket_screen.TicketType
+import com.newton.events.ticket_pdf.TicketPdfGenerator
 
 @Composable
 fun EventTicketCard(
@@ -63,12 +66,13 @@ fun EventTicketCard(
         targetValue = if (ticket.isUsed) 0.7f else 1f,
         label = "alpha"
     )
-    val ticketColorScheme = when(ticket.ticketType) {
+    val ticketColorScheme = when (ticket.ticketType) {
         TicketType.STANDARD -> TicketColorScheme(
             primary = MaterialTheme.colorScheme.primary,
             secondary = MaterialTheme.colorScheme.primaryContainer,
             textColor = MaterialTheme.colorScheme.onPrimary
         )
+
         TicketType.EARLY_BIRD -> TicketColorScheme(
             primary = MaterialTheme.colorScheme.secondary,
             secondary = MaterialTheme.colorScheme.secondaryContainer,
@@ -253,7 +257,8 @@ fun EventTicketCard(
             }
 
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
@@ -262,39 +267,68 @@ fun EventTicketCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                  if (ticket.isUsed) {
-                      Box(
-                          modifier = Modifier
-                              .background(
-                                  color = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
-                                  shape = RoundedCornerShape(16.dp)
-                              )
-                              .padding(horizontal = 12.dp, vertical = 6.dp)
-                      ) {
-                          Text(
-                              text = "Used",
-                              color = MaterialTheme.colorScheme.error,
-                              style = MaterialTheme.typography.labelMedium,
-                              fontWeight = FontWeight.Medium
-                          )
-                      }
-                  } else {
-                      Box(
-                          modifier = Modifier
-                              .background(
-                                  color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                  shape = RoundedCornerShape(16.dp)
-                              )
-                              .padding(horizontal = 12.dp, vertical = 6.dp)
-                      ) {
-                          Text(
-                              text = "Valid",
-                              color = MaterialTheme.colorScheme.primary,
-                              style = MaterialTheme.typography.labelMedium,
-                              fontWeight = FontWeight.Medium
-                          )
-                      }
-                  }
+                    if (ticket.isUsed) {
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                        ) {
+                            Text(
+                                text = "Used",
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                        ) {
+                            Text(
+                                text = "Valid",
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            TextButton(
+                                onClick = {
+                                    val pdfGenerator = TicketPdfGenerator(context)
+                                    val pdfFile = pdfGenerator.generatePdf(ticket)
+                                    val shareManager = ShareManager(context)
+                                    shareManager.sharePdfFile(pdfFile)
+                                },
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Share,
+                                    contentDescription = "Share ticket",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "Share",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    style = MaterialTheme.typography.labelMedium
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
 
                     TextButton(
                         onClick = { expanded = !expanded },

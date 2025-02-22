@@ -17,5 +17,5 @@ data class EventEntity(
     val contactEmail: String,
     val isVirtual: Boolean,
     val timestamp: Long = System.currentTimeMillis(),
-    val pageNumber: Int,
+    val pageNumber: Int? = null,
 )

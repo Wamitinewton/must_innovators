@@ -29,6 +29,7 @@ import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.common_ui.ui.PaginationLoadingIndicator
 import com.newton.common_ui.ui.SearchHeader
 import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.utils.Resource
 import com.newton.events.presentation.events.SearchEvent
 import com.newton.events.presentation.view.composables.EventCardAnimation
 import com.newton.events.presentation.view.composables.SuggestionsList
@@ -41,7 +42,8 @@ fun EventSearchScreen(
     onEventClick: (EventsData) -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
-    val searchResults = viewModel.searchEvents.collectAsLazyPagingItems()
+    val searchResults by viewModel.searchResults.collectAsState()
+    val pagedEvents = viewModel.pagedEvents.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
 
     Column(
@@ -72,65 +74,103 @@ fun EventSearchScreen(
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
-            if (viewState.query.isEmpty()) {
-                Text(
-                    text = "Enter a search term to find events",
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center
-                )
-            } else {
 
-                when(val refreshLoadState = searchResults.loadState.refresh) {
-                    is LoadState.Loading -> {
-                        LoadingIndicator()
-                    }
-                    is LoadState.Error -> {
-                        AnimatedErrorScreen(
-                            message = refreshLoadState.error.message ?: "Error Loading Events",
-                            onRetry = { searchResults.retry() }
-                        )
-                    }
+            when {
+                viewState.query.isEmpty() -> {
+                    Text(
+                        text = "Enter a search term to find events",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center
+                    )
 
-                    else -> {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(bottom = 64.dp),
-                            state = rememberLazyListState()
-                        ) {
-                            items(
-                                count = searchResults.itemCount,
-                            ) {index ->
-                                searchResults[index]?.let { events ->
-                                    EventCardAnimation(
-                                        event = events,
-                                        onClick = {
-                                            onEventClick(events)
-                                        },
-                                        onRsvpClick = {}
-                                    )
+                    // Show paged events in background
+                    EventsList(
+                        events = pagedEvents,
+                        onEventClick = onEventClick
+                    )
+                }
+
+                else -> {
+                    when (searchResults) {
+                        is Resource.Error -> {
+                            AnimatedErrorScreen(
+                                message = (searchResults as Resource.Error).message ?: "",
+                                onRetry = {
+                                    viewModel.handleEvent(SearchEvent.Search(viewState.query))
+                                }
+                            )
+                        }
+                        is Resource.Loading -> {
+                            LoadingIndicator()
+                        }
+                        is Resource.Success -> {
+                            val events = (searchResults as Resource.Success).data
+                            if (events.isNullOrEmpty()) {
+                                EmptySearchResults(
+                                    message = "No events found for '${viewState.query}'",
+                                )
+                            } else {
+                                LazyColumn(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentPadding = PaddingValues(bottom = 64.dp),
+                                    state = rememberLazyListState()
+                                ) {
+                                    items(
+                                        count = events.size,
+                                    ) { index ->
+                                        EventCardAnimation(
+                                            event = events[index],
+                                            onClick = { onEventClick(events[index]) },
+                                            onRsvpClick = {}
+                                        )
+                                    }
                                 }
                             }
-
                         }
-
-
-
-                        androidx.compose.animation.AnimatedVisibility(
-                            visible = searchResults.loadState.append is LoadState.Loading,
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 16.dp),
-                            enter = fadeIn() + expandVertically(),
-                            exit = fadeOut() + shrinkVertically()
-                        ) {
-                            PaginationLoadingIndicator()
+                        null -> {
+                            LoadingIndicator()
                         }
                     }
                 }
+                }
             }
 
+
         }
+    }
+
+@Composable
+private fun EventsList(
+    events: androidx.paging.compose.LazyPagingItems<EventsData>,
+    onEventClick: (EventsData) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 64.dp),
+        state = rememberLazyListState()
+    ) {
+        items(
+            count = events.itemCount,
+        ) { index ->
+            events[index]?.let { event ->
+                EventCardAnimation(
+                    event = event,
+                    onClick = { onEventClick(event) },
+                    onRsvpClick = {}
+                )
+            }
+        }
+    }
+
+    AnimatedVisibility(
+        visible = events.loadState.append is androidx.paging.LoadState.Loading,
+        modifier = Modifier
+            .padding(bottom = 16.dp),
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically()
+    ) {
+        LoadingIndicator()
     }
 }

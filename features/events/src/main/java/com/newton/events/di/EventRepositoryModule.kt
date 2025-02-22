@@ -1,6 +1,8 @@
 package com.newton.events.di
 
 import com.newton.core.network.NetworkConfiguration
+import com.newton.database.dao.EventDao
+import com.newton.database.dao.TicketDao
 import com.newton.database.db.AppDatabase
 import com.newton.events.data.remote.EventApi
 import com.newton.events.data.repository.EventRepositoryImpl
@@ -19,6 +21,8 @@ object EventRepositoryModule {
     fun provideEventRepository(
         eventApi: EventApi,
         db: AppDatabase,
-        networkConfiguration: NetworkConfiguration
-    ): EventRepository = EventRepositoryImpl(eventApi, db, networkConfiguration)
+        networkConfiguration: NetworkConfiguration,
+        ticketDao: TicketDao,
+        eventDao: EventDao
+    ): EventRepository = EventRepositoryImpl(eventApi, db, networkConfiguration, ticketDao, eventDao)
 }

@@ -37,6 +37,7 @@ object Dependencies {
     const val jaro_winkler = "info.debatty:java-string-similarity:2.0.0"
     const val material_icons_core = "androidx.compose.material:material-icons-core:1.2.0"
     const val material_icons_extended = "androidx.compose.material:material-icons-extended:1.2.0"
+    const val zxing_qr = "com.journeyapps:zxing-android-embedded:4.1.0"
 }
 
 

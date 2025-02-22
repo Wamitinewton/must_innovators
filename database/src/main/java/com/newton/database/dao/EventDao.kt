@@ -24,6 +24,14 @@ interface EventDao {
     @Query("DELETE FROM events")
     suspend fun clearEvents()
 
+    @Query("""
+        SELECT * FROM events 
+        WHERE LOWER(name) LIKE LOWER(:query) 
+        OR LOWER(description) LIKE LOWER(:query) 
+        OR LOWER(location) LIKE LOWER(:query)
+    """)
+    suspend fun searchEvents(query: String): List<EventEntity>
+
     @Query("SELECT MAX(timestamp) FROM events WHERE pageNumber = :pageNumber")
     suspend fun getPageTimeStamp(pageNumber: Int): Long?
 }

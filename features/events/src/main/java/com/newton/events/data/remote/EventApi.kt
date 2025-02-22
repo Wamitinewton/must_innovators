@@ -1,14 +1,12 @@
 package com.newton.events.data.remote
 
+import com.newton.core.data.dto.EventDto
 import com.newton.core.data.dto.EventRegistrationResponse
 import com.newton.core.data.dto.EventResponse
 import com.newton.events.domain.models.EventRegistrationRequest
-import com.newton.events.domain.models.EventRequest
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -26,19 +24,9 @@ interface EventApi {
         @Query("page_siz") pageSize: Int = 10
     ): com.newton.core.data.dto.EventApiResponse<EventResponse>
 
-    @PUT(EventEndPoint.UPDATE_EVENT)
-    suspend fun updateEvent(
-        @Path("id") id: Int,
-        @Body request: EventRequest
-    ): EventResponse
+    @GET(EventEndPoint.SEARCH_EVENT)
+    suspend fun searchEvents(
+        @Query("name") eventName: String
+    ): com.newton.core.data.dto.EventApiResponse<List<EventDto>>
 
-    @DELETE(EventEndPoint.DELETE_EVENT)
-    suspend fun deleteEvent(
-        @Path("id") id: Int
-    ): EventResponse
-
-    @POST(EventEndPoint.CREATE_EVENT)
-    suspend fun createEvent(
-        @Body request: EventRequest
-    ): EventResponse
 }

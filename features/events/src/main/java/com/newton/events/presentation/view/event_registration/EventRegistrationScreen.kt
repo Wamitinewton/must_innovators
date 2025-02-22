@@ -1,9 +1,6 @@
 package com.newton.events.presentation.view.event_registration
 
 import android.widget.Toast
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,14 +26,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -54,19 +49,19 @@ import com.newton.common_ui.ui.PrimaryButton
 import com.newton.common_ui.ui.ReadOnlyTextField
 import com.newton.common_ui.ui.SectionHeader
 import com.newton.common_ui.ui.ValidatedTextField
-import com.newton.core.data.dto.EventRegistrationResponse
 import com.newton.core.domain.models.event_models.RegistrationResponse
+import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventDetailsState
 import com.newton.events.presentation.states.RegistrationState
 import com.newton.events.presentation.view.composables.RegistrationSuccessBottomSheet
 import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventRegistrationScreen(
     onClose: () -> Unit,
+    onRegisterSuccess: () -> Unit,
     eventsSharedViewModel: EventsSharedViewModel,
     userDataViewModel: GetUserDataViewModel = hiltViewModel(),
     eventRsvpViewmodel: EventRsvpViewmodel
@@ -82,7 +77,7 @@ fun EventRegistrationScreen(
     val context = LocalContext.current
     var expectations by remember { mutableStateOf("") }
 
-    var showSuccessAnimation by remember { mutableStateOf(true) }
+    var showSuccessAnimation by remember { mutableStateOf(false) }
     var showSuccessSheet by remember { mutableStateOf(false) }
     var registrationResponse by remember { mutableStateOf<RegistrationResponse?>(null) }
 
@@ -96,21 +91,22 @@ fun EventRegistrationScreen(
         }
     }
 
-    LaunchedEffect(registrationState) {
-        when(registrationState) {
-            is RegistrationState.Error -> {
-                Toast.makeText(
-                    context,
-                    (registrationState as RegistrationState.Error).message,
-                    Toast.LENGTH_LONG
-                ).show()
+    LaunchedEffect(Unit) {
+        eventRsvpViewmodel.rsvpEvent.collect { event ->
+            when (event) {
+                is RsvpEvent.ShowSuccessBottomSheet -> {
+                    registrationResponse = event.response
+                    showSuccessSheet = true
+                }
+                is RsvpEvent.ShowError -> {
+                    Toast.makeText(
+                        context,
+                        (registrationState as? RegistrationState.Error)?.message
+                            ?: "Registration failed",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
-            is RegistrationState.Success -> {
-                val response = (registrationState as RegistrationState.Success).data
-                registrationResponse = response
-//                showSuccessAnimation = true
-            }
-            else -> {}
         }
     }
 
@@ -232,8 +228,7 @@ fun EventRegistrationScreen(
 
                  PrimaryButton(
                      text = "Register for Event",
-//                     onClick = { eventRsvpViewmodel.registerForEvent(event.id) },
-                     onClick =  { showSuccessAnimation = !showSuccessAnimation  },
+                     onClick = { eventRsvpViewmodel.registerForEvent(event.id) },
                      modifier = Modifier.padding(vertical = 16.dp)
                  )
 
@@ -249,27 +244,15 @@ fun EventRegistrationScreen(
      }
  }
 
-    if (showSuccessSheet) {
-        val testResponse = registrationResponse ?: RegistrationResponse(
-            course = "bcs",
-            educationalLevel = "1",
-            email = "wamitinewton@gmail.com",
-            event = 1,
-            expectations = "We are expecting a lot of API learning",
-            fullName = "Newton Wamiti",
-            phoneNumber = "0792036343",
-            registrationTimestamp =  "2025-01-15T10:00:00Z",
-            ticketNumber = "TEST123456",
-            uid = "random"
-        )
-
+    if (showSuccessSheet && registrationResponse != null) {
         RegistrationSuccessBottomSheet(
-            registrationResponse = testResponse,
-            onRegisteredEvents = {},
+            registrationResponse = registrationResponse!!,
+            onRegisteredEvents = {
+                onRegisterSuccess()
+            },
             onDismiss = {
                 showSuccessSheet = false
-                // Reset the animation state for repeated testing
-                showSuccessAnimation = false
+                onRegisterSuccess()
             }
         )
     }
