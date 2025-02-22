@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.events.domain.models.Event
+import kotlin.math.min
 
 @Composable
 fun UpcomingEventsSection(
@@ -36,9 +38,9 @@ fun UpcomingEventsSection(
     configuration: Configuration
 ) {
     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        items(events){event->
+        items(events) { event ->
             Card(
-                modifier = Modifier.width((configuration.screenWidthDp*0.6).dp).height((configuration.screenHeightDp*0.4).dp),
+                modifier = Modifier.width((configuration.screenWidthDp*0.9).dp),
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
@@ -46,9 +48,7 @@ fun UpcomingEventsSection(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(text = event.title, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                    Box (modifier = Modifier.height((configuration.screenHeightDp*0.2).dp)){
-                        Text(text = event.description)
-                    }
+                    Text(text = event.description, minLines = 7, maxLines = 7)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Icon(imageVector = Icons.Filled.Person, contentDescription = "Organizer")
                         Text(text = event.organizer)
@@ -57,7 +57,7 @@ fun UpcomingEventsSection(
                         Icon(imageVector = Icons.Filled.DateRange, contentDescription = "Date")
                         Text(text = event.date)
                     }
-                    Box(modifier = Modifier.align(Alignment.CenterHorizontally)){
+                    Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Button(
                             onClick = { onRSVPClick(event.id) },
                             colors = ButtonDefaults.buttonColors(

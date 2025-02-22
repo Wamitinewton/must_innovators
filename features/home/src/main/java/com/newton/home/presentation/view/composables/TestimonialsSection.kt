@@ -1,13 +1,14 @@
 package com.newton.home.presentation.view.composables
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -22,8 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,7 +33,8 @@ import java.net.URL
 @Composable
 fun TestimonialsSection(
     testimonials: List<Testimonial>,
-    configuration: Configuration
+    configuration: Configuration,
+    context: Context
 ) {
     val socials = listOf(
         "https://github.com/piexie3",
@@ -65,24 +65,29 @@ fun TestimonialsSection(
                         }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = testimonial.content, maxLines = 4)
+                    Text(text = testimonial.content, maxLines = 4, minLines = 4)
                     Spacer(modifier = Modifier.height(8.dp))
 
-//                    Row(horizontalArrangement =  Arrangement.spacedBy(8.dp)) {
-//                        socials.forEach { social ->
-//                            val domain = URL(social).host
-//                            val domainIconUrl = "$domain/favicon.ico"
-//                            AsyncImage(
-//                                model = domainIconUrl,
-//                                contentDescription = "Icon Image",
-//                                contentScale = ContentScale.Crop,
-//                                modifier = Modifier
-//                                    .height(30.dp)
-//                                    .width(30.dp)
-//                                    .clip(CircleShape)
-//                            )
-//                        }
-//                    }
+                    Row(horizontalArrangement =  Arrangement.spacedBy(8.dp)) {
+                        socials.forEach { social ->
+                            val domain = URL(social).host
+                            val domainIconUrl = "https://$domain/favicon.ico"
+                            AsyncImage(
+                                model = domainIconUrl,
+                                contentDescription = "Icon Image",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .height(30.dp)
+                                    .width(30.dp)
+                                    .clickable {
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(social))
+                                        context.startActivity(intent)
+                                    }
+                                    .clip(CircleShape)
+
+                            )
+                        }
+                    }
 
                 }
             }
