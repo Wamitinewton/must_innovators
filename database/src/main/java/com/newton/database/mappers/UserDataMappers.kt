@@ -1,7 +1,6 @@
 package com.newton.database.mappers
 
 import com.newton.core.domain.models.auth_models.UserData
-import com.newton.core.domain.models.event_models.EventsData
 import com.newton.database.entities.UserEntity
 
 fun UserEntity.toAuthedUser(): UserData {
@@ -9,7 +8,7 @@ fun UserEntity.toAuthedUser(): UserData {
         course = course,
         email = email,
         first_name = firstName,
-        last_name = firstName,
+        last_name = lastName,
         username = userName
     )
 }

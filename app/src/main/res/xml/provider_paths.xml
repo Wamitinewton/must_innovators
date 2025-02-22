@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Add this new entry -->
+    <external-files-path
+        name="tickets"
+        path="tickets/" />
+
+    <!-- Keep any existing paths you have -->
+    <cache-path name="cache" path="." />
+</paths>

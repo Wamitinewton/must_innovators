@@ -79,12 +79,13 @@ dependencies {
     implementation(Dependencies.roomRuntime)
     implementation("androidx.room:room-paging:2.6.1")
 
-    //jaro winkler
-    implementation(Dependencies.jaro_winkler)
-
     //material icons
     implementation(Dependencies.material_icons_core)
     implementation(Dependencies.material_icons_extended)
+
+    //zxing
+    implementation(Dependencies.zxing_qr)
+
 
 
 

@@ -19,7 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
-import com.newton.auth.presentation.utils.LoadingDialog
+import com.newton.common_ui.ui.LoadingDialog
 import com.newton.common_ui.ui.NetworkMonitor
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.network.NetworkConfiguration

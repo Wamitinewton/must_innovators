@@ -38,7 +38,7 @@ fun EventsScreen(
     onSearchClick: () -> Unit,
     onRsvpClick: () -> Unit
 ) {
-    val pagingItems = eventViewModel.searchEvents.collectAsLazyPagingItems()
+    val pagingItems = eventViewModel.pagedEvents.collectAsLazyPagingItems()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -86,7 +86,10 @@ fun EventsScreen(
                                         onClick = {
                                             onEventClick(events)
                                         },
-                                        onRsvpClick = onRsvpClick
+                                        onRsvpClick = {
+                                            onEventClick(events)
+                                            onRsvpClick()
+                                        }
                                     )
                                 }
                             }

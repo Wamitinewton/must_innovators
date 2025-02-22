@@ -1,18 +1,22 @@
 package com.newton.common_ui.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -140,6 +144,95 @@ fun PasswordTextInput(
             }
         )
     }
+
+
+/**
+ * Reusable read-only text field component
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ReadOnlyTextField(
+    value: String,
+    label: String,
+    modifier: Modifier = Modifier,
+    leadingIcon: ImageVector? = null,
+    contentDescription: String? = null
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = { },
+        label = { Text(label) },
+        readOnly = true,
+        enabled = false,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        leadingIcon = leadingIcon?.let {
+            {
+                Icon(
+                    imageVector = it,
+                    contentDescription = contentDescription
+                )
+            }
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            disabledTextColor = MaterialTheme.colorScheme.onSurface,
+            disabledBorderColor = MaterialTheme.colorScheme.outline,
+            disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    )
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ValidatedTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    modifier: Modifier = Modifier,
+    leadingIcon: ImageVector? = null,
+    contentDescription: String? = null,
+    errorMessage: String? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    maxLines: Int = 1,
+    enabled: Boolean = true
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(label) },
+            modifier = Modifier.fillMaxWidth(),
+            isError = errorMessage != null,
+            keyboardOptions = keyboardOptions,
+            visualTransformation = visualTransformation,
+            maxLines = maxLines,
+            enabled = enabled,
+            leadingIcon = leadingIcon?.let {
+                {
+                    Icon(
+                        imageVector = it,
+                        contentDescription = contentDescription
+                    )
+                }
+            }
+        )
+
+        AnimatedVisibility(visible = errorMessage != null) {
+            errorMessage?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+                )
+            }
+        }
+    }
+}
+
 
 @Composable
 fun CustomClickableOutlinedTextField(
