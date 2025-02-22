@@ -45,10 +45,10 @@ import com.newton.common_ui.ui.GlowingBorderAnimation
 import com.newton.common_ui.ui.GlowingBorderPresets
 import com.newton.common_ui.ui.LoadingOverlay
 import com.newton.common_ui.ui.MultilineInputField
-import com.newton.common_ui.ui.PrimaryButton
 import com.newton.common_ui.ui.ReadOnlyTextField
 import com.newton.common_ui.ui.SectionHeader
 import com.newton.common_ui.ui.ValidatedTextField
+import com.newton.common_ui.ui.button.CustomButton
 import com.newton.core.domain.models.event_models.RegistrationResponse
 import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventDetailsState
@@ -226,8 +226,8 @@ fun EventRegistrationScreen(
 
                  Spacer(modifier = Modifier.height(24.dp))
 
-                 PrimaryButton(
-                     text = "Register for Event",
+                 CustomButton(
+                     content = { Text("Register for Event") },
                      onClick = { eventRsvpViewmodel.registerForEvent(event.id) },
                      modifier = Modifier.padding(vertical = 16.dp)
                  )

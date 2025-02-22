@@ -36,8 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.ui.CopyableText
-import com.newton.common_ui.ui.PrimaryButton
-import com.newton.core.data.dto.EventRegistrationResponse
+import com.newton.common_ui.ui.button.CustomButton
 import com.newton.core.domain.models.event_models.RegistrationResponse
 import com.newton.core.utils.formatDateTime
 import kotlinx.coroutines.launch
@@ -156,8 +155,10 @@ fun RegistrationSuccessBottomSheet(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        PrimaryButton(
-            text = "View My Registered Events",
+        CustomButton(
+           content ={
+               Text("View My Registered Events")
+           },
             onClick = {
                 scope.launch {
                     sheetState.hide()
