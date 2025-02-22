@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,5 +63,14 @@ dependencies {
 
     implementation(Dependencies.extendedIcons)
 
+    //Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
+
     implementation(project(":core"))
+    implementation(project(":database"))
+    implementation(project(":common_ui"))
 }
