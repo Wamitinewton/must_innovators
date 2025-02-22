@@ -29,6 +29,7 @@ object Dependencies {
     const val gsonCoverter = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
     const val retrofit2Converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofit2KotlinxSerializationConverter}"
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialization}"
+    const val kotlinxDatetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.2"
     const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
     const val pager = "com.google.accompanist:accompanist-pager:0.24.10-beta"
     const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:0.18.0"

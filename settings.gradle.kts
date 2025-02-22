@@ -32,3 +32,4 @@ include(
     ":features:account",
     ":features:blogs"
 )
+include(":features:admin")

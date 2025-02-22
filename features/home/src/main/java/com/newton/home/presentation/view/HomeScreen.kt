@@ -6,17 +6,38 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.event_models.EventsData
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.newton.core.navigation.NavigationRoutes
+import com.newton.events.domain.models.Event
 import com.newton.home.domain.models.AboutUs
 import com.newton.home.domain.models.Partner
 import com.newton.home.domain.models.Testimonial
@@ -26,11 +47,46 @@ import com.newton.home.presentation.view.composables.TestimonialsSection
 import com.newton.home.presentation.view.composables.UpcomingEventsSection
 
 @Composable
-fun HomeScreen() {
-    Scaffold {
-        val configuration = LocalConfiguration.current
+fun HomeScreen(
+    navController: NavController
+) {
+    val configuration = LocalConfiguration.current
+    val context = LocalContext.current
+    Scaffold(
+        topBar = {
+            MeruInnovatorsAppBar(
+                title = "MUST Innovators",
+                actions = {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            navController.navigate(NavigationRoutes.AdminDashboard.routes)
+                        }
+                        .padding(10.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.AdminPanelSettings,
+                            contentDescription = "Admin panel"
+                        )
+                    }
+
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+
+                        }
+                        .padding(10.dp)
+
+                    ) {
+                        Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
+                    }
+                }
+            )
+        }
+    ) {
         Box(
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .padding(it)
                 .padding(horizontal = 8.dp)
         ) {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -46,11 +102,12 @@ fun HomeScreen() {
                         Box(
                             modifier = Modifier
                                 .clip(MaterialTheme.shapes.large)
+                                .clickable {
+                                    navController.navigate(NavigationRoutes.EventsRoute.routes)
+                                }
                                 .background(color = MaterialTheme.colorScheme.secondaryContainer)
                                 .padding(horizontal = 12.dp, vertical = 5.dp)
-                                .clickable {
 
-                                }
                         ) {
                             Text("ALL", style = MaterialTheme.typography.titleMedium)
                         }
@@ -76,7 +133,10 @@ fun HomeScreen() {
                     )
                 }
                 item {
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Text(
                             text = "Testimonials",
                             style = MaterialTheme.typography.headlineSmall
@@ -84,11 +144,12 @@ fun HomeScreen() {
                         Box(
                             modifier = Modifier
                                 .clip(MaterialTheme.shapes.large)
-                                .background(color = MaterialTheme.colorScheme.secondaryContainer)
-                                .padding(horizontal = 12.dp, vertical = 5.dp)
                                 .clickable {
 
                                 }
+                                .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                                .padding(horizontal = 12.dp, vertical = 5.dp)
+
                         ) {
                             Text("ALL", style = MaterialTheme.typography.titleMedium)
                         }
@@ -97,7 +158,8 @@ fun HomeScreen() {
                 item {
                     TestimonialsSection(
                         testimonials = sampleTestimonials,
-                        configuration = configuration
+                        configuration = configuration,
+                        context = context
                     )
                 }
                 item {
@@ -109,14 +171,14 @@ fun HomeScreen() {
                 item {
                     AboutUsSection(
                         aboutUs = sampleAboutUs,
-                        configuration = configuration
+                        configuration = configuration,
+                        onClick = {}
                     )
                 }
             }
         }
     }
 }
-
 
 val samplePartners = listOf(
     Partner(
@@ -145,32 +207,38 @@ val sampleAboutUs = AboutUs(
     description = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
 )
 val sampleEvents = listOf(
-    EventsData(
+    Event(
         id = 1,
+        title = "Android Hackathon",
         description = "Are you passionate about Android development and eager to explore the power of Kotlin? Join our vibrant community of developers, learners, and enthusiasts who are dedicated to mastering Android app development using Kotlin. Whether you're a beginner or an experienced developer, our club offers a collaborative space to learn, share, and grow together.",
         date = "12th October",
         contactEmail = "emmanuel@gmail.com",
-        imageUrl = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
+        image = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
         isVirtual = true,
         location = "ECA21",
         name = "Robotics session",
         organizer = "Jairus Kibisu",
-        category = "Robotics"
     ),
-    EventsData(
+    Event(
         id = 2,
+        title = "AI Workshop",
         description = "Hands-on workshop on ML & AI basics",
         date = "20th October",
         contactEmail = "emmanuel@gmail.com",
-        imageUrl = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
+        image = "https://images.unsplash.com/photo-1739772542563-b592f172282f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D",
         isVirtual = false,
         location = "ECA21",
         name = "Robotics session",
         organizer = "Grace Ngari",
-        category = "Android",
     )
 )
 val sampleTestimonials = listOf(
+    Testimonial(
+        id = 1,
+        author = "Bett",
+        role = "Android Lead",
+        content = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
+    ),
     Testimonial(
         id = 1,
         author = "Bett",

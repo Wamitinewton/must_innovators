@@ -1,6 +1,7 @@
 package com.newton.meruinnovators.navigation
 
 import com.newton.account.navigation.AccountNavigationApi
+import com.newton.admin.navigation.AdminNavigationApi
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.blogs.navigation.BlogsNavigationApi
 import com.newton.events.navigation.EventsNavigationApi
@@ -12,4 +13,5 @@ data class NavigationSubGraphs(
     val homeNavigationApi: HomeNavigationApi,
     val blogsNavigationApi: BlogsNavigationApi,
     val accountNavigationApi: AccountNavigationApi,
+    val adminNavigationApi: AdminNavigationApi
 )

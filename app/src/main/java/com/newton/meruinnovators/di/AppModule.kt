@@ -2,6 +2,7 @@ package com.newton.meruinnovators.di
 
 import android.content.Context
 import com.newton.account.navigation.AccountNavigationApi
+import com.newton.admin.navigation.AdminNavigationApi
 import com.newton.auth.authInterceptor.AuthInterceptor
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.blogs.navigation.BlogsNavigationApi
@@ -35,14 +36,16 @@ object AppModule {
         eventsNavigationApi: EventsNavigationApi,
         homeNavigationApi: HomeNavigationApi,
         blogsNavigationApi: BlogsNavigationApi,
-        accountNavigationApi: AccountNavigationApi
+        accountNavigationApi: AccountNavigationApi,
+        adminNavigationApi: AdminNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
             eventsNavigationApi,
             homeNavigationApi,
             blogsNavigationApi,
-            accountNavigationApi
+            accountNavigationApi,
+            adminNavigationApi
         )
     }
 
