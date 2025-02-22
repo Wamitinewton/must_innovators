@@ -26,19 +26,5 @@ interface EventApi {
         @Query("page_siz") pageSize: Int = 10
     ): com.newton.core.data.dto.EventApiResponse<EventResponse>
 
-    @PUT(EventEndPoint.UPDATE_EVENT)
-    suspend fun updateEvent(
-        @Path("id") id: Int,
-        @Body request: EventRequest
-    ): EventResponse
 
-    @DELETE(EventEndPoint.DELETE_EVENT)
-    suspend fun deleteEvent(
-        @Path("id") id: Int
-    ): EventResponse
-
-    @POST(EventEndPoint.CREATE_EVENT)
-    suspend fun createEvent(
-        @Body request: EventRequest
-    ): EventResponse
 }

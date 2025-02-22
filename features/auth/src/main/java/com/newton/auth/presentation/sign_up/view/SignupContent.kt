@@ -16,7 +16,8 @@ import com.newton.auth.presentation.sign_up.state.SignupViewmodelState
 import com.newton.auth.presentation.utils.AuthHeader
 import com.newton.auth.presentation.utils.OrContinueWith
 import com.newton.auth.presentation.utils.SocialAuthentication
-import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.ui.CustomTextLabelSmall
+import com.newton.common_ui.ui.button.CustomButton
 
 @Composable
 fun SignupContent(
@@ -89,7 +90,9 @@ fun SignupContent(
         Spacer(modifier = Modifier.height(15.dp))
 
         CustomButton(
-            text = "Sign up",
+            content = {
+                CustomTextLabelSmall(bodyText = "Sign up")
+            },
             onClick = {
                 onEvent(SignupUiEvent.SignUp)
             },

@@ -22,7 +22,8 @@ import com.newton.auth.presentation.login.state.LoginViewModelState
 import com.newton.auth.presentation.utils.AuthHeader
 import com.newton.auth.presentation.utils.OrContinueWith
 import com.newton.auth.presentation.utils.SocialAuthentication
-import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.ui.CustomTextLabelSmall
+import com.newton.common_ui.ui.button.CustomButton
 
 @Composable
 fun LoginContent(
@@ -66,8 +67,11 @@ fun LoginContent(
 
         Spacer(modifier = Modifier.height(15.dp))
 
+
         CustomButton(
-            text = "Log In",
+            content = {
+                CustomTextLabelSmall(bodyText = "Log In")
+            },
             onClick = {
                 onEvent(LoginEvent.Login)
             },

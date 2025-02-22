@@ -26,9 +26,10 @@ import com.newton.home.domain.models.AboutUs
 @Composable
 fun AboutUsSection(
     aboutUs: AboutUs,
-    configuration: Configuration
+    configuration: Configuration,
+    onClick:()->Unit
 ) {
-    Card(elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)) {
+    Card(elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp), onClick = onClick) {
         Box(modifier = Modifier.padding(8.dp).height(200.dp)){
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)

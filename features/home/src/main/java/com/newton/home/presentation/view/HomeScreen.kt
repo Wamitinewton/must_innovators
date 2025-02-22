@@ -22,6 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -29,9 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.events.domain.models.Event
@@ -48,28 +52,42 @@ fun HomeScreen(
     navController: NavController
 ) {
     val configuration = LocalConfiguration.current
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             MeruInnovatorsAppBar(
                 title = "MUST Innovators",
                 actions = {
-                    Box(modifier = Modifier.padding(8.dp).clip(CircleShape).clickable {
-                        navController.navigate(NavigationRoutes.AdminDashboard.routes)
-                    }){
-                        Icon(imageVector = Icons.Filled.AdminPanelSettings, contentDescription = "Admin panel")
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            navController.navigate(NavigationRoutes.AdminDashboard.routes)
+                        }
+                        .padding(10.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.AdminPanelSettings,
+                            contentDescription = "Admin panel"
+                        )
                     }
 
-                    Box(modifier = Modifier.padding(8.dp).clip(CircleShape).clickable {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
 
-                    }){
-                            Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
+                        }
+                        .padding(10.dp)
+
+                    ) {
+                        Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
                     }
                 }
             )
         }
     ) {
         Box(
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .padding(it)
                 .padding(horizontal = 8.dp)
         ) {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -86,7 +104,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .clip(MaterialTheme.shapes.large)
                                 .clickable {
-
+                                    navController.navigate(NavigationRoutes.EventsRoute.routes)
                                 }
                                 .background(color = MaterialTheme.colorScheme.secondaryContainer)
                                 .padding(horizontal = 12.dp, vertical = 5.dp)
@@ -116,7 +134,10 @@ fun HomeScreen(
                     )
                 }
                 item {
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Text(
                             text = "Testimonials",
                             style = MaterialTheme.typography.headlineSmall
@@ -124,11 +145,12 @@ fun HomeScreen(
                         Box(
                             modifier = Modifier
                                 .clip(MaterialTheme.shapes.large)
-                                .background(color = MaterialTheme.colorScheme.secondaryContainer)
-                                .padding(horizontal = 12.dp, vertical = 5.dp)
                                 .clickable {
 
                                 }
+                                .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                                .padding(horizontal = 12.dp, vertical = 5.dp)
+
                         ) {
                             Text("ALL", style = MaterialTheme.typography.titleMedium)
                         }
@@ -137,7 +159,8 @@ fun HomeScreen(
                 item {
                     TestimonialsSection(
                         testimonials = sampleTestimonials,
-                        configuration = configuration
+                        configuration = configuration,
+                        context = context
                     )
                 }
                 item {
@@ -149,14 +172,14 @@ fun HomeScreen(
                 item {
                     AboutUsSection(
                         aboutUs = sampleAboutUs,
-                        configuration = configuration
+                        configuration = configuration,
+                        onClick = {}
                     )
                 }
             }
         }
     }
 }
-
 
 val samplePartners = listOf(
     Partner(
@@ -211,6 +234,12 @@ val sampleEvents = listOf(
     )
 )
 val sampleTestimonials = listOf(
+    Testimonial(
+        id = 1,
+        author = "Bett",
+        role = "Android Lead",
+        content = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
+    ),
     Testimonial(
         id = 1,
         author = "Bett",
