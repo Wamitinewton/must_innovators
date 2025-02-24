@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.ui.button.CustomButton
+import com.newton.common_ui.ui.CustomButton
 import com.newton.core.navigation.NavigationRoutes
 
 @Composable

@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.events.AddEventEvents
-import com.newton.common_ui.ui.button.CustomOutlinedButton
+import com.newton.common_ui.ui.CustomOutlinedButton
 
 
 @Composable

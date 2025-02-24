@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.newton.common_ui.ui.button.CustomTextButton
+import com.newton.common_ui.ui.CustomTextButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

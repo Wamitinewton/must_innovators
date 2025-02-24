@@ -36,7 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.ui.CopyableText
-import com.newton.common_ui.ui.button.CustomButton
+import com.newton.common_ui.ui.CustomButton
 import com.newton.core.domain.models.event_models.RegistrationResponse
 import com.newton.core.utils.formatDateTime
 import kotlinx.coroutines.launch
