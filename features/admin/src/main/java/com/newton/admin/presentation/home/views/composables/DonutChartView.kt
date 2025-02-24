@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.composables.chart.AnimatedDonutChart
 import com.newton.common_ui.ui.ColumnWrapper
-import com.newton.common_ui.ui.button.CustomButton
+import com.newton.common_ui.ui.CustomButton
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
