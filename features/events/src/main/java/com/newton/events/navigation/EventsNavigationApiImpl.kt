@@ -25,7 +25,7 @@ class EventsNavigationApiImpl: EventsNavigationApi {
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Event.route,
-            startDestination = NavigationRoutes.EventTicketsRoute.routes
+            startDestination = NavigationRoutes.EventsRoute.routes
         ){
             /**
              * In this case, we are using parent entry for the Shared viewmodel

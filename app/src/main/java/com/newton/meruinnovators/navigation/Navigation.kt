@@ -19,7 +19,7 @@ fun MeruInnovatorsNavigation(
 
     NavHost(
         navController = navHostController,
-        startDestination = NavigationSubGraphRoutes.Event.route
+        startDestination = NavigationSubGraphRoutes.Home.route
 //        startDestination = if (isUserLoggedIn) {
 //            NavigationSubGraphRoutes.Home.route
 //        } else {
