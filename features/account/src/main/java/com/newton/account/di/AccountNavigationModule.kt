@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AccountModule {
+object AccountNavigationModule {
     @Provides
     @Singleton
     fun provideEventNavApi(): AccountNavigationApi {

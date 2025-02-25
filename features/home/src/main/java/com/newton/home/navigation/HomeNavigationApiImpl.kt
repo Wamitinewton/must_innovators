@@ -18,7 +18,17 @@ class HomeNavigationApiImpl: HomeNavigationApi {
             startDestination = NavigationRoutes.HomeRoute.routes
         ){
             composable(route = NavigationRoutes.HomeRoute.routes) {
-                HomeScreen(navHostController)
+                HomeScreen(
+                    onNavigateToAdmin = {
+                        navHostController.navigate(NavigationRoutes.AdminDashboard.routes)
+                    },
+                    onNavigateToEvents = {
+                        navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                    },
+                    onNavigateToAboutUs = {
+                        navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
+                    }
+                )
             }
         }
     }

@@ -26,7 +26,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AccountDrawerContent(
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    onMyEventsClick: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -67,7 +68,9 @@ fun AccountDrawerContent(
                 ) },
                 label = { Text("My Event Tickets") },
                 selected = false,
-                onClick = {}
+                onClick = {
+                    onMyEventsClick()
+                }
             )
 
             NavigationDrawerItem(

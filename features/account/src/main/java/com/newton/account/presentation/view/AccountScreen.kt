@@ -50,7 +50,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountScreen() {
+fun AccountScreen(
+    onMyEventsClick: () -> Unit
+) {
 
     val user = remember {
         User(
@@ -131,7 +133,10 @@ fun AccountScreen() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            AccountDrawerContent(drawerState = drawerState)
+            AccountDrawerContent(
+                drawerState = drawerState,
+                onMyEventsClick = onMyEventsClick
+            )
         }
     ) {
         Scaffold(
