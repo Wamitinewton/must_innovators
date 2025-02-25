@@ -29,7 +29,11 @@ fun AboutUsSection(
     configuration: Configuration,
     onClick:()->Unit
 ) {
-    Card(elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp), onClick = onClick) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp), onClick = onClick) {
         Box(modifier = Modifier.padding(8.dp).height(200.dp)){
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)

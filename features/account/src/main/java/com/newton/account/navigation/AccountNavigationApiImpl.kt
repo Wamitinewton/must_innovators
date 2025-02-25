@@ -18,7 +18,11 @@ class AccountNavigationApiImpl: AccountNavigationApi {
             startDestination = NavigationRoutes.AccountRoute.routes
         ){
             composable(route = NavigationRoutes.AccountRoute.routes) {
-                AccountScreen()
+                AccountScreen(
+                    onMyEventsClick = {
+                        navHostController.navigate(NavigationRoutes.EventTicketsRoute.routes)
+                    }
+                )
             }
         }
     }

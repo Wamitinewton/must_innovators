@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,7 +44,7 @@ fun TestimonialsSection(
     )
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         items(testimonials) { testimonial ->
-            Card(elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)) {
+            Card(elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(
                     modifier = Modifier
                         .width((configuration.screenWidthDp * .9).dp)

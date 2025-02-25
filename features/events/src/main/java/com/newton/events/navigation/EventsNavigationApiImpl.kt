@@ -103,7 +103,9 @@ class EventsNavigationApiImpl: EventsNavigationApi {
 
             composable(route = NavigationRoutes.EventTicketsRoute.routes) {
                 RegisteredEventsScreen(
-                    onBackPressed = {},
+                    onBackPressed = {
+                        navHostController.navigateUp()
+                    },
                     onTicketSelected = {}
                 )
             }

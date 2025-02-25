@@ -20,4 +20,5 @@ sealed class NavigationRoutes(val routes: String,val deepLinkPrefix: String? = n
     data object ModifyEvent: NavigationRoutes("edit_event_screen")
     data object EventRegistrationScreen: NavigationRoutes("event_registration")
     data object EventTicketsRoute: NavigationRoutes("event_tickets", "app://event_tickets")
+    data object AboutUsRoute: NavigationRoutes("about_us")
 }
