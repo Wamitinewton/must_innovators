@@ -156,15 +156,15 @@ fun RegistrationSuccessBottomSheet(
         Spacer(modifier = Modifier.height(32.dp))
 
         CustomButton(
-           content ={
-               Text("View My Registered Events")
-           },
             onClick = {
                 scope.launch {
                     sheetState.hide()
                     onDismiss()
                     onRegisteredEvents()
                 }
+            },
+            content ={
+                Text("View My Registered Events")
             },
         )
         Spacer(modifier = Modifier.height(50.dp))

@@ -2,6 +2,7 @@ package com.newton.meruinnovators.appication
 
 import android.app.Application
 import androidx.work.Configuration
+import androidx.work.WorkManager
 import coil3.ImageLoader
 import com.newton.auth.data.work_manager.TokenRefreshWorkerFactory
 import com.newton.auth.data.work_manager.scheduleTokenRefreshWork
@@ -23,6 +24,8 @@ class MeruInnovatorsApp: Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+
+        WorkManager.initialize(this, workManagerConfiguration)
         scheduleTokenRefreshWork(this)
     }
 

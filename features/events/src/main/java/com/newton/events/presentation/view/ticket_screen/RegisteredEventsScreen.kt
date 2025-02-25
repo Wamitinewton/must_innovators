@@ -22,19 +22,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.events.presentation.view.composables.EmptyTicketsView
 import com.newton.events.presentation.view.composables.EventTicketCard
+import com.newton.events.presentation.viewmodel.EventNotificationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisteredEventsScreen(
     onBackPressed: () -> Unit,
-    onTicketSelected: (String) -> Unit = {}
+    onTicketSelected: (String) -> Unit = {},
+    viewModel: EventNotificationViewModel = hiltViewModel()
 ) {
 
     val tickets = remember {
@@ -44,7 +48,7 @@ fun RegisteredEventsScreen(
                 ticketNumber = "TECH24-5781",
                 eventName = "Google Developer Conference",
                 eventDescription = "Join us for the latest in Android and web development",
-                eventDate = "2024-12-05T14:00:00Z",
+                eventDate = "2025-02-25T23:50:00Z",
                 eventLocation = "Technology Hub, Main Auditorium",
                 registrationDate = "2024-12-05T14:00:00Z",
                 ticketType = TicketType.STANDARD
@@ -54,7 +58,7 @@ fun RegisteredEventsScreen(
                 ticketNumber = "HACK23-1234",
                 eventName = "Spring Hackathon 2025",
                 eventDescription = "48-hour coding challenge with amazing prizes",
-                eventDate = "2025-12-05T14:00:00Z",
+                eventDate = "2025-02-25T23:50:00Z",
                 eventLocation = "Innovation Center, Floor 3",
                 registrationDate = "2024-12-05T14:00:00Z",
                 ticketType = TicketType.EARLY_BIRD
@@ -64,7 +68,7 @@ fun RegisteredEventsScreen(
                 ticketNumber = "WORK25-7890",
                 eventName = "UI/UX Design Workshop",
                 eventDescription = "Learn the fundamentals of modern UI/UX design",
-                eventDate = "2025-12-05T14:00:00Z",
+                eventDate = "2025-02-25T14:00:00Z",
                 eventLocation = "Design Studio, Room 101",
                 registrationDate = "2024-12-05T14:00:00Z"
             ),
@@ -80,6 +84,12 @@ fun RegisteredEventsScreen(
                 isUsed = true
             )
         )
+    }
+
+    LaunchedEffect(tickets) {
+        tickets.filter { !it.isUsed }.forEach { ticket ->
+            viewModel.registerForEventNotifications(ticket)
+        }
     }
 
 
