@@ -77,7 +77,7 @@ fun LoginScreen(
                 onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
             )
             if (uiState.isLoading) {
-                LoadingIndicator()
+                LoadingDialog()
             }
         }
     }
