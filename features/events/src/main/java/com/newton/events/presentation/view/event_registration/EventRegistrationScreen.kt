@@ -227,9 +227,9 @@ fun EventRegistrationScreen(
                  Spacer(modifier = Modifier.height(24.dp))
 
                  CustomButton(
-                     content = { Text("Register for Event") },
                      onClick = { eventRsvpViewmodel.registerForEvent(event.id) },
-                     modifier = Modifier.padding(vertical = 16.dp)
+                     modifier = Modifier.padding(vertical = 16.dp),
+                     content = { Text("Register for Event") }
                  )
 
                  Spacer(modifier = Modifier.height(16.dp))

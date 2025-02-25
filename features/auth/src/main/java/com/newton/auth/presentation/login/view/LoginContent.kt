@@ -69,13 +69,16 @@ fun LoginContent(
 
 
         CustomButton(
-            content = {
-                CustomTextLabelSmall(bodyText = "Log In")
-            },
             onClick = {
                 onEvent(LoginEvent.Login)
             },
-            enabled = !uiState.isLoading
+            enabled = !uiState.isLoading,
+            content = {
+                Text(
+                    text = "Log In",
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
         )
         Row(
             modifier = Modifier

@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 
+
 @Composable
  fun LoadingIndicator() {
     Box(
@@ -69,3 +70,5 @@ import androidx.compose.ui.unit.dp
         }
     }
 }
+
+

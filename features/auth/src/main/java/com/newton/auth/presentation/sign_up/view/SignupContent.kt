@@ -90,13 +90,13 @@ fun SignupContent(
         Spacer(modifier = Modifier.height(15.dp))
 
         CustomButton(
-            content = {
-                CustomTextLabelSmall(bodyText = "Sign up")
-            },
             onClick = {
                 onEvent(SignupUiEvent.SignUp)
             },
-            enabled = !uiState.isLoading
+            enabled = !uiState.isLoading,
+            content = {
+                CustomTextLabelSmall(bodyText = "Sign up")
+            }
         )
 
     }

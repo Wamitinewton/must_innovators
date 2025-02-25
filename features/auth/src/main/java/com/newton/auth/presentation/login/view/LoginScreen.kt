@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.newton.auth.presentation.login.event.LoginNavigationEvent
 import com.newton.auth.presentation.login.view_model.LoginViewModel
 import com.newton.common_ui.ui.LoadingDialog
+import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.common_ui.ui.NetworkMonitor
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.network.NetworkConfiguration
@@ -76,7 +77,7 @@ fun LoginScreen(
                 onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
             )
             if (uiState.isLoading) {
-                LoadingDialog()
+                LoadingIndicator()
             }
         }
     }

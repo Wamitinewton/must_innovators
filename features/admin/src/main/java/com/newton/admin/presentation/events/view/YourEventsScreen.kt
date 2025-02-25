@@ -20,10 +20,11 @@ fun YourEventsScreen(navController: NavController) {
     Scaffold(
         topBar = {
             MeruInnovatorsAppBar(title = "Your Events", actions = {
-                CustomButton(modifier = Modifier.padding(8.dp),
+                CustomButton(
                     onClick = {
                         navController.navigate(NavigationRoutes.AddEvent.routes)
                     },
+                    modifier = Modifier.padding(8.dp),
                     content =  {
                         Icon(Icons.Filled.Add, contentDescription = "Add Event")
                     }
