@@ -276,7 +276,6 @@ fun AddEvents(
                    )
                    Spacer(Modifier.size(24.dp))
                }
-
             }
         }
         if (state.isShowDialog) {

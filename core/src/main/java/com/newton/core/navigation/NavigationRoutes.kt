@@ -18,4 +18,7 @@ sealed class NavigationRoutes(val routes: String) {
     data object EventSearchScreen: NavigationRoutes("event_search")
     data object AddEvent: NavigationRoutes("add_event_screen")
     data object ModifyEvent: NavigationRoutes("edit_event_screen")
+    data object AddPartners: NavigationRoutes("add_partners_screen")
+    data object AddCommunity: NavigationRoutes("add_community_screen")
+    data object SendNewsLetter: NavigationRoutes("send_newsletter_screen")
 }
