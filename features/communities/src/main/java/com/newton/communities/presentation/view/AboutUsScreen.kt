@@ -116,7 +116,7 @@ fun AboutUsScreen() {
                 description = "Crafting user-centered design solutions for digital products and experiences.",
                 memberCount = 31,
                 icon = Icons.Outlined.ViewDay,
-                color = Color(0xFFEC407A) // Pink
+                color = Color(0xFFFFA726) // Amber
             ),
             CommunitySubgroup(
                 id = "7",
@@ -124,7 +124,7 @@ fun AboutUsScreen() {
                 description = "Crafting user-centered design solutions for digital products and experiences.",
                 memberCount = 31,
                 icon = Icons.Outlined.ViewDay,
-                color = Color(0xFFEC407A) // Pink
+                color = Color(0xFF7E57C2) // Purple
             ),
             CommunitySubgroup(
                 id = "8",
@@ -132,10 +132,11 @@ fun AboutUsScreen() {
                 description = "Crafting user-centered design solutions for digital products and experiences.",
                 memberCount = 31,
                 icon = Icons.Outlined.ViewDay,
-                color = Color(0xFFEC407A) // Pink
+                color = Color(0xFF26A69A) // Teal
             )
         )
     }
+
 
     val executives = remember {
         listOf(
