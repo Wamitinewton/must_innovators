@@ -34,6 +34,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
 androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version.ref = "uiTextAndroid" }
+androidx-ui-geometry-android = { group = "androidx.compose.ui", name = "ui-geometry-android", version.ref = "uiGeometryAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
