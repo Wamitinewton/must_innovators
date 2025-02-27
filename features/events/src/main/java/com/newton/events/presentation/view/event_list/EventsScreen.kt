@@ -30,6 +30,7 @@ import com.newton.common_ui.ui.PullToRefreshLazyColumn
 import com.newton.core.domain.models.event_models.EventsData
 import com.newton.events.presentation.view.composables.CustomAppBar
 import com.newton.events.presentation.view.composables.EventCardAnimation
+import com.newton.events.presentation.view.composables.EventCardShimmerList
 import com.newton.events.presentation.viewmodel.EventViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +64,7 @@ fun EventsScreen(
         ) {
             when(val refreshLoadState = pagingItems.loadState.refresh) {
                 is LoadState.Loading -> {
-                    LoadingIndicator()
+                    EventCardShimmerList()
                 }
 
                 is LoadState.Error -> {

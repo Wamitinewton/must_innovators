@@ -1,4 +1,4 @@
-package com.newton.on_boarding
+package com.newton.on_boarding.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -56,35 +56,36 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import androidx.navigation.NavHostController
 import coil3.compose.SubcomposeAsyncImage
+import com.newton.common_ui.R
 import com.newton.common_ui.ui.BodyLargeText
 import com.newton.common_ui.ui.DisplaySmallText
 import com.newton.common_ui.ui.LabelLargeText
-import com.newton.core.navigation.NavigationRoutes
+import com.newton.on_boarding.domain.OnboardingPage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @Composable
 fun OnboardingScreen(
-    navHostController: NavHostController
+    onLoginClick: () -> Unit,
+    onSignupClick: () -> Unit
 ) {
     val pages = listOf(
         OnboardingPage(
-            image = com.newton.common_ui.R.drawable.innovation,
+            image = R.drawable.innovation,
             title = "Join the Innovation Community",
             description = "Connect with like-minded innovators and be part of something revolutionary",
             icon = { Icon(Icons.Default.Person, contentDescription = "Community") }
         ),
         OnboardingPage(
-            image = com.newton.common_ui.R.drawable.innovation,
+            image = R.drawable.innovation,
             title = "Discover New Ideas",
             description = "Access resources and explore groundbreaking projects in our vibrant ecosystem",
             icon = { Icon(Icons.Default.Check, contentDescription = "Ideas") }
         ),
         OnboardingPage(
-            image = com.newton.common_ui.R.drawable.innovation,
+            image = R.drawable.innovation,
             title = "Start Your Journey",
             description = "Take your first step towards innovation today with MUST Innovation",
             icon = { Icon(Icons.Rounded.Email, contentDescription = "Start") }
@@ -287,7 +288,7 @@ fun OnboardingScreen(
                             ) {
                                 ElevatedButton(
                                     onClick = {
-                                        navHostController.navigate(NavigationRoutes.SignupRoute.routes)
+                                        onSignupClick()
                                     },
                                     modifier = Modifier
                                         .weight(1f)
@@ -305,7 +306,7 @@ fun OnboardingScreen(
 
                                 FilledTonalButton(
                                     onClick = {
-                                        navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                                        onLoginClick()
                                     },
                                     modifier = Modifier
                                         .weight(1f)

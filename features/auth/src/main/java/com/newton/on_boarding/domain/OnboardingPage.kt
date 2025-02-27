@@ -1,4 +1,4 @@
-package com.newton.on_boarding
+package com.newton.on_boarding.domain
 
 import androidx.compose.runtime.Composable
 
