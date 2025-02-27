@@ -41,7 +41,10 @@ fun UpcomingEventsSection(
         items(events) { event ->
             Card(
                 modifier = Modifier.width((configuration.screenWidthDp*0.9).dp),
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
+                colors = CardDefaults.cardColors(
+                    MaterialTheme.colorScheme.surface
+                )
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),

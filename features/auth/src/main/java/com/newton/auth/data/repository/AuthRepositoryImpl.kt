@@ -33,12 +33,10 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
 
     init {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                AuthTokenHolder.initializeTokens(sessionManager)
-            } catch (e: Exception) {
-                Timber.e(e, "Failed to initialize tokens")
-            }
+        try {
+            AuthTokenHolder.initializeTokens(sessionManager)
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to initialize tokens")
         }
     }
 
@@ -139,9 +137,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getAccessToken(): String? = AuthTokenHolder.accessToken
+    override fun getAccessToken(): String? = sessionManager.fetchAccessToken()
 
-    override fun getRefreshToken(): String? = AuthTokenHolder.refreshToken
+    override fun getRefreshToken(): String? = sessionManager.fetchRefreshToken()
     override suspend fun getLoggedInUser(): UserData? {
         return userDao.getUser()?.toAuthedUser()
     }

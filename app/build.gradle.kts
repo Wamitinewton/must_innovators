@@ -75,6 +75,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
     }
     compileOptions {
@@ -151,6 +152,7 @@ dependencies {
     implementation(project(":features:home"))
     implementation(project(":features:admin"))
     implementation(project(":database"))
+    implementation(project(":features:communities"))
 }
 
 

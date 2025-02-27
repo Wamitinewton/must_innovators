@@ -58,7 +58,7 @@ fun EventCard(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = event.title,
+                text = event.name,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = ThemeUtils.AppColors.Text.themed()
                 ),

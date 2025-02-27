@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.ui.button.CustomButton
+import com.newton.common_ui.ui.CustomButton
 import com.newton.core.navigation.NavigationRoutes
 
 @Composable
@@ -20,10 +20,11 @@ fun YourEventsScreen(navController: NavController) {
     Scaffold(
         topBar = {
             MeruInnovatorsAppBar(title = "Your Events", actions = {
-                CustomButton(modifier = Modifier.padding(8.dp),
+                CustomButton(
                     onClick = {
                         navController.navigate(NavigationRoutes.AddEvent.routes)
                     },
+                    modifier = Modifier.padding(8.dp),
                     content =  {
                         Icon(Icons.Filled.Add, contentDescription = "Add Event")
                     }

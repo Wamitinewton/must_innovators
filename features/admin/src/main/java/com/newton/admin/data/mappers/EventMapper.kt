@@ -11,7 +11,6 @@ object EventMapper {
             imageUrl = this.image_url,
             name = this.name,
             category = this.category,
-            title = this.title,
             description = this.description,
             date = this.date,
             location = this.location,
@@ -23,10 +22,9 @@ object EventMapper {
     fun EventDto.toEventDaoEntity():EventEntity{
         return EventEntity(
             id = this.id,
-            imageUrl = this.image_url?:"",
+            imageUrl = this.image_url,
             name = this.name,
             category = this.category,
-            title = this.category,
             description = this.description,
             date = this.date,
             location = this.location,

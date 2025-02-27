@@ -52,7 +52,6 @@ import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.common_ui.composables.dialog.CustomDatePickerDialog
 import com.newton.common_ui.ui.ColumnWrapper
 import com.newton.common_ui.ui.CustomClickableOutlinedTextField
-import com.newton.common_ui.ui.saveImageUriToPublicDirectory
 import com.newton.common_ui.ui.toFormattedDate
 import java.io.File
 import java.io.FileOutputStream
