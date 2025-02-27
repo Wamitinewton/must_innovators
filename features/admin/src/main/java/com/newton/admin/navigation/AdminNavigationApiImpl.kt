@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.admin.presentation.community.view.AddCommunityScreen
 import com.newton.admin.presentation.events.view.ModifyEvent
-import com.newton.admin.presentation.events.view.YourEventsScreen
+import com.newton.admin.presentation.events.view.EventManagementScreen
 import com.newton.admin.presentation.events.view.AddEvents
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
@@ -33,7 +33,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 AdminHome(viewModel,viewModel::handleEvents,navHostController)
             }
             composable(route = NavigationRoutes.AdminEvents.routes) {
-                YourEventsScreen(navHostController)
+                EventManagementScreen(navHostController)
             }
             composable(route = NavigationRoutes.AdminFeedbacks.routes) {
                 val viewModel = hiltViewModel<AdminFeedbackViewModel>()

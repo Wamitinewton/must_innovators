@@ -261,13 +261,6 @@ fun AdminHome(
                             }
                         )
                         AddChoiceCard(
-                            text = "Update Event",
-                            onclick = {
-                                navController.navigate(NavigationRoutes.ModifyEvent.routes)
-                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
-                            }
-                        )
-                        AddChoiceCard(
                             text = "Send NewsLetter",
                             onclick = {
                                 navController.navigate(NavigationRoutes.SendNewsLetter.routes)
