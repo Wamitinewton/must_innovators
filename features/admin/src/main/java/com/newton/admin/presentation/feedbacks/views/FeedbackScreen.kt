@@ -72,14 +72,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-//@Composable
-//fun FeedbackScreen(modifier: Modifier = Modifier) {
-//    Scaffold {
-//        Box(modifier = Modifier.fillMaxSize().padding(it)){
-//            FeedbackScreen()
-//        }
-//    }
-//}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedbackScreen(
@@ -137,13 +130,6 @@ fun FeedbackScreen(
                                 contentDescription = "Close Search"
                             )
                         }
-                    }
-
-                    IconButton(onClick = { viewModel.loadFeedbacks() }) {
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = "Refresh"
-                        )
                     }
                 }
             )
@@ -253,6 +239,7 @@ fun StatsSummary(feedbacks: List<FeedBack>) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(

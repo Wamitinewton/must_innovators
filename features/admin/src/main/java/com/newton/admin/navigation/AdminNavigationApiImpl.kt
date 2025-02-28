@@ -1,5 +1,6 @@
 package com.newton.admin.navigation
 
+import NewsletterAdminScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -7,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.admin.presentation.community.view.AddCommunityScreen
 import com.newton.admin.presentation.events.view.ModifyEvent
-import com.newton.admin.presentation.events.view.EventManagementScreen
+import com.newton.admin.presentation.events.view.management.EventManagementScreen
 import com.newton.admin.presentation.events.view.AddEvents
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
@@ -56,6 +57,10 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             composable(route = NavigationRoutes.AddPartners.routes) {
                 AddPartnerScreen()
             }
+            composable(route = NavigationRoutes.NewsLetterScreen.routes) {
+                NewsletterAdminScreen()
+            }
+
         }
     }
 }

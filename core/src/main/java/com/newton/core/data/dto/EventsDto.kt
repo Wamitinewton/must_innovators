@@ -29,5 +29,6 @@ data class EventDto(
     val location: String,
     val organizer: String,
     val contact_email: String,
-    val is_virtual: Boolean
+    val is_virtual: Boolean,
+
 )

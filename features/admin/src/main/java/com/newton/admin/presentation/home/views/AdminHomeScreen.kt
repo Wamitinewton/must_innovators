@@ -263,7 +263,7 @@ fun AdminHome(
                         AddChoiceCard(
                             text = "Send NewsLetter",
                             onclick = {
-                                navController.navigate(NavigationRoutes.SendNewsLetter.routes)
+                                navController.navigate(NavigationRoutes.NewsLetterScreen.routes)
                                 onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
                             }
                         )

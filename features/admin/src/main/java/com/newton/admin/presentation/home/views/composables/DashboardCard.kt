@@ -26,8 +26,9 @@ fun DashboardCard(
     Card(
         modifier = modifier
             .padding(8.dp)
-            .height((configuration.screenHeightDp*0.45).dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .height((configuration.screenHeightDp * 0.45).dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
     ) {
         Column(
             modifier = Modifier

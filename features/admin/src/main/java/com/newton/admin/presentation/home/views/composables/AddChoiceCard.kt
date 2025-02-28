@@ -28,10 +28,11 @@ fun AddChoiceCard(text: String, onclick: () -> Unit) {
     Card(
         modifier = Modifier
             .height(50.dp),
+        colors = CardDefaults.cardColors( MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
         onClick = onclick
     ) {
-        Box(modifier = Modifier) {
+        Box(modifier = Modifier.padding(top = 5.dp)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
