@@ -13,5 +13,8 @@ data class EventsData(
     val location: String,
     val organizer: String,
     val contactEmail: String,
-    val isVirtual: Boolean
+//    val attendees: List<Attendee>,
+//    val feedbacks: List<EventFeedback>,
+    val isVirtual: Boolean,
+//    val isReminderSet: Boolean
 )

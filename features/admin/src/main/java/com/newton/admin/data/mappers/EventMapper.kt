@@ -16,7 +16,7 @@ object EventMapper {
             location = this.location,
             organizer = this.organizer,
             contactEmail = this.contact_email,
-            isVirtual = this.is_virtual
+            isVirtual = this.is_virtual,
         )
     }
     fun EventDto.toEventDaoEntity():EventEntity{
