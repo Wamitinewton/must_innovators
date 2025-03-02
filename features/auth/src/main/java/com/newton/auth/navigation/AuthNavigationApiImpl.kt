@@ -9,7 +9,7 @@ import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.login.view.UserDataLoadingScreen
 import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import com.newton.auth.presentation.login.view_model.LoginViewModel
-import com.newton.on_boarding.OnboardingScreen
+import com.newton.on_boarding.view.OnboardingScreen
 import com.newton.auth.presentation.sign_up.view.SignupScreen
 import com.newton.auth.presentation.sign_up.view.SignupSuccessScreen
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
@@ -33,7 +33,14 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 )
             }
             composable(route = NavigationRoutes.OnboardingRoute.routes) {
-                OnboardingScreen(navHostController = navHostController)
+                OnboardingScreen(
+                    onLoginClick = {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                    },
+                    onSignupClick = {
+                        navHostController.navigate(NavigationRoutes.SignupRoute.routes)
+                    }
+                )
             }
             composable(route = NavigationRoutes.LoginRoute.routes) {
                 val loginViewModel = hiltViewModel<LoginViewModel>()
