@@ -113,6 +113,10 @@ class EventRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getLatestEvents(count: Int): Flow<Resource<List<EventsData>>> {
+        TODO("Not yet implemented")
+    }
+
 
     override suspend fun getEventById(id: Int): Flow<Resource<Event>> = flow {
 

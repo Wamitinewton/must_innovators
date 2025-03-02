@@ -1,10 +1,12 @@
 package com.newton.communities.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.communities.presentation.view.AboutUsScreen
+import com.newton.communities.presentation.view_model.CommunitiesViewModel
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
@@ -18,7 +20,13 @@ class CommunityNavigationImpl: CommunityNavigationApi {
             startDestination = NavigationRoutes.AboutUsRoute.routes
         ) {
             composable(route = NavigationRoutes.AboutUsRoute.routes) {
-                AboutUsScreen()
+                val communityViewModel =  hiltViewModel<CommunitiesViewModel>()
+                AboutUsScreen(
+                    onNavigateToDetails = {
+
+                    },
+                    communitiesViewModel = communityViewModel
+                )
             }
         }
     }
