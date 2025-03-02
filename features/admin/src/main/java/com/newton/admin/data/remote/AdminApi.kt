@@ -1,5 +1,6 @@
 package com.newton.admin.data.remote
 
+import com.newton.admin.domain.models.AddCommunityRequest
 import com.newton.core.data.dto.EventApiResponse
 import com.newton.core.data.dto.EventDto
 import com.newton.core.data.dto.EventResponse
@@ -13,7 +14,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import java.io.File
 
-interface EventApi {
+interface AdminApi {
     @PUT(EventEndPoint.UPDATE_EVENT)
     suspend fun updateEvent(
         @Path("id") id: Int,
@@ -39,4 +40,9 @@ interface EventApi {
         @Part("title") title: String,
         @Part("is_Virtual") isVirtual: Boolean
     ): EventApiResponse<EventDto>
+
+    @POST(EventEndPoint.ADD_COMMUNITY)
+    suspend fun addCommunity(
+        @Body request: AddCommunityRequest
+    )
 }

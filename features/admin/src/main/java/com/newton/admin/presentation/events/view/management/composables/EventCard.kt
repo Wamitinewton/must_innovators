@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -83,8 +84,6 @@ fun EventCard(
     }
 
     Card(
-//        onClick = onClick,
-//        backgroundColor = if (isPast) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -94,7 +93,8 @@ fun EventCard(
             .clickable {
                 onClick()
             }
-            .scale(pulseScale.value)
+            .scale(pulseScale.value),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier

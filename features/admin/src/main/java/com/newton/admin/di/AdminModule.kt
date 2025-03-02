@@ -1,6 +1,6 @@
 package com.newton.admin.di
 
-import com.newton.admin.data.remote.EventApi
+import com.newton.admin.data.remote.AdminApi
 import com.newton.admin.data.repository.AdminRepositoryImpl
 import com.newton.admin.domain.repository.AdminRepository
 import com.newton.admin.navigation.AdminNavigationApi
@@ -24,14 +24,14 @@ object AdminModule {
 
     @Provides
     @Singleton
-    fun providesEventApi(retrofit: Retrofit): EventApi {
-        return retrofit.create(EventApi::class.java)
+    fun providesEventApi(retrofit: Retrofit): AdminApi {
+        return retrofit.create(AdminApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideEventRepository(
-        eventApi: EventApi,
+        eventApi: AdminApi,
         eventDao:EventDao
     ): AdminRepository = AdminRepositoryImpl(eventApi,eventDao)
 

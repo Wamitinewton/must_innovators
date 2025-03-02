@@ -267,6 +267,13 @@ fun AdminHome(
                                 onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
                             }
                         )
+                        AddChoiceCard(
+                            text = "Update community",
+                            onclick = {
+                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
+                                navController.navigate(NavigationRoutes.UpdateCommunityRoute.routes)
+                            }
+                        )
                         Spacer(Modifier.height(50.dp))
                     }
                 }
