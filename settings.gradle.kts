@@ -33,4 +33,4 @@ include(
     ":features:blogs"
 )
 include(":features:admin")
-include(":features:communities")
+include(":features:about_us")

@@ -5,7 +5,6 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +32,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -40,32 +41,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.account.presentation.composables.AccountDrawerContent
 import com.newton.account.presentation.composables.BlogCard
 import com.newton.account.presentation.composables.CommunitiesSection
 import com.newton.account.presentation.composables.ProfileSection
 import com.newton.account.presentation.composables.SectionHeader
 import com.newton.account.presentation.composables.UserInfoSection
+import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountScreen(
-    onMyEventsClick: () -> Unit
+    onMyEventsClick: () -> Unit,
+    getUserDataViewModel: GetUserDataViewModel = hiltViewModel()
 ) {
+    val getUserUiState by getUserDataViewModel.getUserDataState.collectAsState()
 
-    val user = remember {
-        User(
-            username = "techstudent22",
-            email = "tech.student@university.edu",
-            course = "Computer Science",
-            yearOfStudy = 3,
-            firstName = "Alex",
-            lastName = "Johnson",
-            description = "Software engineering enthusiast specializing in mobile development. " +
-                    "Currently learning Android development with Jetpack Compose and working on various side projects."
-        )
-    }
+    val user = getUserUiState.userData
 
     val communities = remember {
         listOf(
@@ -192,13 +186,17 @@ fun AccountScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
-                    ProfileSection(
-                        user = user,
-                    )
+                    if (user != null) {
+                        ProfileSection(
+                            user = user,
+                        )
+                    }
                 }
 
                 item {
-                    UserInfoSection(user = user)
+                    if (user != null) {
+                        UserInfoSection(user = user)
+                    }
                 }
 
                 item {

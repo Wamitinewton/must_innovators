@@ -152,7 +152,7 @@ dependencies {
     implementation(project(":features:home"))
     implementation(project(":features:admin"))
     implementation(project(":database"))
-    implementation(project(":features:communities"))
+    implementation(project(":features:about_us"))
 }
 
 

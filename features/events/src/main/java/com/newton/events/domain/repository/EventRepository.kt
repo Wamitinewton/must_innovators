@@ -15,4 +15,5 @@ interface EventRepository {
     suspend fun getEventById(id: Int): Flow<Resource<Event>>
     suspend fun registerForEvent(eventId: Int ,registrationRequest: EventRegistrationRequest): Flow<Resource<RegistrationResponse>>
     suspend fun searchEvents(eventName: String): Flow<Resource<List<EventsData>>>
+    suspend fun getLatestEvents(count: Int): Flow<Resource<List<EventsData>>>
 }

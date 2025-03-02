@@ -38,4 +38,7 @@ interface EventDao {
 
     @Query("SELECT MAX(timestamp) FROM events WHERE pageNumber = :pageNumber")
     suspend fun getPageTimeStamp(pageNumber: Int): Long?
+
+    @Query("SELECT * FROM events ORDER BY date DESC LIMIT :count")
+    suspend fun getLatestEvents(count: Int): List<EventEntity>
 }

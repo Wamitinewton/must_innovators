@@ -25,10 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.newton.account.presentation.view.User
+import com.newton.core.domain.models.auth_models.UserData
 
 @Composable
-fun UserInfoSection(user: User) {
+fun UserInfoSection(user: UserData) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,7 +49,7 @@ fun UserInfoSection(user: User) {
             InfoRow(
                 icon = Icons.Default.School,
                 label = "Studies",
-                value = "${user.course}, Year ${user.yearOfStudy}"
+                value = user.course
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
@@ -60,7 +60,7 @@ fun UserInfoSection(user: User) {
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
             )
             Text(
-                text = user.description,
+                text = "I am a passionate android developer",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
             )

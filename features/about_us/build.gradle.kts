@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
+    id("kotlinx-serialization")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
 }
@@ -60,13 +62,24 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
+    implementation(Dependencies.roomKtx)
+    ksp(Dependencies.roomCompiler)
+    implementation(Dependencies.roomRuntime)
+
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
     implementation(Dependencies.extendedIcons)
 
+    implementation(Dependencies.timber)
+
     implementation(project(":core"))
     implementation(project(":common_ui"))
-
+    implementation(project(":database"))
 
 }
