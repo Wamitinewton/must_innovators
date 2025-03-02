@@ -27,7 +27,10 @@ fun SelectCategoriesContentView(
         items(categories){category ->
             CategoryItemView(
                 category,
-                onEvent = { onEvent.invoke(AddEventEvents.ChangedCategory(category = category)) }
+                onEvent = {
+                    onEvent.invoke(AddEventEvents.ChangedCategory(category = category))
+                    onEvent.invoke(AddEventEvents.Sheet(shown = false))
+                }
             )
         }
     }

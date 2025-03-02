@@ -91,32 +91,6 @@ data class User(
     val specialty: String,
     val profileImageRes: Int
 )
-//
-//// Data class to hold community information
-//data class CommunityData(
-//    val name: String,
-//    val lead: String,
-//    val colead: String,
-//    val secretary: String,
-//    val email: String,
-//    val phone: String,
-//    val githubLink: String,
-//    val linkedinLink: String,
-//    val description: String,
-//    val dateFounded: String,
-//    val tools: List<String>,
-//    val sessions: List<SessionData>
-//)
-
-//// Data class to hold session information
-//data class SessionData(
-//    val title: String,
-//    val date: String,
-//    val startTime: String,
-//    val endTime: String,
-//    val location: String,
-//    val description: String
-//)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -126,7 +100,7 @@ fun AddCommunityScreen(
     viewModel: CommunityViewModel
 ) {
 
-    val addCommunityState = viewModel.communityState.collectAsState()
+    val addCommunityState by viewModel.communityState.collectAsState()
     var isEditing by remember { mutableStateOf(false) }
     var showAddSessionDialog by remember { mutableStateOf(false) }
     var sessionToEdit by remember { mutableStateOf<Session?>(null) }
@@ -143,7 +117,7 @@ fun AddCommunityScreen(
     var currentRoleSelection by remember { mutableStateOf("") } // To track which role is being selected
 
 
-    var sessions by remember { mutableStateOf(addCommunityState.value.sessions) }
+    var sessions by remember { mutableStateOf(addCommunityState.sessions) }
 
     // Sample users for demonstration
     val sampleUsers = listOf(
@@ -230,7 +204,7 @@ fun AddCommunityScreen(
 
                     // Community Name
                     OutlinedTextField(
-                        value = addCommunityState.value.name,
+                        value = addCommunityState.name,
                         onValueChange = {
                             onEvent.invoke(CommunityEvent.NameChanged(it))
                         },
@@ -243,7 +217,7 @@ fun AddCommunityScreen(
 
                     // Date Founded with date picker
                     OutlinedTextField(
-                        value = addCommunityState.value.dateFounded,
+                        value = addCommunityState.dateFounded,
                         onValueChange = {
                             onEvent.invoke(CommunityEvent.DateFoundedChanged(it))
                         },
@@ -265,7 +239,7 @@ fun AddCommunityScreen(
 
                     // Description of the community
                     OutlinedTextField(
-                        value = addCommunityState.value.description,
+                        value = addCommunityState.description,
                         onValueChange = {
                             onEvent.invoke(CommunityEvent.DescriptionChanged(it))
                         },
@@ -301,7 +275,7 @@ fun AddCommunityScreen(
                     // Lead - Clickable
                     LeadershipSelectField(
                         label = "Lead",
-                        value = addCommunityState.value.lead,
+                        value = addCommunityState.lead,
                         onClick = {
                             currentRoleSelection = "lead"
                             showBottomSheet = true
@@ -311,7 +285,7 @@ fun AddCommunityScreen(
                     // Co-lead - Clickable
                     LeadershipSelectField(
                         label = "Co-Lead",
-                        value = addCommunityState.value.coLead,
+                        value = addCommunityState.coLead,
                         onClick = {
                             currentRoleSelection = "colead"
                             showBottomSheet = true
@@ -319,7 +293,7 @@ fun AddCommunityScreen(
                     )
 
                     // Secretary - Clickable
-                    LeadershipSelectField(label = "Secretary", value = addCommunityState.value.secretary, onClick = {
+                    LeadershipSelectField(label = "Secretary", value = addCommunityState.secretary, onClick = {
                             currentRoleSelection = "secretary"
                             showBottomSheet = true
                         })
@@ -489,7 +463,7 @@ fun AddCommunityScreen(
 
                     // Email
                     OutlinedTextField(
-                        value = addCommunityState.value.email,
+                        value = addCommunityState.email,
                         onValueChange = {
                             onEvent.invoke(CommunityEvent.EmailCHanged(it))
                         },
@@ -505,7 +479,7 @@ fun AddCommunityScreen(
 
                     // Phone
                     OutlinedTextField(
-                        value = addCommunityState.value.phone,
+                        value = addCommunityState.phone,
                         onValueChange = {
                             onEvent.invoke(CommunityEvent.PhoneChanged(it))
                         },
@@ -568,7 +542,7 @@ fun AddCommunityScreen(
 
                     // Tools used
                     OutlinedTextField(
-                        value = addCommunityState.value.toolsText,
+                        value = addCommunityState.toolsText,
                         onValueChange = {
                             onEvent.invoke(CommunityEvent.ToolsChanged(it))
                         },
@@ -636,7 +610,7 @@ fun AddCommunityScreen(
 
                                 // Update the appropriate date field
                                 when (dateForField) {
-                                    "founded" -> addCommunityState.value.dateFounded = formattedDate
+                                    "founded" -> addCommunityState.dateFounded = formattedDate
                                     "session" -> sessionDate = formattedDate
                                 }
                             }
@@ -685,9 +659,9 @@ fun AddCommunityScreen(
                                 onClick = {
                                     // Set the selected user to the appropriate role
                                     when (currentRoleSelection) {
-                                        "lead" -> addCommunityState.value.lead = user.name
-                                        "colead" -> addCommunityState.value.coLead = user.name
-                                        "secretary" -> addCommunityState.value.secretary = user.name
+                                        "lead" -> addCommunityState.lead = user.name
+                                        "colead" -> addCommunityState.coLead = user.name
+                                        "secretary" -> addCommunityState.secretary = user.name
                                     }
                                     showBottomSheet = false
                                 }

@@ -11,7 +11,9 @@ import kotlinx.datetime.atTime
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 fun getCurrentUnixTime(): Long {
@@ -27,13 +29,14 @@ fun getCurrentFormatedDate(): String {
 fun Long.toFormattedDate(): String {
     val instant = Instant.fromEpochMilliseconds(this)
     val localDateTime: LocalDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    return "${localDateTime.date} ${localDateTime.month} ${localDateTime.year}"
+    return "${localDateTime.dayOfMonth} ${localDateTime.month} ${localDateTime.year}"
 }
 
 fun Long.toLocaltime():String{
     val instant = Instant.fromEpochMilliseconds(this)
     val localDateTime: LocalDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    return "$localDateTime"
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    return localDateTime.toJavaLocalDateTime().format(formatter)
 }
 
 fun Long.intoMidnight(): Long {
