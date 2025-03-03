@@ -1,4 +1,4 @@
-package com.newton.communities.presentation.view
+package com.newton.communities.presentation.view.about_us
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
@@ -24,28 +24,26 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.newton.communities.presentation.events.UiEvent
-import com.newton.communities.presentation.view.composables.AboutSection
-import com.newton.communities.presentation.view.composables.CommunitiesList
-import com.newton.communities.presentation.view.composables.CommunityCardShimmer
-import com.newton.communities.presentation.view.composables.CommunityCardShimmerList
-import com.newton.communities.presentation.view.composables.ExecutivesSection
-import com.newton.communities.presentation.view.composables.SectionHeading
-import com.newton.communities.presentation.view.composables.VisionAndMission
+import com.newton.communities.presentation.view.about_us.composables.AboutSection
+import com.newton.communities.presentation.view.about_us.composables.CommunitiesList
+import com.newton.communities.presentation.view.about_us.composables.CommunityCardShimmer
+import com.newton.communities.presentation.view.about_us.composables.ExecutivesSection
+import com.newton.communities.presentation.view.about_us.composables.SectionHeading
+import com.newton.communities.presentation.view.about_us.composables.VisionAndMission
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
-import kotlinx.coroutines.launch
+import com.newton.core.domain.models.about_us.Community
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutUsScreen(
-    onNavigateToDetails: (Int) -> Unit,
-    communitiesViewModel: CommunitiesViewModel
+    onNavigateToDetails: (Community) -> Unit,
+    communitiesViewModel: CommunitiesViewModel,
 ) {
     val state by communitiesViewModel.communityState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -233,7 +231,11 @@ fun AboutUsScreen(
                         CommunitiesList(
                             communities = community,
                             showDescription = true,
-                            onSeeDetailsClick = {}
+                            onSeeDetailsClick = {
+                                community.forEach { community ->
+                                    onNavigateToDetails(community)
+                                }
+                            }
                         )
                     }
                }

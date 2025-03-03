@@ -1,4 +1,4 @@
-package com.newton.communities.presentation.view.composables
+package com.newton.communities.presentation.view.about_us.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -29,7 +29,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.newton.communities.presentation.view.ExecutiveMember
+import com.newton.communities.presentation.view.about_us.ExecutiveMember
 
 @Composable
 fun ExecutivesSection(executives: List<ExecutiveMember>) {

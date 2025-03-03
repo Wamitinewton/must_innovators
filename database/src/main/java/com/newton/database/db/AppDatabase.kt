@@ -27,7 +27,7 @@ import com.newton.database.entities.UserEntity
         TechStackEntity::class,
         MemberEntity::class,
         SessionEntity::class],
-    version = 15,
+    version = 16,
     exportSchema = false
 )
 

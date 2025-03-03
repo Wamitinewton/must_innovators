@@ -1,4 +1,4 @@
-package com.newton.communities.presentation.view.composables
+package com.newton.communities.presentation.view.about_us.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -10,6 +10,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.outlined.BrightnessMedium
@@ -25,6 +28,8 @@ import androidx.compose.material.icons.outlined.Computer
 import androidx.compose.material.icons.outlined.Psychology
 import androidx.compose.material.icons.outlined.Smartphone
 import androidx.compose.material.icons.outlined.ViewDay
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
@@ -40,8 +45,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,6 +64,8 @@ fun CommunityCard(
     onExpandToggle: () -> Unit,
     onSeeDetailsClick: () -> Unit
 ) {
+    val communityColor = generateColorFromName(community.name)
+
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.elevatedCardElevation(
@@ -73,7 +83,7 @@ fun CommunityCard(
                     .background(
                         Brush.horizontalGradient(
                             colors = listOf(
-                                generateColorFromName(community.name),
+                                communityColor,
                                 MaterialTheme.colorScheme.surface
                             )
                         )
@@ -84,13 +94,13 @@ fun CommunityCard(
                 Surface(
                     modifier = Modifier.size(48.dp),
                     shape = CircleShape,
-                    color = generateColorFromName(community.name).copy(alpha = 0.2f),
-                    border = BorderStroke(2.dp, generateColorFromName(community.name))
+                    color = communityColor.copy(alpha = 0.2f),
+                    border = BorderStroke(2.dp, communityColor)
                 ) {
                     Icon(
                         imageVector = getIconForCommunity(community.name),
                         contentDescription = null,
-                        tint = generateColorFromName(community.name),
+                        tint = communityColor,
                         modifier = Modifier
                             .padding(8.dp)
                             .size(24.dp)
@@ -127,6 +137,13 @@ fun CommunityCard(
                 )
             }
 
+            if (community.techStack.isNotEmpty()) {
+                TechStackChips(
+                    techStack = community.techStack,
+                    baseColor = communityColor
+                )
+            }
+
             AnimatedVisibility(
                 visible = isExpanded,
                 enter = fadeIn() + expandVertically(),
@@ -146,11 +163,11 @@ fun CommunityCard(
                     OutlinedButton(
                         onClick = onSeeDetailsClick,
                         modifier = Modifier.align(Alignment.End),
-                        border = BorderStroke(1.dp, generateColorFromName(community.name))
+                        border = BorderStroke(1.dp, communityColor)
                     ) {
                         Text(
                             text = "See details",
-                            color = generateColorFromName(community.name)
+                            color = communityColor
                         )
                     }
                 }
@@ -166,7 +183,7 @@ fun CommunityCard(
 fun CommunitiesList(
     communities: List<Community>,
     showDescription: Boolean,
-    onSeeDetailsClick: (Int) -> Unit
+    onSeeDetailsClick: () -> Unit
 ) {
     var expandedCardId by remember { mutableStateOf("") }
 
@@ -197,12 +214,59 @@ fun CommunitiesList(
                     expandedCardId = if (isExpanded) "" else community.id.toString()
                 },
                 onSeeDetailsClick = {
-                    onSeeDetailsClick(community.id)
+                    onSeeDetailsClick()
                 }
             )
         }
     }
 }
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun TechStackChips(
+    modifier: Modifier = Modifier,
+    techStack: List<String>,
+    baseColor: Color
+) {
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        techStack.forEach { tech ->
+            val chipColor = baseColor.copy(alpha = 0.8f)
+
+            AssistChip(
+                onClick = {},
+                label = {
+                    Text(
+                        text = tech,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Medium
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Code,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = chipColor
+                    )
+                },
+                border = BorderStroke(1.dp, chipColor.copy(alpha = 0.3f)),
+                colors = AssistChipDefaults.assistChipColors(
+                    containerColor = chipColor.copy(alpha = 0.1f),
+                    labelColor = chipColor,
+                    leadingIconContentColor = chipColor
+                ),
+                modifier = Modifier
+                    .shadow(1.dp, RoundedCornerShape(16.dp))
+                    .clip(RoundedCornerShape(16.dp))
+            )
+        }
+    }
+}
+
+
 
 /**
  * Returns an appropriate icon based on the community name keywords.
