@@ -9,6 +9,7 @@ import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.states.CommunityState
 import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.core.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class CommunityViewModel @Inject constructor(
     private val repository: AdminRepository
 ) : ViewModel() {

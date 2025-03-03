@@ -23,6 +23,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,6 +67,16 @@ fun AdminHome(
     val adminState by viewModel.adminState.collectAsState()
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    var routeToNavigate by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(routeToNavigate) {
+        routeToNavigate?.let { route ->
+            navController.navigate(route)
+            onEvent(AdminHomeEvent.Sheet(shown = false))
+            routeToNavigate = null
+        }
+    }
 
     // Sample data for demonstration
     val communityGroups = listOf(
@@ -228,6 +239,7 @@ fun AdminHome(
                         .heightIn(min = 80.dp)
                         .padding(bottom = 16.dp)
                 ) {
+
                     Text(
                         "What do you want to add? ",
                         style = MaterialTheme.typography.titleLarge,
@@ -242,36 +254,31 @@ fun AdminHome(
                         AddChoiceCard(
                             text = "Add Events",
                             onclick = {
-                                navController.navigate(NavigationRoutes.AddEvent.routes);
-                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
+                                routeToNavigate=NavigationRoutes.AddEvent.routes
                             }
                         )
                         AddChoiceCard(
                             text = "Add Partners",
                             onclick = {
-                                navController.navigate(NavigationRoutes.AddPartners.routes)
-                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
+                                routeToNavigate=NavigationRoutes.AddPartners.routes
                             }
                         )
                         AddChoiceCard(
                             text = "Add Community",
                             onclick = {
-                                navController.navigate(NavigationRoutes.AddCommunity.routes)
-                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
+                                routeToNavigate=NavigationRoutes.AddCommunity.routes
                             }
                         )
                         AddChoiceCard(
                             text = "Send NewsLetter",
                             onclick = {
-                                navController.navigate(NavigationRoutes.NewsLetterScreen.routes)
-                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
+                                routeToNavigate=NavigationRoutes.NewsLetterScreen.routes
                             }
                         )
                         AddChoiceCard(
                             text = "Update community",
                             onclick = {
-                                onEvent.invoke(AdminHomeEvent.Sheet(shown = false))
-                                navController.navigate(NavigationRoutes.UpdateCommunityRoute.routes)
+                                routeToNavigate=NavigationRoutes.UpdateCommunityRoute.routes
                             }
                         )
                         Spacer(Modifier.height(50.dp))

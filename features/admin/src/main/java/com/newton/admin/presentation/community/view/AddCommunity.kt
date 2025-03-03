@@ -21,8 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Check
@@ -32,16 +32,16 @@ import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Group
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.outlined.Contacts
+import androidx.compose.material.icons.outlined.Webhook
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -75,12 +75,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.newton.admin.domain.models.Session
+import com.newton.admin.domain.models.Socials
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.view.composable.CommunitySection
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
+import com.newton.admin.presentation.community.view.composable.SocialDialog
+import com.newton.admin.presentation.community.view.composable.SocialItem
 import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
+import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.common_ui.R.drawable
+import com.newton.common_ui.composables.MeruInnovatorsAppBar
+import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.ui.CustomCard
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -101,7 +108,6 @@ fun AddCommunityScreen(
 ) {
 
     val addCommunityState by viewModel.communityState.collectAsState()
-    var isEditing by remember { mutableStateOf(false) }
     var showAddSessionDialog by remember { mutableStateOf(false) }
     var sessionToEdit by remember { mutableStateOf<Session?>(null) }
     var sessionDate by remember { mutableStateOf("") }
@@ -109,7 +115,7 @@ fun AddCommunityScreen(
     val scrollState = rememberScrollState()
     val datePickerState = rememberDatePickerState()
     var showDatePicker by remember { mutableStateOf(false) }
-    var dateForField by remember { mutableStateOf("") } // Track which field the date is for
+    var dateForField by remember { mutableStateOf("") }
 
     // BottomSheet state and role selection variables
     val bottomSheetState = rememberModalBottomSheetState()
@@ -117,7 +123,10 @@ fun AddCommunityScreen(
     var currentRoleSelection by remember { mutableStateOf("") } // To track which role is being selected
 
 
-    var sessions by remember { mutableStateOf(addCommunityState.sessions) }
+    val sessions = addCommunityState.sessions
+    val socials = addCommunityState.socials
+    var socialToEdit by remember { mutableStateOf<Socials?>(null) }
+    var showAddSocialDialog by remember { mutableStateOf(false) }
 
     // Sample users for demonstration
     val sampleUsers = listOf(
@@ -133,49 +142,8 @@ fun AddCommunityScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Add New Community") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                navigationIcon = {
-                    IconButton(onClick = onCancelClicked) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-//                        onEvent.invoke(CommunityEvent.AddCommunity)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "Save",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                }
-            )
+            MeruInnovatorsAppBar("Add New Community")
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    sessionToEdit = null
-                    showAddSessionDialog = true
-                },
-                containerColor = MaterialTheme.colorScheme.surface
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Session",
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -185,10 +153,8 @@ fun AddCommunityScreen(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Card(
+            CustomCard(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -231,7 +197,10 @@ fun AddCommunityScreen(
                                 dateForField = "founded"
                                 showDatePicker = true
                             }) {
-                                Icon(Icons.Default.CalendarToday, contentDescription = "Select Date")
+                                Icon(
+                                    Icons.Default.CalendarToday,
+                                    contentDescription = "Select Date"
+                                )
                             }
                         },
                         readOnly = true
@@ -244,21 +213,17 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.DescriptionChanged(it))
                         },
                         label = { Text("Description") },
-                        leadingIcon = { Icon(Icons.Default.Description, contentDescription = null) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 100.dp),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                        maxLines = 5
                     )
                 }
             }
 
             // Leadership Card with clickable fields
-            Card(
+            CustomCard(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -293,125 +258,34 @@ fun AddCommunityScreen(
                     )
 
                     // Secretary - Clickable
-                    LeadershipSelectField(label = "Secretary", value = addCommunityState.secretary, onClick = {
+                    LeadershipSelectField(
+                        label = "Secretary",
+                        value = addCommunityState.secretary,
+                        onClick = {
                             currentRoleSelection = "secretary"
                             showBottomSheet = true
                         })
                 }
             }
-
-            // Sessions Card - New Section for Session Management
-//            Card(
-//                modifier = Modifier.fillMaxWidth(),
-//                shape = RoundedCornerShape(12.dp),
-//                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-//            ) {
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(16.dp),
-//                    verticalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.SpaceBetween,
-//                        verticalAlignment = Alignment.CenterVertically
-//                    ) {
-//                        Text(
-//                            text = "Community Sessions",
-//                            style = MaterialTheme.typography.headlineSmall,
-//                            color = MaterialTheme.colorScheme.primary
-//                        )
-//
-//                        Button(
-//                            onClick = {
-//                                // Reset session fields for new entry
-//                                sessionTitle = ""
-//                                sessionDate = ""
-//                                sessionStartTime = ""
-//                                sessionEndTime = ""
-//                                sessionLocation = ""
-//                                sessionDescription = ""
-//                                editingSessionIndex = -1
-//                                showSessionDialog = true
-//                            },
-//                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
-//                        ) {
-//                            Icon(
-//                                imageVector = Icons.Default.Add,
-//                                contentDescription = null,
-//                                modifier = Modifier.size(18.dp)
-//                            )
-//                            Spacer(modifier = Modifier.width(4.dp))
-//                            Text("Add Session")
-//                        }
-//                    }
-//
-//                    HorizontalDivider()
-//
-//                    if (sessions.isEmpty()) {
-//                        Box(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(vertical = 24.dp),
-//                            contentAlignment = Alignment.Center
-//                        ) {
-//                            Column(
-//                                horizontalAlignment = Alignment.CenterHorizontally,
-//                                verticalArrangement = Arrangement.spacedBy(8.dp)
-//                            ) {
-//                                Icon(
-//                                    imageVector = Icons.Default.EventNote,
-//                                    contentDescription = null,
-//                                    modifier = Modifier.size(48.dp),
-//                                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-//                                )
-//                                Text(
-//                                    text = "No sessions added yet",
-//                                    style = MaterialTheme.typography.bodyLarge,
-//                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-//                                )
-//                                Text(
-//                                    text = "Click the button above to add a new session",
-//                                    style = MaterialTheme.typography.bodyMedium,
-//                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-//                                )
-//                            }
-//                        }
-//                    } else {
-//                        Column(
-//                            modifier = Modifier.fillMaxWidth(),
-//                            verticalArrangement = Arrangement.spacedBy(8.dp)
-//                        ) {
-//                            sessions.forEachIndexed { index, session ->
-//                                SessionListItem(
-//                                    session = session,
-//                                    onEditClick = {
-//                                        // Set fields for editing
-//                                        sessionTitle = session.title
-//                                        sessionDate = session.date
-//                                        sessionStartTime = session.startTime
-//                                        sessionEndTime = session.endTime
-//                                        sessionLocation = session.location
-//                                        sessionDescription = session.sessionType
-//                                        editingSessionIndex = index
-//                                        showSessionDialog = true
-//                                    },
-//                                    onDeleteClick = {
-//                                        sessions = sessions.toMutableList().apply {
-//                                            removeAt(index)
-//                                        }
-//                                    }
-//                                )
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-
+            // sessions
             CommunitySection(
                 title = "Meeting Sessions",
-                icon = Icons.Default.Schedule
+                icon = Icons.Default.Schedule,
+                trailing = {
+                    Button(
+                        modifier = Modifier.padding(horizontal =10.dp, vertical = 8.dp),
+                        onClick = {
+                            sessionToEdit = null
+                            showAddSessionDialog = true
+                        }
+                    ) {
+                        Row {
+                            Icon(Icons.Default.Add, contentDescription = null)
+
+                            Text("Add")
+                        }
+                    }
+                }
             ) {
                 if (sessions.isEmpty()) {
                     Text(
@@ -426,7 +300,7 @@ fun AddCommunityScreen(
                     sessions.forEachIndexed { index, session ->
                         SessionItem(
                             session = session,
-                            isEditing = isEditing,
+                            isEditing = true,
                             onEditClick = {
                                 sessionToEdit = session
                                 showAddSessionDialog = true
@@ -434,7 +308,7 @@ fun AddCommunityScreen(
                             onDeleteClick = {
                                 val newSessions = sessions.toMutableList()
                                 newSessions.removeAt(index)
-                                sessions = newSessions
+                                onEvent.invoke(CommunityEvent.SessionsChanged(newSessions))
                             }
                         )
                         if (index < sessions.size - 1) {
@@ -444,89 +318,90 @@ fun AddCommunityScreen(
                 }
             }
 
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+            CommunitySection(
+                title = "Contact Information",
+                icon = Icons.Outlined.Contacts,
                 ) {
-                    Text(
-                        text = "Contact Information",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    // Email
-                    OutlinedTextField(
-                        value = addCommunityState.email,
-                        onValueChange = {
-                            onEvent.invoke(CommunityEvent.EmailCHanged(it))
-                        },
-                        label = { Text("Email") },
-                        leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
-                        ),
-                        singleLine = true
-                    )
-
-                    // Phone
-                    OutlinedTextField(
-                        value = addCommunityState.phone,
-                        onValueChange = {
-                            onEvent.invoke(CommunityEvent.PhoneChanged(it))
-                        },
-                        label = { Text("Phone") },
-                        leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Phone,
-                            imeAction = ImeAction.Next
-                        ),
-                        singleLine = true
-                    )
-
-                    // GitHub Link
-//                    OutlinedTextField(
-//                        value = addCommunityState.value.lead,
-//                        onValueChange = { githubLink = it },
-//                        label = { Text("GitHub Link") },
-//                        leadingIcon = { Icon(Icons.Default.Link, contentDescription = null) },
-//                        modifier = Modifier.fillMaxWidth(),
-//                        keyboardOptions = KeyboardOptions(
-//                            keyboardType = KeyboardType.Uri,
-//                            imeAction = ImeAction.Next
-//                        ),
-//                        singleLine = true
-//                    )
-
-                    // LinkedIn Link
-//                    OutlinedTextField(
-//                        value = linkedinLink,
-//                        onValueChange = { linkedinLink = it },
-//                        label = { Text("LinkedIn Link") },
-//                        leadingIcon = { Icon(Icons.Default.Link, contentDescription = null) },
-//                        modifier = Modifier.fillMaxWidth(),
-//                        keyboardOptions = KeyboardOptions(
-//                            keyboardType = KeyboardType.Uri,
-//                            imeAction = ImeAction.Next
-//                        ),
-//                        singleLine = true
-//                    )
-                }
+                OutlinedTextField(
+                    value = addCommunityState.email,
+                    onValueChange = {
+                        onEvent.invoke(CommunityEvent.EmailCHanged(it))
+                    },
+                    label = { Text("Email") },
+                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    singleLine = true
+                )
+                OutlinedTextField(
+                    value = addCommunityState.phone,
+                    onValueChange = {
+                        onEvent.invoke(CommunityEvent.PhoneChanged(it))
+                    },
+                    label = { Text("Phone") },
+                    leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null) },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Next
+                    ),
+                    singleLine = true
+                )
             }
 
-            Card(
+            CommunitySection(
+                title = "Community Socials",
+                icon = Icons.Outlined.Webhook,
+                trailing = {
+                    Button(
+                        modifier = Modifier.padding(horizontal =10.dp, vertical = 8.dp),
+                        onClick = {
+                            socialToEdit = null
+                            showAddSocialDialog = true
+                        }
+                    ) {
+                        Row {
+                            Icon(Icons.Default.Add, contentDescription = null)
+
+                            Text("Add")
+                        }
+                    }
+                }
+            ) {
+                if (socials.isEmpty()) {
+                    Text(
+                        text = "There is No socials associated to this community",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                } else {
+                    socials.forEachIndexed { index, social ->
+                        SocialItem(
+                            social = social,
+                            onEditClick = {
+                                socialToEdit = social
+                                showAddSocialDialog = true
+                            },
+                            onDeleteClick = {
+                                val newSocial = socials.toMutableList()
+                                newSocial.removeAt(index)
+                                onEvent.invoke(CommunityEvent.SocialsChanged(newSocial))
+                            }
+                        )
+                        if (index < socials.size - 1) {
+                            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                        }
+                    }
+                }
+            }
+            CustomCard(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -557,23 +432,17 @@ fun AddCommunityScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Button(
+            CustomButton(
                 onClick = {
-                 onEvent.invoke(CommunityEvent.AddCommunity)
+                    onEvent.invoke(CommunityEvent.AddCommunity)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Save Community")
+                Text("Add Community")
             }
-
-            // Extra space at bottom to account for FAB
-            Spacer(modifier = Modifier.height(80.dp))
         }
-
-        // Session Dialog
         if (showAddSessionDialog) {
             SessionDialog(
                 session = sessionToEdit,
@@ -590,13 +459,32 @@ fun AddCommunityScreen(
                             newSessions[index] = session
                         }
                     }
-                    sessions = newSessions
+                    onEvent.invoke(CommunityEvent.SessionsChanged(newSessions))
                     showAddSessionDialog = false
                     sessionToEdit = null
                 }
             )
         }
-        // Date Picker Dialog
+        if (showAddSocialDialog) {
+            SocialDialog(
+                social  = socialToEdit,
+                onDismiss = { showAddSocialDialog = false },
+                onSave = { social ->
+                    val newSocial = socials.toMutableList()
+                    if (socialToEdit == null) {
+                        newSocial.add(social)
+                    } else {
+                        val index = newSocial.indexOf(socialToEdit)
+                        if (index != -1) {
+                            newSocial[index] = social
+                        }
+                    }
+                    onEvent.invoke(CommunityEvent.SocialsChanged(newSocial))
+                    showAddSocialDialog = false
+                    socialToEdit = null
+                }
+            )
+        }
         if (showDatePicker) {
             DatePickerDialog(
                 onDismissRequest = { showDatePicker = false },
@@ -629,8 +517,6 @@ fun AddCommunityScreen(
                 DatePicker(state = datePickerState)
             }
         }
-
-        // Modal Bottom Sheet for selecting leadership roles
         if (showBottomSheet) {
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheet = false },
@@ -642,12 +528,16 @@ fun AddCommunityScreen(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Select ${currentRoleSelection.capitalize()}",
+                        text = "Select ${currentRoleSelection.replaceFirstChar {
+                            if (it.isLowerCase()) it.titlecase(
+                                Locale.getDefault()
+                            ) else it.toString()
+                        }}",
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
-                    Divider()
+                    HorizontalDivider()
 
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
@@ -668,7 +558,6 @@ fun AddCommunityScreen(
                             )
                         }
                     }
-
                     Spacer(modifier = Modifier.height(32.dp))
                 }
             }
@@ -712,7 +601,7 @@ fun LeadershipSelectField(
             }
 
             Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -727,10 +616,8 @@ fun SessionListItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    Card(
+    CustomCard(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
             modifier = Modifier

@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.view.management.Event
+import com.newton.common_ui.ui.CustomCard
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -83,7 +84,7 @@ fun EventCard(
         remember { mutableStateOf(1f) }
     }
 
-    Card(
+    CustomCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -94,7 +95,6 @@ fun EventCard(
                 onClick()
             }
             .scale(pulseScale.value),
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier
