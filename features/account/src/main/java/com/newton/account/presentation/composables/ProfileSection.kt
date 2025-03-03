@@ -21,10 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.account.presentation.view.User
+import com.newton.core.domain.models.auth_models.UserData
 
 @Composable
-fun ProfileSection(user: User) {
+fun ProfileSection(user: UserData) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,7 +52,7 @@ fun ProfileSection(user: User) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "${user.firstName} ${user.lastName}",
+                text = "${user.first_name} ${user.last_name}",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )

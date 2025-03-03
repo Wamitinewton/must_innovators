@@ -49,7 +49,6 @@ class EventNotificationServiceImpl @Inject constructor(
         val reminderTime = eventDateTime.minus(amount, unit)
         val now = ZonedDateTime.now()
 
-        // Only schedule if the reminder time is in the future
         if (reminderTime.isAfter(now)) {
             val notificationId = "${ticket.id}_${unit.name.lowercase()}_${amount}"
             val title = "Reminder: ${ticket.eventName}"

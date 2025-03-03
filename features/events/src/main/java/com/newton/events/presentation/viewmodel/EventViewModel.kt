@@ -35,7 +35,6 @@ class EventViewModel @Inject constructor(
     private val _searchResults = MutableStateFlow<Resource<List<EventsData>>?>(null)
     val searchResults = _searchResults.asStateFlow()
 
-    // Cached paging data for regular event listing
     val pagedEvents: Flow<PagingData<EventsData>> = eventRepository
         .getPagedEvents()
         .distinctUntilChanged()
@@ -53,7 +52,6 @@ class EventViewModel @Inject constructor(
         )
 
     init {
-        // Observe debounced query changes and trigger search
         viewModelScope.launch {
             debouncedQuery
                 .filterNotNull()

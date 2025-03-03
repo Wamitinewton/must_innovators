@@ -11,8 +11,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-
 object AppDatabaseModule {
+
 
     @Provides
     @Singleton
@@ -37,4 +37,10 @@ object AppDatabaseModule {
     @Provides
     @Singleton
     fun provideTicketDao(db: AppDatabase) = db.ticketDao
+
+    @Provides
+    @Singleton
+    fun provideCommunityDao(db: AppDatabase) = db.communityDao
+
 }
+
