@@ -24,4 +24,5 @@ sealed class NavigationRoutes(val routes: String,val deepLink:String? = null) {
     data object EventTicketsRoute: NavigationRoutes("event_tickets", "app://event_tickets")
     data object AboutUsRoute: NavigationRoutes("about_us")
     data object NewsLetterScreen: NavigationRoutes("news_letter_screen")
+    data object CommunitiesDetailsRoute: NavigationRoutes("community_details")
 }

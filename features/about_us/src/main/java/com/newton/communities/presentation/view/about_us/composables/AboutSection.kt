@@ -1,4 +1,4 @@
-package com.newton.communities.presentation.view.composables
+package com.newton.communities.presentation.view.about_us.composables
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
