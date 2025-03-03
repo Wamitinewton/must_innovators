@@ -44,46 +44,26 @@ class AddEventViewModel @Inject constructor(
             AddEventEvents.AddEvent -> saveEvent()
             is AddEventEvents.ChangedFile -> _state.update { it.copy(image = event.file) }
             AddEventEvents.ClearImage -> _state.update { it.copy(image = null) }
+            is AddEventEvents.ChangedMeetingLink -> _state.update { it.copy(meetingLink = event.link) }
+            is AddEventEvents.ChangedContactEmail -> _state.update { it.copy(contactEmail = event.email) }
+            is AddEventEvents.ChangedDescription -> _state.update { it.copy(description = event.description) }
+            is AddEventEvents.ChangedName -> _state.update { it.copy(name = event.name) }
+            is AddEventEvents.ChangedTitle -> _state.update { it.copy(title = event.title) }
+            is AddEventEvents.ChangedVirtual -> _state.update { it.copy(isVirtual = event.isVirtual) }
         }
     }
 
     val categories = listOf(
-        "Android",
-        "CyberSecurity",
-        "Web development",
-        "AI and ML",
-        "Graphics & Design",
-        "UI and UX ",
-        "Robotics",
-        "IEEE",
-        "Google Developers (GDSC)",
-        "Microsoft (MLSA)",
-        "Cloud Computing",
-        "Data Science"
+        "WEB",
+                "CYBERSEC",
+                "ANDROID",
+                "AI",
+                "BLOCKCHAIN",
+                "IoT"
     )
 
-    fun onNameChange(name: String) {
-        _state.value = _state.value.copy(name = name)
-    }
 
-
-    fun onDescriptionChange(description: String) {
-        _state.value = _state.value.copy(description = description)
-    }
-
-    fun onContactEmailChange(email: String) {
-        _state.value = _state.value.copy(contactEmail = email)
-    }
-
-    fun onTitleChange(title: String) {
-        _state.value = _state.value.copy(title = title)
-    }
-
-    fun onIsVirtualChange(isVirtual: Boolean) {
-        _state.value = _state.value.copy(isVirtual = isVirtual)
-    }
-
-    fun validateAndSubmit(): Boolean {
+    private fun validateAndSubmit(): Boolean {
         val errors = mutableMapOf<String, String>()
         if (_state.value.name.isBlank()) {
             errors["name"] = "Event name is required"
@@ -96,6 +76,10 @@ class AddEventViewModel @Inject constructor(
         }
         if (_state.value.organizer.isBlank()) {
             errors["organizer"] = "Organizer name is required"
+        }
+
+        if (_state.value.isVirtual && _state.value.meetingLink.isBlank()){
+            errors["meetingLink"] = "Meeting link  is required"
         }
 
         if (_state.value.contactEmail.isBlank()) {

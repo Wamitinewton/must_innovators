@@ -20,14 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.view.management.Attendee
+import com.newton.common_ui.ui.CustomCard
 
 @Composable
 fun AttendeeItem(attendee: Attendee) {
-    Card(
+    CustomCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier

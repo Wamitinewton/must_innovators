@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,7 +32,10 @@ fun StatCard(
     Card(
         modifier = modifier
             .height(120.dp)
-            .shadow(4.dp, RoundedCornerShape(8.dp))
+            .shadow(4.dp, RoundedCornerShape(8.dp)),
+        colors = CardDefaults.cardColors(
+            MaterialTheme.colorScheme.surface
+        )
     ) {
         Column(
             modifier = Modifier

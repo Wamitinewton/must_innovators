@@ -27,13 +27,13 @@ import com.newton.common_ui.ui.CustomDynamicAsyncImage
 
 @Composable
 internal fun ImageReceiptView(state: AddEventState, onEvent: (AddEventEvents) -> Unit) {
-    val context = LocalContext.current
     val uri = state.image
     uri?.let { safeUri ->
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(144.dp)
+                .height(150.dp)
+                .padding(vertical = 10.dp)
         ) {
             CustomDynamicAsyncImage(
                 modifier = Modifier
