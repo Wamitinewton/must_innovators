@@ -31,7 +31,6 @@ fun AboutSection(
     aboutText: String,
     isExpanded: Boolean,
     onReadMoreClick: () -> Unit,
-    onSeeFullBioClick: () -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
@@ -78,42 +77,21 @@ fun AboutSection(
                     )
                 }
             } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                TextButton(
+                    onClick = onReadMoreClick,
+                    modifier = Modifier.align(Alignment.End)
                 ) {
-                    Button(
-                        onClick = onSeeFullBioClick,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    ) {
-                        Text("See Full Bio")
-                        Icon(
-                            imageVector = Icons.Filled.ChevronRight,
-                            contentDescription = "See Full Bio",
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
-                    }
-
-                    TextButton(
-                        onClick = onReadMoreClick
-                    ) {
-                        Text("Show Less")
-                        val rotation by animateFloatAsState(
-                            targetValue = if (isExpanded) 180f else 0f,
-                            label = "Arrow Rotation"
-                        )
-                        Icon(
-                            imageVector = Icons.Outlined.KeyboardArrowDown,
-                            contentDescription = "Collapse",
-                            modifier = Modifier
-                                .padding(start = 4.dp)
-                                .rotate(rotation)
-                        )
-                    }
+                    Text("show less")
+                    val rotation by animateFloatAsState(
+                        targetValue = if (isExpanded) 180f else 0f,
+                        label = "Arrow rotation"
+                    )
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowDown,
+                        contentDescription = "Expnad",
+                        modifier = Modifier.padding(start = 4.dp)
+                            .rotate(rotation)
+                    )
                 }
             }
         }

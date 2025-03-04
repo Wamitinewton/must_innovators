@@ -1,6 +1,6 @@
 package com.newton.core.navigation
 
-sealed class NavigationRoutes(val routes: String,val deepLink:String? = null) {
+sealed class NavigationRoutes(val routes: String) {
     data object SignupRoute: NavigationRoutes("sign-up-screen")
     data object OnboardingRoute: NavigationRoutes("onboarding_routes")
     data object LoginRoute: NavigationRoutes("login_route")
@@ -21,8 +21,8 @@ sealed class NavigationRoutes(val routes: String,val deepLink:String? = null) {
     data object AddPartners: NavigationRoutes("add_partners_screen")
     data object AddCommunity: NavigationRoutes("add_community_screen")
     data object EventRegistrationScreen: NavigationRoutes("event_registration")
-    data object EventTicketsRoute: NavigationRoutes("event_tickets", "app://event_tickets")
+    data object EventTicketsRoute: NavigationRoutes("event_tickets")
     data object AboutUsRoute: NavigationRoutes("about_us")
     data object NewsLetterScreen: NavigationRoutes("news_letter_screen")
-    data object CommunitiesDetailsRoute: NavigationRoutes("community_details")
+    data object CommunitiesDetailsRoute : NavigationRoutes("community_details")
 }

@@ -1,5 +1,7 @@
 package com.newton.communities.presentation.view.about_us
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +20,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.newton.communities.presentation.events.UiEvent
 import com.newton.communities.presentation.view.about_us.composables.AboutSection
-import com.newton.communities.presentation.view.about_us.composables.CommunitiesList
+import com.newton.communities.presentation.view.about_us.composables.CommunityCard
 import com.newton.communities.presentation.view.about_us.composables.CommunityCardShimmer
 import com.newton.communities.presentation.view.about_us.composables.ExecutivesSection
 import com.newton.communities.presentation.view.about_us.composables.SectionHeading
@@ -42,16 +43,17 @@ import com.newton.core.domain.models.about_us.Community
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutUsScreen(
-    onNavigateToDetails: (Community) -> Unit,
-    communitiesViewModel: CommunitiesViewModel,
+    onCommunityDetailsClick: (Community) -> Unit,
+    communitiesViewModel: CommunitiesViewModel
 ) {
     val state by communitiesViewModel.communityState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-    val community = state.communities
-    val communityName = "Meru Science innovators Club"
+    val communities = state.communities
+    val communityName = "Meru Science Innovators Club"
+    var isAboutExpanded by remember { mutableStateOf(false) }
 
     val aboutText = """
-        Meru Science innovators Club is a vibrant and dynamic collective of technology enthusiasts, 
+        Meru Science Innovators Club is a vibrant and dynamic collective of technology enthusiasts, 
         developers, designers, and innovators who share a common passion for cutting-edge 
         technology and its applications in solving real-world problems.
         
@@ -78,77 +80,22 @@ fun AboutUsScreen(
 
     val vision = "To be a leading technology community that inspires the next generation of tech innovators and contributes to technological advancement through education, collaboration, and practical application."
 
-
-
-
     val executives = remember {
         listOf(
-            ExecutiveMember(
-                id = "1",
-                name = "Newton Wamiti",
-                role = "Android Lead",
-                department = "Software Engineering"
-            ),
-            ExecutiveMember(
-                id = "2",
-                name = "Ephy Mucira",
-                role = "Machine Learning Lead",
-                department = "Data Science"
-            ),
-            ExecutiveMember(
-                name = "Emmanuel Bett",
-                id = "3",
-                role = "Ex-Android Lead",
-                department = "Software Engineering"
-            ),
-            ExecutiveMember(
-                id = "4",
-                name = "Steve Omondi",
-                role = "Backend Lead",
-                department = "Software Engineering"
-            ),
-            ExecutiveMember(
-                id = "5",
-                name = "Jairus Musundi",
-                role = "Ex-IOT & Robotics Lead",
-                department = "Engineering"
-            ),
-            ExecutiveMember(
-                id = "6",
-                name = "Brian Mong'are",
-                role = "UI/UX Lead",
-                department = "Design & Animation"
-            ),
-            ExecutiveMember(
-                id = "7",
-                name = "Bryson Kangai",
-                role = "Graphics Design Lead",
-                department = "Design & Animation"
-            ),
-            ExecutiveMember(
-                id = "8",
-                name = "Lewis Wanjohi",
-                role = "Java Lead",
-                department = "Software Engineering"
-            ),
-            ExecutiveMember(
-                id = "9",
-                name = "Joy Shaney",
-                role = "Social Media Manager",
-                department = "Social Media"
-            ),
-            ExecutiveMember(
-                id = "10",
-                name = "Grace Ngari",
-                role = "Women Tech Makers Lead",
-                department = "Information Technology"
-            )
+            ExecutiveMember(id = "1", name = "Newton Wamiti", role = "Android Lead", department = "Software Engineering"),
+            ExecutiveMember(id = "2", name = "Ephy Mucira", role = "Machine Learning Lead", department = "Data Science"),
+            ExecutiveMember(id = "3", name = "Emmanuel Bett", role = "Ex-Android Lead", department = "Software Engineering"),
+            ExecutiveMember(id = "4", name = "Steve Omondi", role = "Backend Lead", department = "Software Engineering"),
+            ExecutiveMember(id = "5", name = "Jairus Musundi", role = "Ex-IOT & Robotics Lead", department = "Engineering"),
+            ExecutiveMember(id = "6", name = "Brian Mong'are", role = "UI/UX Lead", department = "Design & Animation"),
+            ExecutiveMember(id = "7", name = "Bryson Kangai", role = "Graphics Design Lead", department = "Design & Animation"),
+            ExecutiveMember(id = "8", name = "Lewis Wanjohi", role = "Java Lead", department = "Software Engineering"),
+            ExecutiveMember(id = "9", name = "Joy Shaney", role = "Social Media Manager", department = "Social Media"),
+            ExecutiveMember(id = "10", name = "Grace Ngari", role = "Women Tech Makers Lead", department = "Information Technology")
         )
     }
 
-    var isAboutExpanded by remember { mutableStateOf(false) }
-    var showAllSubgroups by remember { mutableStateOf(false) }
-
+    // LaunchedEffect for error handling remains unchanged
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let { errorMessage ->
             val result = snackBarHostState.showSnackbar(
@@ -156,13 +103,9 @@ fun AboutUsScreen(
                 actionLabel = "Retry",
                 duration = SnackbarDuration.Indefinite
             )
-
             when (result) {
-                SnackbarResult.ActionPerformed -> {
-                    communitiesViewModel.onEvent(UiEvent.RefreshCommunities)
-                }
-                SnackbarResult.Dismissed -> {
-                }
+                SnackbarResult.ActionPerformed -> communitiesViewModel.onEvent(UiEvent.RefreshCommunities)
+                SnackbarResult.Dismissed -> {}
             }
             communitiesViewModel.onEvent(UiEvent.DismissError)
         }
@@ -178,10 +121,6 @@ fun AboutUsScreen(
                         fontWeight = FontWeight.Bold
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
@@ -197,9 +136,6 @@ fun AboutUsScreen(
                     aboutText = aboutText,
                     isExpanded = isAboutExpanded,
                     onReadMoreClick = { isAboutExpanded = !isAboutExpanded },
-                    onSeeFullBioClick = {
-
-                    }
                 )
             }
 
@@ -214,32 +150,45 @@ fun AboutUsScreen(
                 SectionHeading(
                     title = "Our Communities",
                     icon = Icons.Filled.Groups,
-                    showSeeAll = community.size > 4,
-                    onSeeAllClick = { showAllSubgroups = !showAllSubgroups }
                 )
             }
 
-           when {
-               state.isLoading -> {
-                   item {
-                       CommunityCardShimmer()
-                   }
-               }
+            if (!state.isLoading) {
+                item {
+                    Text(
+                        text = "Explore our specialized communities that focus on different aspects of technology",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
+            }
 
-               else -> {
-                    item {
-                        CommunitiesList(
-                            communities = community,
-                            showDescription = true,
+
+            when {
+                state.isLoading -> {
+                    items(4) {
+                        CommunityCardShimmer()
+                    }
+                }
+                else -> {
+                    items(communities.size) { index ->
+                        val community = communities[index]
+                        CommunityCard(
+                            modifier = Modifier.animateItem(
+                                placementSpec = spring(
+                                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                                    stiffness = Spring.StiffnessLow
+                                )
+                            ),
+                            community = community,
                             onSeeDetailsClick = {
-                                community.forEach { community ->
-                                    onNavigateToDetails(community)
-                                }
+                                onCommunityDetailsClick(community)
                             }
                         )
                     }
-               }
-           }
+                }
+            }
 
             item {
                 SectionHeading(
@@ -257,5 +206,4 @@ fun AboutUsScreen(
             }
         }
     }
-
 }

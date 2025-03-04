@@ -34,7 +34,6 @@
             <option value="$PROJECT_DIR$/features/blogs" />
             <option value="$PROJECT_DIR$/features/events" />
             <option value="$PROJECT_DIR$/features/home" />
-            <option value="$PROJECT_DIR$/paging" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
