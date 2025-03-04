@@ -41,7 +41,7 @@ import com.newton.core.domain.models.about_us.Session
 @Composable
 fun CommunitySessionsTab(sessions: List<Session>) {
 
-    val daysOfWeek = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+    val daysOfWeek = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "FRIDAY", "Saturday", "Sunday")
 
     val groupedSessions = sessions.groupBy { it.day }
 
