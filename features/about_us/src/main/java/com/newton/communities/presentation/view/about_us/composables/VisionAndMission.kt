@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Card
@@ -19,7 +18,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -109,8 +107,6 @@ fun VisionAndMission(vision: String, mission: String) {
 fun SectionHeading(
     title: String,
     icon: ImageVector,
-    showSeeAll: Boolean = false,
-    onSeeAllClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -136,22 +132,6 @@ fun SectionHeading(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-        }
-
-        if (showSeeAll) {
-            TextButton(onClick = onSeeAllClick) {
-                Text(
-                    text = if (title == "Our Communities") "See All" else "More",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Icon(
-                    imageVector = Icons.Filled.ArrowDropDown,
-                    contentDescription = "See All",
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
         }
     }
 }

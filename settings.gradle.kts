@@ -27,7 +27,6 @@ include(
     ":database",
     ":features:events",
     ":features:auth",
-    ":paging",
     ":features:home",
     ":features:account",
     ":features:blogs"

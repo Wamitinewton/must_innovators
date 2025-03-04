@@ -131,6 +131,7 @@ class CommunitiesViewModel @Inject constructor(
         }
     }
 
+
     private fun clearAllData() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }

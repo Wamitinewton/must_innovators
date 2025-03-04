@@ -7,5 +7,5 @@ sealed class NavigationSubGraphRoutes(val route: String) {
     data object Blogs: NavigationSubGraphRoutes(route = "/blogs_")
     data object Account: NavigationSubGraphRoutes(route = "/account_")
     data object Admin: NavigationSubGraphRoutes(route = "/admin_")
-    data object Communities: NavigationSubGraphRoutes(route = "/communities_")
+    data object AboutUs: NavigationSubGraphRoutes(route = "/communities_")
 }
