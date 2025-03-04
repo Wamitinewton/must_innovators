@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +26,6 @@ fun SignupContent(
     uiState: SignupViewmodelState,
     onEvent: (SignupUiEvent) -> Unit,
     onBackClick: () -> Unit,
-    navigateToEvents: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -95,9 +96,15 @@ fun SignupContent(
             },
             enabled = !uiState.isLoading,
             content = {
-                CustomTextLabelSmall(bodyText = "Sign up")
+                Text(
+                    text = "Sign up",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                )
             }
         )
+        Spacer(modifier = Modifier.height(50.dp))
 
     }
 }

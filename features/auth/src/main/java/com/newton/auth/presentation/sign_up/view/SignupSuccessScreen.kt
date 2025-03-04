@@ -98,7 +98,7 @@ fun SignupSuccessScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Please proceed to login with your new account credentials",
+                        text = "Check your email and click on the verification link to activate your account, Then proceed to login with your credentials",
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)

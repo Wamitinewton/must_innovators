@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -155,7 +156,7 @@ fun MemberDetailsDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
             dismissOnBackPress = true,
-            dismissOnClickOutside = true
+            dismissOnClickOutside = false
         )
     ) {
         val animatedScale = remember { Animatable(0.8f) }
@@ -170,11 +171,14 @@ fun MemberDetailsDialog(
             )
         }
 
-        Card(
+        ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .scale(animatedScale.value),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
         ) {
             Column(
                 modifier = Modifier
@@ -223,12 +227,6 @@ fun MemberDetailsDialog(
                         label = "Joined",
                         value = formatDateTime(member.joinedAt)
                     )
-//
-//                    DetailItem(
-//                        icon = Icons.Default.Code,
-//                        label = "Skills",
-//                        value = getRandomSkills().joinToString(", ")
-//                    )
 
                     DetailItem(
                         icon = Icons.Default.Star,

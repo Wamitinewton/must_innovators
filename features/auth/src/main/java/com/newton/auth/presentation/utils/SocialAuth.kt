@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +34,7 @@ fun SocialAuthentication(
                 .height(60.dp)
                 .padding(bottom = 12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFE5B8E8)
+                containerColor = MaterialTheme.colorScheme.primary
             ),
             shape = RoundedCornerShape(14.dp)
         ) {
@@ -48,7 +49,10 @@ fun SocialAuthentication(
                     modifier = Modifier.padding(end = 12.dp)
                 )
                 Text(
-                    text = "Continue with google"
+                    text = "Continue with google",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 )
             }
         }
@@ -62,7 +66,7 @@ fun SocialAuthentication(
                 .height(60.dp)
                 .padding(bottom = 12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFE5B8E8)
+                containerColor = MaterialTheme.colorScheme.primary
             ),
             shape = RoundedCornerShape(14.dp)
         ) {
@@ -77,7 +81,10 @@ fun SocialAuthentication(
                     modifier = Modifier.padding(end = 12.dp)
                 )
                 Text(
-                    text = "Continue with github"
+                    text = "Continue with github",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 )
             }
         }
