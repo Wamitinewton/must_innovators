@@ -175,11 +175,7 @@ fun ReadOnlyTextField(
                 )
             }
         },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            disabledTextColor = MaterialTheme.colorScheme.onSurface,
-            disabledBorderColor = MaterialTheme.colorScheme.outline,
-            disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+
     )
 }
 
