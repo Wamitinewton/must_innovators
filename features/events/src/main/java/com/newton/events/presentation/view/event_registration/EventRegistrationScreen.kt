@@ -40,18 +40,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
+import com.newton.common_ui.ui.CustomButton
 import com.newton.common_ui.ui.DropdownSelector
+import com.newton.common_ui.ui.LoadingDialog
 import com.newton.common_ui.ui.MultilineInputField
 import com.newton.common_ui.ui.ReadOnlyTextField
 import com.newton.common_ui.ui.SectionHeader
 import com.newton.common_ui.ui.ValidatedTextField
-import com.newton.common_ui.ui.CustomButton
-import com.newton.common_ui.ui.LoadingDialog
 import com.newton.core.domain.models.event_models.RegistrationResponse
+import com.newton.core.utils.formatDateTime
 import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventDetailsState
 import com.newton.events.presentation.states.RegistrationState
-import com.newton.events.presentation.view.composables.RegistrationSuccessBottomSheet
+import com.newton.events.presentation.view.composables.EventRegistrationSuccessScreen
 import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 
@@ -59,7 +60,7 @@ import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 @Composable
 fun EventRegistrationScreen(
     onClose: () -> Unit,
-    onRegisterSuccess: () -> Unit,
+    onNavigateToTickets: () -> Unit,
     eventsSharedViewModel: EventsSharedViewModel,
     userDataViewModel: GetUserDataViewModel = hiltViewModel(),
     eventRsvpViewmodel: EventRsvpViewmodel
@@ -246,15 +247,12 @@ fun EventRegistrationScreen(
     }
 
     if (showSuccessSheet && registrationResponse != null) {
-        RegistrationSuccessBottomSheet(
+        EventRegistrationSuccessScreen(
             registrationResponse = registrationResponse!!,
-            onRegisteredEvents = {
-                onRegisterSuccess()
-            },
-            onDismiss = {
-                showSuccessSheet = false
-                onRegisterSuccess()
-            }
+            eventName = event.name,
+            eventDateTime = formatDateTime(event.date),
+            onNavigateToHome = {},
+            onViewMyTickets = onNavigateToTickets,
         )
     }
 }
