@@ -16,10 +16,10 @@
 ## 📱 App Screenshots
 
 <div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
-  <img src="screenshots/login.jpeg" width="300" alt="Login Screen"/>
-  <img src="screenshots/signup.jpeg" width="300" alt="Home Screen"/>
-  <img src="screenshots/onboarding.jpeg" width="300" alt="Events List"/>
-  <img src="screenshots/onboarding1.jpeg" width="300" alt="Event Details"/>
+  <img src="screenshots/login.jpeg" width="200" alt="Login Screen"/>
+  <img src="screenshots/signup.jpeg" width="200" alt="Home Screen"/>
+  <img src="screenshots/onboarding.jpeg" width="200" alt="Events List"/>
+  <img src="screenshots/onboarding1.jpeg" width="200" alt="Event Details"/>
 </div>
 
 
