@@ -2,7 +2,7 @@
 
 <!-- Logo section with modern CSS -->
 <div style="text-align: center;">
-  <img src="app/src/main/res/drawable/app_logo.png" alt="MeruInnovators Logo" width="150"/>
+  <img src="common_ui/src/main/res/drawable/innovation.jpg" alt="MeruInnovators Logo" width="150"/>
 </div>
 
 <div style="text-align: center; margin-bottom: 20px;">
