@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
-import com.newton.common_ui.composables.animation.OrbitalsBackground
+import com.newton.common_ui.composables.animation.custom_animations.OrbitalsBackground
 import com.newton.common_ui.ui.LoadingDialog
 import com.newton.common_ui.ui.NetworkMonitor
 import com.newton.core.navigation.NavigationRoutes

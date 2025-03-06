@@ -11,11 +11,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,10 +24,8 @@ import com.newton.common_ui.ui.BodyMediumText
 import com.newton.common_ui.ui.DisplaySmallText
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthBottomSheetContent(
-    bottomSheetState: SheetState,
     onDismiss: () -> Unit,
     onLoginClick: () -> Unit,
     onSignupClick: () -> Unit
