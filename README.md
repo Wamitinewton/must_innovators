@@ -2,7 +2,7 @@
 
 <!-- Logo section with modern CSS -->
 <div style="text-align: center;">
-  <img src="common_ui/src/main/res/drawable/innovation.jpg" alt="MeruInnovators Logo" width="150"/>
+  <img src="common_ui/src/main/res/drawable/innovation.jpg" alt="MeruInnovators Logo" width="300" height="300"/>
 </div>
 
 <div style="text-align: center; margin-bottom: 20px;">
@@ -16,10 +16,10 @@
 ## 📱 App Screenshots
 
 <div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
-  <img src="screenshots/login_screen.png" width="200" alt="Login Screen"/>
-  <img src="screenshots/home_screen.png" width="200" alt="Home Screen"/>
-  <img src="screenshots/events_list.png" width="200" alt="Events List"/>
-  <img src="screenshots/event_details.png" width="200" alt="Event Details"/>
+  <img src="screenshots/login.jpeg" width="1080" alt="Login Screen"/>
+  <img src="screenshots/signup.jpeg" width="1080" alt="Home Screen"/>
+  <img src="screenshots/onboarding.jpeg" width="1080" alt="Events List"/>
+  <img src="screenshots/onboarding1.jpeg" width="1080" alt="Event Details"/>
 </div>
 
 <div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
@@ -213,9 +213,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Meru University Science Department for their support
 - All contributors who have helped shape this project
 - Open source libraries that made this project possible
-
----
-
-<p align="center">
-  Made with ❤️ by the Meru University Science Innovators Club
-</p>
