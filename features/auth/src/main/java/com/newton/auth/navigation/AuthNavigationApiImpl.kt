@@ -35,10 +35,14 @@ class AuthNavigationApiImpl: AuthNavigationApi {
             composable(route = NavigationRoutes.OnboardingRoute.routes) {
                 OnboardingScreen(
                     onLoginClick = {
-                        navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                        navHostController.navigate(NavigationRoutes.LoginRoute.routes) {
+                            popUpTo(NavigationRoutes.OnboardingRoute.routes)
+                        }
                     },
                     onSignupClick = {
-                        navHostController.navigate(NavigationRoutes.SignupRoute.routes)
+                        navHostController.navigate(NavigationRoutes.SignupRoute.routes) {
+                            popUpTo(NavigationRoutes.OnboardingRoute.routes)
+                        }
                     }
                 )
             }
@@ -51,7 +55,15 @@ class AuthNavigationApiImpl: AuthNavigationApi {
             }
 
             composable(route = NavigationRoutes.SignupSuccessRoute.routes) {
-                SignupSuccessScreen(navHostController = navHostController)
+                SignupSuccessScreen(
+                    onContinueClick = {
+                        navHostController.navigate(NavigationRoutes.UserDataLoadingRoute.routes) {
+                            popUpTo(NavigationSubGraphRoutes.Auth.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
 
             composable(route = NavigationRoutes.UserDataLoadingRoute.routes) {
@@ -59,7 +71,9 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 UserDataLoadingScreen(
                     viewModel = userViewModel,
                     onNavigateToHome = {
-                        navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                        navHostController.navigate(NavigationRoutes.HomeRoute.routes) {
+                            popUpTo(0) { inclusive = true }
+                        }
                     }
                 )
             }

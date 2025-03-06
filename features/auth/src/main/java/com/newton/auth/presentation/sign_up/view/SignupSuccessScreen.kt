@@ -41,7 +41,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SignupSuccessScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    onContinueClick: () -> Unit
 ) {
     var animationState by remember { mutableStateOf<LottieAnimationState>(LottieAnimationState.Playing) }
     var showContent by remember { mutableStateOf(false) }
@@ -129,11 +129,7 @@ fun SignupSuccessScreen(
             ) {
                 Button(
                     onClick = {
-                        navHostController.navigate(NavigationRoutes.LoginRoute.routes) {
-                            popUpTo(NavigationRoutes.SignupRoute.routes) {
-                                inclusive = true
-                            }
-                        }
+                        onContinueClick()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
