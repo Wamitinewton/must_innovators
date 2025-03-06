@@ -1,210 +1,325 @@
 package com.newton.events.presentation.view.composables
 
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.EaseInOut
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.material.icons.filled.School
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.CopyableText
-import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.composables.animation.confetti_animation.DottedShape
+import com.newton.common_ui.composables.animation.confetti_animation.EnhancedConfettiCelebration
+import com.newton.common_ui.composables.animation.confetti_animation.GlobalConfettiEffect
+import com.newton.common_ui.ui.CustomElevatedButton
+import com.newton.common_ui.ui.CustomOutlinedButton
+import com.newton.common_ui.ui.LabelLargeText
 import com.newton.core.domain.models.event_models.RegistrationResponse
 import com.newton.core.utils.formatDateTime
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistrationSuccessBottomSheet(
+fun EventRegistrationSuccessScreen(
     registrationResponse: RegistrationResponse,
-    onRegisteredEvents: () -> Unit,
-    onDismiss: () -> Unit
+    eventName: String,
+    eventDateTime: String,
+    onNavigateToHome: () -> Unit,
+    onViewMyTickets: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
+    var showScreen by remember { mutableStateOf(false) }
+    var showConfetti by remember { mutableStateOf(false) }
+    var showTicket by remember { mutableStateOf(false) }
+    var showButtons by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
-    val infiniteTransition = rememberInfiniteTransition(label = "glowTransition")
-    val glowAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1500),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "glowAlpha"
-    )
+    LaunchedEffect(Unit) {
+        showScreen = true
+        delay(300)
+        showConfetti = true
+        delay(800)
+        showTicket = true
+        delay(600)
+        showButtons = true
+    }
 
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface,
-        dragHandle = {}
+    AnimatedVisibility(
+        visible = showScreen,
+        enter = fadeIn(tween(700)) + scaleIn(
+            initialScale = 0.8f,
+            animationSpec = tween(700, easing = FastOutSlowInEasing)
+        )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Scaffold(
+        ) { padding ->
             Box(
                 modifier = Modifier
-                    .size(90.dp)
-                    .alpha(glowAlpha)
-                    .background(
-                        brush = Brush.radialGradient(
-                            colors = listOf(
-                                MaterialTheme.colorScheme.primary,
-                                Color.Transparent
-                            )
-                        ),
-                        shape = CircleShape
-                    ),
-                contentAlignment = Alignment.Center
-            ){
-                Icon(
-                    imageVector = Icons.Default.CheckCircle,
-                    contentDescription = "success",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(72.dp)
-                )
-            }
-
-        }
-
-        Text(
-            text = "Registration successful!",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "You've successfully registered for the event",
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-
-        RegistrationInfoItem(
-            label = "Ticket Number",
-            value = registrationResponse.ticketNumber,
-            highlightValue = true,
-            isCopyable = true
-        )
-
-        RegistrationInfoItem(
-            label = "Registration date",
-            value = formatDateTime(registrationResponse.registrationTimestamp)
-        )
-        RegistrationInfoItem(
-            label = "Name",
-            value = registrationResponse.fullName
-        )
-        RegistrationInfoItem(
-            label = "Email",
-            value = registrationResponse.email,
-            isCopyable = true
-        )
-        RegistrationInfoItem(
-            label = "Course",
-            value = registrationResponse.course
-        )
-        RegistrationInfoItem(
-            label = "Education Level",
-            value = "Year ${registrationResponse.educationalLevel}"
-        )
-        RegistrationInfoItem(
-            label = "Phone",
-            value = registrationResponse.phoneNumber,
-            isCopyable = true
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        CustomButton(
-            onClick = {
-                scope.launch {
-                    sheetState.hide()
-                    onDismiss()
-                    onRegisteredEvents()
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                AnimatedVisibility(
+                    visible = showConfetti,
+                    enter = fadeIn(tween(300))
+                ) {
+                    GlobalConfettiEffect(
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
-            },
-            content ={
-                Text("View My Registered Events")
-            },
-        )
-        Spacer(modifier = Modifier.height(50.dp))
 
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                        .verticalScroll(scrollState),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    AnimatedVisibility(
+                        visible = showConfetti,
+                        enter = fadeIn() + scaleIn(initialScale = 0.5f)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(200.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            EnhancedConfettiCelebration()
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "Registration Successful!",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "You're all set for the event",
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    AnimatedVisibility(
+                        visible = showTicket,
+                        enter = fadeIn(tween(500)) +
+                                slideInVertically(
+                                    initialOffsetY = { it / 2 },
+                                    animationSpec = tween(500, easing = EaseInOut)
+                                )
+                    ) {
+                        ElevatedCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp),
+                            elevation = CardDefaults.elevatedCardElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            colors = CardDefaults.elevatedCardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            )
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(24.dp)
+                            ) {
+                                Text(
+                                    text = "EVENT TICKET",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = eventName,
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(24.dp))
+
+                                TicketInfoRow(
+                                    icon = Icons.Default.QrCode2,
+                                    label = "Ticket #",
+                                    value = registrationResponse.ticketNumber
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                TicketInfoRow(
+                                    icon = Icons.Default.AccessTime,
+                                    label = "Date & Time",
+                                    value = eventDateTime
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                TicketInfoRow(
+                                    icon = Icons.Default.Person,
+                                    label = "Attendee",
+                                    value = registrationResponse.fullName
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                TicketInfoRow(
+                                    icon = Icons.Default.School,
+                                    label = "Course & Year",
+                                    value = "${registrationResponse.course} (${registrationResponse.educationalLevel})"
+                                )
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(1.dp)
+                                        .background(
+                                            color = MaterialTheme.colorScheme.outlineVariant,
+                                            shape = DottedShape(step = 10.dp)
+                                        )
+                                )
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Text(
+                                    text = formatDateTime(registrationResponse.registrationTimestamp),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    AnimatedVisibility(
+                        visible = showButtons,
+                        enter = fadeIn(tween(500)) +
+                                slideInVertically(
+                                    initialOffsetY = { it / 2 },
+                                    animationSpec = tween(500)
+                                )
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                           CustomElevatedButton(
+                               onClick = onViewMyTickets,
+                               modifier = Modifier
+                                   .fillMaxWidth()
+                                   .height(56.dp),
+                               shape = RoundedCornerShape(16.dp),
+                               content = {
+                                   LabelLargeText(
+                                       text = "View My Tickets"
+                                   )
+                               }
+                           )
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            CustomOutlinedButton(
+                                onClick = onNavigateToHome,
+                                shape = RoundedCornerShape(16.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(56.dp),
+                                content = {
+                                    LabelLargeText(
+                                        text = "Back to Home"
+                                    )
+                                },
+                            )
+
+                            Spacer(modifier = Modifier.height(24.dp))
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
+
 @Composable
-fun RegistrationInfoItem(
+fun TicketInfoRow(
+    icon: ImageVector,
     label: String,
-    value: String,
-    highlightValue: Boolean = false,
-    isCopyable: Boolean = false
+    value: String
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 6.dp)
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.weight(0.4f)
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(20.dp)
         )
 
-        if (isCopyable) {
-            CopyableText(
-                text = value,
-                highlightText = highlightValue,
-                toastMessage = "$label copied to clipboard",
-                modifier = Modifier.weight(0.6f)
+        Spacer(modifier = Modifier.padding(8.dp))
+
+        Column {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-        } else {
+
             Text(
                 text = value,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (highlightValue) FontWeight.Bold else FontWeight.Normal,
-                color = if (highlightValue) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.weight(0.6f)
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium
             )
         }
     }

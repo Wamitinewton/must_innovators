@@ -164,6 +164,32 @@ fun CustomOutlinedButton(
     )
 }
 
+@Composable
+fun CustomElevatedButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.primary,
+    content: @Composable RowScope.() -> Unit,
+    shape: Shape = RoundedCornerShape(12.dp)
+) {
+    ElevatedButton(
+        onClick = onClick,
+        modifier = modifier,
+        shape = shape,
+        colors = ButtonDefaults.elevatedButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        ),
+        elevation = ButtonDefaults.elevatedButtonElevation(6.dp),
+        contentPadding = contentPadding,
+        content = content,
+        enabled = enabled,
+    )
+}
+
 
 @Composable
 fun AuthButton(
@@ -214,8 +240,8 @@ fun AuthButton(
         CustomOutlinedButton(
             onClick = onClick,
            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
+               .fillMaxWidth()
+               .height(56.dp),
             enabled = true,
             content = {
                 Icon(
