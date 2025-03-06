@@ -42,12 +42,6 @@ fun CustomAppBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = {}) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
-                    )
-                }
                 Text("Events Screen", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 IconButton(onClick = { }) {
                     Box {
