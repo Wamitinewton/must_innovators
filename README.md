@@ -16,18 +16,12 @@
 ## 📱 App Screenshots
 
 <div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
-  <img src="screenshots/login.jpeg" width="1080" alt="Login Screen"/>
-  <img src="screenshots/signup.jpeg" width="1080" alt="Home Screen"/>
-  <img src="screenshots/onboarding.jpeg" width="1080" alt="Events List"/>
-  <img src="screenshots/onboarding1.jpeg" width="1080" alt="Event Details"/>
+  <img src="screenshots/login.jpeg" width="400" alt="Login Screen"/>
+  <img src="screenshots/signup.jpeg" width="400" alt="Home Screen"/>
+  <img src="screenshots/onboarding.jpeg" width="400" alt="Events List"/>
+  <img src="screenshots/onboarding1.jpeg" width="400" alt="Event Details"/>
 </div>
 
-<div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  <img src="screenshots/profile_screen.png" width="200" alt="Profile Screen"/>
-  <img src="screenshots/projects_gallery.png" width="200" alt="Projects Gallery"/>
-  <img src="screenshots/chat_feature.png" width="200" alt="Chat Feature"/>
-  <img src="screenshots/notifications.png" width="200" alt="Notifications"/>
-</div>
 
 ## 🚀 About
 
