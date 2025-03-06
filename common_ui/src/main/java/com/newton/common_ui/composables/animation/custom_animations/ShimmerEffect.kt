@@ -1,4 +1,4 @@
-package com.newton.common_ui.composables.animation
+package com.newton.common_ui.composables.animation.custom_animations
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing

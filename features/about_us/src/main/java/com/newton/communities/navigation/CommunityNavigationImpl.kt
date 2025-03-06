@@ -12,6 +12,7 @@ import com.newton.communities.presentation.view.about_us.AboutUsScreen
 import com.newton.communities.presentation.view.community_details.CommunityDetailsScreen
 import com.newton.communities.presentation.view_model.AboutUsSharedViewModel
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
+import com.newton.communities.presentation.view_model.ExecutiveViewModel
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
@@ -30,13 +31,14 @@ class CommunityNavigationImpl: CommunityNavigationApi {
                     navHostController.getBackStackEntry(NavigationSubGraphRoutes.AboutUs.route)
                 }
                 val aboutUsSharedViewModel = hiltViewModel<AboutUsSharedViewModel>(parentEntry)
+                val executiveViewModel = hiltViewModel<ExecutiveViewModel>()
                 AboutUsScreen(
                     communitiesViewModel = communityViewModel,
                     onCommunityDetailsClick = { community ->
                         aboutUsSharedViewModel.selectCommunity(community)
                         navHostController.navigate(NavigationRoutes.CommunitiesDetailsRoute.routes)
-
                     },
+                    executiveViewModel = executiveViewModel
                 )
             }
 

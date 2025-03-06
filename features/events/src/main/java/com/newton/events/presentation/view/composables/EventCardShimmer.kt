@@ -28,7 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.composables.animation.ShimmerWithFade
+import com.newton.common_ui.composables.animation.custom_animations.ShimmerWithFade
 
 
 @Composable

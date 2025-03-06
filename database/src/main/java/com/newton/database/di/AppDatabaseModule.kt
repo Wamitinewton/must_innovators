@@ -42,5 +42,9 @@ object AppDatabaseModule {
     @Singleton
     fun provideCommunityDao(db: AppDatabase) = db.communityDao
 
+    @Provides
+    @Singleton
+    fun provideExecutiveDao(db: AppDatabase) = db.executiveDao
+
 }
 

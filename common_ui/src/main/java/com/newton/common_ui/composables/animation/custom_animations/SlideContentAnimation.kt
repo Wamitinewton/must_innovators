@@ -1,4 +1,4 @@
-package com.newton.common_ui.composables.animation
+package com.newton.common_ui.composables.animation.custom_animations
 
 import android.view.FrameMetrics.ANIMATION_DURATION
 import androidx.compose.animation.AnimatedContentTransitionScope

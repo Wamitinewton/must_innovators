@@ -34,17 +34,18 @@ import com.newton.communities.presentation.events.UiEvent
 import com.newton.communities.presentation.view.about_us.composables.AboutSection
 import com.newton.communities.presentation.view.about_us.composables.CommunityCard
 import com.newton.communities.presentation.view.about_us.composables.CommunityCardShimmer
-import com.newton.communities.presentation.view.about_us.composables.ExecutivesSection
 import com.newton.communities.presentation.view.about_us.composables.SectionHeading
 import com.newton.communities.presentation.view.about_us.composables.VisionAndMission
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
+import com.newton.communities.presentation.view_model.ExecutiveViewModel
 import com.newton.core.domain.models.about_us.Community
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutUsScreen(
     onCommunityDetailsClick: (Community) -> Unit,
-    communitiesViewModel: CommunitiesViewModel
+    communitiesViewModel: CommunitiesViewModel,
+    executiveViewModel: ExecutiveViewModel
 ) {
     val state by communitiesViewModel.communityState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
@@ -80,22 +81,6 @@ fun AboutUsScreen(
 
     val vision = "To be a leading technology community that inspires the next generation of tech innovators and contributes to technological advancement through education, collaboration, and practical application."
 
-    val executives = remember {
-        listOf(
-            ExecutiveMember(id = "1", name = "Newton Wamiti", role = "Android Lead", department = "Software Engineering"),
-            ExecutiveMember(id = "2", name = "Ephy Mucira", role = "Machine Learning Lead", department = "Data Science"),
-            ExecutiveMember(id = "3", name = "Emmanuel Bett", role = "Ex-Android Lead", department = "Software Engineering"),
-            ExecutiveMember(id = "4", name = "Steve Omondi", role = "Backend Lead", department = "Software Engineering"),
-            ExecutiveMember(id = "5", name = "Jairus Musundi", role = "Ex-IOT & Robotics Lead", department = "Engineering"),
-            ExecutiveMember(id = "6", name = "Brian Mong'are", role = "UI/UX Lead", department = "Design & Animation"),
-            ExecutiveMember(id = "7", name = "Bryson Kangai", role = "Graphics Design Lead", department = "Design & Animation"),
-            ExecutiveMember(id = "8", name = "Lewis Wanjohi", role = "Java Lead", department = "Software Engineering"),
-            ExecutiveMember(id = "9", name = "Joy Shaney", role = "Social Media Manager", department = "Social Media"),
-            ExecutiveMember(id = "10", name = "Grace Ngari", role = "Women Tech Makers Lead", department = "Information Technology")
-        )
-    }
-
-    // LaunchedEffect for error handling remains unchanged
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let { errorMessage ->
             val result = snackBarHostState.showSnackbar(
@@ -110,6 +95,7 @@ fun AboutUsScreen(
             communitiesViewModel.onEvent(UiEvent.DismissError)
         }
     }
+
 
     Scaffold(
         topBar = {
@@ -198,7 +184,7 @@ fun AboutUsScreen(
             }
 
             item {
-                ExecutivesSection(executives = executives)
+                ExecutivesSection(viewModel = executiveViewModel)
             }
 
             item {

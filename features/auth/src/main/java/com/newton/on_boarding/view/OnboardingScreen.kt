@@ -55,7 +55,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.composables.animation.OrbitalsBackground
+import com.newton.common_ui.composables.animation.custom_animations.OrbitalsBackground
 import com.newton.common_ui.ui.BodyLargeText
 import com.newton.common_ui.ui.DisplayLargeText
 import com.newton.common_ui.ui.DisplaySmallText
@@ -266,7 +266,7 @@ fun OnboardingScreen(
                                         .padding(8.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    aboutItems[page].icon()
+                                    aboutItems[page].icon
                                 }
 
                                 Spacer(modifier = Modifier.height(16.dp))
@@ -329,7 +329,6 @@ fun OnboardingScreen(
                 tonalElevation = 8.dp
             ) {
                 AuthBottomSheetContent(
-                    bottomSheetState = bottomSheetState,
                     onDismiss = { showBottomSheet = false },
                     onLoginClick = {
                         scope.launch {
