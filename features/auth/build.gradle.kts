@@ -92,6 +92,8 @@ dependencies {
 
     implementation(Dependencies.crypto_datastore)
 
+    implementation(Dependencies.extendedIcons)
+
     implementation(Dependencies.timber)
 
     implementation(project(":core"))

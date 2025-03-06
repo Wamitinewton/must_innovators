@@ -41,14 +41,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import com.newton.common_ui.ui.DropdownSelector
-import com.newton.common_ui.ui.GlowingBorderAnimation
-import com.newton.common_ui.ui.GlowingBorderPresets
-import com.newton.common_ui.ui.LoadingOverlay
 import com.newton.common_ui.ui.MultilineInputField
 import com.newton.common_ui.ui.ReadOnlyTextField
 import com.newton.common_ui.ui.SectionHeader
 import com.newton.common_ui.ui.ValidatedTextField
 import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.ui.LoadingDialog
 import com.newton.core.domain.models.event_models.RegistrationResponse
 import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventDetailsState
@@ -76,11 +74,8 @@ fun EventRegistrationScreen(
     val educationLevels = listOf("1", "2", "3", "4",)
     val context = LocalContext.current
     var expectations by remember { mutableStateOf("") }
-
-    var showSuccessAnimation by remember { mutableStateOf(false) }
     var showSuccessSheet by remember { mutableStateOf(false) }
     var registrationResponse by remember { mutableStateOf<RegistrationResponse?>(null) }
-
 
     LaunchedEffect(userDataState.userData) {
         userDataState.userData?.let { user ->
@@ -110,139 +105,145 @@ fun EventRegistrationScreen(
         }
     }
 
- GlowingBorderAnimation(
-     isActive = showSuccessAnimation,
-     colors = GlowingBorderPresets.Success,
-     onAnimationComplete = { showSuccessSheet = true }
- ) {
-     Scaffold(
-         topBar = {
-             TopAppBar(
-                 title = { Text("Event Registration") },
-                 navigationIcon = {
-                     IconButton(onClick = onClose) {
-                         Icon(
-                             imageVector = Icons.Default.Close,
-                             contentDescription = "Close"
-                         )
-                     }
-                 }
-             )
-         }
-     ) { padding ->
-         Box(modifier = Modifier.fillMaxSize()) {
-             Column(
-                 modifier = Modifier
-                     .fillMaxSize()
-                     .padding(padding)
-                     .padding(horizontal = 16.dp)
-                     .verticalScroll(rememberScrollState())
-             ) {
-                 Card(
-                     modifier = Modifier
-                         .fillMaxWidth()
-                         .padding(vertical = 16.dp),
-                     colors = CardDefaults.cardColors(
-                         containerColor = MaterialTheme.colorScheme.primaryContainer
-                     )
-                 ) {
-                     Column(
-                         modifier = Modifier.padding(16.dp)
-                     ) {
-                         Text(
-                             text = "Registering for:",
-                             style = MaterialTheme.typography.labelLarge
-                         )
-                         Spacer(modifier = Modifier.height(4.dp))
-                         Text(
-                             text = event.name,
-                             style = MaterialTheme.typography.titleLarge,
-                             fontWeight = FontWeight.Bold
-                         )
-                     }
-                 }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Event Registration") },
+                navigationIcon = {
+                    IconButton(onClick = onClose) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close"
+                        )
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Registering for:",
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = event.name,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
 
-                 SectionHeader(title = "Personal Information")
+                SectionHeader(title = "Personal Information")
 
-                 ReadOnlyTextField(
-                     value = "${formState.firstName} ${formState.lastName}",
-                     label = "Full Name",
-                     leadingIcon = Icons.Default.Person3,
-                     contentDescription = "Name"
-                 )
+                ReadOnlyTextField(
+                    value = "${formState.firstName} ${formState.lastName}",
+                    label = "Full Name",
+                    leadingIcon = Icons.Default.Person3,
+                    contentDescription = "Name"
+                )
 
-                 ReadOnlyTextField(
-                     value = formState.email,
-                     label = "Email Address",
-                     leadingIcon = Icons.Default.Person3,
-                     contentDescription = "Email"
-                 )
+                ReadOnlyTextField(
+                    value = formState.email,
+                    label = "Email Address",
+                    leadingIcon = Icons.Default.Person3,
+                    contentDescription = "Email"
+                )
 
-                 ReadOnlyTextField(
-                     value = formState.course,
-                     label = "Course",
-                     leadingIcon = Icons.Default.School,
-                     contentDescription = "Email"
-                 )
+                ReadOnlyTextField(
+                    value = formState.course,
+                    label = "Course",
+                    leadingIcon = Icons.Default.School,
+                    contentDescription = "Email"
+                )
 
-                 Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-                 SectionHeader(title = "Education Details")
+                SectionHeader(title = "Education Details")
 
-                 DropdownSelector(
-                     selectedValue = formState.educationLevel,
-                     options = educationLevels,
-                     onSelectionChanged = { eventRsvpViewmodel.updateEducationLevel(it) },
-                     label = "Education Level",
-                     leadingIcon = Icons.Default.School,
-                     contentDescription = "Education Level",
-                     modifier = Modifier.padding(vertical = 8.dp)
-                 )
+                DropdownSelector(
+                    selectedValue = formState.educationLevel,
+                    options = educationLevels,
+                    onSelectionChanged = { eventRsvpViewmodel.updateEducationLevel(it) },
+                    label = "Education Level",
+                    leadingIcon = Icons.Default.School,
+                    contentDescription = "Education Level",
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
 
-                 ValidatedTextField(
-                     value = formState.phoneNumber,
-                     onValueChange = { eventRsvpViewmodel.updatePhoneNumber(it) },
-                     label = "Phone Number",
-                     leadingIcon = Icons.Default.Phone,
-                     contentDescription = "Phone",
-                     errorMessage = validationState.phoneNumberError,
-                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                     modifier = Modifier.padding(vertical = 8.dp)
-                 )
+                ValidatedTextField(
+                    value = formState.phoneNumber,
+                    onValueChange = { eventRsvpViewmodel.updatePhoneNumber(it) },
+                    label = "Phone Number",
+                    leadingIcon = Icons.Default.Phone,
+                    contentDescription = "Phone",
+                    errorMessage = validationState.phoneNumberError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
 
-                 MultilineInputField(
-                     value = expectations,
-                     onValueChange = {
-                         expectations = it
-                         eventRsvpViewmodel.updateExpectations(it)
-                     },
-                     label = "Expectations",
-                     leadingIcon = Icons.Default.Feedback,
-                     contentDescription = "Expectations",
-                     errorMessage = validationState.expectationsError,
-                     placeholder = "What do you hope to learn from this event?",
-                     modifier = Modifier.padding(vertical = 8.dp)
-                 )
+                MultilineInputField(
+                    value = expectations,
+                    onValueChange = {
+                        expectations = it
+                        eventRsvpViewmodel.updateExpectations(it)
+                    },
+                    label = "Expectations",
+                    leadingIcon = Icons.Default.Feedback,
+                    contentDescription = "Expectations",
+                    errorMessage = validationState.expectationsError,
+                    placeholder = "What do you hope to learn from this event?",
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
 
-                 Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
-                 CustomButton(
-                     onClick = { eventRsvpViewmodel.registerForEvent(event.id) },
-                     modifier = Modifier.padding(vertical = 16.dp),
-                     content = { Text("Register for Event") }
-                 )
+                CustomButton(
+                    onClick = { eventRsvpViewmodel.registerForEvent(event.id) },
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    content = { Text("Register for Event") }
+                )
 
-                 Spacer(modifier = Modifier.height(16.dp))
-             }
+                Spacer(modifier = Modifier.height(16.dp))
+            }
 
-             LoadingOverlay(
-                 isLoading = registrationState is RegistrationState.Loading &&
-                         (registrationState as? RegistrationState.Loading)?.isLoading == true,
-                 loadingText = "Registering..."
-             )
-         }
-     }
- }
+            when (registrationState) {
+                is RegistrationState.Loading -> {
+                    if ((registrationState as RegistrationState.Loading).isLoading) {
+                       LoadingDialog()
+                    }
+                }
+                is RegistrationState.Success -> {
+                    LaunchedEffect(registrationState) {
+                        registrationResponse = (registrationState as RegistrationState.Success).data
+                        showSuccessSheet = true
+                    }
+                }
+                is RegistrationState.Error -> {
+                }
+                else -> {
+                }
+            }
+        }
+    }
 
     if (showSuccessSheet && registrationResponse != null) {
         RegistrationSuccessBottomSheet(
@@ -256,4 +257,4 @@ fun EventRegistrationScreen(
             }
         )
     }
-    }
+}
