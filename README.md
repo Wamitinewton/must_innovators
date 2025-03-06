@@ -2,7 +2,7 @@
 
 <!-- Logo section with modern CSS -->
 <div style="text-align: center;">
-  <img src="common_ui/src/main/res/drawable/innovation.jpg" alt="MeruInnovators Logo" width="300" height="300"/>
+  <img src="common_ui/src/main/res/drawable/innovation.jpg" alt="MeruInnovators Logo" width="300"/>
 </div>
 
 <div style="text-align: center; margin-bottom: 20px;">
@@ -16,10 +16,10 @@
 ## 📱 App Screenshots
 
 <div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
-  <img src="screenshots/login.jpeg" width="400" alt="Login Screen"/>
-  <img src="screenshots/signup.jpeg" width="400" alt="Home Screen"/>
-  <img src="screenshots/onboarding.jpeg" width="400" alt="Events List"/>
-  <img src="screenshots/onboarding1.jpeg" width="400" alt="Event Details"/>
+  <img src="screenshots/login.jpeg" width="300" alt="Login Screen"/>
+  <img src="screenshots/signup.jpeg" width="300" alt="Home Screen"/>
+  <img src="screenshots/onboarding.jpeg" width="300" alt="Events List"/>
+  <img src="screenshots/onboarding1.jpeg" width="300" alt="Event Details"/>
 </div>
 
 
