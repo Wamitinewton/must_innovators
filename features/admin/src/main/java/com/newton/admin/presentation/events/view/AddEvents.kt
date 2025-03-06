@@ -1,6 +1,5 @@
 package com.newton.admin.presentation.events.view
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,17 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Today
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -34,9 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -60,8 +53,8 @@ import java.io.FileOutputStream
 @Composable
 fun AddEvents(
     viewModel: AddEventViewModel,
-    onEvent: (AddEventEvents)->Unit,
-    navigator:NavController
+    onEvent: (AddEventEvents) -> Unit,
+    navigator: NavController
 ) {
     val state by viewModel.state.collectAsState()
     val scrollState = rememberScrollState()
@@ -72,7 +65,7 @@ fun AddEvents(
         onResult = { uri ->
             val contentResolver = context.contentResolver
             val file = File(context.cacheDir, "temp_file_${System.currentTimeMillis()}")
-            if (uri!= null){
+            if (uri != null) {
                 try {
                     contentResolver.openInputStream(uri)?.use { inputStream ->
                         FileOutputStream(file).use { outputStream ->
@@ -105,8 +98,7 @@ fun AddEvents(
 
             MeruInnovatorsAppBar(
                 title = "Add Event",
-
-                )
+            )
         }
     ) { paddingValues ->
         Column(
@@ -119,7 +111,7 @@ fun AddEvents(
             // Event Name
             OutlinedTextField(
                 value = state.name,
-                onValueChange = { viewModel.onNameChange(it) },
+                onValueChange = { onEvent.invoke(AddEventEvents.ChangedName(it)) },
                 label = { Text("Event Name*") },
                 modifier = Modifier.fillMaxWidth(),
                 isError = state.errors["name"] != null,
@@ -146,7 +138,9 @@ fun AddEvents(
             // Description
             OutlinedTextField(
                 value = state.description,
-                onValueChange = { viewModel.onDescriptionChange(it) },
+                onValueChange = {
+                    onEvent.invoke(AddEventEvents.ChangedDescription(it))
+                },
                 label = { Text("Description") },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3
@@ -207,7 +201,9 @@ fun AddEvents(
             // Contact Email
             OutlinedTextField(
                 value = state.contactEmail,
-                onValueChange = { viewModel.onContactEmailChange(it) },
+                onValueChange = {
+                    onEvent.invoke(AddEventEvents.ChangedContactEmail(it))
+                },
                 label = { Text("Contact Email*") },
                 modifier = Modifier.fillMaxWidth(),
                 isError = state.errors["email"] != null,
@@ -219,7 +215,9 @@ fun AddEvents(
             // Title
             OutlinedTextField(
                 value = state.title,
-                onValueChange = { viewModel.onTitleChange(it) },
+                onValueChange = {
+                    onEvent.invoke(AddEventEvents.ChangedTitle(it))
+                },
                 label = { Text("Title*") },
                 modifier = Modifier.fillMaxWidth(),
                 isError = state.errors["title"] != null,
@@ -235,9 +233,24 @@ fun AddEvents(
             ) {
                 Checkbox(
                     checked = state.isVirtual,
-                    onCheckedChange = { viewModel.onIsVirtualChange(it) }
+                    onCheckedChange = {
+                        onEvent.invoke(AddEventEvents.ChangedVirtual(it))
+                    }
                 )
                 Text("Virtual Event")
+            }
+
+            if (state.isVirtual){
+                OutlinedTextField(
+                    value = state.meetingLink,
+                    onValueChange = {
+                        onEvent.invoke(AddEventEvents.ChangedMeetingLink(it))
+                    },
+                    label = { Text("Meeting link*") },
+                    modifier = Modifier.fillMaxWidth(),
+                    isError = state.errors["meetingLink"] != null,
+                    supportingText = { state.errors["meetingLink"]?.let { Text(it) } }
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -246,7 +259,7 @@ fun AddEvents(
             Button(
                 onClick = {
                     onEvent.invoke(AddEventEvents.AddEvent)
-                    if(state.uploadSuccess){
+                    if (state.uploadSuccess) {
                         navigator.popBackStack()
                     }
                 },
@@ -262,19 +275,21 @@ fun AddEvents(
                 sheetState = sheetState,
                 onDismissRequest = { onEvent.invoke(AddEventEvents.Sheet(shown = false)) }
             ) {
-               ColumnWrapper(modifier = Modifier.heightIn(max = 640.dp)){
-                   Text(
+                ColumnWrapper(modifier = Modifier.heightIn(max = 640.dp)) {
+                    Text(
                         "Select Category",
                         style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(bottom = 16.dp).align(Alignment.CenterHorizontally)
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .align(Alignment.CenterHorizontally)
                     )
 
-                   SelectCategoriesContentView(
-                       onEvent = onEvent,
-                       categories = viewModel.categories
-                   )
-                   Spacer(Modifier.size(24.dp))
-               }
+                    SelectCategoriesContentView(
+                        onEvent = onEvent,
+                        categories = viewModel.categories
+                    )
+                    Spacer(Modifier.size(24.dp))
+                }
             }
         }
         if (state.isShowDialog) {

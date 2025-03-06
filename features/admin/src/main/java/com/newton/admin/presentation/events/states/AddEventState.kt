@@ -13,6 +13,7 @@ data class AddEventState(
     val organizer: String = "",
     val contactEmail: String = "",
     val title: String = "",
+    val meetingLink : String = "",
     val isVirtual: Boolean = false,
     val showCategorySheet: Boolean = false,
     val showDatePicker: Boolean = false,

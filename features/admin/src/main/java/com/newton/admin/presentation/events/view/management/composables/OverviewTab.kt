@@ -68,7 +68,7 @@ fun OverviewTab(
             }
 
             item {
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(60.dp))
             }
         }
     }

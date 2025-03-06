@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/features/admin" />
             <option value="$PROJECT_DIR$/features/auth" />
             <option value="$PROJECT_DIR$/features/blogs" />
+            <option value="$PROJECT_DIR$/features/communities" />
             <option value="$PROJECT_DIR$/features/events" />
             <option value="$PROJECT_DIR$/features/home" />
           </set>
