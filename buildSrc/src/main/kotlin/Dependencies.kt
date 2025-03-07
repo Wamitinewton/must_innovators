@@ -1,5 +1,3 @@
-import org.gradle.api.artifacts.dsl.DependencyHandler
-
 object Dependencies {
 
 

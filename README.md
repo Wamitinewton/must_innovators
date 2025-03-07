@@ -36,7 +36,7 @@ The MeruInnovators app is a platform for the Meru University Science Innovators 
 ## 🛠️ Tech Stack
 
 - **Language**: Kotlin
-- **Architecture**: MVVM with Clean Architecture
+- **Architecture**: Feature-Based Multi-Module Architecture
 - **UI**: Jetpack Compose
 - **Dependency Injection**: Hilt
 - **Database**: Room
@@ -198,12 +198,3 @@ git push origin feature/your-feature-name
 - Update documentation if needed
 - Add screenshots for UI changes in your PR description
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgements
-
-- Meru University Science Department for their support
-- All contributors who have helped shape this project
-- Open source libraries that made this project possible
