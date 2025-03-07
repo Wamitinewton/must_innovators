@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.view.composables.ImageReceiptView
@@ -45,6 +46,7 @@ import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.common_ui.composables.dialog.CustomDatePickerDialog
 import com.newton.common_ui.ui.ColumnWrapper
 import com.newton.common_ui.ui.CustomClickableOutlinedTextField
+import com.newton.common_ui.ui.LoadingDialog
 import com.newton.common_ui.ui.toFormattedDate
 import java.io.File
 import java.io.FileOutputStream
@@ -268,7 +270,12 @@ fun AddEvents(
                 Text("Create Event")
             }
         }
-
+        if (state.isLoading) {
+            LoadingDialog()
+        }
+        if(state.uploadSuccess){
+            onEvent.invoke(AddEventEvents.ToDefaultSate)
+        }
         // Category Selection Bottom Sheet
         if (state.showCategorySheet) {
             ModalBottomSheet(
@@ -296,7 +303,10 @@ fun AddEvents(
             CustomDatePickerDialog(
                 initialValue = state.date,
                 onDismiss = { viewModel.handleEvent(AddEventEvents.Dialog(shown = false)) },
-                onConfirm = { viewModel.handleEvent(AddEventEvents.ChangeDate(it)) }
+                onConfirm = {
+                    viewModel.handleEvent(AddEventEvents.ChangeDate(it))
+                    viewModel.handleEvent(AddEventEvents.Dialog(shown = false))
+                }
             )
         }
 

@@ -17,6 +17,7 @@ import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
 import com.newton.admin.presentation.feedbacks.views.FeedbackScreen
 import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
 import com.newton.admin.presentation.home.views.AdminHome
+import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
 import com.newton.admin.presentation.partners.view.AddPartnerScreen
 import com.newton.admin.presentation.view.setings.AdminSettingsScreen
 import com.newton.core.navigation.NavigationRoutes
@@ -55,18 +56,29 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             }
             composable(route = NavigationRoutes.AddCommunity.routes) {
                 val viewModel = hiltViewModel<CommunityViewModel>()
-                AddCommunityScreen(viewModel=viewModel, onEvent = viewModel::handleEvent)
+                AddCommunityScreen(
+                    viewModel = viewModel,
+                    onEvent = viewModel::handleEvent,
+                    navController = navHostController,
+                )
             }
             composable(route = NavigationRoutes.AddPartners.routes) {
                 AddPartnerScreen()
             }
             composable(route = NavigationRoutes.NewsLetterScreen.routes) {
-                NewsletterAdminScreen()
+                val viewModel = hiltViewModel<NotificationsViewModel>()
+                NewsletterAdminScreen(
+                    viewModel = viewModel,
+                    onEvent = viewModel::handleEvents,
+                    navController = navHostController
+                )
             }
             composable(route = NavigationRoutes.UpdateCommunityRoute.routes) {
+                val viewModel = hiltViewModel<CommunityViewModel>()
                 UpdateCommunityScreen(
                     onBackPressed = { },
-                    onSavePressed ={ }
+                    onSavePressed = { },
+                    viewModel
                 )
             }
 

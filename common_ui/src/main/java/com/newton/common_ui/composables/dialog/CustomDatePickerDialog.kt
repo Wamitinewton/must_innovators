@@ -18,7 +18,7 @@ import com.newton.common_ui.ui.CustomTextButton
 fun CustomDatePickerDialog(
     initialValue: Long? = System.currentTimeMillis(),
     defaultValue: Long = System.currentTimeMillis(),
-    onDismiss: () -> Unit = {},
+    onDismiss: () -> Unit,
     onConfirm: (Long) -> Unit
 ) {
     val state = rememberDatePickerState(initialSelectedDateMillis = initialValue)
@@ -52,10 +52,4 @@ fun CustomDatePicker(state: DatePickerState) {
         headline = null,
         colors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
     )
-}
-
-@Composable
-@Preview
-private fun CustomDatePickerPreview() {
-    CustomDatePickerDialog {  }
 }

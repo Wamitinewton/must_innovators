@@ -6,10 +6,14 @@ import com.newton.admin.domain.models.NewsLetterResponse
 import com.newton.core.data.dto.EventApiResponse
 import com.newton.core.data.dto.EventDto
 import com.newton.core.data.dto.EventResponse
-import com.newton.core.domain.models.admin_models.AddCommunityResponse
-import com.newton.core.domain.models.admin_models.EventsRsvpResponse
+import com.newton.core.domain.models.ApiResponse
+import com.newton.core.domain.models.PaginationResponse
+import com.newton.core.domain.models.admin_models.CommunityData
+import com.newton.core.domain.models.admin_models.EventRegistrationData
+import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.event_models.AddEventRequest
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -18,7 +22,6 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
-import java.io.File
 
 interface AdminApi {
     @PUT(EventEndPoint.UPDATE_EVENT)
@@ -35,22 +38,22 @@ interface AdminApi {
     @Multipart
     @POST(EventEndPoint.CREATE_EVENT)
     suspend fun createEvent(
-        @Part("name") name: String,
-        @Part("category") category: String,
-        @Part("description") description: String,
+        @Part("name") name: RequestBody,
+        @Part("category") category: RequestBody,
+        @Part("description") description: RequestBody,
         @Part image: MultipartBody.Part,
-        @Part("date") date: String,
-        @Part("location") location: String,
-        @Part("organizer") organizer: String,
-        @Part("contact_email") contactEmail: String,
-        @Part("title") title: String,
-        @Part("is_virtual") isVirtual: Boolean
+        @Part("date") date: RequestBody,
+        @Part("location") location: RequestBody,
+        @Part("organizer") organizer: RequestBody,
+        @Part("contact_email") contactEmail: RequestBody,
+        @Part("title") title: RequestBody,
+        @Part("is_virtual") isVirtual : RequestBody
     ): EventApiResponse<EventDto>
 
     @POST(EventEndPoint.ADD_COMMUNITY)
     suspend fun addCommunity(
         @Body request: AddCommunityRequest
-    ): AddCommunityResponse
+    ): ApiResponse<CommunityData>
 
     @POST(EventEndPoint.SEND_NEWSLETTER)
     suspend fun sendNewsLetter(
@@ -60,5 +63,15 @@ interface AdminApi {
     @GET(EventEndPoint.GET_RSVPS_DATA)
     suspend fun getRsvpsData(
         @Path("id") id: Int
-    ): EventsRsvpResponse
+    ): ApiResponse<PaginationResponse<EventRegistrationData>>
+
+    @POST(EventEndPoint.UPDATE_COMMUNITY)
+    suspend fun updateCommunity(
+        @Path("id") id: Int,
+        @Body community: AddCommunityRequest
+    ): ApiResponse<PaginationResponse<CommunityData>>
+    @GET(EventEndPoint.EVENT_FEEDBACK_BY_ID)
+    suspend fun getEventFeedbackBYId(
+        @Path("id") id: Int,
+    ): ApiResponse<PaginationResponse<FeedbackData>>
 }

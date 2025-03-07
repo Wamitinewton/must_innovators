@@ -4,15 +4,6 @@ package com.newton.core.domain.models.admin_models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class AddCommunityResponse(
-    @SerialName("data")
-    val `data`: CommunityData = CommunityData(),
-    @SerialName("message")
-    val message: String = "",
-    @SerialName("status")
-    val status: String = ""
-)
 
 @Serializable
 data class CommunityData(
@@ -43,7 +34,7 @@ data class CommunityData(
     @SerialName("social_media")
     val socialMedia: List<SocialMedia> = listOf(),
     @SerialName("tech_stack")
-    val techStack: String = "",
+    val techStack: List<String> = emptyList(),
     @SerialName("total_members")
     val totalMembers: Int = 0
 )

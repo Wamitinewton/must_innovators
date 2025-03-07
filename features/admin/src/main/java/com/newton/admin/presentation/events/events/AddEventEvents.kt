@@ -1,7 +1,5 @@
 package com.newton.admin.presentation.events.events
 
-import com.newton.admin.domain.models.Session
-import com.newton.admin.domain.models.Socials
 import java.io.File
 
 sealed class AddEventEvents {
@@ -15,6 +13,7 @@ sealed class AddEventEvents {
     data class ChangedOrganizer(val organizer:String):AddEventEvents()
     data object AddEvent : AddEventEvents()
     data object ClearImage : AddEventEvents()
+    data object ToDefaultSate : AddEventEvents()
     data class ChangedMeetingLink(val link:String):AddEventEvents()
     data class ChangedName(val name:String):AddEventEvents()
     data class ChangedDescription(val description:String):AddEventEvents()
