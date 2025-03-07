@@ -39,29 +39,33 @@ class AddEventViewModel @Inject constructor(
             is AddEventEvents.ChangedLocation -> _state.update { it.copy(location = event.location) }
             is AddEventEvents.ChangedOrganizer -> _state.update { it.copy(organizer = event.organizer) }
             is AddEventEvents.Dialog -> _state.update { it.copy(isShowDialog = event.shown) }
-            AddEventEvents.PickImage -> emit(AddEventEffect.PickImage)
             is AddEventEvents.Sheet -> _state.update { it.copy(showCategorySheet = event.shown) }
-            AddEventEvents.AddEvent -> saveEvent()
             is AddEventEvents.ChangedFile -> _state.update { it.copy(image = event.file) }
-            AddEventEvents.ClearImage -> _state.update { it.copy(image = null) }
             is AddEventEvents.ChangedMeetingLink -> _state.update { it.copy(meetingLink = event.link) }
             is AddEventEvents.ChangedContactEmail -> _state.update { it.copy(contactEmail = event.email) }
             is AddEventEvents.ChangedDescription -> _state.update { it.copy(description = event.description) }
             is AddEventEvents.ChangedName -> _state.update { it.copy(name = event.name) }
             is AddEventEvents.ChangedTitle -> _state.update { it.copy(title = event.title) }
             is AddEventEvents.ChangedVirtual -> _state.update { it.copy(isVirtual = event.isVirtual) }
+            AddEventEvents.ToDefaultSate -> toDefaultState()
+            AddEventEvents.AddEvent -> saveEvent()
+            AddEventEvents.PickImage -> emit(AddEventEffect.PickImage)
+            AddEventEvents.ClearImage -> _state.update { it.copy(image = null) }
         }
     }
 
     val categories = listOf(
         "WEB",
-                "CYBERSEC",
-                "ANDROID",
-                "AI",
-                "BLOCKCHAIN",
-                "IoT"
+        "CYBERSEC",
+        "ANDROID",
+        "AI",
+        "BLOCKCHAIN",
+        "IoT"
     )
 
+    private fun toDefaultState(){
+        _state.value = AddEventState()
+    }
 
     private fun validateAndSubmit(): Boolean {
         val errors = mutableMapOf<String, String>()
@@ -78,7 +82,7 @@ class AddEventViewModel @Inject constructor(
             errors["organizer"] = "Organizer name is required"
         }
 
-        if (_state.value.isVirtual && _state.value.meetingLink.isBlank()){
+        if (_state.value.isVirtual && _state.value.meetingLink.isBlank()) {
             errors["meetingLink"] = "Meeting link  is required"
         }
 
@@ -101,7 +105,7 @@ class AddEventViewModel @Inject constructor(
             val request = AddEventRequest(
                 name = _state.value.name,
                 category = _state.value.category,
-                description = _state.value.category,
+                description = _state.value.description,
                 image = _state.value.image!!,
                 date = _state.value.date.toLocaltime(),
                 location = _state.value.location,

@@ -30,7 +30,7 @@ fun SocialDialog(
     val isEditing = social != null
 
     var platform by remember { mutableStateOf(social?.platform ?: "") }
-    var url by remember { mutableStateOf(social?.url ?: "") }
+    var url by remember { mutableStateOf(social?.url ?: "https://") }
 
     AlertDialog(
         onDismissRequest = onDismiss,

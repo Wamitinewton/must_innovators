@@ -1,11 +1,11 @@
-package com.newton.core.domain.models.admin_models
+package com.newton.core.domain.models
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Data(
+data class PaginationResponse<T>(
     @SerialName("count")
     val count: Int = 0,
     @SerialName("next")
@@ -13,5 +13,5 @@ data class Data(
     @SerialName("previous")
     val previous: String = "",
     @SerialName("results")
-    val results: List<RsvpResult> = listOf()
+    val results: List<T> = listOf()
 )

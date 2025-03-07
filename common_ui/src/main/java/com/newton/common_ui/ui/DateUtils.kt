@@ -34,9 +34,7 @@ fun Long.toFormattedDate(): String {
 
 fun Long.toLocaltime():String{
     val instant = Instant.fromEpochMilliseconds(this)
-    val localDateTime: LocalDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-    return localDateTime.toJavaLocalDateTime().format(formatter)
+    return instant.toString()
 }
 
 fun Long.intoMidnight(): Long {

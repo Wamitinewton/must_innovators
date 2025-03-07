@@ -39,10 +39,10 @@ fun SessionDialog(
 ) {
     val isEditing = session != null
 
-    var day by remember { mutableStateOf(session?.date ?: "MONDAY") }
-    var startTime by remember { mutableStateOf(session?.startTime ?: "09:00") }
-    var endTime by remember { mutableStateOf(session?.endTime ?: "10:00") }
-    var meetingType by remember { mutableStateOf(session?.sessionType ?: "VIRTUAL") }
+    var day by remember { mutableStateOf(session?.day ?: "MONDAY") }
+    var startTime by remember { mutableStateOf(session?.start_time ?: "09:00") }
+    var endTime by remember { mutableStateOf(session?.end_time ?: "10:00") }
+    var meetingType by remember { mutableStateOf(session?.meeting_type ?: "VIRTUAL") }
     var location by remember { mutableStateOf(session?.location ?: "") }
 
     var showStartTimePicker by remember { mutableStateOf(false) }
@@ -54,7 +54,7 @@ fun SessionDialog(
 
     // For Meeting Type dropdown
     var meetingTypeExpanded by remember { mutableStateOf(false) }
-    val meetingTypes = listOf("VIRTUAL", "IN_PERSON", "HYBRID")
+    val meetingTypes = listOf("VIRTUAL", "PHYSICAL", "HYBRID")
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -184,12 +184,11 @@ fun SessionDialog(
                 onClick = {
                     onSave(
                         Session(
-                            date = day,
-                            startTime = startTime,
-                            endTime = endTime,
-                            sessionType = meetingType,
+                            day = day,
+                            start_time = startTime,
+                            end_time = endTime,
+                            meeting_type = meetingType,
                             location = location,
-                            title = ""
                         )
                     )
                 }

@@ -1,13 +1,11 @@
-package com.newton.core.domain.models.admin_models
+package com.newton.core.domain.models
 
 
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
-data class EventsRsvpResponse(
+data class ApiResponse<T>(
     @SerialName("data")
-    val `data`: Data = Data(),
+    val `data`: T,
     @SerialName("message")
     val message: String = "",
     @SerialName("status")

@@ -53,7 +53,7 @@ fun SessionItem(
                 )
 
                 Text(
-                    text = session.date,
+                    text = session.day,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 8.dp)
@@ -67,7 +67,7 @@ fun SessionItem(
                 modifier = Modifier.padding(start = 28.dp)
             ) {
                 Text(
-                    text = "${session.startTime} - ${session.endTime}",
+                    text = "${session.start_time} - ${session.end_time}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -78,7 +78,7 @@ fun SessionItem(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(start = 28.dp)
             ) {
-                val icon = when (session.sessionType) {
+                val icon = when (session.meeting_type) {
                     "VIRTUAL" -> Icons.Default.VideoCall
                     else -> Icons.Default.LocationOn
                 }
@@ -91,7 +91,7 @@ fun SessionItem(
                 )
 
                 Text(
-                    text = "${session.sessionType}: ${session.location}",
+                    text = "${session.meeting_type}: ${session.location}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     modifier = Modifier.padding(start = 4.dp)

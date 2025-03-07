@@ -7,4 +7,6 @@ object EventEndPoint {
     const val ADD_COMMUNITY = "/communities/"
     const val SEND_NEWSLETTER = "/newsletter/"
     const val GET_RSVPS_DATA = "/events/{id}/registrations/"
+    const val UPDATE_COMMUNITY = "/community/update/{id}/"
+    const val EVENT_FEEDBACK_BY_ID = "/events/{id}/feedback/"
 }
