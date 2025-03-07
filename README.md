@@ -210,3 +210,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Meru University Science Innovators club for their support
 - All contributors who have helped shape this project
 - Open source libraries that made this project possible
+
+## Contributors ✨
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
