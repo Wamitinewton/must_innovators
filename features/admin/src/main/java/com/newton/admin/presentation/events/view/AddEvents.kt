@@ -43,7 +43,7 @@ import com.newton.admin.presentation.events.view.composables.SelectCategoriesCon
 import com.newton.admin.presentation.events.view.composables.SelectImageButton
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.composables.dialog.CustomDatePickerDialog
+import com.newton.common_ui.ui.CustomDatePickerDialog
 import com.newton.common_ui.ui.ColumnWrapper
 import com.newton.common_ui.ui.CustomClickableOutlinedTextField
 import com.newton.common_ui.ui.LoadingDialog

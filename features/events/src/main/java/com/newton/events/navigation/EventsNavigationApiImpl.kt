@@ -95,7 +95,7 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                     eventsSharedViewModel = sharedViewModel,
                     userDataViewModel = getUserDataViewModel,
                     eventRsvpViewmodel = eventRsvpViewmodel,
-                    onRegisterSuccess = {
+                    onNavigateToTickets = {
                         navHostController.navigate(NavigationRoutes.EventTicketsRoute.routes)
                     }
                 )

@@ -1,10 +1,8 @@
 package com.newton.on_boarding.view
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -13,32 +11,33 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Devices
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,126 +47,113 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
-import coil3.compose.SubcomposeAsyncImage
-import com.newton.common_ui.R
+import com.newton.common_ui.composables.animation.custom_animations.OrbitalsBackground
 import com.newton.common_ui.ui.BodyLargeText
+import com.newton.common_ui.ui.DisplayLargeText
 import com.newton.common_ui.ui.DisplaySmallText
 import com.newton.common_ui.ui.LabelLargeText
-import com.newton.on_boarding.domain.OnboardingPage
+import com.newton.common_ui.ui.TitleLargeText
+import com.newton.on_boarding.domain.AboutItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen(
     onLoginClick: () -> Unit,
     onSignupClick: () -> Unit
 ) {
-    val pages = listOf(
-        OnboardingPage(
-            image = R.drawable.innovation,
-            title = "Join the Innovation Community",
-            description = "Connect with like-minded innovators and be part of something revolutionary",
-            icon = { Icon(Icons.Default.Person, contentDescription = "Community") }
-        ),
-        OnboardingPage(
-            image = R.drawable.innovation,
-            title = "Discover New Ideas",
-            description = "Access resources and explore groundbreaking projects in our vibrant ecosystem",
-            icon = { Icon(Icons.Default.Check, contentDescription = "Ideas") }
-        ),
-        OnboardingPage(
-            image = R.drawable.innovation,
-            title = "Start Your Journey",
-            description = "Take your first step towards innovation today with MUST Innovation",
-            icon = { Icon(Icons.Rounded.Email, contentDescription = "Start") }
+    val gradientBackground = Brush.verticalGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surface,
+            MaterialTheme.colorScheme.surfaceDim,
+            MaterialTheme.colorScheme.surfaceBright
         )
     )
 
-    val visibleState = remember {
-        MutableTransitionState(false).apply {
-            targetState = true
+    val visibleState = remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
+
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    var showBottomSheet by remember { mutableStateOf(false) }
+
+    val aboutItems = listOf(
+        AboutItem(
+            title = "Learn Cutting-Edge Technologies",
+            description = "Master the latest tech stacks and development methodologies",
+            icon = { Icon(Icons.Filled.Code, contentDescription = "Code", tint = MaterialTheme.colorScheme.onPrimary) }
+        ),
+        AboutItem(
+            title = "Collaborate with Industry Experts",
+            description = "Work alongside professionals and build your network",
+            icon = { Icon(Icons.Filled.Group, contentDescription = "Group", tint = MaterialTheme.colorScheme.onPrimary) }
+        ),
+        AboutItem(
+            title = "Innovate and Transform",
+            description = "Turn your ideas into reality with our resources and support",
+            icon = { Icon(Icons.Filled.Lightbulb, contentDescription = "Innovate", tint = MaterialTheme.colorScheme.onPrimary) }
+        )
+    )
+
+    val pagerState = rememberPagerState(pageCount = { aboutItems.size })
+
+    LaunchedEffect(Unit) {
+        visibleState.value = true
+
+        while (true) {
+            delay(4000)
+            val nextPage = (pagerState.currentPage + 1) % aboutItems.size
+            pagerState.animateScrollToPage(nextPage)
         }
     }
 
-    val pagerState = rememberPagerState(pageCount = { pages.size })
-    val scope = rememberCoroutineScope()
-    var showGetStarted by remember { mutableStateOf(false) }
-
-    LaunchedEffect(pagerState.currentPage) {
-        showGetStarted = pagerState.currentPage == pages.size - 1
-    }
+    val logoScale by animateFloatAsState(
+        targetValue = if (visibleState.value) 1f else 0f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "logo-scale"
+    )
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize(),
-            pageSpacing = 0.dp,
-        ) { page ->
-            Box(modifier = Modifier.fillMaxSize()) {
-                SubcomposeAsyncImage(
-                    model = pages[page].image,
-                    contentDescription = "Background image for ${pages[page].title}",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .graphicsLayer {
-                            val pageOffset = (
-                                    (pagerState.currentPage - page) + pagerState
-                                        .currentPageOffsetFraction
-                                    ).absoluteValue
-
-                            translationX = size.width * (1f - lerp(
-                                0.8f,
-                                1f,
-                                1f - pageOffset.coerceIn(0f, 1f)
-                            ))
-                        }
-                        .blur(4.dp),
-                    loading = {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
-                        )
-                    }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                   gradientBackground
                 )
+        )
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.9f)
-                                )
-                            )
-                        )
-                )
-            }
-        }
+        OrbitalsBackground()
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.weight(0.2f))
+            Spacer(modifier = Modifier.height(40.dp))
 
             AnimatedVisibility(
-                visibleState = visibleState,
-                enter = fadeIn(animationSpec = tween(1000)) +
+                visible = visibleState.value,
+                enter = fadeIn(tween(1000)) +
                         slideInVertically(
                             animationSpec = spring(
                                 dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -176,204 +162,194 @@ fun OnboardingScreen(
                             initialOffsetY = { -200 }
                         )
             ) {
-                Card(
-                    modifier = Modifier.size(80.dp),
-                    shape = CircleShape,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    elevation = CardDefaults.cardElevation(6.dp)
-                ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        pages[pagerState.currentPage].icon()
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(40.dp))
-
-            // Page content
-            AnimatedVisibility(
-                visibleState = visibleState,
-                enter = fadeIn(animationSpec = tween(1000, delayMillis = 300)) +
-                        slideInVertically(
-                            animationSpec = tween(700, delayMillis = 300),
-                            initialOffsetY = { 100 }
-                        )
-            ) {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(horizontal = 32.dp)
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DisplaySmallText(
-                        text = pages[pagerState.currentPage].title,
+                    Card(
+                        modifier = Modifier
+                            .size(120.dp)
+                            .scale(logoScale),
+                        shape = CircleShape,
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
+                        elevation = CardDefaults.cardElevation(8.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Devices,
+                                contentDescription = "Tech Logo",
+                                modifier = Modifier.size(64.dp),
+                                tint = MaterialTheme.colorScheme.onPrimary
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    DisplayLargeText(
+                        text = "Meru Science Innovators Club",
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.primary
+                        color = Color.White,
+                        style = MaterialTheme.typography.displayMedium
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    BodyLargeText(
-                        text = pages[pagerState.currentPage].description,
+                    TitleLargeText(
+                        text = "Empowering the next generation of tech leaders",
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f)
+                        color = Color.White.copy(alpha = 0.9f)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.weight(0.5f))
+            Spacer(modifier = Modifier.height(48.dp))
 
             AnimatedVisibility(
-                visibleState = visibleState,
-                enter = fadeIn(animationSpec = tween(1000, delayMillis = 600)) +
+                visible = visibleState.value,
+                enter = fadeIn(tween(1000, delayMillis = 500)) +
                         slideInVertically(
-                            animationSpec = tween(700, delayMillis = 600),
-                            initialOffsetY = { 200 }
+                            initialOffsetY = { 200 },
+                            animationSpec = tween(durationMillis = 700, delayMillis = 500)
                         )
             ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 32.dp),
-                    shape = RoundedCornerShape(28.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-                    ),
-                    elevation = CardDefaults.cardElevation(8.dp)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(24.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            repeat(pages.size) { iteration ->
-                                val width by animateDpAsState(
-                                    targetValue = if (pagerState.currentPage == iteration) 24.dp else 10.dp,
-                                    animationSpec = spring(
-                                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                                        stiffness = Spring.StiffnessLow
-                                    ),
-                                    label = "indicator width"
-                                )
+                    DisplaySmallText(
+                        text = "Why Join Us?",
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.9f),
+                    )
 
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                    ) { page ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp)
+                                .graphicsLayer {
+                                    val pageOffset =
+                                        ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
+
+                                    alpha = 1f - (0.5f * pageOffset.coerceIn(-1f, 1f).absoluteValue)
+                                    scaleX = 0.8f + (0.2f * (1f - pageOffset.coerceIn(-1f, 1f).absoluteValue))
+                                    scaleY = 0.8f + (0.2f * (1f - pageOffset.coerceIn(-1f, 1f).absoluteValue))
+                                },
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            ),
+                            shape = RoundedCornerShape(24.dp),
+                            elevation = CardDefaults.cardElevation(6.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(24.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
                                 Box(
                                     modifier = Modifier
-                                        .padding(horizontal = 4.dp)
-                                        .height(10.dp)
-                                        .width(width)
+                                        .size(48.dp)
                                         .clip(CircleShape)
-                                        .background(
-                                            if (pagerState.currentPage == iteration)
-                                                MaterialTheme.colorScheme.primary
-                                            else
-                                                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-                                        )
+                                        .background(MaterialTheme.colorScheme.surface)
+                                        .padding(8.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    aboutItems[page].icon
+                                }
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Text(
+                                    text = aboutItems[page].title,
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center
                                 )
-                            }
-                        }
 
-                        Spacer(modifier = Modifier.height(32.dp))
+                                Spacer(modifier = Modifier.height(8.dp))
 
-                        if (showGetStarted) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly
-                            ) {
-                                ElevatedButton(
-                                    onClick = {
-                                        onSignupClick()
-                                    },
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .height(56.dp),
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = ButtonDefaults.elevatedButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                    ),
-                                    elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
-                                ) {
-                                    LabelLargeText(text = "Register")
-                                }
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                FilledTonalButton(
-                                    onClick = {
-                                        onLoginClick()
-                                    },
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .height(56.dp),
-                                    colors = ButtonDefaults.filledTonalButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary
-                                    ),
-                                    shape = RoundedCornerShape(16.dp)
-                                ) {
-                                    LabelLargeText(
-                                        text = "Login",
-                                    )
-                                }
-                            }
-                        } else {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                // Skip button
-                                TextButton(
-                                    onClick = {
-                                        scope.launch {
-                                            pagerState.animateScrollToPage(pages.size - 1)
-                                        }
-                                    }
-                                ) {
-                                    LabelLargeText(
-                                        text = "Skip",
-                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                                    )
-                                }
-
-                                // Next button
-                                FloatingActionButton(
-                                    onClick = {
-                                        scope.launch {
-                                            val nextPage = (pagerState.currentPage + 1) % pages.size
-                                            pagerState.animateScrollToPage(
-                                                nextPage,
-                                                animationSpec = tween(
-                                                    durationMillis = 500,
-                                                    easing = FastOutSlowInEasing
-                                                )
-                                            )
-                                        }
-                                    },
-                                    containerColor = MaterialTheme.colorScheme.primary,
-                                    contentColor = MaterialTheme.colorScheme.onPrimary
-                                ) {
-                                    Icon(
-                                        Icons.AutoMirrored.Filled.ArrowForward,
-                                        contentDescription = "Next"
-                                    )
-                                }
+                                BodyLargeText(
+                                    text = aboutItems[page].description,
+                                    textAlign = TextAlign.Center
+                                )
                             }
                         }
                     }
+
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            AnimatedVisibility(
+                visible = visibleState.value,
+                enter = fadeIn(tween(1000, delayMillis = 1000)) +
+                        slideInVertically(
+                            initialOffsetY = { 200 },
+                            animationSpec = tween(durationMillis = 700, delayMillis = 1000)
+                        )
+            ) {
+                ElevatedButton(
+                    onClick = { showBottomSheet = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ),
+                    elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
+                ) {
+                    LabelLargeText(
+                        text = "Get Started",
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
                 }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+        }
+
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false },
+                sheetState = bottomSheetState,
+                containerColor = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                tonalElevation = 8.dp
+            ) {
+                AuthBottomSheetContent(
+                    onDismiss = { showBottomSheet = false },
+                    onLoginClick = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            showBottomSheet = false
+                            onLoginClick()
+                        }
+                    },
+                    onSignupClick = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            showBottomSheet = false
+                            onSignupClick()
+                        }
+                    }
+                )
             }
         }
     }
-
-    LaunchedEffect(pagerState.currentPage) {
-        visibleState.targetState = false
-        delay(100)
-        visibleState.targetState = true
+}
     }
 }
+
+

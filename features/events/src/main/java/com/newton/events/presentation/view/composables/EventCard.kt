@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.newton.core.domain.models.event_models.EventsData
-import com.newton.common_ui.theme.ThemeUtils
-import com.newton.common_ui.theme.ThemeUtils.themed
+import com.newton.meruinnovators.ui.theme.ThemeUtils
+import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 
 
 @Composable

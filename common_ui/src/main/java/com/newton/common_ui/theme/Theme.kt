@@ -1,13 +1,12 @@
-package com.newton.common_ui.theme
+package com.newton.meruinnovators.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.newton.meruinnovators.ui.theme.Typography
-import com.newton.meruinnovators.ui.theme.blackColor
-import com.newton.meruinnovators.ui.theme.lightGrayBackgroundColor
+import com.newton.common_ui.theme.blackColor
+import com.newton.common_ui.theme.lightGrayBackgroundColor
 
 object ThemeUtils {
     data class ThemeColorPair(

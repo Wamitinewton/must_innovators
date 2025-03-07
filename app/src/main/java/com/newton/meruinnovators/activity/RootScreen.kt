@@ -22,7 +22,7 @@ import com.newton.meruinnovators.navigation.AdminNavBar
 import com.newton.meruinnovators.navigation.BottomNavigationBar
 import com.newton.meruinnovators.navigation.MeruInnovatorsNavigation
 import com.newton.meruinnovators.navigation.NavigationSubGraphs
-import com.newton.common_ui.theme.ThemeUtils.MeruinnovatorsTheme
+import com.newton.meruinnovators.ui.theme.ThemeUtils.MeruinnovatorsTheme
 
 @Composable
 fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
