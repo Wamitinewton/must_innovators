@@ -1,4 +1,7 @@
 # MeruInnovators Android App
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- Logo section with modern CSS -->
 <div style="text-align: center;">
@@ -36,7 +39,7 @@ The MeruInnovators app is a platform for the Meru University Science Innovators 
 ## 🛠️ Tech Stack
 
 - **Language**: Kotlin
-- **Architecture**: MVVM with Clean Architecture
+- **Architecture**: Feature-Based Multi-Module Architecture
 - **UI**: Jetpack Compose
 - **Dependency Injection**: Hilt
 - **Database**: Room
@@ -204,6 +207,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgements
 
-- Meru University Science Department for their support
+- Meru University Science Innovators club for their support
 - All contributors who have helped shape this project
 - Open source libraries that made this project possible
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
