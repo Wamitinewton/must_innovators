@@ -1,7 +1,4 @@
 # MeruInnovators Android App
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- Logo section with modern CSS -->
 <div style="text-align: center;">
@@ -201,15 +198,3 @@ git push origin feature/your-feature-name
 - Update documentation if needed
 - Add screenshots for UI changes in your PR description
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgements
-
-- Meru University Science Innovators club for their support
-- All contributors who have helped shape this project
-- Open source libraries that made this project possible
-
-## Contributors ✨
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
