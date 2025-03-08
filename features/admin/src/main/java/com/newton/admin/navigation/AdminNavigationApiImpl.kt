@@ -19,6 +19,8 @@ import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
 import com.newton.admin.presentation.home.views.AdminHome
 import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
 import com.newton.admin.presentation.partners.view.AddPartnerScreen
+import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
+import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
 import com.newton.admin.presentation.view.setings.AdminSettingsScreen
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
@@ -79,6 +81,13 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                     onBackPressed = { },
                     onSavePressed = { },
                     viewModel
+                )
+            }
+            composable(route = NavigationRoutes.UpdateExecutive.routes) {
+                val viewModel = hiltViewModel<ExecutiveViewModel>()
+                UpdateExecutiveScreen(
+                    navController = navHostController,
+                    viewModel=viewModel
                 )
             }
 

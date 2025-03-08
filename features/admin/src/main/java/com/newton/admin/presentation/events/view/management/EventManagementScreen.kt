@@ -72,6 +72,7 @@ data class CalendarDay(
     val date: LocalDate,
     val events: List<Event>
 )
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventManagementScreen(navController: NavController) {
