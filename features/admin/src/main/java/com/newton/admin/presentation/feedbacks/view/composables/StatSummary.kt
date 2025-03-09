@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.feedbacks.views.composables
+package com.newton.admin.presentation.feedbacks.view.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -14,8 +14,8 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -53,10 +53,10 @@ fun StatsSummary(feedbacks: List<FeedBack>) {
                 color = MaterialTheme.colorScheme.tertiary
             )
 
-            HorizontalDivider(
+            VerticalDivider(
                 modifier = Modifier
-                    .height(40.dp)
-                    .width(1.dp),
+                    .width(1.dp)
+                    .height(40.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
 
@@ -67,7 +67,7 @@ fun StatsSummary(feedbacks: List<FeedBack>) {
                 color = MaterialTheme.colorScheme.secondary
             )
 
-            HorizontalDivider(
+            VerticalDivider(
                 modifier = Modifier
                     .height(40.dp)
                     .width(1.dp),
@@ -81,7 +81,7 @@ fun StatsSummary(feedbacks: List<FeedBack>) {
                 color = MaterialTheme.colorScheme.primary
             )
 
-            HorizontalDivider(
+            VerticalDivider(
                 modifier = Modifier
                     .height(40.dp)
                     .width(1.dp),

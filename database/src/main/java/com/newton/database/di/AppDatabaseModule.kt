@@ -46,5 +46,9 @@ object AppDatabaseModule {
     @Singleton
     fun provideExecutiveDao(db: AppDatabase) = db.executiveDao
 
+    @Provides
+    @Singleton
+    fun provideUserFeedbackDao(db: AppDatabase) = db.userFeedback
+
 }
 

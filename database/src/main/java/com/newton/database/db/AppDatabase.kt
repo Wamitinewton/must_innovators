@@ -9,6 +9,7 @@ import com.newton.database.dao.EventDao
 import com.newton.database.dao.ExecutiveDao
 import com.newton.database.dao.TicketDao
 import com.newton.database.dao.UserDao
+import com.newton.database.dao.UserFeedbackDao
 import com.newton.database.entities.CommunityEntity
 import com.newton.database.entities.EventEntity
 import com.newton.database.entities.ExecutiveEntity
@@ -18,6 +19,7 @@ import com.newton.database.entities.SocialMediaEntity
 import com.newton.database.entities.TechStackEntity
 import com.newton.database.entities.TicketsEntity
 import com.newton.database.entities.UserEntity
+import com.newton.database.entities.UserFeedbackEntity
 
 @Database(
     entities = [
@@ -29,17 +31,20 @@ import com.newton.database.entities.UserEntity
         TechStackEntity::class,
         MemberEntity::class,
         SessionEntity::class,
-    ExecutiveEntity::class],
+        UserFeedbackEntity::class,
+        ExecutiveEntity::class,
+    ],
 
-    version = 17,
+    version = 18,
     exportSchema = false
 )
 
 @TypeConverters(DataConverters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val eventDao: EventDao
     abstract val ticketDao: TicketDao
     abstract val communityDao: CommunityDao
     abstract val executiveDao: ExecutiveDao
+    abstract val userFeedback: UserFeedbackDao
 }

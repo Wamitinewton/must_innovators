@@ -19,5 +19,6 @@ interface AdminRepository {
     suspend fun updateCommunity(community: AddCommunityRequest): Flow<Resource<CommunityData>>
     suspend fun sendNewsLetter(newsLetter: NewsLetter): Flow<Resource<NewsLetterResponse>>
     suspend fun getRsvpsData(eventId: Int): Flow<Resource<ApiResponse<PaginationResponse<EventRegistrationData>>>>
-    suspend fun getEventFeedbackBYId(eventId: Int): Flow<Resource<ApiResponse<PaginationResponse<FeedbackData>>>>
+    suspend fun getEventFeedbackBYId(eventId: Int): Flow<Resource<ApiResponse<FeedbackData>>>
+    suspend fun getAllFeedbacks(isRefresh:Boolean):Flow<Resource<List<FeedbackData>>>
 }

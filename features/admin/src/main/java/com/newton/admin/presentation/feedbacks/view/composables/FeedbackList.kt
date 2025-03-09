@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.feedbacks.views.composables
+package com.newton.admin.presentation.feedbacks.view.composables
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring

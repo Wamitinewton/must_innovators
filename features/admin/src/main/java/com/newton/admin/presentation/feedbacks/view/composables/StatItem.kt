@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.feedbacks.views.composables
+package com.newton.admin.presentation.feedbacks.view.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size

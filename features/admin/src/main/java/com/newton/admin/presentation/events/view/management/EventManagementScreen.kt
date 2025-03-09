@@ -244,7 +244,7 @@ fun EventManagementScreen(navController: NavController) {
             )
         },
         bottomBar = {
-            TabRow(selectedTabIndex = selectedTab, modifier = Modifier.wrapContentHeight()) {
+            TabRow(selectedTabIndex = selectedTab) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
                         selected = selectedTab == index,

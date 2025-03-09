@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.feedbacks.views.composables
+package com.newton.admin.presentation.feedbacks.view.composables
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
@@ -12,7 +12,7 @@ import com.newton.admin.domain.models.enums.FeedbackStatus
 @Composable
 fun FilterSection(
     selectedFilter: FeedbackStatus?,
-    onFilterSelected: (FeedbackStatus?) -> Unit
+    onFilterSelected: (FeedbackStatus) -> Unit
 ) {
     val filters = remember {
         listOf(
@@ -35,7 +35,7 @@ fun FilterSection(
 
             Tab(
                 selected = selected,
-                onClick = { onFilterSelected(status) },
+                onClick = { status?.let { onFilterSelected(it) } },
                 text = {
                     Text(
                         text = label,

@@ -14,7 +14,7 @@ import com.newton.admin.presentation.events.view.ModifyEvent
 import com.newton.admin.presentation.events.view.management.EventManagementScreen
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
-import com.newton.admin.presentation.feedbacks.views.FeedbackScreen
+import com.newton.admin.presentation.feedbacks.view.FeedbackScreen
 import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
 import com.newton.admin.presentation.home.views.AdminHome
 import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
@@ -43,7 +43,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             }
             composable(route = NavigationRoutes.AdminFeedbacks.routes) {
                 val viewModel = hiltViewModel<AdminFeedbackViewModel>()
-                FeedbackScreen(viewModel)
+                FeedbackScreen(viewModel, onEvent = viewModel::handleEvent)
             }
             composable(route = NavigationRoutes.AdminSettings.routes) {
                 AdminSettingsScreen()

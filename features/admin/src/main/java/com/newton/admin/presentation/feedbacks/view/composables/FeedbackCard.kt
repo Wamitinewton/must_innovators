@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.feedbacks.views.composables
+package com.newton.admin.presentation.feedbacks.view.composables
 
 import androidx.compose.animation.core.EaseOutBack
 import androidx.compose.animation.core.animateFloatAsState
@@ -36,10 +36,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -57,7 +57,6 @@ import com.newton.admin.domain.models.enums.AdminAction
 import com.newton.admin.domain.models.enums.FeedbackCategory
 import com.newton.admin.domain.models.enums.FeedbackPriority
 import com.newton.admin.domain.models.enums.FeedbackStatus
-import com.newton.admin.presentation.feedbacks.views.FeedbackActionButton
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -142,7 +141,7 @@ fun FeedbackCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Row(
+            Row (
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {

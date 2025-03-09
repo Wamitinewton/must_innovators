@@ -7,44 +7,56 @@ import com.newton.admin.domain.models.enums.AdminAction
 import com.newton.admin.domain.models.enums.FeedbackCategory
 import com.newton.admin.domain.models.enums.FeedbackPriority
 import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.admin.domain.repository.AdminRepository
+import com.newton.admin.presentation.feedbacks.events.FeedbackEvent
 import com.newton.admin.presentation.feedbacks.states.FeedbackState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.random.Random
 
-class AdminFeedbackViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow<FeedbackState>(FeedbackState.Loading)
+@HiltViewModel
+class AdminFeedbackViewModel @Inject constructor(
+    private val adminRepository: AdminRepository
+): ViewModel() {
+    private val _uiState = MutableStateFlow(FeedbackState())
     val uiState: StateFlow<FeedbackState> = _uiState.asStateFlow()
-
-    private val _feedbacks = MutableStateFlow<List<FeedBack>>(emptyList())
-    val feedbacks: StateFlow<List<FeedBack>> = _feedbacks.asStateFlow()
-
-    private val _selectedFilter = MutableStateFlow<FeedbackStatus?>(null)
-    val selectedFilter: StateFlow<FeedbackStatus?> = _selectedFilter.asStateFlow()
-
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-
     init {
         loadFeedbacks()
     }
 
-    fun loadFeedbacks() {
+    fun handleEvent(event:FeedbackEvent){
+        when(event){
+            is FeedbackEvent.ErrorChange -> _uiState.update { it.copy(errorMessage = event.message) }
+            is FeedbackEvent.FeedbacksChange -> _uiState.update { it.copy(feedbacks = event.feedback) }
+            is FeedbackEvent.IsLoadingChange -> _uiState.update { it.copy(isLoading = event.isLoading) }
+            is FeedbackEvent.IsSuccessChange -> _uiState.update { it.copy(isSuccess = event.isSuccess) }
+            is FeedbackEvent.SearchQueryChange -> _uiState.update { it.copy(searchQuery = event.search) }
+            is FeedbackEvent.SelectedFilterChange -> _uiState.update { it.copy(selectedFilter = event.filter) }
+            FeedbackEvent.LoadFeedback -> loadFeedbacks()
+        }
+    }
 
+
+
+    private fun loadFeedbacks() {
         viewModelScope.launch {
-            _uiState.value = FeedbackState.Loading
+            _uiState.update { it.copy(isLoading = true) }
             delay(1500)
             val mockFeedbacks = generateMockFeedbacks(30)
-            _feedbacks.value = mockFeedbacks
-            _uiState.value = FeedbackState.Success
+            _uiState.update { it.copy(feedbacks = mockFeedbacks) }
+            _uiState.update { it.copy(isLoading = false) }
+            _uiState.update { it.copy(isSuccess = true) }
         }
     }
 
     fun updateFeedbackAction(feedbackId: String, action: AdminAction) {
-        val currentFeedbacks = _feedbacks.value.toMutableList()
+        val currentFeedbacks = _uiState.value.feedbacks.toMutableList()
         val feedbackIndex = currentFeedbacks.indexOfFirst { it.id == feedbackId }
 
         if (feedbackIndex >= 0) {
@@ -56,23 +68,24 @@ class AdminFeedbackViewModel : ViewModel() {
             }
 
             currentFeedbacks[feedbackIndex] = updatedFeedback
-            _feedbacks.value = currentFeedbacks
+            _uiState.update { it.copy(feedbacks = currentFeedbacks) }
         }
     }
 
     fun setFilter(status: FeedbackStatus?) {
-        _selectedFilter.value = status
+        _uiState.update { it.copy(selectedFilter = status) }
     }
 
     fun setSearchQuery(query: String) {
-        _searchQuery.value = query
+        _uiState.update { it.copy(searchQuery = query) }
     }
 
     fun getFilteredFeedbacks(): List<FeedBack> {
-        val currentFilter = _selectedFilter.value
-        val query = _searchQuery.value.lowercase()
 
-        return _feedbacks.value.filter { feedback ->
+        val currentFilter = _uiState.value.selectedFilter
+        val query = _uiState.value.searchQuery.lowercase()
+
+        return _uiState.value.feedbacks.filter { feedback ->
             val matchesFilter = currentFilter == null || feedback.status == currentFilter
             val matchesSearch = query.isEmpty() ||
                     feedback.userName.lowercase().contains(query) ||

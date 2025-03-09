@@ -6,6 +6,7 @@ import com.newton.admin.domain.repository.AdminRepository
 import com.newton.admin.navigation.AdminNavigationApi
 import com.newton.admin.navigation.AdminNavigationApiImpl
 import com.newton.database.dao.EventDao
+import com.newton.database.dao.UserFeedbackDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +33,8 @@ object AdminModule {
     @Singleton
     fun provideEventRepository(
         eventApi: AdminApi,
-        eventDao:EventDao
-    ): AdminRepository = AdminRepositoryImpl(eventApi,eventDao)
+        eventDao:EventDao,
+        userFeedbackDao:UserFeedbackDao
+    ): AdminRepository = AdminRepositoryImpl(eventApi,eventDao,userFeedbackDao)
 
 }

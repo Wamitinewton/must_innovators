@@ -73,5 +73,7 @@ interface AdminApi {
     @GET(EventEndPoint.EVENT_FEEDBACK_BY_ID)
     suspend fun getEventFeedbackBYId(
         @Path("id") id: Int,
-    ): ApiResponse<PaginationResponse<FeedbackData>>
+    ): ApiResponse<FeedbackData>
+
+    suspend fun getUserFeedbacks(): ApiResponse<PaginationResponse<FeedbackData>>
 }

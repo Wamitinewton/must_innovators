@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.storage)
     implementation(libs.androidx.ui.geometry.android)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,6 +70,10 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
+
+    // paging
+    implementation(Dependencies.pagingCompose)
+    implementation(Dependencies.pagingRuntime)
 
 
     implementation(project(":core"))
