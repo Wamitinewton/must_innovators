@@ -4,14 +4,14 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
+        android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
 
     <application
-
-        android:name=".appication.MeruInnovatorsApp"
+        android:name=".application.MeruInnovatorsApp"
+        android:enableOnBackInvokedCallback="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,7 +25,6 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Meruinnovators">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +38,16 @@
                 <data android:scheme="app" android:host="event_tickets" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.newton.notifications.services.FCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -46,8 +55,10 @@
             tools:node="merge">
             <meta-data
                 android:name="androidx.work.WorkManagerInitializer"
-                android:value="androidx.startup"
-                tools:node="remove" />
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="com.newton.notifications.initializer.NotificationsInitializer"
+                android:value="androidx.startup"/>
         </provider>
         <provider
             android:name="androidx.core.content.FileProvider"

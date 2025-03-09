@@ -1,11 +1,14 @@
-package com.newton.meruinnovators.appication
+package com.newton.meruinnovators.application
 
 import android.app.Application
+import android.os.Build
 import androidx.work.Configuration
-import androidx.work.WorkManager
 import coil3.ImageLoader
+import com.google.firebase.FirebaseApp
 import com.newton.auth.data.work_manager.TokenRefreshWorkerFactory
 import com.newton.auth.data.work_manager.scheduleTokenRefreshWork
+import com.newton.meruinnovators.BuildConfig
+import com.newton.notifications.manager.NotificationsManager
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
@@ -21,11 +24,20 @@ class MeruInnovatorsApp: Application(), Configuration.Provider {
     @Inject
     lateinit var imageLoader: ImageLoader
 
+    @Inject
+    lateinit var notificationsManager: NotificationsManager
+
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
 
-        WorkManager.initialize(this, workManagerConfiguration)
+        if (BuildConfig.DEBUG){
+            Timber.plant(Timber.DebugTree())
+        }
+
+        FirebaseApp.initializeApp(this)
+
+        notificationsManager.checkNotificationPermission()
+
         scheduleTokenRefreshWork(this)
     }
 

@@ -33,3 +33,4 @@ include(
 )
 include(":features:admin")
 include(":features:about_us")
+include(":notifications")

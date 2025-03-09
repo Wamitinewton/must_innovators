@@ -27,7 +27,7 @@ import kotlin.random.Random
 
 
 @Composable
-fun EnhancedConfettiCelebration(
+fun ConfettiCelebration(
     secondary: Color = MaterialTheme.colorScheme.secondary
 ) {
     Box(
