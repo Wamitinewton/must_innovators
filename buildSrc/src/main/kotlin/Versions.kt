@@ -14,4 +14,5 @@ object Versions {
     const val timber = "5.0.1"
     const val dataStorePrefs = "1.1.1"
     const val workRuntimeKtx = "2.10.0"
+    const val initilizer = "1.2.0-alpha02"
 }

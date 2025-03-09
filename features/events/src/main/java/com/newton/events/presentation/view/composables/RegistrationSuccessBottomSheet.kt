@@ -46,7 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.composables.animation.confetti_animation.DottedShape
-import com.newton.common_ui.composables.animation.confetti_animation.EnhancedConfettiCelebration
+import com.newton.common_ui.composables.animation.confetti_animation.ConfettiCelebration
 import com.newton.common_ui.composables.animation.confetti_animation.GlobalConfettiEffect
 import com.newton.common_ui.ui.CustomElevatedButton
 import com.newton.common_ui.ui.CustomOutlinedButton
@@ -122,7 +122,7 @@ fun EventRegistrationSuccessScreen(
                                 .size(200.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            EnhancedConfettiCelebration()
+                            ConfettiCelebration()
                         }
                     }
 

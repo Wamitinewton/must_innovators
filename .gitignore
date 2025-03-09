@@ -17,3 +17,4 @@ keys.properties
 innovation_keystore.jks
 /.kotlin
 /.idea
+/app/google-services.json

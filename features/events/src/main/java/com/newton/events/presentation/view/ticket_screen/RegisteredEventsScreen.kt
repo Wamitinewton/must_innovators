@@ -31,14 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.events.presentation.view.composables.EmptyTicketsView
 import com.newton.events.presentation.view.composables.EventTicketCard
-import com.newton.events.presentation.viewmodel.EventNotificationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisteredEventsScreen(
     onBackPressed: () -> Unit,
     onTicketSelected: (String) -> Unit = {},
-    viewModel: EventNotificationViewModel = hiltViewModel()
 ) {
 
     val tickets = remember {
@@ -84,12 +82,6 @@ fun RegisteredEventsScreen(
                 isUsed = true
             )
         )
-    }
-
-    LaunchedEffect(tickets) {
-        tickets.filter { !it.isUsed }.forEach { ticket ->
-            viewModel.registerForEventNotifications(ticket)
-        }
     }
 
 
