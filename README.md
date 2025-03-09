@@ -5,24 +5,6 @@
   <img src="common_ui/src/main/res/drawable/innovation.jpg" alt="MeruInnovators Logo" width="300"/>
 </div>
 
-<div style="text-align: center; margin-bottom: 20px;">
-  <a href="https://github.com/Wamitinewton/must_innovators/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Wamitinewton/must_innovators"></a>
-  <a href="https://github.com/Wamitinewton/must_innovators/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Wamitinewton/must_innovators"></a>
-  <a href="https://github.com/Wamitinewton/must_innovators/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Wamitinewton/must_innovators"></a>
-  <a href="https://github.com/Wamitinewton/must_innovators/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Wamitinewton/must_innovators"></a>
-  <img alt="API Level" src="https://img.shields.io/badge/API-23%2B-brightgreen"/>
-</div>
-
-## 📱 App Screenshots
-
-<div style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
-  <img src="screenshots/login.jpeg" width="200" alt="Login Screen"/>
-  <img src="screenshots/signup.jpeg" width="200" alt="Home Screen"/>
-  <img src="screenshots/onboarding.jpeg" width="200" alt="Events List"/>
-  <img src="screenshots/onboarding1.jpeg" width="200" alt="Event Details"/>
-</div>
-
-
 ## 🚀 About
 
 The MeruInnovators app is a platform for the Meru University Science Innovators club that facilitates:

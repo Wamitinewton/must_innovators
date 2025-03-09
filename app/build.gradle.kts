@@ -8,6 +8,7 @@ plugins {
     id("kotlin-parcelize")
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -142,6 +143,11 @@ dependencies {
 
     implementation(Dependencies.extendedIcons)
 
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
+
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
@@ -153,6 +159,7 @@ dependencies {
     implementation(project(":features:admin"))
     implementation(project(":database"))
     implementation(project(":features:about_us"))
+    implementation(project(":notifications"))
 }
 
 
