@@ -30,6 +30,10 @@ class NotificationsManager @Inject constructor(
     private val _notificationPermissionGranted = MutableStateFlow(false)
     val notificationPermissionGranted: StateFlow<Boolean> = _notificationPermissionGranted
 
+    init {
+        checkNotificationPermission()
+    }
+
     /**
      * Initialize FCM and register for token
      */
@@ -37,6 +41,8 @@ class NotificationsManager @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val token = FirebaseMessaging.getInstance().token.await()
+
+                Timber.d("FCM initialized: $token")
 
                 fcmTokenRepository.saveToken(token)
 
