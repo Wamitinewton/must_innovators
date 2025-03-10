@@ -3,6 +3,7 @@ package com.newton.admin.domain.repository
 import com.newton.admin.domain.models.AddCommunityRequest
 import com.newton.admin.domain.models.NewsLetter
 import com.newton.admin.domain.models.NewsLetterResponse
+import com.newton.admin.presentation.role_management.executives.view.User
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
 import com.newton.core.domain.models.admin_models.CommunityData
@@ -21,4 +22,5 @@ interface AdminRepository {
     suspend fun getRsvpsData(eventId: Int): Flow<Resource<ApiResponse<PaginationResponse<EventRegistrationData>>>>
     suspend fun getEventFeedbackBYId(eventId: Int): Flow<Resource<ApiResponse<FeedbackData>>>
     suspend fun getAllFeedbacks(isRefresh:Boolean):Flow<Resource<List<FeedbackData>>>
+    suspend fun getAllUsers(isRefresh:Boolean):Flow<Resource<List<User>>>
 }

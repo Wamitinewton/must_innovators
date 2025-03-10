@@ -198,12 +198,12 @@ fun AdminHome(
                     }
                 }
             }
-            tooltipData?.let { tooltip ->
-                TooltipBox(
-                    tooltipData = tooltip,
-                    onDismiss = { tooltipData = null }
-                )
-            }
+//            tooltipData?.let { tooltip ->
+//                TooltipBox(
+//                    tooltipData = tooltip,
+//                    onDismiss = { tooltipData = null }
+//                )
+//            }
 
 
             if (adminState.isShowChoices) {

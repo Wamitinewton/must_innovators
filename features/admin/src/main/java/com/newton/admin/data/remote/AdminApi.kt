@@ -11,6 +11,7 @@ import com.newton.core.domain.models.PaginationResponse
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventRegistrationData
 import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.event_models.AddEventRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -76,4 +77,7 @@ interface AdminApi {
     ): ApiResponse<FeedbackData>
 
     suspend fun getUserFeedbacks(): ApiResponse<PaginationResponse<FeedbackData>>
+
+
+    suspend fun getAllUsers(): ApiResponse<PaginationResponse<UserData>>
 }

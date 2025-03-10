@@ -3,6 +3,7 @@ package com.newton.admin.data.repository
 import android.util.Log
 import com.newton.admin.data.mappers.EventMapper.toEventDaoEntity
 import com.newton.admin.data.mappers.EventMapper.toEventData
+import com.newton.admin.data.mappers.UserDataMappers.toDomainList
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
 import com.newton.admin.data.remote.AdminApi
@@ -10,6 +11,7 @@ import com.newton.admin.domain.models.AddCommunityRequest
 import com.newton.admin.domain.models.NewsLetter
 import com.newton.admin.domain.models.NewsLetterResponse
 import com.newton.admin.domain.repository.AdminRepository
+import com.newton.admin.presentation.role_management.executives.view.User
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
 import com.newton.core.domain.models.admin_models.CommunityData
@@ -144,11 +146,33 @@ class AdminRepositoryImpl @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                emit(Resource.Error(e.message ?: "Unknown error occurred while getting all users feedback"))
+                emit(
+                    Resource.Error(
+                        e.message ?: "Unknown error occurred while getting all users feedback"
+                    )
+                )
             } finally {
                 emit(Resource.Loading(false))
             }
         }
+
+    override suspend fun getAllUsers(isRefresh: Boolean): Flow<Resource<List<User>>> = flow {
+        emit(Resource.Loading(true))
+        try {
+            if (isRefresh) {
+//                usersDao.getAllUsers()
+            } else {
+                val response = adminApi.getAllUsers()
+                emit(Resource.Success(response.data.results.toDomainList()))
+            }
+        } catch (e: HttpException) {
+            emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))
+        } catch (e: IOException) {
+            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
+        } catch (e: Exception) {
+            emit(Resource.Error("An unexpected error occurred: ${e.message ?: "Unknown error"}"))
+        }
+    }
 
     private suspend fun getRemoteFeedbacks(): Resource<List<FeedbackData>>? {
         return try {

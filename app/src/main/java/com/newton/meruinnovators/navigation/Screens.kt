@@ -110,7 +110,7 @@ sealed class Screens(
 var bottomNavigationDestinations = listOf(
     Screens.Home,
     Screens.Events,
-    Screens.Blogs,
+//    Screens.Blogs,
     Screens.Account
 )
 

@@ -17,4 +17,6 @@ class PartnersViewModel @Inject constructor(
 
     private val _partnersState = MutableStateFlow(PartnersState())
     val partnersState : StateFlow<PartnersState> = _partnersState.asStateFlow()
+
+
 }

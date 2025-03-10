@@ -21,7 +21,7 @@ import com.newton.admin.presentation.notification.viewmodel.NotificationsViewMod
 import com.newton.admin.presentation.partners.view.AddPartnerScreen
 import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
 import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
-import com.newton.admin.presentation.view.setings.AdminSettingsScreen
+import com.newton.admin.presentation.settings.view.AdminSettingsScreen
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
