@@ -21,7 +21,13 @@ class AccountNavigationApiImpl: AccountNavigationApi {
                 AccountScreen(
                     onMyEventsClick = {
                         navHostController.navigate(NavigationRoutes.EventTicketsRoute.routes)
-                    }
+                    },
+                    onBugReportClick = {
+                        navHostController.navigate(NavigationRoutes.BugReportingScreen.routes)
+                    },
+                    onGeneralFeedbackClick = {
+                        navHostController.navigate(NavigationRoutes.GeneralFeedbackRoute.routes)
+                    },
                 )
             }
         }

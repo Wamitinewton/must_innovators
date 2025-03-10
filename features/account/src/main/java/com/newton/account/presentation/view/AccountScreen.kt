@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Menu
@@ -25,11 +26,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,6 +50,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.account.presentation.composables.AccountDrawerContent
 import com.newton.account.presentation.composables.BlogCard
 import com.newton.account.presentation.composables.CommunitiesSection
+import com.newton.account.presentation.composables.FeedbackSelectionBottomSheet
 import com.newton.account.presentation.composables.ProfileSection
 import com.newton.account.presentation.composables.SectionHeader
 import com.newton.account.presentation.composables.UserInfoSection
@@ -57,6 +61,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun AccountScreen(
     onMyEventsClick: () -> Unit,
+    onBugReportClick: () -> Unit,
+    onGeneralFeedbackClick: () -> Unit,
     getUserDataViewModel: GetUserDataViewModel = hiltViewModel()
 ) {
     val getUserUiState by getUserDataViewModel.getUserDataState.collectAsState()
@@ -125,6 +131,9 @@ fun AccountScreen(
     val scrollBehaviour = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val coroutine = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    val bottomSheetState = rememberModalBottomSheetState()
+
 
 
     ModalNavigationDrawer(
@@ -254,6 +263,35 @@ fun AccountScreen(
                     Spacer(modifier = Modifier.height(60.dp))
                 }
             }
+
+        }
+    }
+
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showBottomSheet = false },
+            sheetState = bottomSheetState,
+            containerColor = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+            tonalElevation = 8.dp
+        ) {
+
+                FeedbackSelectionBottomSheet(
+                    onSelectBugReport = {
+                        coroutine.launch {
+                            bottomSheetState.hide()
+                            onBugReportClick()
+                        }
+                    },
+                    onSelectGeneralFeedback = {
+                        coroutine.launch {
+                            bottomSheetState.hide()
+                            onGeneralFeedbackClick()
+                        }
+                    },
+                    onDismiss = {}
+                )
+
         }
     }
 }
