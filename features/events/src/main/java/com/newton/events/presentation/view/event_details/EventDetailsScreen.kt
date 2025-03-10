@@ -29,6 +29,7 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -77,7 +78,7 @@ fun EventDetailsScreen(
 
     Scaffold(
         topBar = {
-            LargeTopAppBar(
+            TopAppBar(
                 title = { Text("Event Details") },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
@@ -88,7 +89,7 @@ fun EventDetailsScreen(
                     }
                 },
                 colors = TopAppBarDefaults.largeTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.95f)
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             )
         }

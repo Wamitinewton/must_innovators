@@ -32,7 +32,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun AccountDrawerContent(
     drawerState: DrawerState,
-    onMyEventsClick: () -> Unit
+    onMyEventsClick: () -> Unit,
+    onFeedbackClicked: () -> Unit = {}
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -88,6 +89,21 @@ fun AccountDrawerContent(
                 onClick = { onMyEventsClick() },
 
             )
+
+            NavigationDrawerItem(
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_feedback_24),
+                        contentDescription = null,
+                    )
+                },
+                label = {
+                    Text("Feedback")
+                },
+                selected = false,
+                onClick = {  },
+
+                )
 
             // Settings Item
             NavigationDrawerItem(
