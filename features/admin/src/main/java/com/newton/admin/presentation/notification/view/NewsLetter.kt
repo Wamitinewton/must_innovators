@@ -27,7 +27,6 @@ import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
@@ -49,89 +48,46 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.newton.admin.presentation.notification.events.NotificationEvent
+import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
+import com.newton.common_ui.composables.MeruInnovatorsAppBar
+import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.ui.LoadingDialog
+import com.newton.core.navigation.NavigationRoutes
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsletterAdminScreen() {
+fun NewsletterAdminScreen(
+    viewModel: NotificationsViewModel,
+    onEvent: (NotificationEvent) -> Unit,
+    navController: NavController
+) {
+    val newsState by viewModel.notificationState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
-    var subject by remember { mutableStateOf("") }
-    var messageContent by remember { mutableStateOf("") }
-    var showLinkDialog by remember { mutableStateOf(false) }
-    var linkText by remember { mutableStateOf("") }
-    var linkUrl by remember { mutableStateOf("") }
-    var isScheduled by remember { mutableStateOf(false) }
-
-    // Date and time picker state
-    var scheduledDateTime by remember { mutableStateOf<LocalDateTime?>(null) }
-    var showDatePicker by remember { mutableStateOf(false) }
-    var showTimePicker by remember { mutableStateOf(false) }
-    var selectedDate by remember { mutableStateOf(LocalDateTime.now()) }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Compose Newsletter",
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-//                actions = {
-//                    IconButton(onClick = {
-//                        scope.launch {
-//                            snackbarHostState.showSnackbar("Newsletter preview generated")
-//                        }
-//                    }) {
-//                        Icon(
-//                            imageVector = Icons.Default.Visibility,
-//                            contentDescription = "Preview",
-//                        )
-//                    }
-//                    IconButton(onClick = {
-//                        if (subject.isBlank()) {
-//                            scope.launch {
-//                                snackbarHostState.showSnackbar("Please add a subject")
-//                            }
-//                        } else if (messageContent.isBlank()) {
-//                            scope.launch {
-//                                snackbarHostState.showSnackbar("Please add message content")
-//                            }
-//                        } else {
-//                            scope.launch {
-//                                snackbarHostState.showSnackbar("Newsletter sent successfully!")
-//                            }
-//                        }
-//                    }) {
-//                        Icon(
-//                            imageVector = Icons.AutoMirrored.Filled.Send,
-//                            contentDescription = "Send",
-//                            tint = Color.White
-//                        )
-//                    }
-//                }
-            )
+            MeruInnovatorsAppBar("Compose a Newsletter")
         },
         containerColor = MaterialTheme.colorScheme.surface
     ) { paddingValues ->
@@ -143,7 +99,6 @@ fun NewsletterAdminScreen() {
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Subject card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -160,31 +115,23 @@ fun NewsletterAdminScreen() {
                     Text(
                         text = "Subject",
                         fontWeight = FontWeight.Bold,
-//                        color = primaryColor,
                         fontSize = 16.sp
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
-                        value = subject,
-                        onValueChange = { subject = it },
+                        value = newsState.subject,
+                        onValueChange = { onEvent.invoke(NotificationEvent.SubjectChange(it)) },
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = { Text("Enter newsletter subject") },
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(
-//                            focusedBorderColor = primaryColor,
-                            unfocusedBorderColor = Color.LightGray,
-//                            cursorColor = primaryColor
-                        ),
                         keyboardOptions = KeyboardOptions(
                             imeAction = ImeAction.Next
                         )
                     )
                 }
             }
-
-            // Message card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
@@ -204,30 +151,27 @@ fun NewsletterAdminScreen() {
                         Text(
                             text = "Message",
                             fontWeight = FontWeight.Bold,
-//                            color = primaryColor,
                             fontSize = 16.sp
                         )
 
                         Row {
                             IconButton(
-                                onClick = { showLinkDialog = true }
+                                onClick = { onEvent.invoke(NotificationEvent.ShowLinkDialog(shown = true)) }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Link,
                                     contentDescription = "Add Link",
-//                                    tint = accentColor
                                 )
                             }
 
                             IconButton(
                                 onClick = {
-                                    messageContent += "\n• "
+                                    onEvent.invoke(NotificationEvent.MessageChange(message = newsState.message + "\n• "))
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.FormatListBulleted,
                                     contentDescription = "Add Bullet Point",
-//                                    tint = accentColor
                                 )
                             }
 
@@ -236,7 +180,7 @@ fun NewsletterAdminScreen() {
                                     scope.launch {
                                         snackbarHostState.showSnackbar("Image placeholder added")
                                     }
-                                    messageContent += "\n[IMAGE PLACEHOLDER]\n"
+                                    onEvent.invoke(NotificationEvent.MessageChange(message = newsState.message + "\n[IMAGE PLACEHOLDER]\n"))
                                 }
                             ) {
                                 Icon(
@@ -253,8 +197,8 @@ fun NewsletterAdminScreen() {
                     // Custom message editor with borders
                     SelectionContainer {
                         BasicTextField(
-                            value = messageContent,
-                            onValueChange = { messageContent = it },
+                            value = newsState.message,
+                            onValueChange = { onEvent.invoke(NotificationEvent.MessageChange(it)) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 200.dp)
@@ -264,7 +208,7 @@ fun NewsletterAdminScreen() {
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .padding(12.dp),
-                            textStyle = MaterialTheme.typography.bodySmall,
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Default
@@ -272,7 +216,7 @@ fun NewsletterAdminScreen() {
                             decorationBox = { innerTextField ->
 
                                 Box {
-                                    if (messageContent.isEmpty()) {
+                                    if (newsState.message.isEmpty()) {
                                         Text(
                                             text = "Compose your newsletter message here. You can add links, bullet points, and image placeholders using the buttons above.",
                                             color = Color.Gray,
@@ -281,14 +225,15 @@ fun NewsletterAdminScreen() {
                                     }
                                     innerTextField()
                                 }
-                            }
-                        )
+                            },
+
+                            )
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "${messageContent.length} characters",
+                        text = "${newsState.message.length} characters",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                         fontSize = 12.sp
@@ -321,7 +266,6 @@ fun NewsletterAdminScreen() {
                 }
             }
 
-            // Schedule card with toggle
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
@@ -337,7 +281,6 @@ fun NewsletterAdminScreen() {
                     Icon(
                         imageVector = Icons.Default.Schedule,
                         contentDescription = null,
-//                        tint = primaryColor
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -356,17 +299,13 @@ fun NewsletterAdminScreen() {
 
 
                     Switch(
-                        checked = isScheduled,
-                        onCheckedChange = { isScheduled = it },
-//                        colors = SwitchDefaults.colors(
-//                            checkedThumbColor = primaryColor,
-//                            checkedTrackColor = primaryColor.copy(alpha = 0.5f)
-//                        )
+                        checked = newsState.isScheduled,
+                        onCheckedChange = { onEvent.invoke(NotificationEvent.ScheduledChanged(it)) },
                     )
                 }
             }
-            // Date and time selector - visible only when scheduled is true
-            AnimatedVisibility(visible = isScheduled) {
+
+            AnimatedVisibility(visible = newsState.isScheduled) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
@@ -386,18 +325,17 @@ fun NewsletterAdminScreen() {
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        // Date and time selector
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(8.dp))
                                 .border(
                                     width = 1.dp,
-                                    color = if (isScheduled && scheduledDateTime == null) MaterialTheme.colorScheme.error else Color.LightGray,
+                                    color = if (newsState.isScheduled && newsState.scheduledDateTime == null) MaterialTheme.colorScheme.error else Color.LightGray,
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .background(MaterialTheme.colorScheme.surface)
-                                .clickable { showDatePicker = true }
+                                .clickable { onEvent.invoke(NotificationEvent.ShowDateDialog(true)) }
                                 .padding(16.dp),
                         ) {
                             Row(
@@ -412,18 +350,18 @@ fun NewsletterAdminScreen() {
                                 Spacer(modifier = Modifier.width(12.dp))
 
                                 Text(
-                                    text = if (scheduledDateTime != null) {
+                                    text = if (newsState.scheduledDateTime != null) {
                                         val formatter =
                                             DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' hh:mm a")
-                                        scheduledDateTime!!.format(formatter)
+                                        newsState.scheduledDateTime!!.format(formatter)
                                     } else {
                                         "Select date and time"
                                     },
-                                    color = if (scheduledDateTime != null) Color.DarkGray else Color.Gray
+                                    color = if (newsState.scheduledDateTime != null) Color.DarkGray else Color.Gray
                                 )
                             }
                         }
-                        if (isScheduled && scheduledDateTime == null) {
+                        if (newsState.isScheduled && newsState.scheduledDateTime == null) {
                             Text(
                                 text = "Schedule date and time is required",
                                 color = MaterialTheme.colorScheme.error,
@@ -434,35 +372,25 @@ fun NewsletterAdminScreen() {
                     }
                 }
             }
-
-
-
-
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Send button
-            Button(
+            CustomButton(
                 onClick = {
-                    if (subject.isBlank()) {
+                    if (newsState.subject.isBlank()) {
                         scope.launch {
                             snackbarHostState.showSnackbar("Please add a subject")
                         }
-                    } else if (messageContent.isBlank()) {
+                    } else if (newsState.message.isBlank()) {
                         scope.launch {
                             snackbarHostState.showSnackbar("Please add message content")
                         }
                     } else {
-                        scope.launch {
-                            snackbarHostState.showSnackbar("Newsletter sent successfully!")
-                        }
+                        onEvent.invoke(NotificationEvent.SendNewsLetter)
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = primaryColor
-//                ),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
@@ -473,14 +401,19 @@ fun NewsletterAdminScreen() {
             }
         }
     }
-
-    if (showDatePicker) {
+    if (newsState.isLoading) {
+        LoadingDialog()
+    }
+    if (newsState.uploadSuccess) {
+       onEvent.invoke(NotificationEvent.ToDefault)
+    }
+    if (newsState.showDatePicker) {
         val datePickerState = rememberDatePickerState(
             initialSelectedDateMillis = System.currentTimeMillis()
         )
 
         DatePickerDialog(
-            onDismissRequest = { showDatePicker = false },
+            onDismissRequest = { onEvent.invoke(NotificationEvent.ShowDateDialog(shown = false)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -488,9 +421,9 @@ fun NewsletterAdminScreen() {
                             val date = java.time.Instant.ofEpochMilli(dateMillis)
                                 .atZone(java.time.ZoneId.systemDefault())
                                 .toLocalDateTime()
-                            selectedDate = date
-                            showDatePicker = false
-                            showTimePicker = true
+                            onEvent.invoke(NotificationEvent.SelectedDateChange(date))
+                            onEvent.invoke(NotificationEvent.ShowDateDialog(false))
+                            onEvent.invoke(NotificationEvent.ShowTimeDialog(true))
                         }
                     }
                 ) {
@@ -499,7 +432,7 @@ fun NewsletterAdminScreen() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showDatePicker = false }
+                    onClick = { onEvent.invoke(NotificationEvent.ShowDateDialog(false)) }
                 ) {
                     Text("Cancel")
                 }
@@ -509,15 +442,14 @@ fun NewsletterAdminScreen() {
         }
     }
 
-    // Time picker dialog
-    if (showTimePicker) {
+    if (newsState.showTimePicker) {
         val timePickerState = rememberTimePickerState(
             initialHour = LocalDateTime.now().hour,
             initialMinute = LocalDateTime.now().minute
         )
 
         AlertDialog(
-            onDismissRequest = { showTimePicker = false },
+            onDismissRequest = { onEvent.invoke(NotificationEvent.ShowTimeDialog(false)) },
             title = { Text("Select Time") },
             text = {
                 Box(
@@ -531,12 +463,11 @@ fun NewsletterAdminScreen() {
                 TextButton(
                     onClick = {
                         // Combine date and time
-                        val finalDateTime = selectedDate
+                        val finalDateTime = newsState.selectedDate
                             .withHour(timePickerState.hour)
                             .withMinute(timePickerState.minute)
-
-                        scheduledDateTime = finalDateTime
-                        showTimePicker = false
+                        onEvent.invoke(NotificationEvent.ScheduledDateTimeChanged(finalDateTime))
+                        onEvent.invoke(NotificationEvent.ShowTimeDialog(false))
                     }
                 ) {
                     Text("Confirm")
@@ -544,7 +475,7 @@ fun NewsletterAdminScreen() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showTimePicker = false }
+                    onClick = { onEvent.invoke(NotificationEvent.ShowTimeDialog(false)) }
                 ) {
                     Text("Cancel")
                 }
@@ -552,13 +483,12 @@ fun NewsletterAdminScreen() {
         )
     }
 
-// Add link dialog
-    if (showLinkDialog) {
+    if (newsState.showLinkDialog) {
         AlertDialog(
             onDismissRequest = {
-                showLinkDialog = false
-                linkText = ""
-                linkUrl = ""
+                onEvent.invoke(NotificationEvent.ShowLinkDialog(shown = false))
+                onEvent.invoke(NotificationEvent.LinkChange(link = ""))
+                onEvent.invoke(NotificationEvent.LinkTitleChange(title = ""))
             },
             title = {
                 Text("Add Link")
@@ -568,16 +498,20 @@ fun NewsletterAdminScreen() {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     OutlinedTextField(
-                        value = linkText,
-                        onValueChange = { linkText = it },
+                        value = newsState.linkTitle,
+                        onValueChange = {
+                            onEvent.invoke(NotificationEvent.LinkTitleChange(it))
+                        },
                         label = { Text("Link Text") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )
 
                     OutlinedTextField(
-                        value = linkUrl,
-                        onValueChange = { linkUrl = it },
+                        value = newsState.linkUrl,
+                        onValueChange = {
+                            onEvent.invoke(NotificationEvent.LinkChange(it))
+                        },
                         label = { Text("URL") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
@@ -590,13 +524,9 @@ fun NewsletterAdminScreen() {
             confirmButton = {
                 TextButton(
                     onClick = {
-                        if (linkText.isNotBlank() && linkUrl.isNotBlank()) {
-                            // In a real app, you'd insert a clickable link
-                            // Here we're just adding formatted text
-                            messageContent += "[${linkText}](${linkUrl})"
-                            showLinkDialog = false
-                            linkText = ""
-                            linkUrl = ""
+                        if (newsState.linkTitle.isNotBlank() && newsState.linkUrl.isNotBlank()) {
+                            onEvent.invoke(NotificationEvent.MessageChange(message = newsState.message + "[${newsState.linkTitle}](${newsState.linkUrl})"))
+                            onEvent.invoke(NotificationEvent.ShowLinkDialog(shown = false))
                         }
                     }
                 ) {
@@ -606,9 +536,9 @@ fun NewsletterAdminScreen() {
             dismissButton = {
                 TextButton(
                     onClick = {
-                        showLinkDialog = false
-                        linkText = ""
-                        linkUrl = ""
+                        onEvent.invoke(NotificationEvent.ShowLinkDialog(shown = false))
+                        onEvent.invoke(NotificationEvent.LinkChange(link = ""))
+                        onEvent.invoke(NotificationEvent.LinkTitleChange(title = ""))
                     }
                 ) {
                     Text("Cancel")

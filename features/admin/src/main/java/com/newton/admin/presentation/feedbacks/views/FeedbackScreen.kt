@@ -181,7 +181,7 @@ fun FeedbackScreen(
             ) {
                 when (uiState) {
                     is FeedbackState.Loading -> {
-                        LoadingState()
+
                     }
                     is FeedbackState.Success -> {
                         val filteredFeedbacks = viewModel.getFilteredFeedbacks()

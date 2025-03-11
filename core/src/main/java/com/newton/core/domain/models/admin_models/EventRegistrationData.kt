@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RsvpResult(
+data class EventRegistrationData(
     @SerialName("course")
     val course: String = "",
     @SerialName("educational_level")

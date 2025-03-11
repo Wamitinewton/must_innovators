@@ -11,12 +11,24 @@ data class CommunityState(
     var secretary :String="",
     val email :String="",
     val phone :String="",
-    val socials: List<Socials> = emptyList(),
+
     val description :String="",
     var dateFounded :String="",
     val toolsText :String="",
-    val isRecruiting: Boolean? = false,
+    val dateForField: String = "",
+    val currentRoleSelection: String = "",
+    val sessionDate: String = "",
+    val isRecruiting: Boolean = false,
     val uploadError: String? = null,
     val isLoading: Boolean = false,
-    val uploadSuccess: Boolean = false
+    val uploadSuccess: Boolean = false,
+    val showDatePicker: Boolean = false,
+    val showBottomSheet: Boolean = false,
+    val showAddSocialDialog: Boolean = false,
+    val showAddSessionDialog: Boolean = false,
+
+    val socials: List<Socials> = emptyList(),
+    val socialToEdit: Socials? = null,
+    val sessionToEdit: Session? = null,
+
 )
