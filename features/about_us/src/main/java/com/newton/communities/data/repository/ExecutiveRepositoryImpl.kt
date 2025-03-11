@@ -1,9 +1,9 @@
 package com.newton.communities.data.repository
 
-import com.newton.communities.data.mappers.toExecutiveDomain
-import com.newton.communities.data.mappers.toExecutiveEntity
-import com.newton.communities.data.remote.AboutUsApi
-import com.newton.communities.domain.repository.ExecutiveRepository
+import com.newton.database.mappers.toExecutiveDomain
+import com.newton.database.mappers.toExecutiveEntity
+import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.domain.repositories.ExecutiveRepository
 import com.newton.core.domain.models.about_us.Executive
 import com.newton.core.utils.Resource
 import com.newton.database.dao.ExecutiveDao

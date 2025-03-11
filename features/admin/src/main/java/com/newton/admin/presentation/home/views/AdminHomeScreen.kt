@@ -31,11 +31,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.newton.admin.domain.models.TooltipData
+import com.newton.core.domain.models.admin.TooltipData
 import com.newton.admin.presentation.home.events.AdminHomeEvent
 import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
 import com.newton.admin.presentation.home.views.composables.AddChoiceCard

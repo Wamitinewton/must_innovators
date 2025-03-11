@@ -26,7 +26,6 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Schedule
@@ -54,10 +53,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.models.Session
-import com.newton.admin.domain.models.Socials
-import com.newton.admin.domain.models.enums.SessionType
+import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin.Session
+import com.newton.core.domain.models.admin.Socials
 import com.newton.admin.presentation.community.view.composable.CommunityHeader
 import com.newton.admin.presentation.community.view.composable.CommunitySection
 import com.newton.admin.presentation.community.view.composable.ContactField
@@ -65,7 +63,6 @@ import com.newton.admin.presentation.community.view.composable.DetailRow
 import com.newton.admin.presentation.community.view.composable.LeadershipField
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
-import com.newton.admin.presentation.community.view.composable.SocialField
 
 
 @OptIn(ExperimentalMaterial3Api::class)

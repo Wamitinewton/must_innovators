@@ -1,6 +1,6 @@
 package com.newton.events.presentation.states
 
-import com.newton.core.domain.models.event_models.RegistrationResponse
+import com.newton.core.domain.models.admin_models.RegistrationResponse
 
 data class EventRegistrationFormState(
     val firstName: String = "",

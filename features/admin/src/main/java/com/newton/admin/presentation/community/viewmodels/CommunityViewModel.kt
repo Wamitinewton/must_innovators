@@ -2,12 +2,10 @@ package com.newton.admin.presentation.community.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.repository.AdminRepository
+import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.states.CommunityState
-import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

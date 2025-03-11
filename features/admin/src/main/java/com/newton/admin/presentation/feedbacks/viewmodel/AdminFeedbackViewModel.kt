@@ -2,11 +2,11 @@ package com.newton.admin.presentation.feedbacks.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.admin.domain.models.FeedBack
-import com.newton.admin.domain.models.enums.AdminAction
-import com.newton.admin.domain.models.enums.FeedbackCategory
-import com.newton.admin.domain.models.enums.FeedbackPriority
-import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.core.domain.models.admin.FeedBack
+import com.newton.core.enums.AdminAction
+import com.newton.core.enums.FeedbackCategory
+import com.newton.core.enums.FeedbackPriority
+import com.newton.core.enums.FeedbackStatus
 import com.newton.admin.presentation.feedbacks.states.FeedbackState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

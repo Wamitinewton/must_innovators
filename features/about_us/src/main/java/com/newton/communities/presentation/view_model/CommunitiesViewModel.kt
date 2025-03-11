@@ -2,7 +2,7 @@ package com.newton.communities.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.communities.domain.repository.CommunityRepository
+import com.newton.core.domain.repositories.CommunityRepository
 import com.newton.communities.presentation.events.CommunityEvent
 import com.newton.communities.presentation.events.UiEvent
 import com.newton.communities.presentation.state.CommunitiesUiState

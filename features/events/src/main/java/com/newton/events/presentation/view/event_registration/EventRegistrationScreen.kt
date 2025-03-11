@@ -47,7 +47,7 @@ import com.newton.common_ui.ui.MultilineInputField
 import com.newton.common_ui.ui.ReadOnlyTextField
 import com.newton.common_ui.ui.SectionHeader
 import com.newton.common_ui.ui.ValidatedTextField
-import com.newton.core.domain.models.event_models.RegistrationResponse
+import com.newton.core.domain.models.admin_models.RegistrationResponse
 import com.newton.core.utils.formatDateTime
 import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventDetailsState

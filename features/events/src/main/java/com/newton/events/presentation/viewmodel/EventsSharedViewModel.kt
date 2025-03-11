@@ -2,7 +2,7 @@ package com.newton.events.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.events.presentation.states.EventDetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

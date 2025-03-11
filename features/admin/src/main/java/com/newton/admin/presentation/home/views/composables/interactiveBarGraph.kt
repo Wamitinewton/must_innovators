@@ -18,8 +18,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.newton.admin.domain.models.DashboardColors
-import com.newton.admin.domain.models.TooltipData
+import com.newton.core.domain.models.admin.DashboardColors
+import com.newton.core.domain.models.admin.TooltipData
 import com.newton.admin.presentation.home.views.InteractionData
 
 @Composable

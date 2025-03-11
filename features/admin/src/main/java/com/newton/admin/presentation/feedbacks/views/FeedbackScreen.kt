@@ -88,11 +88,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.newton.admin.domain.models.FeedBack
-import com.newton.admin.domain.models.enums.AdminAction
-import com.newton.admin.domain.models.enums.FeedbackCategory
-import com.newton.admin.domain.models.enums.FeedbackPriority
-import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.core.domain.models.admin.FeedBack
+import com.newton.core.enums.AdminAction
+import com.newton.core.enums.FeedbackCategory
+import com.newton.core.enums.FeedbackPriority
+import com.newton.core.enums.FeedbackStatus
 import com.newton.admin.presentation.feedbacks.states.FeedbackState
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
 import com.newton.common_ui.composables.MeruInnovatorsAppBar

@@ -5,7 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import coil3.network.HttpException
-import com.newton.auth.domain.repositories.AuthRepository
+import com.newton.core.domain.repositories.AuthRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber

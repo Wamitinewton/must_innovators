@@ -1,0 +1,33 @@
+package com.newton.core.data.remote
+
+import com.newton.core.data.response.events_response.EventApiResponse
+import com.newton.core.data.response.events_response.EventDto
+import com.newton.core.data.response.events_response.EventRegistrationResponse
+import com.newton.core.data.response.events_response.EventResponse
+import com.newton.core.domain.models.event_models.EventRegistrationRequest
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+interface EventApi {
+
+    @POST(ApiEndpoints.RSVP_EVENT)
+    suspend fun registerForEvent(
+        @Path("id") eventId: Int,
+        @Body registrationRequest: EventRegistrationRequest
+    ): EventRegistrationResponse
+
+    @GET(ApiEndpoints.GET_ALL_EVENTS)
+    suspend fun getAllEvents(
+        @Query("page") page: Int = 1,
+        @Query("page_siz") pageSize: Int = 10
+    ): EventApiResponse<EventResponse>
+
+    @GET(ApiEndpoints.SEARCH_EVENT)
+    suspend fun searchEvents(
+        @Query("name") eventName: String
+    ): EventApiResponse<List<EventDto>>
+
+}

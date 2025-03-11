@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.newton.core.domain.models.auth_models.GetUserData
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsData
 
 class DataConverters {
     @TypeConverter

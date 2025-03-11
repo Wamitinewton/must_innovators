@@ -25,10 +25,8 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Group
@@ -38,12 +36,9 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.outlined.Contacts
 import androidx.compose.material.icons.outlined.Webhook
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,8 +49,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -74,8 +67,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.newton.admin.domain.models.Session
-import com.newton.admin.domain.models.Socials
+import com.newton.core.domain.models.admin.Session
+import com.newton.core.domain.models.admin.Socials
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.view.composable.CommunitySection
 import com.newton.admin.presentation.community.view.composable.SessionDialog
@@ -83,7 +76,6 @@ import com.newton.admin.presentation.community.view.composable.SessionItem
 import com.newton.admin.presentation.community.view.composable.SocialDialog
 import com.newton.admin.presentation.community.view.composable.SocialItem
 import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
-import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.common_ui.R.drawable
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.common_ui.ui.CustomButton

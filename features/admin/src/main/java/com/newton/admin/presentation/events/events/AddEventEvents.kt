@@ -1,7 +1,5 @@
 package com.newton.admin.presentation.events.events
 
-import com.newton.admin.domain.models.Session
-import com.newton.admin.domain.models.Socials
 import java.io.File
 
 sealed class AddEventEvents {

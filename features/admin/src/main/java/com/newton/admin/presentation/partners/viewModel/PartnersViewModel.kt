@@ -1,8 +1,7 @@
 package com.newton.admin.presentation.partners.viewModel
 
-import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
-import com.newton.admin.domain.repository.AdminRepository
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.presentation.partners.states.PartnersState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

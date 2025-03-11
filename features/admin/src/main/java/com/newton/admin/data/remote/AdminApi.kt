@@ -1,14 +1,14 @@
 package com.newton.admin.data.remote
 
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.models.NewsLetter
-import com.newton.admin.domain.models.NewsLetterResponse
-import com.newton.core.data.dto.EventApiResponse
-import com.newton.core.data.dto.EventDto
-import com.newton.core.data.dto.EventResponse
+import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin.NewsLetter
+import com.newton.core.domain.models.admin.NewsLetterResponse
+import com.newton.core.data.response.events_response.EventApiResponse
+import com.newton.core.data.response.events_response.EventDto
+import com.newton.core.data.response.events_response.EventResponse
 import com.newton.core.domain.models.admin_models.AddCommunityResponse
 import com.newton.core.domain.models.admin_models.EventsRsvpResponse
-import com.newton.core.domain.models.event_models.AddEventRequest
+import com.newton.core.domain.models.admin_models.AddEventRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -18,7 +18,6 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
-import java.io.File
 
 interface AdminApi {
     @PUT(EventEndPoint.UPDATE_EVENT)
@@ -54,8 +53,8 @@ interface AdminApi {
 
     @POST(EventEndPoint.SEND_NEWSLETTER)
     suspend fun sendNewsLetter(
-        @Body request:NewsLetter
-    ):NewsLetterResponse
+        @Body request: NewsLetter
+    ): NewsLetterResponse
 
     @GET(EventEndPoint.GET_RSVPS_DATA)
     suspend fun getRsvpsData(
