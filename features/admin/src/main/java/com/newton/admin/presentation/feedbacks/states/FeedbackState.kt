@@ -1,7 +1,14 @@
 package com.newton.admin.presentation.feedbacks.states
 
-sealed class FeedbackState {
-    data object Loading : FeedbackState()
-    data object Success : FeedbackState()
-    data class Error(val message: String) : FeedbackState()
-}
+import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.enums.FeedbackStatus
+
+
+data class FeedbackState (
+    val isLoading:Boolean = false,
+    val isSuccess:Boolean = false,
+    val errorMessage:String? = null,
+    val searchQuery:String = "",
+    val feedbacks:List<FeedbackData> = emptyList(),
+    val selectedFilter: FeedbackStatus? = null
+)

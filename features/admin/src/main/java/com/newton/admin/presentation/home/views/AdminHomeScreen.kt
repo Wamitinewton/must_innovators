@@ -85,14 +85,6 @@ fun AdminHome(
         CommunityGroup("Tech", 200)
     )
 
-    val activeUsersData = listOf(
-        ActiveUserData("10:00", 100),
-        ActiveUserData("10:05", 150),
-        ActiveUserData("10:10", 130),
-        ActiveUserData("10:15", 170),
-        ActiveUserData("10:20", 160)
-    )
-
     val eventData = listOf(
         EventData("Sports", 1),
         EventData("Music", 3),
@@ -102,23 +94,6 @@ fun AdminHome(
         EventData("Tech", 4),
         EventData("Art", 12),
         EventData("Tech", 4)
-    )
-
-    val dailyInteractions = listOf(
-        InteractionData("Mon", 50),
-        InteractionData("Tue", 70),
-        InteractionData("Wed", 60),
-        InteractionData("Thu", 90),
-        InteractionData("Fri", 80),
-        InteractionData("Sat", 100),
-        InteractionData("Sun", 40)
-    )
-
-    val weeklyInteractions = listOf(
-        InteractionData("Week 1", 400),
-        InteractionData("Week 2", 450),
-        InteractionData("Week 3", 500),
-        InteractionData("Week 4", 480)
     )
     val interactionData = List(30) { index ->
         val date = LocalDate.now().minusDays(29L - index)
@@ -222,12 +197,12 @@ fun AdminHome(
                     }
                 }
             }
-            tooltipData?.let { tooltip ->
-                TooltipBox(
-                    tooltipData = tooltip,
-                    onDismiss = { tooltipData = null }
-                )
-            }
+//            tooltipData?.let { tooltip ->
+//                TooltipBox(
+//                    tooltipData = tooltip,
+//                    onDismiss = { tooltipData = null }
+//                )
+//            }
 
 
             if (adminState.isShowChoices) {
@@ -278,6 +253,12 @@ fun AdminHome(
                             text = "Update community",
                             onclick = {
                                 routeToNavigate=NavigationRoutes.UpdateCommunityRoute.routes
+                            }
+                        )
+                        AddChoiceCard(
+                            text = "Update Executives",
+                            onclick = {
+                                routeToNavigate=NavigationRoutes.UpdateExecutive.routes
                             }
                         )
                         Spacer(Modifier.height(50.dp))

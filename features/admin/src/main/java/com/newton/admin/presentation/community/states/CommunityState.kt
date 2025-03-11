@@ -11,7 +11,6 @@ data class CommunityState(
     var secretary :String="",
     val email :String="",
     val phone :String="",
-
     val description :String="",
     var dateFounded :String="",
     val toolsText :String="",

@@ -1,13 +1,17 @@
 package com.newton.admin.presentation.events.view.management
 
+import UpdateCommunityScreen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
@@ -72,6 +76,7 @@ data class CalendarDay(
     val date: LocalDate,
     val events: List<Event>
 )
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventManagementScreen(navController: NavController) {
@@ -90,36 +95,54 @@ fun EventManagementScreen(navController: NavController) {
                 endDateTime = LocalDateTime.now().plusDays(16),
                 location = "Convention Center",
                 attendees = listOf(
-                    Attendee("a1", "John Doe", "john@example.com", null,
+                    Attendee(
+                        "a1", "John Doe", "john@example.com", null,
                         isAttending = true,
                         hasCheckedIn = true
-                    ),  Attendee("a1", "John Doe", "john@example.com", null,
+                    ), Attendee(
+                        "a1", "John Doe", "john@example.com", null,
                         isAttending = true,
                         hasCheckedIn = true
-                    ),  Attendee("a1", "John Doe", "john@example.com", null,
+                    ), Attendee(
+                        "a1", "John Doe", "john@example.com", null,
                         isAttending = true,
                         hasCheckedIn = true
-                    ),  Attendee("a1", "John Doe", "john@example.com", null,
+                    ), Attendee(
+                        "a1", "John Doe", "john@example.com", null,
                         isAttending = true,
                         hasCheckedIn = true
                     ),
-                    Attendee("a2", "Jane Smith", "jane@example.com", null,
+                    Attendee(
+                        "a2", "Jane Smith", "jane@example.com", null,
                         isAttending = true,
                         hasCheckedIn = false
                     ),
-                    Attendee("a3", "Mike Johnson", "mike@example.com", null,
+                    Attendee(
+                        "a3", "Mike Johnson", "mike@example.com", null,
                         isAttending = false,
                         hasCheckedIn = false
                     )
                 ),
                 feedbacks = listOf(
-                    Feedback("f1", "a1", 5, "Great event! Learned a lot.", LocalDateTime.now().minusDays(2)),
-                    Feedback("f2", "a2", 4, "Good speakers, but venue was a bit crowded.", LocalDateTime.now().minusDays(1))
+                    Feedback(
+                        "f1",
+                        "a1",
+                        5,
+                        "Great event! Learned a lot.",
+                        LocalDateTime.now().minusDays(2)
+                    ),
+                    Feedback(
+                        "f2",
+                        "a2",
+                        4,
+                        "Good speakers, but venue was a bit crowded.",
+                        LocalDateTime.now().minusDays(1)
+                    )
                 ),
                 isReminderSet = false
             ),
             Event(
-                id =" 4",
+                id = " 4",
                 title = "Robotics Meeting",
                 description = "Our biggest tech event of the year featuring industry speakers and networking opportunities.",
                 startDateTime = LocalDateTime.now().plusDays(16),
@@ -131,8 +154,20 @@ fun EventManagementScreen(navController: NavController) {
                     Attendee("a3", "Mike Johnson", "mike@example.com", null, false, false)
                 ),
                 feedbacks = listOf(
-                    Feedback("f1", "a1", 5, "Great event! Learned a lot.", LocalDateTime.now().minusDays(2)),
-                    Feedback("f2", "a2", 4, "Good speakers, but venue was a bit crowded.", LocalDateTime.now().minusDays(1))
+                    Feedback(
+                        "f1",
+                        "a1",
+                        5,
+                        "Great event! Learned a lot.",
+                        LocalDateTime.now().minusDays(2)
+                    ),
+                    Feedback(
+                        "f2",
+                        "a2",
+                        4,
+                        "Good speakers, but venue was a bit crowded.",
+                        LocalDateTime.now().minusDays(1)
+                    )
                 ),
                 isReminderSet = true
             ),
@@ -150,8 +185,20 @@ fun EventManagementScreen(navController: NavController) {
                     Attendee("b4", "James Anderson", "james@example.com", null, false, false)
                 ),
                 feedbacks = listOf(
-                    Feedback("f3", "b1", 5, "Amazing product launch! Very innovative features.", LocalDateTime.now().minusDays(6)),
-                    Feedback("f4", "b2", 1, "The speaker was not eard very well.ur biggest tech event of the year featuring industry speakers and networking opportunities. Test of the large text in the feedback card", LocalDateTime.now().minusDays(6))
+                    Feedback(
+                        "f3",
+                        "b1",
+                        5,
+                        "Amazing product launch! Very innovative features.",
+                        LocalDateTime.now().minusDays(6)
+                    ),
+                    Feedback(
+                        "f4",
+                        "b2",
+                        1,
+                        "The speaker was not eard very well.ur biggest tech event of the year featuring industry speakers and networking opportunities. Test of the large text in the feedback card",
+                        LocalDateTime.now().minusDays(6)
+                    )
                 )
             ),
             Event(
@@ -180,8 +227,20 @@ fun EventManagementScreen(navController: NavController) {
                 ),
                 isReminderSet = true,
                 feedbacks = listOf(
-                    Feedback("f3", "b1", 5, "Amazing product launch! Very innovative features.", LocalDateTime.now().minusDays(6)),
-                    Feedback("f4", "b2", 1, "The speaker was not eard very well.ur biggest tech event of the year featuring industry speakers and networking opportunities. Test of the large text in the feedback card", LocalDateTime.now().minusDays(6))
+                    Feedback(
+                        "f3",
+                        "b1",
+                        5,
+                        "Amazing product launch! Very innovative features.",
+                        LocalDateTime.now().minusDays(6)
+                    ),
+                    Feedback(
+                        "f4",
+                        "b2",
+                        1,
+                        "The speaker was not eard very well.ur biggest tech event of the year featuring industry speakers and networking opportunities. Test of the large text in the feedback card",
+                        LocalDateTime.now().minusDays(6)
+                    )
                 )
             )
         )
@@ -243,7 +302,7 @@ fun EventManagementScreen(navController: NavController) {
             )
         },
         bottomBar = {
-            TabRow(selectedTabIndex = selectedTab, modifier = Modifier.wrapContentHeight()) {
+            TabRow(selectedTabIndex = selectedTab) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
                         selected = selectedTab == index,
@@ -254,14 +313,19 @@ fun EventManagementScreen(navController: NavController) {
             }
         },
 
-    ) { paddingValues ->
+        ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
             when (selectedTab) {
-                0 -> OverviewTab(events, listState, isScrolling, onEventSelected = { selectedEvent = it })
+                0 -> OverviewTab(
+                    events,
+                    listState,
+                    isScrolling,
+                    onEventSelected = { selectedEvent = it })
+
                 1 -> CalendarTab(calendarDays, onEventSelected = { selectedEvent = it })
                 2 -> AttendeesTab(events)
                 3 -> FeedbackTab(events, listState, isScrolling)
@@ -269,16 +333,16 @@ fun EventManagementScreen(navController: NavController) {
 
             // Event details dialog
             if (selectedEvent != null) {
-                EventDetailsDialog(
-                    event = selectedEvent!!,
-                    onDismiss = { selectedEvent = null },
-                    onToggleReminder = { event ->
-                        val index = events.indexOfFirst { it.id == event.id }
-                        if (index >= 0) {
-                            events[index] = event.copy(isReminderSet = !event.isReminderSet)
-                        }
-                    }
-                )
+//                EventDetailsDialog(
+//                    event = selectedEvent!!,
+//                    onDismiss = { selectedEvent = null },
+//                    onToggleReminder = { event ->
+//                        val index = events.indexOfFirst { it.id == event.id }
+//                        if (index >= 0) {
+//                            events[index] = event.copy(isReminderSet = !event.isReminderSet)
+//                        }
+//                    }
+//                )
             }
         }
     }
@@ -310,7 +374,7 @@ fun Scaffold(
                     .weight(1f)
                     .fillMaxWidth()
             ) {
-                content(PaddingValues(bottom = 56.dp))
+                content(PaddingValues(bottom = 8.dp))
 
 //                // Snackbar
 //                SnackbarHost(

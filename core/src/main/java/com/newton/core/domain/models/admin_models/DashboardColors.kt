@@ -1,4 +1,4 @@
-package com.newton.core.domain.models.admin
+package com.newton.core.domain.models.admin_models
 
 import androidx.compose.ui.graphics.Color
 

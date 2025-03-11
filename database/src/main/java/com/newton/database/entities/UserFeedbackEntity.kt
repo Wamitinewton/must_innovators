@@ -1,10 +1,14 @@
-package com.newton.core.domain.models.admin
+package com.newton.database.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.newton.core.enums.FeedbackCategory
 import com.newton.core.enums.FeedbackPriority
 import com.newton.core.enums.FeedbackStatus
 
-data class FeedBack(
+@Entity(tableName = "user_feedbacks")
+data class UserFeedbackEntity (
+    @PrimaryKey
     val id: String,
     val userId: String,
     val userName: String,

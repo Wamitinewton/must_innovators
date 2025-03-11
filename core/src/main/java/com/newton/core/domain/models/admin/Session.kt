@@ -1,10 +1,9 @@
 package com.newton.core.domain.models.admin
 
 data class Session(
-    val title: String,
-    val date: String,
-    val startTime: String,
-    val endTime: String,
+    val day: String,
+    val start_time: String,
+    val end_time: String,
     val location: String,
-    val sessionType: String
+    val meeting_type: String
 )

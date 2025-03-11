@@ -2,10 +2,10 @@ package com.newton.admin.presentation.notification.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.admin.domain.models.NewsLetter
-import com.newton.admin.domain.repository.AdminRepository
 import com.newton.admin.presentation.notification.events.NotificationEvent
 import com.newton.admin.presentation.notification.state.NotificationState
+import com.newton.core.domain.models.admin.NewsLetter
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

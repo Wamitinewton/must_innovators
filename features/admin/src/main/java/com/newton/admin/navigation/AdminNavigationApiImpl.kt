@@ -14,12 +14,14 @@ import com.newton.admin.presentation.events.view.ModifyEvent
 import com.newton.admin.presentation.events.view.management.EventManagementScreen
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
-import com.newton.admin.presentation.feedbacks.views.FeedbackScreen
+import com.newton.admin.presentation.feedbacks.view.FeedbackScreen
 import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
 import com.newton.admin.presentation.home.views.AdminHome
 import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
 import com.newton.admin.presentation.partners.view.AddPartnerScreen
-import com.newton.admin.presentation.view.setings.AdminSettingsScreen
+import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
+import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
+import com.newton.admin.presentation.settings.view.AdminSettingsScreen
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
@@ -41,7 +43,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             }
             composable(route = NavigationRoutes.AdminFeedbacks.routes) {
                 val viewModel = hiltViewModel<AdminFeedbackViewModel>()
-                FeedbackScreen(viewModel)
+                FeedbackScreen(viewModel, onEvent = viewModel::handleEvent)
             }
             composable(route = NavigationRoutes.AdminSettings.routes) {
                 AdminSettingsScreen()
@@ -79,6 +81,13 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                     onBackPressed = { },
                     onSavePressed = { },
                     viewModel
+                )
+            }
+            composable(route = NavigationRoutes.UpdateExecutive.routes) {
+                val viewModel = hiltViewModel<ExecutiveViewModel>()
+                UpdateExecutiveScreen(
+                    navController = navHostController,
+                    viewModel=viewModel
                 )
             }
 

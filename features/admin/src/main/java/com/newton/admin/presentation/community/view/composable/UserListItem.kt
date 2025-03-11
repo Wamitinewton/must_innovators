@@ -1,6 +1,5 @@
 package com.newton.admin.presentation.community.view.composable
 
-import User
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.newton.admin.presentation.role_management.executives.view.User
 
 @Composable
 fun UserListItem(
@@ -42,14 +42,14 @@ fun UserListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // User profile image
-            Image(
-                painter = painterResource(id = user.profileImageRes),
-                contentDescription = "Profile picture of ${user.name}",
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
+//            Image(
+//                painter = painterResource(id = user.profileImageRes),
+//                contentDescription = "Profile picture of ${user.name}",
+//                modifier = Modifier
+//                    .size(48.dp)
+//                    .clip(CircleShape),
+//                contentScale = ContentScale.Crop
+//            )
 
             Spacer(modifier = Modifier.width(12.dp))
 
@@ -62,7 +62,7 @@ fun UserListItem(
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = user.specialty,
+                    text = user.email,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
