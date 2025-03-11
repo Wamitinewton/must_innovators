@@ -25,10 +25,8 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Group
@@ -38,12 +36,9 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.outlined.Contacts
 import androidx.compose.material.icons.outlined.Webhook
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,8 +49,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -74,24 +67,19 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.newton.admin.domain.models.Session
-import com.newton.admin.domain.models.Socials
+import com.newton.core.domain.models.admin.Session
+import com.newton.core.domain.models.admin.Socials
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.view.composable.CommunitySection
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
 import com.newton.admin.presentation.community.view.composable.SocialDialog
 import com.newton.admin.presentation.community.view.composable.SocialItem
-import com.newton.admin.presentation.community.view.composable.UserListItem
 import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
-import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.common_ui.R.drawable
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.common_ui.ui.CustomButton
 import com.newton.common_ui.ui.CustomCard
-import com.newton.common_ui.ui.LoadingDialog
-import com.newton.core.navigation.NavigationRoutes
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -108,15 +96,30 @@ data class User(
 fun AddCommunityScreen(
     onEvent: (CommunityEvent) -> Unit,
     onCancelClicked: () -> Unit = {},
-    viewModel: CommunityViewModel,
-    navController: NavController
+    viewModel: CommunityViewModel
 ) {
+
     val addCommunityState by viewModel.communityState.collectAsState()
+    var showAddSessionDialog by remember { mutableStateOf(false) }
+    var sessionToEdit by remember { mutableStateOf<Session?>(null) }
+    var sessionDate by remember { mutableStateOf("") }
+
     val scrollState = rememberScrollState()
     val datePickerState = rememberDatePickerState()
+    var showDatePicker by remember { mutableStateOf(false) }
+    var dateForField by remember { mutableStateOf("") }
+
+    // BottomSheet state and role selection variables
     val bottomSheetState = rememberModalBottomSheetState()
+    var showBottomSheet by remember { mutableStateOf(false) }
+    var currentRoleSelection by remember { mutableStateOf("") } // To track which role is being selected
+
+
     val sessions = addCommunityState.sessions
     val socials = addCommunityState.socials
+    var socialToEdit by remember { mutableStateOf<Socials?>(null) }
+    var showAddSocialDialog by remember { mutableStateOf(false) }
+
     // Sample users for demonstration
     val sampleUsers = listOf(
         User("John Doe", "Android", drawable.innovation),
@@ -183,7 +186,8 @@ fun AddCommunityScreen(
                         singleLine = true,
                         trailingIcon = {
                             IconButton(onClick = {
-                                onEvent.invoke(CommunityEvent.ShowDatePicker(true))
+                                dateForField = "founded"
+                                showDatePicker = true
                             }) {
                                 Icon(
                                     Icons.Default.CalendarToday,
@@ -230,8 +234,8 @@ fun AddCommunityScreen(
                         label = "Lead",
                         value = addCommunityState.lead,
                         onClick = {
-                            onEvent.invoke(CommunityEvent.CurrentRoleSelectionChange("lead"))
-                            onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
+                            currentRoleSelection = "lead"
+                            showBottomSheet = true
                         }
                     )
 
@@ -240,8 +244,8 @@ fun AddCommunityScreen(
                         label = "Co-Lead",
                         value = addCommunityState.coLead,
                         onClick = {
-                            onEvent.invoke(CommunityEvent.CurrentRoleSelectionChange("co-lead"))
-                            onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
+                            currentRoleSelection = "colead"
+                            showBottomSheet = true
                         }
                     )
 
@@ -250,8 +254,8 @@ fun AddCommunityScreen(
                         label = "Secretary",
                         value = addCommunityState.secretary,
                         onClick = {
-                            onEvent.invoke(CommunityEvent.CurrentRoleSelectionChange("secretary"))
-                            onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
+                            currentRoleSelection = "secretary"
+                            showBottomSheet = true
                         })
                 }
             }
@@ -261,10 +265,10 @@ fun AddCommunityScreen(
                 icon = Icons.Default.Schedule,
                 trailing = {
                     Button(
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+                        modifier = Modifier.padding(horizontal =10.dp, vertical = 8.dp),
                         onClick = {
-                            onEvent.invoke(CommunityEvent.SessionToEdit(null))
-                            onEvent.invoke(CommunityEvent.ShowAddSession(true))
+                            sessionToEdit = null
+                            showAddSessionDialog = true
                         }
                     ) {
                         Row {
@@ -290,8 +294,8 @@ fun AddCommunityScreen(
                             session = session,
                             isEditing = true,
                             onEditClick = {
-                                onEvent.invoke(CommunityEvent.SessionToEdit(session))
-                                onEvent.invoke(CommunityEvent.ShowAddSession(true))
+                                sessionToEdit = session
+                                showAddSessionDialog = true
                             },
                             onDeleteClick = {
                                 val newSessions = sessions.toMutableList()
@@ -309,7 +313,7 @@ fun AddCommunityScreen(
             CommunitySection(
                 title = "Contact Information",
                 icon = Icons.Outlined.Contacts,
-            ) {
+                ) {
                 OutlinedTextField(
                     value = addCommunityState.email,
                     onValueChange = {
@@ -345,10 +349,10 @@ fun AddCommunityScreen(
                 icon = Icons.Outlined.Webhook,
                 trailing = {
                     Button(
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+                        modifier = Modifier.padding(horizontal =10.dp, vertical = 8.dp),
                         onClick = {
-                            onEvent.invoke(CommunityEvent.SocialToEditChange(null))
-                            onEvent.invoke(CommunityEvent.ShowAddSocialDialog(true))
+                            socialToEdit = null
+                            showAddSocialDialog = true
                         }
                     ) {
                         Row {
@@ -373,8 +377,8 @@ fun AddCommunityScreen(
                         SocialItem(
                             social = social,
                             onEditClick = {
-                                onEvent.invoke(CommunityEvent.SocialToEditChange(social))
-                                onEvent.invoke(CommunityEvent.ShowAddSocialDialog(true))
+                                socialToEdit = social
+                                showAddSocialDialog = true
                             },
                             onDeleteClick = {
                                 val newSocial = socials.toMutableList()
@@ -431,61 +435,51 @@ fun AddCommunityScreen(
                 Text("Add Community")
             }
         }
-        if (addCommunityState.isLoading) {
-            LoadingDialog()
-        }
-        if (addCommunityState.uploadSuccess) {
-            onEvent.invoke(CommunityEvent.ToDefault)
-        }
-        if (addCommunityState.showAddSessionDialog) {
+        if (showAddSessionDialog) {
             SessionDialog(
-                session = addCommunityState.sessionToEdit,
-                onDismiss = {
-                    onEvent.invoke(CommunityEvent.ShowAddSession(false))
-                },
+                session = sessionToEdit,
+                onDismiss = { showAddSessionDialog = false },
                 onSave = { session ->
                     val newSessions = sessions.toMutableList()
-                    if (addCommunityState.sessionToEdit == null) {
+                    if (sessionToEdit == null) {
+                        // Add new session
                         newSessions.add(session)
                     } else {
-                        val index = newSessions.indexOf(addCommunityState.sessionToEdit)
+                        // Update existing session
+                        val index = newSessions.indexOf(sessionToEdit)
                         if (index != -1) {
                             newSessions[index] = session
                         }
                     }
                     onEvent.invoke(CommunityEvent.SessionsChanged(newSessions))
-                    onEvent.invoke(CommunityEvent.ShowAddSession(false))
-                    onEvent.invoke(CommunityEvent.SessionToEdit(null))
+                    showAddSessionDialog = false
+                    sessionToEdit = null
                 }
             )
         }
-        if (addCommunityState.showAddSocialDialog) {
+        if (showAddSocialDialog) {
             SocialDialog(
-                social = addCommunityState.socialToEdit,
-                onDismiss = {
-                    onEvent.invoke(CommunityEvent.ShowAddSocialDialog(false))
-                },
+                social  = socialToEdit,
+                onDismiss = { showAddSocialDialog = false },
                 onSave = { social ->
                     val newSocial = socials.toMutableList()
-                    if (addCommunityState.socialToEdit == null) {
+                    if (socialToEdit == null) {
                         newSocial.add(social)
                     } else {
-                        val index = newSocial.indexOf(addCommunityState.socialToEdit)
+                        val index = newSocial.indexOf(socialToEdit)
                         if (index != -1) {
                             newSocial[index] = social
                         }
                     }
                     onEvent.invoke(CommunityEvent.SocialsChanged(newSocial))
-                    onEvent.invoke(CommunityEvent.ShowAddSocialDialog(false))
-                    onEvent.invoke(CommunityEvent.SocialToEditChange(null))
+                    showAddSocialDialog = false
+                    socialToEdit = null
                 }
             )
         }
-        if (addCommunityState.showDatePicker) {
+        if (showDatePicker) {
             DatePickerDialog(
-                onDismissRequest = {
-                    onEvent.invoke(CommunityEvent.ShowDatePicker(false))
-                },
+                onDismissRequest = { showDatePicker = false },
                 confirmButton = {
                     TextButton(
                         onClick = {
@@ -494,19 +488,20 @@ fun AddCommunityScreen(
                                 val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                                 val formattedDate = format.format(date)
 
-                                onEvent.invoke(CommunityEvent.DateFoundedChanged(formattedDate))
-
+                                // Update the appropriate date field
+                                when (dateForField) {
+                                    "founded" -> addCommunityState.dateFounded = formattedDate
+                                    "session" -> sessionDate = formattedDate
+                                }
                             }
-                            onEvent.invoke(CommunityEvent.ShowDatePicker(false))
+                            showDatePicker = false
                         }
                     ) {
                         Text("OK")
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = {
-                        onEvent.invoke(CommunityEvent.ShowDatePicker(false))
-                    }) {
+                    TextButton(onClick = { showDatePicker = false }) {
                         Text("Cancel")
                     }
                 }
@@ -514,11 +509,9 @@ fun AddCommunityScreen(
                 DatePicker(state = datePickerState)
             }
         }
-        if (addCommunityState.showBottomSheet) {
+        if (showBottomSheet) {
             ModalBottomSheet(
-                onDismissRequest = {
-                    onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
-                },
+                onDismissRequest = { showBottomSheet = false },
                 sheetState = bottomSheetState
             ) {
                 Column(
@@ -527,13 +520,11 @@ fun AddCommunityScreen(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "Select ${
-                            addCommunityState.currentRoleSelection.replaceFirstChar {
-                                if (it.isLowerCase()) it.titlecase(
-                                    Locale.getDefault()
-                                ) else it.toString()
-                            }
-                        }",
+                        text = "Select ${currentRoleSelection.replaceFirstChar {
+                            if (it.isLowerCase()) it.titlecase(
+                                Locale.getDefault()
+                            ) else it.toString()
+                        }}",
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -549,12 +540,12 @@ fun AddCommunityScreen(
                                 user = user,
                                 onClick = {
                                     // Set the selected user to the appropriate role
-                                    when (addCommunityState.currentRoleSelection) {
+                                    when (currentRoleSelection) {
                                         "lead" -> addCommunityState.lead = user.name
-                                        "co-lead" -> addCommunityState.coLead = user.name
+                                        "colead" -> addCommunityState.coLead = user.name
                                         "secretary" -> addCommunityState.secretary = user.name
                                     }
-                                    onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
+                                    showBottomSheet = false
                                 }
                             )
                         }
@@ -596,7 +587,7 @@ fun LeadershipSelectField(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = value.ifEmpty { "Select $label" },
+                    text = if (value.isNotEmpty()) value else "Select $label",
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -606,6 +597,181 @@ fun LeadershipSelectField(
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+    }
+}
+
+// Complete the SessionListItem from where it left off
+@Composable
+fun SessionListItem(
+    session: Session,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit
+) {
+    CustomCard(
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = session.title,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = session.date,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Schedule,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = "${session.startTime} - ${session.endTime}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.LocationOn,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = session.location,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    if (session.sessionType.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = session.sessionType,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+
+                Row(
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    IconButton(
+                        onClick = onEditClick,
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Edit Session",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    IconButton(
+                        onClick = onDeleteClick,
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete Session",
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun UserListItem(
+    user: User,
+    onClick: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 4.dp),
+        color = Color.Transparent
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // User profile image
+            Image(
+                painter = painterResource(id = user.profileImageRes),
+                contentDescription = "Profile picture of ${user.name}",
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            // User information
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = user.name,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = user.specialty,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }

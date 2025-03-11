@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.newton.admin.domain.models.DashboardColors
-import com.newton.admin.domain.models.TooltipData
+import com.newton.core.domain.models.admin.DashboardColors
+import com.newton.core.domain.models.admin.TooltipData
 
 @Composable
 fun InteractiveLineGraph(

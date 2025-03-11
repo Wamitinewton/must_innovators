@@ -1,9 +1,9 @@
 package com.newton.auth.di
 
 import com.newton.auth.data.data_store.SessionManager
-import com.newton.auth.data.remote.authApiService.AuthService
+import com.newton.core.data.remote.AuthService
 import com.newton.auth.data.repository.AuthRepositoryImpl
-import com.newton.auth.domain.repositories.AuthRepository
+import com.newton.core.domain.repositories.AuthRepository
 import com.newton.database.dao.UserDao
 import dagger.Module
 import dagger.Provides

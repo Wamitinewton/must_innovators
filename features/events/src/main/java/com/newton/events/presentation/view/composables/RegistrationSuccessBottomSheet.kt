@@ -51,7 +51,7 @@ import com.newton.common_ui.composables.animation.confetti_animation.GlobalConfe
 import com.newton.common_ui.ui.CustomElevatedButton
 import com.newton.common_ui.ui.CustomOutlinedButton
 import com.newton.common_ui.ui.LabelLargeText
-import com.newton.core.domain.models.event_models.RegistrationResponse
+import com.newton.core.domain.models.admin_models.RegistrationResponse
 import com.newton.core.utils.formatDateTime
 import kotlinx.coroutines.delay
 

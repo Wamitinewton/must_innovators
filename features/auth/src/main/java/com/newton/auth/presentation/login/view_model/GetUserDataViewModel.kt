@@ -2,7 +2,7 @@ package com.newton.auth.presentation.login.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.domain.repositories.AuthRepository
+import com.newton.core.domain.repositories.AuthRepository
 import com.newton.auth.presentation.login.event.GetUserDataEvent
 import com.newton.auth.presentation.login.state.GetUserDataViewModelState
 import com.newton.core.domain.models.auth_models.GetUserData

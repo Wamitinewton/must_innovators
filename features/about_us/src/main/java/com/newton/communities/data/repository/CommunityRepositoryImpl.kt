@@ -1,14 +1,15 @@
 package com.newton.communities.data.repository
 
-import com.newton.communities.data.mappers.toDomain
-import com.newton.communities.data.mappers.toDomainList
-import com.newton.communities.data.mappers.toEntity
-import com.newton.communities.data.mappers.toTechStackEntity
-import com.newton.communities.data.remote.AboutUsApi
-import com.newton.communities.domain.repository.CommunityRepository
+import com.newton.core.data.mappers.toDomain
+import com.newton.core.data.mappers.toDomainList
+import com.newton.database.mappers.toEntity
+import com.newton.database.mappers.toTechStackEntity
+import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.domain.repositories.CommunityRepository
 import com.newton.core.domain.models.about_us.Community
 import com.newton.core.utils.Resource
 import com.newton.database.dao.CommunityDao
+import com.newton.database.mappers.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

@@ -54,4 +54,8 @@ dependencies {
 
     implementation(Dependencies.work)
     implementation(Dependencies.hiltWorker)
+
+    // paging
+    implementation(Dependencies.pagingCompose)
+    implementation(Dependencies.pagingRuntime)
 }

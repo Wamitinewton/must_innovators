@@ -3,17 +3,14 @@ package com.newton.admin.data.repository
 import com.newton.admin.data.mappers.EventMapper.toEventDaoEntity
 import com.newton.admin.data.mappers.EventMapper.toEventData
 import com.newton.admin.data.remote.AdminApi
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.models.NewsLetter
-import com.newton.admin.domain.models.NewsLetterResponse
-import com.newton.admin.domain.repository.AdminRepository
-import com.newton.core.domain.models.ApiResponse
-import com.newton.core.domain.models.PaginationResponse
+import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin.NewsLetter
+import com.newton.core.domain.models.admin.NewsLetterResponse
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.domain.models.admin_models.CommunityData
-import com.newton.core.domain.models.admin_models.EventRegistrationData
-import com.newton.core.domain.models.admin_models.FeedbackData
-import com.newton.core.domain.models.event_models.AddEventRequest
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsRsvpResponse
+import com.newton.core.domain.models.admin_models.AddEventRequest
+import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.utils.Resource
 import com.newton.database.dao.EventDao
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +18,6 @@ import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class AdminRepositoryImpl @Inject constructor(
@@ -36,16 +32,16 @@ class AdminRepositoryImpl @Inject constructor(
 
 
             val response = adminApi.createEvent(
-                name = event.name.toRequestBody("text/plain".toMediaTypeOrNull()),
-                category = event.category.toRequestBody("text/plain".toMediaTypeOrNull()),
-                description = event.description.toRequestBody("text/plain".toMediaTypeOrNull()),
+                name = event.name,
+                category = event.category,
+                description = event.description,
                 image = imagePart,
-                date = event.date.toRequestBody("text/plain".toMediaTypeOrNull()),
-                location = event.location.toRequestBody("text/plain".toMediaTypeOrNull()),
-                organizer = event.organizer.toRequestBody("text/plain".toMediaTypeOrNull()),
-                contactEmail = event.contactEmail.toRequestBody("text/plain".toMediaTypeOrNull()),
-                title = event.title.toRequestBody("text/plain".toMediaTypeOrNull()),
-                isVirtual = if(event.isVirtual)"True".toRequestBody("text/plain".toMediaTypeOrNull()) else "False".toRequestBody("text/plain".toMediaTypeOrNull())
+                date = event.date,
+                location = event.location,
+                organizer = event.organizer,
+                contactEmail = event.contactEmail,
+                title = event.title,
+                isVirtual = event.isVirtual
             )
             if (response.status=="success"){
                 emit(Resource.Success(data = response.data.toEventData()))
@@ -60,11 +56,11 @@ class AdminRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addCommunity(community: AddCommunityRequest): Flow<Resource<ApiResponse<CommunityData>>> = flow{
+    override suspend fun addCommunity(community: AddCommunityRequest): Flow<Resource<CommunityData>> = flow{
         emit(Resource.Loading(true))
         try {
             val response = adminApi.addCommunity(community)
-            emit(Resource.Success(data = response))
+            emit(Resource.Success(data = response.data))
         } catch (e: Exception) {
             emit(Resource.Error(e.message?:"Error occurred while adding product"))
         }finally {
@@ -72,15 +68,10 @@ class AdminRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateCommunity(community: AddCommunityRequest): Flow<Resource<CommunityData>> = flow{
-        emit(Resource.Loading(true))
-//        val response =  adminApi.updateCommunity(community)
-    }
-
     override suspend fun sendNewsLetter(newsLetter: NewsLetter): Flow<Resource<NewsLetterResponse>> =flow{
         emit(Resource.Loading(true))
         try {
-            val response:NewsLetterResponse = adminApi.sendNewsLetter(newsLetter)
+            val response: NewsLetterResponse = adminApi.sendNewsLetter(newsLetter)
             emit(Resource.Success(response))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?:"Error occurred when sending newsletter"))
@@ -89,7 +80,7 @@ class AdminRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRsvpsData(eventId: Int): Flow<Resource<ApiResponse<PaginationResponse<EventRegistrationData>>>> = flow{
+    override suspend fun getRsvpsData(eventId: Int): Flow<Resource<EventsRsvpResponse>> = flow{
         emit(Resource.Loading(true))
         try {
             val response = adminApi.getRsvpsData(eventId)
@@ -103,9 +94,5 @@ class AdminRepositoryImpl @Inject constructor(
         } finally {
             emit(Resource.Loading(false))
         }
-    }
-
-    override suspend fun getEventFeedbackBYId(eventId: Int): Flow<Resource<ApiResponse<PaginationResponse<FeedbackData>>>> {
-        TODO("Not yet implemented")
     }
 }

@@ -1,6 +1,6 @@
 package com.newton.home.presentation.states
 
-import com.newton.events.domain.models.Event
+import com.newton.core.domain.models.event_models.Event
 
 data class UpcomingEventsState(
     val isLoading: Boolean = false,

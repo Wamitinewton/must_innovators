@@ -23,7 +23,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.common_ui.ui.AnimatedErrorScreen
 import com.newton.common_ui.ui.PaginationLoadingIndicator
 import com.newton.common_ui.ui.PullToRefreshLazyColumn
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.events.presentation.view.composables.CustomAppBar
 import com.newton.events.presentation.view.composables.EventCardAnimation
 import com.newton.events.presentation.view.composables.EventCardShimmerList
