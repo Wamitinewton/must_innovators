@@ -160,6 +160,7 @@ dependencies {
     implementation(project(":database"))
     implementation(project(":features:about_us"))
     implementation(project(":notifications"))
+    implementation(project(":features:feedback"))
 }
 
 

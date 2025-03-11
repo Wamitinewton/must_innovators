@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.utils.Resource
-import com.newton.events.domain.repository.EventRepository
+import com.newton.core.domain.repositories.EventRepository
 import com.newton.events.presentation.events.SearchEvent
 import com.newton.events.presentation.states.SearchEventState
 import dagger.hilt.android.lifecycle.HiltViewModel

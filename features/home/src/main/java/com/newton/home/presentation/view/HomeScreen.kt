@@ -24,10 +24,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.events.domain.models.Event
+import com.newton.core.domain.models.event_models.Event
 import com.newton.home.domain.models.AboutUs
 import com.newton.home.domain.models.Partner
 import com.newton.home.domain.models.Testimonial

@@ -1,7 +1,7 @@
 package com.newton.admin.presentation.feedbacks.states
 
-import com.newton.admin.domain.models.FeedBack
-import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.core.domain.models.admin.FeedBack
+import com.newton.core.enums.FeedbackStatus
 
 
 data class FeedbackState (

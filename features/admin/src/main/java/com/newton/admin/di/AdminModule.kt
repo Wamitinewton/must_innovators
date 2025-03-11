@@ -2,7 +2,7 @@ package com.newton.admin.di
 
 import com.newton.admin.data.remote.AdminApi
 import com.newton.admin.data.repository.AdminRepositoryImpl
-import com.newton.admin.domain.repository.AdminRepository
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.navigation.AdminNavigationApi
 import com.newton.admin.navigation.AdminNavigationApiImpl
 import com.newton.database.dao.EventDao

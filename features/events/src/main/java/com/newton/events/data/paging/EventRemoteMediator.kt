@@ -5,15 +5,15 @@
     import androidx.paging.PagingState
     import androidx.paging.RemoteMediator
     import androidx.room.withTransaction
+    import com.newton.core.data.mappers.toDomainEvent
     import com.newton.core.network.NetworkConfiguration
     import com.newton.core.network.NetworkStatus
     import com.newton.core.utils.CustomErrorManager
     import com.newton.core.utils.toException
     import com.newton.database.db.AppDatabase
     import com.newton.database.entities.EventEntity
-    import com.newton.events.data.mappers.EventMappers.toDomainEvent
-    import com.newton.events.data.mappers.EventMappers.toEntity
-    import com.newton.events.data.remote.EventApi
+    import com.newton.core.data.remote.EventApi
+    import com.newton.database.mappers.toEntity
     import kotlinx.coroutines.Dispatchers
     import kotlinx.coroutines.coroutineScope
     import kotlinx.coroutines.flow.first

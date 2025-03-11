@@ -101,7 +101,9 @@ fun AccountDrawerContent(
                     Text("Feedback")
                 },
                 selected = false,
-                onClick = {  },
+                onClick = {
+                    onFeedbackClicked()
+                },
 
                 )
 

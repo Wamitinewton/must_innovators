@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsData
 
 @Composable
 fun EventCardAnimation(

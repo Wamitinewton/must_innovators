@@ -7,18 +7,19 @@ import com.newton.admin.data.mappers.UserDataMappers.toDomainList
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
 import com.newton.admin.data.remote.AdminApi
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.models.NewsLetter
-import com.newton.admin.domain.models.NewsLetterResponse
-import com.newton.admin.domain.repository.AdminRepository
 import com.newton.admin.presentation.role_management.executives.view.User
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
+import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin.NewsLetter
+import com.newton.core.domain.models.admin.NewsLetterResponse
+import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventRegistrationData
+import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.FeedbackData
-import com.newton.core.domain.models.event_models.AddEventRequest
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.UserFeedbackDao
@@ -156,17 +157,17 @@ class AdminRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getAllUsers(isRefresh: Boolean): Flow<Resource<List<User>>> = flow {
+    override suspend fun getAllUsers(isRefresh: Boolean): Flow<Resource<List<UserData>>> = flow {
         emit(Resource.Loading(true))
         try {
             if (isRefresh) {
                 val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data.toDomainList()))
+                emit(Resource.Success(response.data))
 
             } else {
 //                usersDao.getAllUsers()
                 val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data.toDomainList()))
+                emit(Resource.Success(response.data))
             }
         } catch (e: HttpException) {
             emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))

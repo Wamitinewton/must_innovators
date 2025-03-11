@@ -1,7 +1,7 @@
 package com.newton.admin.presentation.community.events
 
-import com.newton.admin.domain.models.Session
-import com.newton.admin.domain.models.Socials
+import com.newton.core.domain.models.admin.Session
+import com.newton.core.domain.models.admin.Socials
 
 sealed class CommunityEvent {
     data class SessionsChanged(val session: List<Session>): CommunityEvent()

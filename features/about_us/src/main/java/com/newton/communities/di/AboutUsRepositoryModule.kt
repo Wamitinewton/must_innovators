@@ -1,18 +1,16 @@
 package com.newton.communities.di
 
-import com.newton.communities.data.remote.AboutUsApi
+import com.newton.core.data.remote.AboutUsApi
 import com.newton.communities.data.repository.CommunityRepositoryImpl
 import com.newton.communities.data.repository.ExecutiveRepositoryImpl
-import com.newton.communities.domain.repository.CommunityRepository
-import com.newton.communities.domain.repository.ExecutiveRepository
+import com.newton.core.domain.repositories.CommunityRepository
+import com.newton.core.domain.repositories.ExecutiveRepository
 import com.newton.database.dao.CommunityDao
 import com.newton.database.dao.ExecutiveDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module

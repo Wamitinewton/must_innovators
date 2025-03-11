@@ -8,6 +8,7 @@ import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.blogs.navigation.BlogsNavigationApi
 import com.newton.communities.navigation.CommunityNavigationApi
 import com.newton.events.navigation.EventsNavigationApi
+import com.newton.feedback.navigation.FeedbackNavigationApi
 import com.newton.home.navigation.HomeNavigationApi
 import com.newton.meruinnovators.BuildConfig
 import com.newton.meruinnovators.navigation.NavigationSubGraphs
@@ -39,7 +40,8 @@ object AppModule {
         blogsNavigationApi: BlogsNavigationApi,
         accountNavigationApi: AccountNavigationApi,
         adminNavigationApi: AdminNavigationApi,
-        communityNavigationApi: CommunityNavigationApi
+        communityNavigationApi: CommunityNavigationApi,
+        feedbackNavigationApi: FeedbackNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -48,7 +50,8 @@ object AppModule {
             blogsNavigationApi,
             accountNavigationApi,
             adminNavigationApi,
-            communityNavigationApi
+            communityNavigationApi,
+            feedbackNavigationApi
         )
     }
 

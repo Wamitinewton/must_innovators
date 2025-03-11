@@ -1,18 +1,18 @@
 package com.newton.admin.data.remote
 
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.models.NewsLetter
-import com.newton.admin.domain.models.NewsLetterResponse
-import com.newton.core.data.dto.EventApiResponse
-import com.newton.core.data.dto.EventDto
-import com.newton.core.data.dto.EventResponse
+import com.newton.core.data.response.events_response.EventApiResponse
+import com.newton.core.data.response.events_response.EventDto
+import com.newton.core.data.response.events_response.EventResponse
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
+import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin.NewsLetter
+import com.newton.core.domain.models.admin.NewsLetterResponse
+import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventRegistrationData
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.UserData
-import com.newton.core.domain.models.event_models.AddEventRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body

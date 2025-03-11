@@ -3,12 +3,12 @@ package com.newton.admin.presentation.events.viewmodel
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.admin.domain.repository.AdminRepository
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.states.AddEventState
 import com.newton.common_ui.ui.toLocaltime
-import com.newton.core.domain.models.event_models.AddEventRequest
+import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

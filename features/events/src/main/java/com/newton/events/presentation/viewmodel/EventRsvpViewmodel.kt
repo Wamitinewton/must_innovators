@@ -2,11 +2,10 @@ package com.newton.events.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.utils.InputValidators
 import com.newton.core.utils.Resource
 import com.newton.core.utils.ValidationResult
-import com.newton.events.domain.models.EventRegistrationRequest
-import com.newton.events.domain.repository.EventRepository
+import com.newton.core.domain.models.event_models.EventRegistrationRequest
+import com.newton.core.domain.repositories.EventRepository
 import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventRegistrationFormState
 import com.newton.events.presentation.states.RegistrationState

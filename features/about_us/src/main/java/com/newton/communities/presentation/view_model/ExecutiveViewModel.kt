@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
-import com.newton.communities.domain.repository.ExecutiveRepository
+import com.newton.core.domain.repositories.ExecutiveRepository
 import com.newton.communities.presentation.state.ExecutiveUiState
 import com.newton.core.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow

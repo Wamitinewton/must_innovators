@@ -3,7 +3,7 @@ package com.newton.auth.presentation.sign_up.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.core.domain.models.auth_models.SignupRequest
-import com.newton.auth.domain.repositories.AuthRepository
+import com.newton.core.domain.repositories.AuthRepository
 import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
 import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.auth.presentation.sign_up.state.SignupViewmodelState

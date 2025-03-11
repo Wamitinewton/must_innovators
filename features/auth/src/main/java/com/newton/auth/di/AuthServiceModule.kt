@@ -1,6 +1,6 @@
 package com.newton.auth.di
 
-import com.newton.auth.data.remote.authApiService.AuthService
+import com.newton.core.data.remote.AuthService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

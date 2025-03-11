@@ -2,10 +2,10 @@ package com.newton.auth.presentation.login.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.domain.repositories.AuthRepository
 import com.newton.auth.presentation.login.event.GetUserDataEvent
 import com.newton.auth.presentation.login.state.GetUserDataViewModelState
 import com.newton.core.domain.models.auth_models.GetUserData
+import com.newton.core.domain.repositories.AuthRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,8 +29,6 @@ class GetUserDataViewModel @Inject constructor(
         getUserData()
     }
 
-
-
     fun onEvent(event: GetUserDataEvent) {
         when(event) {
             GetUserDataEvent.GetUserEvent -> {
@@ -42,16 +40,6 @@ class GetUserDataViewModel @Inject constructor(
     private fun getUserData() {
         viewModelScope.launch {
             try {
-                val localUser = authRepository.getLoggedInUser()
-                if (localUser != null) {
-                    _getUserDataState.update {
-                        it.copy(
-                            isLoading = false,
-                            userData = localUser
-                        )
-                    }
-                }
-
                 fetchRemoteUser()
             } catch (e: Exception) {
                 _getUserDataState.update {
@@ -99,6 +87,7 @@ class GetUserDataViewModel @Inject constructor(
             }
             val user = getUserData.data
             authRepository.storeLoggedInUser(user)
+
         } catch (e: Exception) {
             _getUserDataState.update {
                 it.copy(
@@ -109,4 +98,5 @@ class GetUserDataViewModel @Inject constructor(
             Timber.e(e, "Failed to get User Data!!!")
         }
     }
+
 }

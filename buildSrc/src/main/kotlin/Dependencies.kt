@@ -38,6 +38,7 @@ object Dependencies {
     const val material_icons_extended = "androidx.compose.material:material-icons-extended:1.2.0"
     const val zxing_qr = "com.journeyapps:zxing-android-embedded:4.1.0"
     const val initializer = "androidx.startup:startup-runtime:${Versions.initilizer}"
+    const val reorderble = "org.burnoutcrew.composereorderable:reorderable:${Versions.reordable}"
 }
 
 

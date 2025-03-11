@@ -2,25 +2,22 @@ package com.newton.auth.data.repository
 
 import coil3.network.HttpException
 import com.newton.auth.data.data_store.SessionManager
-import com.newton.auth.data.remote.authApiService.AuthService
+import com.newton.core.data.remote.AuthService
 import com.newton.auth.data.token_holder.AuthTokenHolder
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResponse
 import com.newton.core.domain.models.auth_models.LoginResultData
 import com.newton.core.domain.models.auth_models.SignupRequest
 import com.newton.core.domain.models.auth_models.SignupResponse
-import com.newton.auth.domain.repositories.AuthRepository
+import com.newton.core.domain.repositories.AuthRepository
 import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.domain.models.auth_models.UserData
 import com.newton.core.utils.Resource
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toAuthedUser
 import com.newton.database.mappers.toUserEntity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -29,7 +26,7 @@ import retrofit2.HttpException as RetrofitHttpException
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val sessionManager: SessionManager,
-    private val userDao: UserDao
+    private val userDao: UserDao,
 ) : AuthRepository {
 
     init {

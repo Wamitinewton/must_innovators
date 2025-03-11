@@ -21,14 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.newton.common_ui.ui.AnimatedErrorScreen
 import com.newton.common_ui.ui.EmptySearchResults
 import com.newton.common_ui.ui.LoadingIndicator
-import com.newton.common_ui.ui.PaginationLoadingIndicator
 import com.newton.common_ui.ui.SearchHeader
-import com.newton.core.domain.models.event_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.utils.Resource
 import com.newton.events.presentation.events.SearchEvent
 import com.newton.events.presentation.view.composables.EventCardAnimation
