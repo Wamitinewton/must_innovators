@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.newton.common_ui.ui.CustomCard
 
 
 @Composable
@@ -29,13 +30,10 @@ fun StatCard(
     icon: ImageVector,
     modifier: Modifier = Modifier
 ) {
-    Card(
+    CustomCard(
         modifier = modifier
             .height(120.dp)
             .shadow(4.dp, RoundedCornerShape(8.dp)),
-        colors = CardDefaults.cardColors(
-            MaterialTheme.colorScheme.surface
-        )
     ) {
         Column(
             modifier = Modifier
@@ -51,7 +49,7 @@ fun StatCard(
                 modifier = Modifier.size(36.dp)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = value,

@@ -160,10 +160,13 @@ class AdminRepositoryImpl @Inject constructor(
         emit(Resource.Loading(true))
         try {
             if (isRefresh) {
-//                usersDao.getAllUsers()
-            } else {
                 val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data.results.toDomainList()))
+                emit(Resource.Success(response.data.toDomainList()))
+
+            } else {
+//                usersDao.getAllUsers()
+                val response = adminApi.getAllUsers()
+                emit(Resource.Success(response.data.toDomainList()))
             }
         } catch (e: HttpException) {
             emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))

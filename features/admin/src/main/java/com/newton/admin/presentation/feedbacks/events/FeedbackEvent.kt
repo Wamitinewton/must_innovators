@@ -9,6 +9,6 @@ sealed class FeedbackEvent{
     data class ErrorChange(val message: String) : FeedbackEvent()
     data class SearchQueryChange(val search: String) : FeedbackEvent()
     data class FeedbacksChange(val feedback: List<FeedBack>) : FeedbackEvent()
-    data class SelectedFilterChange(val filter: FeedbackStatus) : FeedbackEvent()
+    data class SelectedFilterChange(val filter: FeedbackStatus?) : FeedbackEvent()
     data object LoadFeedback: FeedbackEvent()
 }

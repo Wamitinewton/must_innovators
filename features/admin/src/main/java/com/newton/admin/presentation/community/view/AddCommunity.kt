@@ -59,6 +59,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -84,6 +85,7 @@ import com.newton.admin.presentation.community.view.composable.SessionItem
 import com.newton.admin.presentation.community.view.composable.SocialDialog
 import com.newton.admin.presentation.community.view.composable.SocialItem
 import com.newton.admin.presentation.community.view.composable.UserListItem
+import com.newton.admin.presentation.community.view.composable.UsersShimmer
 import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
 import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.common_ui.R.drawable
@@ -96,13 +98,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-// Data class to hold user information
-data class User(
-    val name: String,
-    val specialty: String,
-    val profileImageRes: Int
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCommunityScreen(
@@ -112,22 +107,16 @@ fun AddCommunityScreen(
     navController: NavController
 ) {
     val addCommunityState by viewModel.communityState.collectAsState()
+    val usersState by viewModel.userState.collectAsState()
     val scrollState = rememberScrollState()
     val datePickerState = rememberDatePickerState()
     val bottomSheetState = rememberModalBottomSheetState()
     val sessions = addCommunityState.sessions
     val socials = addCommunityState.socials
-    // Sample users for demonstration
-    val sampleUsers = listOf(
-        User("John Doe", "Android", drawable.innovation),
-        User("Jane Smith", "Cybersecurity", drawable.innovation),
-        User("Robert Johnson", "Robotics", drawable.innovation),
-        User("Emily Wilson", "Android", drawable.innovation),
-        User("Michael Brown", "Cybersecurity", drawable.innovation),
-        User("Sarah Davis", "Robotics", drawable.innovation),
-        User("David Miller", "Android", drawable.innovation),
-        User("Lisa Anderson", "Cybersecurity", drawable.innovation)
-    )
+
+    LaunchedEffect(addCommunityState.showBottomSheet) {
+        onEvent.invoke(CommunityEvent.LoadUsers(true))
+    }
 
     Scaffold(
         topBar = {
@@ -544,19 +533,25 @@ fun AddCommunityScreen(
                         modifier = Modifier.fillMaxWidth(),
                         contentPadding = PaddingValues(vertical = 8.dp)
                     ) {
-                        items(sampleUsers) { user ->
-                            UserListItem(
-                                user = user,
-                                onClick = {
-                                    // Set the selected user to the appropriate role
-                                    when (addCommunityState.currentRoleSelection) {
-                                        "lead" -> addCommunityState.lead = user.name
-                                        "co-lead" -> addCommunityState.coLead = user.name
-                                        "secretary" -> addCommunityState.secretary = user.name
+                        if (usersState.isLoading) {
+                            items(8){
+                                UsersShimmer()
+                            }
+                        } else{
+                            items(usersState.users) { user ->
+                                UserListItem(
+                                    user = user,
+                                    onClick = {
+                                        // Set the selected user to the appropriate role
+                                        when (addCommunityState.currentRoleSelection) {
+                                            "lead" -> addCommunityState.lead = user.name
+                                            "co-lead" -> addCommunityState.coLead = user.name
+                                            "secretary" -> addCommunityState.secretary = user.name
+                                        }
+                                        onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
                                     }
-                                    onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
-                                }
-                            )
+                                )
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(32.dp))

@@ -103,7 +103,8 @@ fun FeedbackScreen(
             // Filter Chips
             FilterSection(
                 selectedFilter = uiState.selectedFilter,
-                onFilterSelected = { onEvent.invoke(FeedbackEvent.SelectedFilterChange(it)) }
+                onFilterSelected = { onEvent.invoke(FeedbackEvent.SelectedFilterChange(it)) },
+                onEvent = onEvent
             )
             if (uiState.isLoading) {
                 StatsSummaryShimmer()

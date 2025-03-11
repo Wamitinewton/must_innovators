@@ -263,7 +263,8 @@ class ExecutiveViewModel : ViewModel() {
                             User(
                                 id = jsonObject.getInt("id"),
                                 name = jsonObject.optString("name", "Unknown"),
-                                email = jsonObject.getString("email")
+                                email = jsonObject.getString("email"),
+                                photo = ""
                             )
                         )
                     }

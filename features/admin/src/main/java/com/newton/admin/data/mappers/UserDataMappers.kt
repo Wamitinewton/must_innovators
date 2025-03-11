@@ -8,7 +8,8 @@ object UserDataMappers {
         return User(
             id = id,
             name = first_name + last_name,
-            email = email
+            email = email,
+            photo = photo
         )
     }
 

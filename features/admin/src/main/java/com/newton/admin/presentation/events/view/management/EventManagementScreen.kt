@@ -1,5 +1,6 @@
 package com.newton.admin.presentation.events.view.management
 
+import UpdateCommunityScreen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -332,16 +333,16 @@ fun EventManagementScreen(navController: NavController) {
 
             // Event details dialog
             if (selectedEvent != null) {
-                EventDetailsDialog(
-                    event = selectedEvent!!,
-                    onDismiss = { selectedEvent = null },
-                    onToggleReminder = { event ->
-                        val index = events.indexOfFirst { it.id == event.id }
-                        if (index >= 0) {
-                            events[index] = event.copy(isReminderSet = !event.isReminderSet)
-                        }
-                    }
-                )
+//                EventDetailsDialog(
+//                    event = selectedEvent!!,
+//                    onDismiss = { selectedEvent = null },
+//                    onToggleReminder = { event ->
+//                        val index = events.indexOfFirst { it.id == event.id }
+//                        if (index >= 0) {
+//                            events[index] = event.copy(isReminderSet = !event.isReminderSet)
+//                        }
+//                    }
+//                )
             }
         }
     }

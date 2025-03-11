@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.admin.presentation.feedbacks.events.FeedbackEvent
 
 @Composable
 fun FilterSection(
     selectedFilter: FeedbackStatus?,
-    onFilterSelected: (FeedbackStatus) -> Unit
+    onFilterSelected: (FeedbackStatus) -> Unit,
+    onEvent: (FeedbackEvent) -> Unit
 ) {
     val filters = remember {
         listOf(
@@ -24,7 +26,8 @@ fun FilterSection(
     }
 
     ScrollableTabRow(
-        selectedTabIndex = filters.indexOfFirst { it.first == selectedFilter }.takeIf { it >= 0 } ?: 0,
+        selectedTabIndex = filters.indexOfFirst { it.first == selectedFilter }.takeIf { it >= 0 }
+            ?: 0,
         edgePadding = 16.dp,
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.primary,
@@ -35,7 +38,9 @@ fun FilterSection(
 
             Tab(
                 selected = selected,
-                onClick = { status?.let { onFilterSelected(it) } },
+                onClick = {
+                    status.let {  onEvent.invoke(FeedbackEvent.SelectedFilterChange(it)) }
+                },
                 text = {
                     Text(
                         text = label,
