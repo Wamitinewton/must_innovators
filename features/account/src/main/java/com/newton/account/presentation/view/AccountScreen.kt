@@ -54,6 +54,7 @@ import com.newton.account.presentation.composables.FeedbackSelectionBottomSheet
 import com.newton.account.presentation.composables.ProfileSection
 import com.newton.account.presentation.composables.SectionHeader
 import com.newton.account.presentation.composables.UserInfoSection
+import com.newton.account.presentation.viewmodel.AccountViewModel
 import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import kotlinx.coroutines.launch
 
@@ -63,11 +64,11 @@ fun AccountScreen(
     onMyEventsClick: () -> Unit,
     onBugReportClick: () -> Unit,
     onGeneralFeedbackClick: () -> Unit,
-    getUserDataViewModel: GetUserDataViewModel = hiltViewModel()
+    accountViewModel: AccountViewModel
 ) {
-    val getUserUiState by getUserDataViewModel.getUserDataState.collectAsState()
+    val accountUiState by accountViewModel.accountState.collectAsState()
 
-    val user = getUserUiState.userData
+    val user = accountUiState.userData
 
     val communities = remember {
         listOf(

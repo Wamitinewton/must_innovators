@@ -1,6 +1,6 @@
 package com.newton.core.data.remote
 
-import com.newton.core.data.runTime.Authenticated
+import com.newton.core.data.Authenticated
 import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResponse

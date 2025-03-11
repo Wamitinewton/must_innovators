@@ -26,7 +26,7 @@ import retrofit2.HttpException as RetrofitHttpException
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val sessionManager: SessionManager,
-    private val userDao: UserDao
+    private val userDao: UserDao,
 ) : AuthRepository {
 
     init {
