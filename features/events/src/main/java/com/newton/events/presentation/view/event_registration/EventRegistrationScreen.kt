@@ -78,6 +78,7 @@ fun EventRegistrationScreen(
     var showSuccessSheet by remember { mutableStateOf(false) }
     var registrationResponse by remember { mutableStateOf<RegistrationResponse?>(null) }
 
+    // Load user data
     LaunchedEffect(userDataState.userData) {
         userDataState.userData?.let { user ->
             eventRsvpViewmodel.updateFirstName(user.first_name)
@@ -87,6 +88,7 @@ fun EventRegistrationScreen(
         }
     }
 
+    // Handle RSVP events
     LaunchedEffect(Unit) {
         eventRsvpViewmodel.rsvpEvent.collect { event ->
             when (event) {
@@ -95,13 +97,28 @@ fun EventRegistrationScreen(
                     showSuccessSheet = true
                 }
                 is RsvpEvent.ShowError -> {
-                    Toast.makeText(
-                        context,
-                        (registrationState as? RegistrationState.Error)?.message
-                            ?: "Registration failed",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    if (registrationState is RegistrationState.Error) {
+                        Toast.makeText(
+                            context,
+                            (registrationState as RegistrationState.Error).message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
+            }
+        }
+    }
+
+    // Monitor registration state for changes
+    LaunchedEffect(registrationState) {
+        when (registrationState) {
+            is RegistrationState.Success -> {
+                val successState = registrationState as RegistrationState.Success
+                registrationResponse = successState.data
+                showSuccessSheet = true
+            }
+            else -> {
+                // Handle other states in their respective sections
             }
         }
     }
@@ -134,7 +151,7 @@ fun EventRegistrationScreen(
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
                 ) {
                     Column(
@@ -226,32 +243,20 @@ fun EventRegistrationScreen(
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            when (registrationState) {
-                is RegistrationState.Loading -> {
-                    if ((registrationState as RegistrationState.Loading).isLoading) {
-                       LoadingDialog()
-                    }
-                }
-                is RegistrationState.Success -> {
-                    LaunchedEffect(registrationState) {
-                        registrationResponse = (registrationState as RegistrationState.Success).data
-                        showSuccessSheet = true
-                    }
-                }
-                is RegistrationState.Error -> {
-                }
-                else -> {
-                }
+            // Show loading dialog when in loading state
+            if (registrationState is RegistrationState.Loading && (registrationState as RegistrationState.Loading).isLoading) {
+                LoadingDialog()
             }
         }
     }
 
+    // Show success screen when flag is true and we have registration data
     if (showSuccessSheet && registrationResponse != null) {
         EventRegistrationSuccessScreen(
             registrationResponse = registrationResponse!!,
             eventName = event.name,
             eventDateTime = formatDateTime(event.date),
-            onNavigateToHome = {},
+            onNavigateToHome = onClose,
             onViewMyTickets = onNavigateToTickets,
         )
     }

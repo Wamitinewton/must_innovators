@@ -93,17 +93,35 @@ fun OnboardingScreen(
         AboutItem(
             title = "Learn Cutting-Edge Technologies",
             description = "Master the latest tech stacks and development methodologies",
-            icon = { Icon(Icons.Filled.Code, contentDescription = "Code", tint = MaterialTheme.colorScheme.onPrimary) }
+            icon = {
+                Icon(
+                    Icons.Filled.Code,
+                    contentDescription = "Code",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
         ),
         AboutItem(
             title = "Collaborate with Industry Experts",
             description = "Work alongside professionals and build your network",
-            icon = { Icon(Icons.Filled.Group, contentDescription = "Group", tint = MaterialTheme.colorScheme.onPrimary) }
+            icon = {
+                Icon(
+                    Icons.Filled.Group,
+                    contentDescription = "Group",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
         ),
         AboutItem(
             title = "Innovate and Transform",
             description = "Turn your ideas into reality with our resources and support",
-            icon = { Icon(Icons.Filled.Lightbulb, contentDescription = "Innovate", tint = MaterialTheme.colorScheme.onPrimary) }
+            icon = {
+                Icon(
+                    Icons.Filled.Lightbulb,
+                    contentDescription = "Innovate",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
         )
     )
 
@@ -136,7 +154,7 @@ fun OnboardingScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                   gradientBackground
+                    gradientBackground
                 )
         )
 
@@ -242,8 +260,14 @@ fun OnboardingScreen(
                                         ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
 
                                     alpha = 1f - (0.5f * pageOffset.coerceIn(-1f, 1f).absoluteValue)
-                                    scaleX = 0.8f + (0.2f * (1f - pageOffset.coerceIn(-1f, 1f).absoluteValue))
-                                    scaleY = 0.8f + (0.2f * (1f - pageOffset.coerceIn(-1f, 1f).absoluteValue))
+                                    scaleX = 0.8f + (0.2f * (1f - pageOffset.coerceIn(
+                                        -1f,
+                                        1f
+                                    ).absoluteValue))
+                                    scaleY = 0.8f + (0.2f * (1f - pageOffset.coerceIn(
+                                        -1f,
+                                        1f
+                                    ).absoluteValue))
                                 },
                             colors = CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.surface
@@ -289,66 +313,66 @@ fun OnboardingScreen(
                     }
 
 
-            Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
 
-            AnimatedVisibility(
-                visible = visibleState.value,
-                enter = fadeIn(tween(1000, delayMillis = 1000)) +
-                        slideInVertically(
-                            initialOffsetY = { 200 },
-                            animationSpec = tween(durationMillis = 700, delayMillis = 1000)
-                        )
-            ) {
-                ElevatedButton(
-                    onClick = { showBottomSheet = true },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.elevatedButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
-                ) {
-                    LabelLargeText(
-                        text = "Get Started",
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-        }
-
-        if (showBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { showBottomSheet = false },
-                sheetState = bottomSheetState,
-                containerColor = MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                tonalElevation = 8.dp
-            ) {
-                AuthBottomSheetContent(
-                    onDismiss = { showBottomSheet = false },
-                    onLoginClick = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            showBottomSheet = false
-                            onLoginClick()
-                        }
-                    },
-                    onSignupClick = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            showBottomSheet = false
-                            onSignupClick()
+                    AnimatedVisibility(
+                        visible = visibleState.value,
+                        enter = fadeIn(tween(1000, delayMillis = 1000)) +
+                                slideInVertically(
+                                    initialOffsetY = { 200 },
+                                    animationSpec = tween(durationMillis = 700, delayMillis = 1000)
+                                )
+                    ) {
+                        ElevatedButton(
+                            onClick = { showBottomSheet = true },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ),
+                            elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
+                        ) {
+                            LabelLargeText(
+                                text = "Get Started",
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
                         }
                     }
-                )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
+
+                if (showBottomSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showBottomSheet = false },
+                        sheetState = bottomSheetState,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                        tonalElevation = 8.dp
+                    ) {
+                        AuthBottomSheetContent(
+                            onDismiss = { showBottomSheet = false },
+                            onLoginClick = {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    showBottomSheet = false
+                                    onLoginClick()
+                                }
+                            },
+                            onSignupClick = {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    showBottomSheet = false
+                                    onSignupClick()
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
-    }
-}
     }
 }
 

@@ -57,7 +57,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
             composable(route = NavigationRoutes.SignupSuccessRoute.routes) {
                 SignupSuccessScreen(
                     onContinueClick = {
-                        navHostController.navigate(NavigationRoutes.UserDataLoadingRoute.routes) {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.routes) {
                             popUpTo(NavigationSubGraphRoutes.Auth.route) {
                                 inclusive = true
                             }

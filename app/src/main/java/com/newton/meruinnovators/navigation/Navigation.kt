@@ -54,6 +54,10 @@ fun MeruInnovatorsNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
+        navigationSubGraphs.feedbackNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
 
     }
 
