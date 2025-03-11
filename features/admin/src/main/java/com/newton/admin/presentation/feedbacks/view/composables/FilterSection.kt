@@ -7,8 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import com.newton.admin.domain.models.enums.FeedbackStatus
 import com.newton.admin.presentation.feedbacks.events.FeedbackEvent
+import com.newton.core.enums.FeedbackStatus
 
 @Composable
 fun FilterSection(

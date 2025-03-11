@@ -14,13 +14,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.newton.admin.domain.models.FeedBack
-import com.newton.admin.domain.models.enums.AdminAction
+import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.enums.AdminAction
 
 
 @Composable
 fun FeedbackList(
-    feedbacks: List<FeedBack>,
+    feedbacks: List<FeedbackData>,
     listState: LazyListState,
     onFeedbackClick: (String) -> Unit,
     onActionToggle: (String, AdminAction) -> Unit

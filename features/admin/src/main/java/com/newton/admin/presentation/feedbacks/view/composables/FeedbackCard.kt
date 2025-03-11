@@ -36,10 +36,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -52,11 +52,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.newton.admin.domain.models.FeedBack
-import com.newton.admin.domain.models.enums.AdminAction
-import com.newton.admin.domain.models.enums.FeedbackCategory
-import com.newton.admin.domain.models.enums.FeedbackPriority
-import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.enums.AdminAction
+import com.newton.core.enums.FeedbackCategory
+import com.newton.core.enums.FeedbackPriority
+import com.newton.core.enums.FeedbackStatus
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -64,7 +64,7 @@ import java.util.Locale
 
 @Composable
 fun FeedbackCard(
-    feedback: FeedBack,
+    feedback: FeedbackData,
     onCardClick: () -> Unit,
     onActionToggle: (String, AdminAction) -> Unit,
     modifier: Modifier = Modifier,

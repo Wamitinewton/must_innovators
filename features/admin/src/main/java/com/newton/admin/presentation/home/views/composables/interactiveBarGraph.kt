@@ -18,7 +18,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin.DashboardColors
+import com.newton.core.domain.models.admin_models.DashboardColors
 import com.newton.core.domain.models.admin.TooltipData
 import com.newton.admin.presentation.home.views.InteractionData
 

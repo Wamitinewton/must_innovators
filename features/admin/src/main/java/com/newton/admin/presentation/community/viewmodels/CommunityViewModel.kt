@@ -2,12 +2,12 @@ package com.newton.admin.presentation.community.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.admin.domain.models.AddCommunityRequest
-import com.newton.admin.domain.repository.AdminRepository
+import com.newton.admin.data.mappers.UserDataMappers.toDomainList
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.states.CommunityState
 import com.newton.admin.presentation.community.states.UsersState
-import com.newton.admin.presentation.role_management.executives.view.User
+import com.newton.core.domain.models.admin_models.AddCommunityRequest
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,6 +66,7 @@ class CommunityViewModel @Inject constructor(
     private fun getAllUsers(isRefresh:Boolean){
         viewModelScope.launch {
             repository.getAllUsers(isRefresh).collectLatest { result->
+
                 when (result) {
                     is Resource.Error -> {
                        _usersState.update { it.copy(getUsersError = result.message?: "Unknown error when adding community") }
@@ -74,8 +75,9 @@ class CommunityViewModel @Inject constructor(
                         _usersState.update { it.copy(isLoading = result.isLoading) }
                     }
                     is Resource.Success -> {
-                        result.data?.let {users->
-                             _usersState.update {
+                        val userData = result.data?.toDomainList()
+                        userData?.let { users->
+                            _usersState.update {
                                 it.copy(
                                     isSuccess = true,
                                     isLoading = false,

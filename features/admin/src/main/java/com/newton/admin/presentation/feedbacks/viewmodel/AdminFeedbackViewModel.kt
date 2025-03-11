@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.admin.presentation.feedbacks.events.FeedbackEvent
 import com.newton.admin.presentation.feedbacks.states.FeedbackState
-import com.newton.core.domain.models.admin.FeedBack
+import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.enums.AdminAction
 import com.newton.core.enums.FeedbackCategory
@@ -80,7 +80,7 @@ class AdminFeedbackViewModel @Inject constructor(
         _uiState.update { it.copy(searchQuery = query) }
     }
 
-    fun getFilteredFeedbacks(): List<FeedBack> {
+    fun getFilteredFeedbacks(): List<FeedbackData> {
 
         val currentFilter = _uiState.value.selectedFilter
         val query = _uiState.value.searchQuery.lowercase()
@@ -96,7 +96,7 @@ class AdminFeedbackViewModel @Inject constructor(
         }
     }
 
-    private fun generateMockFeedbacks(count: Int): List<FeedBack> {
+    private fun generateMockFeedbacks(count: Int): List<FeedbackData> {
         val random = Random(System.currentTimeMillis())
 
         val names = listOf(
@@ -129,7 +129,7 @@ class AdminFeedbackViewModel @Inject constructor(
             val name = names[random.nextInt(names.size)]
             val email = name.lowercase().replace(" ", ".") + "@" + domains[random.nextInt(domains.size)]
 
-            FeedBack(
+            FeedbackData(
                 id = "fb-${index + 1000}",
                 userId = "user-${index + 100}",
                 userName = name,

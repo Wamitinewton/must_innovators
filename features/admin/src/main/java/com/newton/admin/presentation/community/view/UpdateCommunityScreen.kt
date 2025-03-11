@@ -43,6 +43,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,9 +54,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.core.domain.models.admin.AddCommunityRequest
-import com.newton.core.domain.models.admin.Session
-import com.newton.core.domain.models.admin.Socials
 import com.newton.admin.presentation.community.view.composable.CommunityHeader
 import com.newton.admin.presentation.community.view.composable.CommunitySection
 import com.newton.admin.presentation.community.view.composable.ContactField
@@ -63,47 +61,51 @@ import com.newton.admin.presentation.community.view.composable.DetailRow
 import com.newton.admin.presentation.community.view.composable.LeadershipField
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
+import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
+import com.newton.common_ui.ui.LoadingDialog
+import com.newton.core.domain.models.admin_models.AddCommunityRequest
+import com.newton.core.domain.models.admin.Session
+import com.newton.core.domain.models.admin.Socials
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateCommunityScreen(
     onBackPressed: () -> Unit,
-    onSavePressed: (AddCommunityRequest) -> Unit
+    onSavePressed: (AddCommunityRequest) -> Unit,
+    viewModel: CommunityViewModel
 ) {
     var tools by remember { mutableStateOf<String>("Kotlin , Swift , Flutter ,React Native") }
-
+    val communityState by viewModel.communityState.collectAsState()
     // Sample default community data
     val defaultCommunity = AddCommunityRequest(
-        coLead = "Jane Smith",
-        lead = "John Doe",
+        co_lead = "Jane Smith",
+        community_lead = "John Doe",
         description = "A community focused on mobile development and design patterns.",
         email = "community@example.com",
-        dateFounded = "2023-01-15",
-        isRecruiting = true,
+        founding_date = "2023-01-15",
+        is_recruiting = true,
         name = "Mobile Dev Hub",
-        phone = "+1 (555) 123-4567",
+        phone_number = "+1 (555) 123-4567",
         secretary = "Alex Johnson",
         sessions = listOf(
             Session(
-                date = "FRIDAY",
-                startTime = "09:00",
-                endTime = "11:00",
-                sessionType = "VIRTUAL",
+                day = "FRIDAY",
+                start_time = "09:00",
+                end_time = "11:00",
+                meeting_type = "VIRTUAL",
                 location = "Zoom",
-                title = ""
             ),
             Session(
-                date = "FRIDAY",
-                startTime = "09:00",
-                endTime = "11:00",
-                sessionType = "PHYSICAL",
+                day = "FRIDAY",
+                start_time = "09:00",
+                end_time = "11:00",
+                meeting_type = "PHYSICAL",
                 location = "Zoom",
-                title = ""
             ),
         ),
-        tools = tools.split(","),
-        socials = listOf(
+        tech_stack = tools.split(","),
+        social_media = listOf(
             Socials(
                 platform = "Github",
                 url = "github.com/mobiledevhub"
@@ -192,10 +194,10 @@ fun UpdateCommunityScreen(
                 // Community header with name and recruitment status
                 CommunityHeader(
                     communityName = communityData.name,
-                    isRecruiting = communityData.isRecruiting?:false,
+                    isRecruiting = communityData.is_recruiting?:false,
                     isEditing = isEditing,
                     onNameChange = { communityData = communityData.copy(name = it) },
-                    onRecruitingChange = { communityData = communityData.copy(isRecruiting = it) }
+                    onRecruitingChange = { communityData = communityData.copy(is_recruiting = it) }
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -231,16 +233,16 @@ fun UpdateCommunityScreen(
                 ) {
                     LeadershipField(
                         label = "Community Lead",
-                        value = communityData.lead,
+                        value = communityData.community_lead,
                         isEditing = isEditing,
-                        onValueChange = { communityData = communityData.copy(coLead = it) }
+                        onValueChange = { communityData = communityData.copy(co_lead = it) }
                     )
 
                     LeadershipField(
                         label = "Co-Lead",
-                        value = communityData.coLead,
+                        value = communityData.co_lead,
                         isEditing = isEditing,
-                        onValueChange = { communityData = communityData.copy(coLead = it) }
+                        onValueChange = { communityData = communityData.copy(co_lead = it) }
                     )
 
                     LeadershipField(
@@ -269,11 +271,11 @@ fun UpdateCommunityScreen(
 
                     ContactField(
                         label = "Phone",
-                        value = communityData.phone,
+                        value = communityData.phone_number,
                         icon = Icons.Default.Phone,
                         isEditing = isEditing,
                         keyboardType = KeyboardType.Phone,
-                        onValueChange = { communityData = communityData.copy(phone = it) }
+                        onValueChange = { communityData = communityData.copy(phone_number = it) }
                     )
                 }
 
@@ -332,7 +334,7 @@ fun UpdateCommunityScreen(
                         )
                     } else {
                         Text(
-                            text = communityData.tools.toString(),
+                            text = communityData.tech_stack.toString(),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(top = 8.dp)
                         )
@@ -348,10 +350,10 @@ fun UpdateCommunityScreen(
                 ) {
                     DetailRow(
                         label = "Founding Date",
-                        value = communityData.dateFounded,
+                        value = communityData.founding_date,
                         icon = Icons.Default.CalendarMonth,
                         isEditing = isEditing,
-                        onValueChange = { communityData = communityData.copy(dateFounded = it) }
+                        onValueChange = { communityData = communityData.copy(founding_date = it) }
                     )
 
 //                    DetailRow(
@@ -460,6 +462,9 @@ fun UpdateCommunityScreen(
             }
         }
 
+        if (communityState.isLoading) {
+            LoadingDialog()
+        }
         // Session Dialog
         if (showAddSessionDialog) {
             SessionDialog(

@@ -5,7 +5,7 @@ import com.newton.core.data.response.events_response.EventDto
 import com.newton.core.data.response.events_response.EventResponse
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
-import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin.NewsLetter
 import com.newton.core.domain.models.admin.NewsLetterResponse
 import com.newton.core.domain.models.admin_models.AddEventRequest

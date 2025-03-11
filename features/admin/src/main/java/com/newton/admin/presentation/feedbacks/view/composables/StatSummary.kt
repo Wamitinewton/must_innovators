@@ -21,13 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.newton.admin.domain.models.FeedBack
-import com.newton.admin.domain.models.enums.FeedbackPriority
-import com.newton.admin.domain.models.enums.FeedbackStatus
+import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.enums.FeedbackPriority
+import com.newton.core.enums.FeedbackStatus
 
 
 @Composable
-fun StatsSummary(feedbacks: List<FeedBack>) {
+fun StatsSummary(feedbacks: List<FeedbackData>) {
     val pendingCount = remember(feedbacks) { feedbacks.count { it.status == FeedbackStatus.PENDING } }
     val inProgressCount = remember(feedbacks) { feedbacks.count { it.status == FeedbackStatus.IN_PROGRESS } }
     val completedCount = remember(feedbacks) { feedbacks.count { it.status == FeedbackStatus.RESOLVED } }

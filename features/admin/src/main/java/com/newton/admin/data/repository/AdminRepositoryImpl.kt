@@ -3,14 +3,12 @@ package com.newton.admin.data.repository
 import android.util.Log
 import com.newton.admin.data.mappers.EventMapper.toEventDaoEntity
 import com.newton.admin.data.mappers.EventMapper.toEventData
-import com.newton.admin.data.mappers.UserDataMappers.toDomainList
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
 import com.newton.admin.data.remote.AdminApi
-import com.newton.admin.presentation.role_management.executives.view.User
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
-import com.newton.core.domain.models.admin.AddCommunityRequest
+import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin.NewsLetter
 import com.newton.core.domain.models.admin.NewsLetterResponse
 import com.newton.core.domain.models.admin_models.AddEventRequest

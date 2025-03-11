@@ -1,4 +1,7 @@
-package com.newton.core.domain.models.admin
+package com.newton.core.domain.models.admin_models
+
+import com.newton.core.domain.models.admin.Session
+import com.newton.core.domain.models.admin.Socials
 
 data class AddCommunityRequest(
     val name: String,
