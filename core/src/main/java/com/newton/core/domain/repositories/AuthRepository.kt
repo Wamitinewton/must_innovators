@@ -30,4 +30,6 @@ interface AuthRepository {
     suspend fun getLoggedInUser(): UserData?
 
     suspend fun storeLoggedInUser(userData: UserData)
+
+
 }
