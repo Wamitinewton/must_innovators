@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import com.newton.common_ui.ui.DefaultTextInput
+import com.newton.common_ui.ui.AuthTextFields
 import com.newton.common_ui.ui.PasswordTextInput
 
 @Composable
@@ -21,7 +21,7 @@ fun LoginForm(
 ) {
     Column {
         val focusManager = LocalFocusManager.current
-        DefaultTextInput(
+        AuthTextFields(
             onInputChanged = {
                 onEmailChanged(it)
             },

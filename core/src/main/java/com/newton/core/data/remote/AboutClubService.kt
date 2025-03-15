@@ -5,7 +5,7 @@ import com.newton.core.data.response.about_us.CommunityApiResponse
 import com.newton.core.domain.models.about_us.ExecutiveData
 import retrofit2.http.GET
 
-interface AboutUsApi {
+interface AboutClubService {
     @GET(ApiEndpoints.GET_COMMUNITIES)
     suspend fun getCommunities(): CommunityApiResponse<CommunitiesResponse>
 

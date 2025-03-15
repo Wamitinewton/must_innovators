@@ -1,9 +1,12 @@
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android") // Add this line
+    id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
+    id("kotlinx-serialization")
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -59,12 +62,21 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
-    implementation(Dependencies.material_icons_core)
-    implementation(Dependencies.material_icons_extended)
+    // Compose Icons
+    implementation(Dependencies.extendedIcons)
+
+    //Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
+    implementation(Dependencies.timber)
 
 
 
     implementation(project(":core"))
     implementation(project(":common_ui"))
     implementation(project(":features:auth"))
+    implementation(project(":database"))
 }

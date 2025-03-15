@@ -29,4 +29,6 @@ sealed class NavigationRoutes(val routes: String) {
     data object CommunitiesDetailsRoute : NavigationRoutes("community_details")
     data object GeneralFeedbackRoute : NavigationRoutes("general_feedback")
     data object BugReportingScreen : NavigationRoutes("bug_reporting")
+    data object ProfileUpdateScreen : NavigationRoutes("profile_update")
+    data object ForgotPasswordRoute: NavigationRoutes("forgot_password")
 }

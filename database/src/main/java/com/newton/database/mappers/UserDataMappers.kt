@@ -5,22 +5,41 @@ import com.newton.database.entities.UserEntity
 
 fun UserEntity.toAuthedUser(): UserData {
     return UserData(
-        course = course,
+        id = id,
+        username = userName,
         email = email,
         first_name = firstName,
         last_name = lastName,
-        username = userName
+        course = course,
+        registration_no = registrationNo,
+        bio = bio,
+        tech_stacks = techStacks,
+        social_media = socialMedia,
+        photo = photo,
+        year_of_study = yearOfStudy,
+        graduation_year = graduationYear,
+        projects = projects,
+        skills = skills
     )
 }
 
 fun UserData.toUserEntity(): UserEntity {
     return UserEntity(
-        course = course,
+        id = id ?: 1,
+        userName = username,
         email = email,
         firstName = first_name,
         lastName = last_name,
-        userName = username,
-        id = id ?: 1,
+        course = course,
+        registrationNo = registration_no,
+        bio = bio,
+        techStacks = tech_stacks,
+        socialMedia = social_media,
+        photo = photo,
+        yearOfStudy = year_of_study,
+        graduationYear = graduation_year,
+        projects = projects,
+        skills = skills
     )
 }
 

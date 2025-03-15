@@ -35,7 +35,7 @@ import com.newton.database.entities.UserFeedbackEntity
         ExecutiveEntity::class,
     ],
 
-    version = 18,
+    version = 19,
     exportSchema = false
 )
 

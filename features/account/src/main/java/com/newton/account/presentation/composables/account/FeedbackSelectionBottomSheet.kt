@@ -1,4 +1,4 @@
-package com.newton.account.presentation.composables
+package com.newton.account.presentation.composables.account
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

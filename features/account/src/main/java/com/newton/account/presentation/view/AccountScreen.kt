@@ -46,16 +46,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.newton.account.presentation.composables.AccountDrawerContent
-import com.newton.account.presentation.composables.BlogCard
-import com.newton.account.presentation.composables.CommunitiesSection
-import com.newton.account.presentation.composables.FeedbackSelectionBottomSheet
-import com.newton.account.presentation.composables.ProfileSection
-import com.newton.account.presentation.composables.SectionHeader
-import com.newton.account.presentation.composables.UserInfoSection
+import com.newton.account.presentation.composables.account.AccountDrawerContent
+import com.newton.account.presentation.composables.account.BlogCard
+import com.newton.account.presentation.composables.account.CommunitiesSection
+import com.newton.account.presentation.composables.account.FeedbackSelectionBottomSheet
+import com.newton.account.presentation.composables.account.ProfileSection
+import com.newton.account.presentation.composables.account.SectionHeader
+import com.newton.account.presentation.composables.account.UserInfoSection
 import com.newton.account.presentation.viewmodel.AccountViewModel
-import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,6 +62,7 @@ fun AccountScreen(
     onMyEventsClick: () -> Unit,
     onBugReportClick: () -> Unit,
     onGeneralFeedbackClick: () -> Unit,
+    onUpdateProfile: () -> Unit,
     accountViewModel: AccountViewModel
 ) {
     val accountUiState by accountViewModel.accountState.collectAsState()
@@ -190,7 +189,9 @@ fun AccountScreen(
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {},
+                    onClick = {
+                        onUpdateProfile()
+                    },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ) {

@@ -1,4 +1,4 @@
-package com.newton.core.data.response.events_response
+package com.newton.core.data.response.events
 
 import kotlinx.serialization.Serializable
 
