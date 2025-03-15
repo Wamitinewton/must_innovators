@@ -1,6 +1,6 @@
 package com.newton.events.di
 
-import com.newton.core.data.remote.EventApi
+import com.newton.core.data.remote.EventService
 import com.newton.events.navigation.EventsNavigationApi
 import com.newton.events.navigation.EventsNavigationApiImpl
 import dagger.Module
@@ -23,8 +23,8 @@ object EventModule {
 
     @Provides
     @Singleton
-    fun providesEventApi(retrofit: Retrofit): EventApi {
-        return retrofit.create(EventApi::class.java)
+    fun providesEventApi(retrofit: Retrofit): EventService {
+        return retrofit.create(EventService::class.java)
     }
 
 

@@ -5,9 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import com.newton.auth.presentation.sign_up.event.SignupUiEvent
-import com.newton.common_ui.ui.DefaultTextInput
+import com.newton.common_ui.ui.AuthTextFields
 import com.newton.common_ui.ui.PasswordTextInput
 
 @Composable
@@ -35,7 +33,7 @@ fun SignupForm(
 ) {
     Column {
         val focusManager = LocalFocusManager.current
-        DefaultTextInput(
+        AuthTextFields(
             onInputChanged = {
                 onFirstnameChanged(it)
             },
@@ -45,7 +43,7 @@ fun SignupForm(
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
         )
-        DefaultTextInput(
+        AuthTextFields(
             onInputChanged = {
                 onLastnameChanged(it)
             },
@@ -55,7 +53,7 @@ fun SignupForm(
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
         )
-        DefaultTextInput(
+        AuthTextFields(
             onInputChanged = {
                 onUsernameChanged(it)
             },
@@ -65,7 +63,7 @@ fun SignupForm(
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
         )
-        DefaultTextInput(
+        AuthTextFields(
             onInputChanged = {
                 onEmailChanged(it)
             },
@@ -78,7 +76,7 @@ fun SignupForm(
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
 
         )
-        DefaultTextInput(
+        AuthTextFields(
             onInputChanged = {
                 onCourseNameChanged(it)
             },

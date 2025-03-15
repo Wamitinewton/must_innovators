@@ -84,7 +84,7 @@ fun EventRegistrationScreen(
             eventRsvpViewmodel.updateFirstName(user.first_name)
             eventRsvpViewmodel.updateLastName(user.last_name)
             eventRsvpViewmodel.updateEmail(user.email)
-            eventRsvpViewmodel.updateCourse(user.course)
+            user.course?.let { eventRsvpViewmodel.updateCourse(it) }
         }
     }
 

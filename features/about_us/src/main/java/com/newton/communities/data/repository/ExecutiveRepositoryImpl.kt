@@ -2,7 +2,7 @@ package com.newton.communities.data.repository
 
 import com.newton.database.mappers.toExecutiveDomain
 import com.newton.database.mappers.toExecutiveEntity
-import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.data.remote.AboutClubService
 import com.newton.core.domain.repositories.ExecutiveRepository
 import com.newton.core.domain.models.about_us.Executive
 import com.newton.core.utils.Resource
@@ -14,7 +14,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class ExecutiveRepositoryImpl @Inject constructor(
-    private val executiveApi: AboutUsApi,
+    private val executiveApi: AboutClubService,
     private val dao: ExecutiveDao
 ): ExecutiveRepository {
 

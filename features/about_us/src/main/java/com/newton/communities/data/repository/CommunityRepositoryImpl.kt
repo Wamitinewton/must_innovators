@@ -1,10 +1,9 @@
 package com.newton.communities.data.repository
 
-import com.newton.core.data.mappers.toDomain
 import com.newton.core.data.mappers.toDomainList
 import com.newton.database.mappers.toEntity
 import com.newton.database.mappers.toTechStackEntity
-import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.data.remote.AboutClubService
 import com.newton.core.domain.repositories.CommunityRepository
 import com.newton.core.domain.models.about_us.Community
 import com.newton.core.utils.Resource
@@ -18,7 +17,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class CommunityRepositoryImpl @Inject constructor(
-    private val aboutUsApi: AboutUsApi,
+    private val aboutUsApi: AboutClubService,
     private val dao: CommunityDao
 ) : CommunityRepository {
 
@@ -52,11 +51,14 @@ class CommunityRepositoryImpl @Inject constructor(
         return try {
             val response = aboutUsApi.getCommunities()
 
-            if (response.status == "success" && response.data.results.isNotEmpty()) {
+            if (response.status == "success") {
                 val communities = response.data.toDomainList()
                 saveCommunities(communities)
                 Resource.Success(data = communities)
-            } else {
+            } else if(response.data.results.isEmpty()) {
+                Resource.Error("No communities added. Try again later")
+            }
+            else  {
                 Resource.Error("Failed to fetch communities: ${response.message}")
             }
         } catch (e: HttpException) {

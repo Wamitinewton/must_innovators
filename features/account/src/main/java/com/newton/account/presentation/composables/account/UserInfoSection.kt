@@ -1,4 +1,4 @@
-package com.newton.account.presentation.composables
+package com.newton.account.presentation.composables.account
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,11 +46,13 @@ fun UserInfoSection(user: UserData) {
                 value = user.email
             )
 
-            InfoRow(
-                icon = Icons.Default.School,
-                label = "Studies",
-                value = user.course
-            )
+            user.course?.let {
+                InfoRow(
+                    icon = Icons.Default.School,
+                    label = "Studies",
+                    value = it
+                )
+            }
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
@@ -60,7 +62,7 @@ fun UserInfoSection(user: UserData) {
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
             )
             Text(
-                text = "I am a passionate android developer",
+                text = user.bio ?: "You have not added you bio",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
             )

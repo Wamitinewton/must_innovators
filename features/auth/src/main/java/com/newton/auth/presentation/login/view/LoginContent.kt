@@ -29,6 +29,7 @@ fun LoginContent(
     uiState: LoginViewModelState,
     onEvent: (LoginEvent) -> Unit,
     onBackClick: () -> Unit,
+    onForgotPasswordClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -88,7 +89,11 @@ fun LoginContent(
             Text(
                 text = "Forgot password?",
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable(
+                    onClick = {
+                        onForgotPasswordClick()
+                    }
+                )
             )
         }
     }

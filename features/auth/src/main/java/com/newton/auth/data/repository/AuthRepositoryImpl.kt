@@ -2,26 +2,30 @@ package com.newton.auth.data.repository
 
 import coil3.network.HttpException
 import com.newton.auth.data.data_store.SessionManager
-import com.newton.core.data.remote.AuthService
 import com.newton.auth.data.token_holder.AuthTokenHolder
+import com.newton.core.data.remote.AuthService
+import com.newton.core.data.response.auth.OtpVerificationResponse
+import com.newton.core.data.response.auth.RequestOtpResponse
+import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResponse
 import com.newton.core.domain.models.auth_models.LoginResultData
+import com.newton.core.domain.models.auth_models.OtpRequest
+import com.newton.core.domain.models.auth_models.ResetPasswordRequest
 import com.newton.core.domain.models.auth_models.SignupRequest
 import com.newton.core.domain.models.auth_models.SignupResponse
-import com.newton.core.domain.repositories.AuthRepository
-import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.domain.models.auth_models.UserData
+import com.newton.core.domain.models.auth_models.VerifyOtp
+import com.newton.core.domain.repositories.AuthRepository
 import com.newton.core.utils.Resource
+import com.newton.core.utils.safeApiCall
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toAuthedUser
 import com.newton.database.mappers.toUserEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
-import retrofit2.HttpException as RetrofitHttpException
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
@@ -37,42 +41,20 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createUserWithEmailAndPassword(signupRequest: SignupRequest): Flow<Resource<SignupResponse>> = flow {
-        try {
-            emit(Resource.Loading(true))
-            val response = authService.signUp(signupRequest)
-
-            emit(Resource.Success(data = response))
-        } catch (e: RetrofitHttpException) {
-            emit(Resource.Error(message = handleHttpError(e)))
-        } catch (e: IOException) {
-            emit(Resource.Error(message = "Network error: Please check your internet connection"))
-        } catch (e: Exception) {
-            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
-        } finally {
-            emit(Resource.Loading(false))
+    override suspend fun createUserWithEmailAndPassword(signupRequest: SignupRequest): Flow<Resource<SignupResponse>> =
+        safeApiCall {
+            authService.signUp(signupRequest)
         }
-    }
 
-    override suspend fun loginWithEmailAndPassword(loginRequest: LoginRequest): Flow<Resource<LoginResultData>> = flow {
-        try {
-            emit(Resource.Loading(true))
-            val response = authService.login(loginRequest)
-            emit(Resource.Success(data = response.data))
-        } catch (e: RetrofitHttpException) {
-            emit(Resource.Error(message = handleHttpError(e)))
-        } catch (e: IOException) {
-            emit(Resource.Error(message = "Network error: Please check your internet connection"))
-        } catch (e: Exception) {
-            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
-        } finally {
-            emit(Resource.Loading(false))
+    override suspend fun loginWithEmailAndPassword(loginRequest: LoginRequest): Flow<Resource<LoginResultData>> =
+        safeApiCall {
+            authService.login(loginRequest).data
         }
-    }
 
     override suspend fun refreshTokensFromServer(): LoginResponse? {
         return try {
-            val refreshToken = getRefreshToken() ?: throw TokenRefreshException("No refresh token available")
+            val refreshToken =
+                getRefreshToken() ?: throw TokenRefreshException("No refresh token available")
             val response = authService.refreshTokens(refreshToken)
 
             response
@@ -118,21 +100,10 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserData(): Flow<Resource<GetUserData>> = flow {
-        try {
-            emit(Resource.Loading(true))
-            val response = authService.getUserData()
-            emit(Resource.Success(data = response))
-        }catch (e: RetrofitHttpException) {
-            emit(Resource.Error(message = handleHttpError(e)))
-        } catch (e: IOException) {
-            emit(Resource.Error(message = "Network error: Please check your internet connection"))
-        } catch (e: Exception) {
-            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
-        } finally {
-            emit(Resource.Loading(false))
+    override suspend fun getUserData(): Flow<Resource<GetUserData>> =
+        safeApiCall {
+            authService.getUserData()
         }
-    }
 
     override fun getAccessToken(): String? = sessionManager.fetchAccessToken()
 
@@ -145,16 +116,20 @@ class AuthRepositoryImpl @Inject constructor(
         return userDao.insertUser(userData.toUserEntity())
     }
 
-    private fun handleHttpError(error: RetrofitHttpException): String {
-        return when (error.code()) {
-            400 -> "Invalid request: Please check your input"
-            401 -> "Unauthorized: Please log in again"
-            403 -> "Access denied"
-            404 -> "Resource not found"
-            500, 502, 503 -> "Server error: Please try again later"
-            else -> "Network error: ${error.message()}"
+    override suspend fun requestOtp(email: OtpRequest): Flow<Resource<RequestOtpResponse>> =
+        safeApiCall {
+            authService.requestOtp(email)
         }
-    }
+
+    override suspend fun verifyOtp(otp: VerifyOtp): Flow<Resource<OtpVerificationResponse>> =
+        safeApiCall {
+            authService.verifyOtp(otp)
+        }
+
+    override suspend fun resetPassword(passwordRequest: ResetPasswordRequest): Flow<Resource<RequestOtpResponse>> =
+        safeApiCall {
+            authService.resetPassword(passwordRequest)
+        }
 
     private fun verifyTokenPersistence() {
         val savedAccessToken = sessionManager.fetchAccessToken()
@@ -169,5 +144,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     private class TokenRefreshException(message: String) : Exception(message)
-    private class TokenStorageException(message: String, cause: Throwable? = null) : Exception(message, cause)
+    private class TokenStorageException(message: String, cause: Throwable? = null) :
+        Exception(message, cause)
+
 }

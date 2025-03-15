@@ -1,4 +1,4 @@
-package com.newton.account.presentation.composables
+package com.newton.account.presentation.composables.account
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState

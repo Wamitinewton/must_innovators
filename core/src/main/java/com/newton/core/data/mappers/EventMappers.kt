@@ -1,7 +1,7 @@
 package com.newton.core.data.mappers
 
-import com.newton.core.data.response.events_response.EventDto
-import com.newton.core.data.response.events_response.EventRegistrationResponseDto
+import com.newton.core.data.response.events.EventDto
+import com.newton.core.data.response.events.EventRegistrationResponseDto
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.RegistrationResponse
 

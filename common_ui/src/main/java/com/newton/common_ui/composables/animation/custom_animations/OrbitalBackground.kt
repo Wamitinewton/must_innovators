@@ -29,10 +29,11 @@ import kotlin.math.sin
 @Composable
 fun OrbitalsBackground(
     modifier: Modifier = Modifier,
-    primaryColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-    secondaryColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.08f),
-    tertiaryColor: Color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f)
-) {
+    primaryColor: Color = Color(0xFF4CAF50).copy(alpha = 0.25f),
+    secondaryColor: Color = Color(0xFF2196F3).copy(alpha = 0.2f),
+    tertiaryColor: Color = Color(0xFFFF9800).copy(alpha = 0.25f),
+
+    ) {
     val infiniteTransition = rememberInfiniteTransition(label = "orbit-animation")
 
     // Animations for different orbital movements
@@ -92,14 +93,14 @@ fun OrbitalsBackground(
             radiusY = canvasHeight * 0.25f * orbitPulse,
             rotation = rotation2,
             color = secondaryColor,
-            strokeWidth = 1.8f
+            strokeWidth = 3.0f
         )
 
         // Draw a larger orbit
         drawOrbitalEllipse(
             center = Offset(canvasWidth * 0.6f, canvasHeight * 0.7f),
-            radiusX = canvasWidth * 0.3f * orbitPulse,
-            radiusY = canvasHeight * 0.2f,
+            radiusX = canvasWidth * 0.6f * orbitPulse,
+            radiusY = canvasHeight * 0.5f * orbitPulse,
             rotation = rotation1 * 0.7f,
             color = tertiaryColor,
             strokeWidth = 1.2f
