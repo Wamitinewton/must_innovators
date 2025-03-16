@@ -1,7 +1,6 @@
 package com.newton.admin.presentation.events.states
 
 import java.io.File
-import java.util.Date
 
 data class AddEventState(
     val name: String = "",
@@ -21,7 +20,7 @@ data class AddEventState(
     val isShowDialog: Boolean = false,
     val uploadError: String? = null,
     val isLoading: Boolean = false,
-    val uploadSuccess: Boolean = false
+    val uploadSuccess: Boolean = false,
 )
 
 sealed class AddEventEffect {

@@ -35,13 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.events.events.AddEventEvents
+import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.view.composables.ImageReceiptView
 import com.newton.admin.presentation.events.view.composables.SelectCategoriesContentView
 import com.newton.admin.presentation.events.view.composables.SelectImageButton
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
+import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.common_ui.ui.CustomDatePickerDialog
 import com.newton.common_ui.ui.ColumnWrapper

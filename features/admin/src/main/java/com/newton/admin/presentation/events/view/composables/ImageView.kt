@@ -17,10 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.events.AddEventEvents
+import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.states.AddEventState
 import com.newton.common_ui.ui.CustomDynamicAsyncImage
 
@@ -54,7 +53,7 @@ internal fun ImageReceiptView(state: AddEventState, onEvent: (AddEventEvents) ->
 }
 
 @Composable
-private fun CloseButton(modifier: Modifier = Modifier, onDismiss: () -> Unit) {
+fun CloseButton(modifier: Modifier = Modifier, onDismiss: () -> Unit) {
     Surface(
         onClick = onDismiss,
         shape = CircleShape,

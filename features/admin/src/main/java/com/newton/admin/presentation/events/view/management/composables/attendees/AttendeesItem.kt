@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.attendees
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,11 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Attendee
 import com.newton.common_ui.ui.CustomCard
+import com.newton.core.domain.models.admin_models.Attendees
 
 @Composable
-fun AttendeeItem(attendee: Attendee) {
+fun AttendeeItem(attendee: Attendees) {
     CustomCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +44,7 @@ fun AttendeeItem(attendee: Attendee) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = attendee.name.first().toString(),
+                    text = attendee.fullName.first().toString(),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -56,7 +54,7 @@ fun AttendeeItem(attendee: Attendee) {
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = attendee.name,
+                    text = attendee.fullName,
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Medium
                 )
@@ -69,7 +67,7 @@ fun AttendeeItem(attendee: Attendee) {
             }
 
             Column(horizontalAlignment = Alignment.End) {
-                if (attendee.hasCheckedIn) {
+                if (attendee.educationalLevel == "2") {
                     AttendeeBadge(
                         backgroundColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
@@ -79,7 +77,7 @@ fun AttendeeItem(attendee: Attendee) {
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
-                } else if (attendee.isAttending) {
+                } else if (attendee.educationalLevel == "1") {
                     AttendeeBadge(
                         backgroundColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary

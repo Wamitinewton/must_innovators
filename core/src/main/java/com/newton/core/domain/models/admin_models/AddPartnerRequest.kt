@@ -2,23 +2,23 @@ package com.newton.core.domain.models.admin_models
 
 import com.newton.core.enums.PartnerType
 import com.newton.core.enums.PartnershipStatus
-import java.time.LocalDate
+import java.io.File
 
 
-data class Partners(
+data class AddPartnerRequest(
     val name:String,
-    val type:PartnerType,
+    val type:String,
     val description:String,
-    val logo:String,
+    val logo: File,
     val webUrl:String,
     val contactEmail:String,
     val contactPerson:String,
     val linkedIn:String,
     val twitter:String,
-    val startDate: LocalDate,
-    val endDate: LocalDate,
+    val startDate: String,
+    val endDate: String,
     val ongoing:Boolean,
-    val status: PartnershipStatus,
+    val status: String,
     val scope:String, // what is the scope of collaboration eg mentorship
     val benefits:String,
     val eventsSupported:String,

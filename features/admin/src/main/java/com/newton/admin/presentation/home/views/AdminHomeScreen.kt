@@ -52,9 +52,8 @@ import java.time.format.DateTimeFormatter
 
 data class CommunityGroup(val name: String, val members: Int)
 data class ActiveUserData(val time: String, val users: Int)
-data class EventData(val community: String, val events: Int)
+data class SampleEvent(val community: String, val events: Int)
 data class InteractionData(val day: String, val intensity: Int)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdminHome(
@@ -86,14 +85,14 @@ fun AdminHome(
     )
 
     val eventData = listOf(
-        EventData("Sports", 1),
-        EventData("Music", 3),
-        EventData("Art", 7),
-        EventData("Tech", 4),
-        EventData("Art", 10),
-        EventData("Tech", 4),
-        EventData("Art", 12),
-        EventData("Tech", 4)
+        SampleEvent("Sports", 1),
+        SampleEvent("Music", 3),
+        SampleEvent("Art", 7),
+        SampleEvent("Tech", 4),
+        SampleEvent("Art", 10),
+        SampleEvent("Tech", 4),
+        SampleEvent("Art", 12),
+        SampleEvent("Tech", 4)
     )
     val interactionData = List(30) { index ->
         val date = LocalDate.now().minusDays(29L - index)

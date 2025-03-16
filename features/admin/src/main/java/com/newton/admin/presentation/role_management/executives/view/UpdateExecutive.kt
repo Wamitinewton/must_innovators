@@ -134,14 +134,14 @@ fun UpdateExecutiveScreen(
     LaunchedEffect(execState.errorMessage, execState.successMessage) {
         execState.errorMessage?.let { message ->
             scope.launch {
-                scaffoldState.snackBarHostState.showSnackbar(message)
+                scaffoldState.snackBarHostState.showSnackBar(message)
                 viewModel.clearMessages()
             }
         }
 
         execState.successMessage?.let { message ->
             scope.launch {
-                scaffoldState.snackBarHostState.showSnackbar(message)
+                scaffoldState.snackBarHostState.showSnackBar(message)
                 viewModel.clearMessages()
             }
         }

@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.feedback
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -35,17 +35,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Event
-import com.newton.admin.presentation.events.view.management.Feedback
+import com.newton.core.domain.models.admin_models.EventsFeedback
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun FeedbackCard(
-    event: Event,
-    feedback: Feedback,
-    attendeeName: String,
+    feedback: EventsFeedback,
     isScrolling: Boolean
 ) {
     val animatedElevation = remember { Animatable(2f) }
@@ -111,13 +108,12 @@ fun FeedbackCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Event badge
                 Surface(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Text(
-                        text = event.title,
+                        text = feedback.attendeeId,
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -141,7 +137,7 @@ fun FeedbackCard(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = attendeeName,
+                        text = feedback.attendeeName,
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold
                     )
@@ -154,13 +150,10 @@ fun FeedbackCard(
                 // Animated star rating state
                 val animatedRating = remember { mutableFloatStateOf(0f) }
 
-                // Create the animated value in the Composable context
                 val animatedRatingValue by animateFloatAsState(
                     targetValue = animatedRating.floatValue,
                     animationSpec = tween(500, easing = FastOutSlowInEasing)
                 )
-
-                // Use LaunchedEffect to control the animation timing
                 LaunchedEffect(feedback.id) {
                     animatedRating.floatValue = 0f
                     delay(300)

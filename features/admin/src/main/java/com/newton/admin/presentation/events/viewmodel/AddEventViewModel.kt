@@ -3,12 +3,13 @@ package com.newton.admin.presentation.events.viewmodel
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.presentation.events.events.AddEventEvents
+import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.states.AddEventState
 import com.newton.common_ui.ui.toLocaltime
 import com.newton.core.domain.models.admin_models.AddEventRequest
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,9 +29,18 @@ class AddEventViewModel @Inject constructor(
     private val _state = MutableStateFlow(AddEventState())
     val state: StateFlow<AddEventState> = _state.asStateFlow()
 
+
     val uiSideEffect get() = _uiSideEffect.asSharedFlow()
     private val _uiSideEffect = MutableSharedFlow<AddEventEffect>()
 
+    val categories = listOf(
+        "WEB",
+        "CYBERSEC",
+        "ANDROID",
+        "AI",
+        "BLOCKCHAIN",
+        "IoT"
+    )
 
     fun handleEvent(event: AddEventEvents) {
         when (event) {
@@ -54,51 +64,6 @@ class AddEventViewModel @Inject constructor(
         }
     }
 
-    val categories = listOf(
-        "WEB",
-        "CYBERSEC",
-        "ANDROID",
-        "AI",
-        "BLOCKCHAIN",
-        "IoT"
-    )
-
-    private fun toDefaultState(){
-        _state.value = AddEventState()
-    }
-
-    private fun validateAndSubmit(): Boolean {
-        val errors = mutableMapOf<String, String>()
-        if (_state.value.name.isBlank()) {
-            errors["name"] = "Event name is required"
-        }
-        if (_state.value.category.isBlank()) {
-            errors["category"] = "Category is required"
-        }
-        if (_state.value.image == null) {
-            errors["image"] = "Event poster is required"
-        }
-        if (_state.value.organizer.isBlank()) {
-            errors["organizer"] = "Organizer name is required"
-        }
-
-        if (_state.value.isVirtual && _state.value.meetingLink.isBlank()) {
-            errors["meetingLink"] = "Meeting link  is required"
-        }
-
-        if (_state.value.contactEmail.isBlank()) {
-            errors["email"] = "Contact email is required"
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(_state.value.contactEmail).matches()) {
-            errors["email"] = "Invalid email format"
-        }
-
-        if (_state.value.title.isBlank()) {
-            errors["title"] = "Title is required"
-        }
-
-        _state.value = _state.value.copy(errors = errors)
-        return errors.isEmpty()
-    }
 
     private fun saveEvent() {
         if (validateAndSubmit()) {
@@ -141,5 +106,43 @@ class AddEventViewModel @Inject constructor(
     private fun emit(effect: AddEventEffect) = viewModelScope.launch {
         _uiSideEffect.emit(effect)
     }
+
+    private fun toDefaultState() {
+        _state.value = AddEventState()
+    }
+
+    private fun validateAndSubmit(): Boolean {
+        val errors = mutableMapOf<String, String>()
+        if (_state.value.name.isBlank()) {
+            errors["name"] = "Event name is required"
+        }
+        if (_state.value.category.isBlank()) {
+            errors["category"] = "Category is required"
+        }
+        if (_state.value.image == null) {
+            errors["image"] = "Event poster is required"
+        }
+        if (_state.value.organizer.isBlank()) {
+            errors["organizer"] = "Organizer name is required"
+        }
+
+        if (_state.value.isVirtual && _state.value.meetingLink.isBlank()) {
+            errors["meetingLink"] = "Meeting link  is required"
+        }
+
+        if (_state.value.contactEmail.isBlank()) {
+            errors["email"] = "Contact email is required"
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(_state.value.contactEmail).matches()) {
+            errors["email"] = "Invalid email format"
+        }
+
+        if (_state.value.title.isBlank()) {
+            errors["title"] = "Title is required"
+        }
+
+        _state.value = _state.value.copy(errors = errors)
+        return errors.isEmpty()
+    }
+
 
 }

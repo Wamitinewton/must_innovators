@@ -13,6 +13,10 @@ interface EventDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEvents(events: List<EventEntity>)
 
+    @Query("SELECT * FROM events")
+    suspend fun getListOfEvents():List<EventEntity>
+
+
     @Upsert
     suspend fun insertEvent(user: EventEntity)
 

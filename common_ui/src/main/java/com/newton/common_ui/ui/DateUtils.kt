@@ -5,16 +5,22 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.atTime
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toKotlinLocalDate
+import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.datetime.toLocalDateTime
 import java.time.format.DateTimeFormatter
 
+import java.time.LocalDateTime as JavaLocalDateTime
+import java.time.LocalDate as JavaLocalDate
 
 fun getCurrentUnixTime(): Long {
     return Clock.System.now().toEpochMilliseconds()
@@ -30,6 +36,22 @@ fun Long.toFormattedDate(): String {
     val instant = Instant.fromEpochMilliseconds(this)
     val localDateTime: LocalDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
     return "${localDateTime.dayOfMonth} ${localDateTime.month} ${localDateTime.year}"
+}
+
+fun String.toFormatedDate():String{
+    val instant = Instant.parse(this)
+    val localDateTime: LocalDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+    return "${localDateTime.dayOfMonth} ${localDateTime.month} ${localDateTime.year}"
+}
+
+fun JavaLocalDate.toStringLocalTime():String{
+    val localtime =   this.toKotlinLocalDate()
+    return localtime.toJavaLocalDate().toKotlinLocalDate().atStartOfDayIn(TimeZone.currentSystemDefault()).toString()
+}
+
+fun String.fromStringToLocalTime():JavaLocalDateTime{
+    val instant = Instant.parse(this)
+    return instant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
 }
 
 fun Long.toLocaltime():String{

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.events.AddEventEvents
+import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.common_ui.ui.RowWrapper
 
 

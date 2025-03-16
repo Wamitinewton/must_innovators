@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,15 +33,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.CalendarDay
-import com.newton.admin.presentation.events.view.management.Event
+import com.newton.core.domain.models.admin_models.CalendarDay
+import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun CalendarTab(
     calendarDays: List<CalendarDay>,
-    onEventSelected: (Event) -> Unit
+    onEventSelected: (EventsData) -> Unit
 ) {
     val today = LocalDate.now()
     val visibleMonths = remember {

@@ -50,5 +50,13 @@ object AppDatabaseModule {
     @Singleton
     fun provideUserFeedbackDao(db: AppDatabase) = db.userFeedback
 
+    @Provides
+    @Singleton
+    fun provideEventsFeedbackDao(db: AppDatabase) = db.eventsFeedback
+
+    @Provides
+    @Singleton
+    fun providePartnersDao(db: AppDatabase) = db.partnersDao
+
 }
 

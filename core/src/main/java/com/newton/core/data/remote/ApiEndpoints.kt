@@ -1,7 +1,7 @@
 package com.newton.core.data.remote
 
 object ApiEndpoints {
-    const val GET_COMMUNITIES = "communities/"
+    const val GET_COMMUNITIES = "list-communities/"
     const val GET_EXECUTIVES = "executives/"
 
 

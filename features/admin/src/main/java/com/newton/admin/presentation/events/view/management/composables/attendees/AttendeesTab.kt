@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.attendees
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -23,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,16 +32,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Event
+import com.newton.admin.presentation.events.events.EventEvents
+import com.newton.admin.presentation.events.viewmodel.EventsViewModel
+import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.core.domain.models.admin_models.EventsData
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun AttendeesTab(events: List<Event>) {
-    var selectedEvent by remember { mutableStateOf<Event?>(null) }
-    val allEvents = events.sortedByDescending { it.startDateTime }
+fun AttendeesTab(
+    events: List<EventsData>,
+    onEvent: (EventEvents) -> Unit,
+    viewModel: EventsViewModel
+) {
+    var selectedEvent by remember { mutableStateOf<EventsData?>(null) }
+    val allEvents =
+        events.sortedByDescending { it.date.fromStringToLocalTime().isAfter(LocalDateTime.now()) }
     var expanded by remember { mutableStateOf(false) }
+    val attendeesState by viewModel.rsvpState.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -73,16 +84,19 @@ fun AttendeesTab(events: List<Event>) {
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+                    .fillMaxWidth()
             ) {
                 allEvents.forEach { event ->
                     DropdownMenuItem(
                         onClick = {
                             selectedEvent = event
                             expanded = false
+                            onEvent.invoke(EventEvents.GetEventsAttendees(event.id))
                         },
                         text = {
-                            Text(text = event.title)
+                            Text(text = event.name)
                         }
                     )
                 }
@@ -92,37 +106,47 @@ fun AttendeesTab(events: List<Event>) {
 
         if (selectedEvent != null) {
             Text(
-                text = "Attendees for: ${selectedEvent!!.title}",
+                text = "Attendees for: ${selectedEvent!!.name}",
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             Text(
-                text = "Date: ${selectedEvent!!.startDateTime.format(DateTimeFormatter.ofPattern("MMM d, yyyy"))}",
+                text = "Date: ${
+                    selectedEvent!!.date.fromStringToLocalTime()
+                        .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
+                }",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                AttendanceStatistics(
-                    attended = selectedEvent!!.attendees.count { it.hasCheckedIn },
-                    confirmed = selectedEvent!!.attendees.count { it.isAttending },
-                    total = selectedEvent!!.attendees.size
-                )
+            if (attendeesState.isLoading){
+                CircularProgressIndicator()
+            }else if (attendeesState.isSuccess){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AttendanceStatistics(
+                        attended = 3,
+                        confirmed = 8,
+                        total = attendeesState.attendees.size,
+                    )
+                }
+            }else{
+                Box {
+                    Text("There is an error loading attendees data")
+                }
             }
-
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             // Attendees list
             LazyColumn(
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                items(selectedEvent!!.attendees) { attendee ->
+                items(attendeesState.attendees) { attendee ->
                     AttendeeItem(attendee = attendee)
                 }
             }

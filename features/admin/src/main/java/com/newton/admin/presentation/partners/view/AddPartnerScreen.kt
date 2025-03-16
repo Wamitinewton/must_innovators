@@ -1,5 +1,8 @@
 package com.newton.admin.presentation.partners.view
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -62,61 +65,83 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.newton.admin.presentation.events.view.composables.CloseButton
+import com.newton.admin.presentation.partners.events.AddPartnersEvent
+import com.newton.admin.presentation.partners.states.AddPartnersEffect
+import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
 import com.newton.common_ui.ui.CustomButton
+import com.newton.common_ui.ui.CustomDynamicAsyncImage
+import com.newton.common_ui.ui.LoadingDialog
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddPartnerScreen() {
+fun AddPartnerScreen(
+    viewModel: PartnersViewModel,
+    onEvent: (AddPartnersEvent) -> Unit
+) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
-    // Partner data states
-    var partnerName by remember { mutableStateOf("") }
-    var partnerType by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var website by remember { mutableStateOf("") }
-    var contactEmail by remember { mutableStateOf("") }
-    var contactPerson by remember { mutableStateOf("") }
-    var socialLinkedIn by remember { mutableStateOf("") }
-    var socialTwitter by remember { mutableStateOf("") }
-    var partnershipStartDate by remember { mutableStateOf(LocalDate.now()) }
-    var ongoingPartnership by remember { mutableStateOf(true) }
-    var partnershipEndDate by remember { mutableStateOf<LocalDate?>(null) }
-    var collaborationScope by remember { mutableStateOf("") }
-    var keyBenefits by remember { mutableStateOf("") }
-    var eventsSupported by remember { mutableStateOf("") }
-    var resourcesProvided by remember { mutableStateOf("") }
-    var achievements by remember { mutableStateOf("") }
-    var status by remember { mutableStateOf("Active") }
-    var targetAudience by remember { mutableStateOf("") }
+    val partnersState by viewModel.addPartnersState.collectAsState()
 
-    // Dropdown expanded states
-    var partnerTypeExpanded by remember { mutableStateOf(false) }
-    var statusExpanded by remember { mutableStateOf(false) }
-    var showStartDatePicker by remember { mutableStateOf(false) }
-    var showEndDatePicker by remember { mutableStateOf(false) }
+    val partnerTypeOptions = listOf(
+        "TECH", "ACADEMIC", "COMMUNITY", "MEDIA", "CORPORATE"
+    )
+    val statusOptions = listOf("ACTIVE", "INACTIVE", "PENDING", "COMPLETED")
 
-    // Partner types and status options
-    val partnerTypeOptions = listOf("Tech Partner", "Corporate Partner", "Academic Partner", "Community Partner", "Media Partner")
-    val statusOptions = listOf("Active", "Inactive", "Pending", "Completed")
 
+    val imageLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            val contentResolver = context.contentResolver
+            val file = File(context.cacheDir, "temp_file_${System.currentTimeMillis()}")
+            if (uri != null) {
+                try {
+                    contentResolver.openInputStream(uri)?.use { inputStream ->
+                        FileOutputStream(file).use { outputStream ->
+                            inputStream.copyTo(outputStream)
+                        }
+                    }
+                    onEvent.invoke(AddPartnersEvent.LogoChange(file))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+        }
+    )
+    val mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
+    val mediaRequest = PickVisualMediaRequest(mediaType)
+    LaunchedEffect(Unit) {
+        viewModel.uiSideEffect.collect { effect ->
+            when (effect) {
+                AddPartnersEffect.PickImage -> imageLauncher.launch(mediaRequest)
+            }
+        }
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -129,7 +154,9 @@ fun AddPartnerScreen() {
                     )
                 },
                 actions = {
-                    IconButton(onClick = { /* Preview functionality */ }) {
+                    IconButton(onClick = {
+
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Visibility,
                             contentDescription = "Preview",
@@ -170,8 +197,8 @@ fun AddPartnerScreen() {
 
                     // Partner Name
                     OutlinedTextField(
-                        value = partnerName,
-                        onValueChange = { partnerName = it },
+                        value = partnersState.partnerName,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.NameChange(it)) },
                         label = { Text("Partner Name") },
                         placeholder = { Text("e.g. Google Cloud") },
                         modifier = Modifier.fillMaxWidth(),
@@ -181,19 +208,24 @@ fun AddPartnerScreen() {
                                 contentDescription = null,
                             )
                         },
-                        singleLine = true
+                        singleLine = true,
+                        supportingText = {
+                            partnersState.errors["name"]?.let { Text(it) }
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Partner Type Dropdown
                     ExposedDropdownMenuBox(
-                        expanded = partnerTypeExpanded,
-                        onExpandedChange = { partnerTypeExpanded = it },
+                        expanded = partnersState.partnerTypeExpanded,
+                        onExpandedChange = {
+                            onEvent.invoke(AddPartnersEvent.IsPartnerTypeExpanded(it))
+                        },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         OutlinedTextField(
-                            value = partnerType,
+                            value = partnersState.partnerType,
                             onValueChange = {},
                             readOnly = true,
                             label = { Text("Partner Type") },
@@ -205,23 +237,27 @@ fun AddPartnerScreen() {
                                 )
                             },
                             trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = partnerTypeExpanded)
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = partnersState.partnerTypeExpanded)
                             },
                             modifier = Modifier
                                 .menuAnchor()
-                                .fillMaxWidth()
+                                .fillMaxWidth(), supportingText = {
+                                partnersState.errors["partnerType"]?.let { Text(it) }
+                            }
                         )
 
                         ExposedDropdownMenu(
-                            expanded = partnerTypeExpanded,
-                            onDismissRequest = { partnerTypeExpanded = false }
+                            expanded = partnersState.partnerTypeExpanded,
+                            onDismissRequest = {
+                                onEvent.invoke(AddPartnersEvent.IsPartnerTypeExpanded(false))
+                            }
                         ) {
                             partnerTypeOptions.forEach { option ->
                                 DropdownMenuItem(
                                     text = { Text(option) },
                                     onClick = {
-                                        partnerType = option
-                                        partnerTypeExpanded = false
+                                        onEvent.invoke(AddPartnersEvent.TypeChange(option))
+                                        onEvent.invoke(AddPartnersEvent.IsPartnerTypeExpanded(false))
                                     }
                                 )
                             }
@@ -232,14 +268,17 @@ fun AddPartnerScreen() {
 
                     // Description
                     OutlinedTextField(
-                        value = description,
-                        onValueChange = { description = it },
+                        value = partnersState.description,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.DescriptionChange(it)) },
                         label = { Text("Description") },
                         placeholder = { Text("Describe the partner and their contributions") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 120.dp),
                         minLines = 3,
+                        supportingText = {
+                            partnersState.errors["description"]?.let { Text(it) }
+                        }
                     )
                 }
             }
@@ -267,38 +306,67 @@ fun AddPartnerScreen() {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Logo Placeholder
-                    Box(
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.LightGray.copy(alpha = 0.3f))
-                            .border(
-                                width = 1.dp,
-                                color = Color.LightGray,
-                                shape = RoundedCornerShape(8.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AddPhotoAlternate,
-                            contentDescription = "Add Logo",
-                            modifier = Modifier.size(40.dp),
-                            tint = Color.Gray
-                        )
-                    }
+                    if (partnersState.partnershipLogo != null) {
+                        val uri = partnersState.partnershipLogo
+                        uri?.let { safeUri ->
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(150.dp)
+                                    .padding(vertical = 10.dp)
+                            ) {
+                                CustomDynamicAsyncImage(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .clip(MaterialTheme.shapes.small),
+                                    imageUrl = safeUri,
+                                    contentDescription = "Receipt Image",
+                                    contentScale = ContentScale.Crop
+                                )
+                                CloseButton(
+                                    modifier = Modifier
+                                        .align(Alignment.TopEnd)
+                                        .padding(12.dp),
+                                    onDismiss = { onEvent.invoke(AddPartnersEvent.LogoChange(null)) }
+                                )
+                            }
+                        }
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.LightGray.copy(alpha = 0.3f))
+                                .border(
+                                    width = 1.dp,
+                                    color = Color.LightGray,
+                                    shape = RoundedCornerShape(8.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.AddPhotoAlternate,
+                                contentDescription = "Add Logo",
+                                modifier = Modifier.size(40.dp),
+                                tint = Color.Gray
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
 
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    CustomButton(
-                        onClick = { /* Handle logo upload */ },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.FileUpload,
-                            contentDescription = "Upload"
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Upload Logo")
+                        CustomButton(
+                            onClick = {
+                                onEvent.invoke(AddPartnersEvent.PickImage)
+                            },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.FileUpload,
+                                contentDescription = "Upload"
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Upload Logo")
+                        }
                     }
+                    partnersState.errors["logo"]?.let { Text(it) }
                 }
             }
 
@@ -324,8 +392,8 @@ fun AddPartnerScreen() {
 
                     // Website URL
                     OutlinedTextField(
-                        value = website,
-                        onValueChange = { website = it },
+                        value = partnersState.website,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.WebsiteChange(it)) },
                         label = { Text("Website URL") },
                         placeholder = { Text("e.g. cloud.google.com") },
                         modifier = Modifier.fillMaxWidth(),
@@ -334,6 +402,9 @@ fun AddPartnerScreen() {
                                 imageVector = Icons.Default.Language,
                                 contentDescription = null,
                             )
+                        },
+                        supportingText = {
+                            partnersState.errors["webUrl"]?.let { Text(it) }
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
@@ -346,8 +417,8 @@ fun AddPartnerScreen() {
 
                     // Contact Email
                     OutlinedTextField(
-                        value = contactEmail,
-                        onValueChange = { contactEmail = it },
+                        value = partnersState.contactEmail,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.ContactEmailChange(it)) },
                         label = { Text("Contact Email") },
                         placeholder = { Text("e.g. partnerships@google.com") },
                         modifier = Modifier.fillMaxWidth(),
@@ -356,6 +427,9 @@ fun AddPartnerScreen() {
                                 imageVector = Icons.Default.Email,
                                 contentDescription = null,
                             )
+                        },
+                        supportingText = {
+                            partnersState.errors["email"]?.let { Text(it) }
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
@@ -368,8 +442,8 @@ fun AddPartnerScreen() {
 
                     // Contact Person
                     OutlinedTextField(
-                        value = contactPerson,
-                        onValueChange = { contactPerson = it },
+                        value = partnersState.contactPerson,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.ContactPersonChange(it)) },
                         label = { Text("Contact Person") },
                         placeholder = { Text("e.g. Alex Brown, Developer Advocate") },
                         modifier = Modifier.fillMaxWidth(),
@@ -379,7 +453,10 @@ fun AddPartnerScreen() {
                                 contentDescription = null,
                             )
                         },
-                        singleLine = true
+                        singleLine = true,
+                        supportingText = {
+                            partnersState.errors["person"]?.let { Text(it) }
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -393,8 +470,8 @@ fun AddPartnerScreen() {
 
                     // LinkedIn
                     OutlinedTextField(
-                        value = socialLinkedIn,
-                        onValueChange = { socialLinkedIn = it },
+                        value = partnersState.socialLinkedIn,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.LinkedInChange(it)) },
                         label = { Text("LinkedIn") },
                         placeholder = { Text("LinkedIn profile or page URL") },
                         modifier = Modifier.fillMaxWidth(),
@@ -416,8 +493,8 @@ fun AddPartnerScreen() {
 
                     // Twitter
                     OutlinedTextField(
-                        value = socialTwitter,
-                        onValueChange = { socialTwitter = it },
+                        value = partnersState.socialTwitter,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.TwitterChange(it)) },
                         label = { Text("Twitter/X") },
                         placeholder = { Text("Twitter/X profile URL") },
                         modifier = Modifier.fillMaxWidth(),
@@ -477,11 +554,15 @@ fun AddPartnerScreen() {
                         Spacer(modifier = Modifier.width(4.dp))
 
                         OutlinedButton(
-                            onClick = { showStartDatePicker = true },
+                            onClick = { onEvent.invoke(AddPartnersEvent.ShowStartDate(true)) },
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = partnershipStartDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy")),
+                                text = partnersState.partnershipStartDate.format(
+                                    DateTimeFormatter.ofPattern(
+                                        "MMM d, yyyy"
+                                    )
+                                ),
                             )
                         }
                     }
@@ -508,18 +589,18 @@ fun AddPartnerScreen() {
                         Spacer(modifier = Modifier.weight(1f))
 
                         Switch(
-                            checked = ongoingPartnership,
+                            checked = partnersState.ongoingPartnership,
                             onCheckedChange = {
-                                ongoingPartnership = it
+                                onEvent.invoke(AddPartnersEvent.OnGoingPartnership(it))
                                 if (it) {
-                                    partnershipEndDate = null
+                                    onEvent.invoke(AddPartnersEvent.EndDateChange(null))
                                 }
                             },
                         )
                     }
 
                     // End Date (visible only if not ongoing)
-                    AnimatedVisibility(visible = !ongoingPartnership) {
+                    AnimatedVisibility(visible = !partnersState.ongoingPartnership) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -541,27 +622,31 @@ fun AddPartnerScreen() {
                             Spacer(modifier = Modifier.width(4.dp))
 
                             OutlinedButton(
-                                onClick = { showEndDatePicker = true },
+                                onClick = { onEvent.invoke(AddPartnersEvent.ShowEndDate(true)) },
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Text(
-                                    text = partnershipEndDate?.format(DateTimeFormatter.ofPattern("MMM d, yyyy")) ?: "Select End Date",
+                                    text = partnersState.partnershipEndDate?.format(
+                                        DateTimeFormatter.ofPattern("MMM d, yyyy")
+                                    ) ?: "Select End Date",
                                     color = Color.DarkGray
                                 )
                             }
                         }
                     }
-
+                    partnersState.errors["endDate"]?.let { Text(it) }
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Status Dropdown
                     ExposedDropdownMenuBox(
-                        expanded = statusExpanded,
-                        onExpandedChange = { statusExpanded = it },
+                        expanded = partnersState.statusExpanded,
+                        onExpandedChange = {
+                            onEvent.invoke(AddPartnersEvent.IsStatusExpanded(it))
+                        },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         OutlinedTextField(
-                            value = status,
+                            value = partnersState.status,
                             onValueChange = {},
                             readOnly = true,
                             label = { Text("Partnership Status") },
@@ -572,7 +657,7 @@ fun AddPartnerScreen() {
                                 )
                             },
                             trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = statusExpanded)
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = partnersState.statusExpanded)
                             },
                             modifier = Modifier
                                 .menuAnchor()
@@ -580,15 +665,17 @@ fun AddPartnerScreen() {
                         )
 
                         ExposedDropdownMenu(
-                            expanded = statusExpanded,
-                            onDismissRequest = { statusExpanded = false }
+                            expanded = partnersState.statusExpanded,
+                            onDismissRequest = {
+                                onEvent.invoke(AddPartnersEvent.IsStatusExpanded(false))
+                            }
                         ) {
                             statusOptions.forEach { option ->
                                 DropdownMenuItem(
                                     text = { Text(option) },
                                     onClick = {
-                                        status = option
-                                        statusExpanded = false
+                                        onEvent.invoke(AddPartnersEvent.StatusChange(option))
+                                        onEvent.invoke(AddPartnersEvent.IsStatusExpanded(false))
                                     }
                                 )
                             }
@@ -619,8 +706,10 @@ fun AddPartnerScreen() {
 
                     // Collaboration Scope
                     OutlinedTextField(
-                        value = collaborationScope,
-                        onValueChange = { collaborationScope = it },
+                        value = partnersState.collaborationScope,
+                        onValueChange = {
+                            onEvent.invoke(AddPartnersEvent.ScopeChange(it))
+                        },
                         label = { Text("Collaboration Scope") },
                         placeholder = { Text("e.g. Cloud training, credits for projects, mentorship") },
                         modifier = Modifier.fillMaxWidth(),
@@ -631,15 +720,20 @@ fun AddPartnerScreen() {
                             )
                         },
                         minLines = 2,
-                        maxLines = 3
+                        maxLines = 3,
+                        supportingText = {
+                            partnersState.errors["scope"]?.let { Text(it) }
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Key Benefits
                     OutlinedTextField(
-                        value = keyBenefits,
-                        onValueChange = { keyBenefits = it },
+                        value = partnersState.keyBenefits,
+                        onValueChange = {
+                            onEvent.invoke(AddPartnersEvent.BenefitsChange(it))
+                        },
                         label = { Text("Key Benefits") },
                         placeholder = { Text("e.g. Free cloud credits, certification scholarships") },
                         modifier = Modifier.fillMaxWidth(),
@@ -650,15 +744,20 @@ fun AddPartnerScreen() {
                             )
                         },
                         minLines = 2,
-                        maxLines = 3
+                        maxLines = 3,
+                        supportingText = {
+                            partnersState.errors["benefit"]?.let { Text(it) }
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Events Supported
                     OutlinedTextField(
-                        value = eventsSupported,
-                        onValueChange = { eventsSupported = it },
+                        value = partnersState.eventsSupported,
+                        onValueChange = {
+                            onEvent.invoke(AddPartnersEvent.SupportChange(it))
+                        },
                         label = { Text("Events Supported") },
                         placeholder = { Text("e.g. Annual Solution Challenge, Cloud Study Jams") },
                         modifier = Modifier.fillMaxWidth(),
@@ -676,8 +775,8 @@ fun AddPartnerScreen() {
 
                     // Resources Provided
                     OutlinedTextField(
-                        value = resourcesProvided,
-                        onValueChange = { resourcesProvided = it },
+                        value = partnersState.resourcesProvided,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.ResourcesChange(it)) },
                         label = { Text("Resources Provided") },
                         placeholder = { Text("e.g. Qwiklabs licenses, tutorials") },
                         modifier = Modifier.fillMaxWidth(),
@@ -688,15 +787,15 @@ fun AddPartnerScreen() {
                             )
                         },
                         minLines = 2,
-                        maxLines = 3
+                        maxLines = 3,
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Achievements
                     OutlinedTextField(
-                        value = achievements,
-                        onValueChange = { achievements = it },
+                        value = partnersState.achievements,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.AchievementsChange(it)) },
                         label = { Text("Achievements") },
                         placeholder = { Text("e.g. 200+ members certified in 2023") },
                         modifier = Modifier.fillMaxWidth(),
@@ -714,8 +813,8 @@ fun AddPartnerScreen() {
 
                     // Target Audience
                     OutlinedTextField(
-                        value = targetAudience,
-                        onValueChange = { targetAudience = it },
+                        value = partnersState.targetAudience,
+                        onValueChange = { onEvent.invoke(AddPartnersEvent.AudienceTargetChange(it)) },
                         label = { Text("Target Audience") },
                         placeholder = { Text("e.g. Computer Science and Engineering students") },
                         modifier = Modifier.fillMaxWidth(),
@@ -734,18 +833,10 @@ fun AddPartnerScreen() {
             // Save Button
             CustomButton(
                 onClick = {
-                    // Validate and save partnership
-                    if (partnerName.isBlank()) {
+                    onEvent.invoke(AddPartnersEvent.AddPartners)
+                    if (partnersState.isSuccess) {
                         scope.launch {
-                            snackbarHostState.showSnackbar("Partner name is required")
-                        }
-                    } else if (partnerType.isBlank()) {
-                        scope.launch {
-                            snackbarHostState.showSnackbar("Partner type is required")
-                        }
-                    } else {
-                        scope.launch {
-                            snackbarHostState.showSnackbar("Partner added successfully!")
+                            snackbarHostState.showSnackbar("Partner added successfully")
                         }
                     }
                 },
@@ -772,13 +863,15 @@ fun AddPartnerScreen() {
     }
 
     // Start Date Picker Dialog
-    if (showStartDatePicker) {
+    if (partnersState.showStartDatePicker) {
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = partnershipStartDate.toEpochDay() * 24 * 60 * 60 * 1000
+            initialSelectedDateMillis = partnersState.partnershipStartDate.toEpochDay() * 24 * 60 * 60 * 1000
         )
 
         DatePickerDialog(
-            onDismissRequest = { showStartDatePicker = false },
+            onDismissRequest = {
+                onEvent.invoke(AddPartnersEvent.ShowStartDate(false))
+            },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -786,9 +879,9 @@ fun AddPartnerScreen() {
                             val date = java.time.Instant.ofEpochMilli(dateMillis)
                                 .atZone(java.time.ZoneId.systemDefault())
                                 .toLocalDate()
-                            partnershipStartDate = date
+                            onEvent.invoke(AddPartnersEvent.StartDateChange(date))
                         }
-                        showStartDatePicker = false
+                        onEvent.invoke(AddPartnersEvent.ShowStartDate(false))
                     }
                 ) {
                     Text("Confirm")
@@ -796,7 +889,9 @@ fun AddPartnerScreen() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showStartDatePicker = false }
+                    onClick = {
+                        onEvent.invoke(AddPartnersEvent.ShowStartDate(false))
+                    }
                 ) {
                     Text("Cancel")
                 }
@@ -807,14 +902,17 @@ fun AddPartnerScreen() {
     }
 
     // End Date Picker Dialog
-    if (showEndDatePicker) {
+    if (partnersState.showEndDatePicker) {
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = partnershipEndDate?.toEpochDay()?.times(24 * 60 * 60 * 1000)
+            initialSelectedDateMillis = partnersState.partnershipEndDate?.toEpochDay()
+                ?.times(24 * 60 * 60 * 1000)
                 ?: (LocalDate.now().toEpochDay() * 24 * 60 * 60 * 1000)
         )
 
         DatePickerDialog(
-            onDismissRequest = { showEndDatePicker = false },
+            onDismissRequest = {
+                onEvent.invoke(AddPartnersEvent.ShowEndDate(false))
+            },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -822,9 +920,9 @@ fun AddPartnerScreen() {
                             val date = java.time.Instant.ofEpochMilli(dateMillis)
                                 .atZone(java.time.ZoneId.systemDefault())
                                 .toLocalDate()
-                            partnershipEndDate = date
+                            onEvent.invoke(AddPartnersEvent.EndDateChange(date))
                         }
-                        showEndDatePicker = false
+                        onEvent.invoke(AddPartnersEvent.ShowEndDate(false))
                     }
                 ) {
                     Text("Confirm")
@@ -832,7 +930,7 @@ fun AddPartnerScreen() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showEndDatePicker = false }
+                    onClick = { onEvent.invoke(AddPartnersEvent.ShowEndDate(false)) }
                 ) {
                     Text("Cancel")
                 }
@@ -840,5 +938,9 @@ fun AddPartnerScreen() {
         ) {
             DatePicker(state = datePickerState)
         }
+    }
+
+    if (partnersState.isLoading) {
+        LoadingDialog()
     }
 }

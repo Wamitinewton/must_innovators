@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.calendar
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,12 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Event
+import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.core.domain.models.admin_models.EventsData
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun EventCalendarItem(
-    event: Event,
+    event: EventsData,
     onClick: () -> Unit
 ) {
     Card(
@@ -34,14 +35,13 @@ fun EventCalendarItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = event.title,
+                    text = event.name,
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
-                    text = "${event.startDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))} - " +
-                            event.endDateTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.bodyMedium
                 )
 
@@ -52,15 +52,15 @@ fun EventCalendarItem(
             }
 
             Column(horizontalAlignment = Alignment.End) {
-                Text(
-                    text = "${event.attendees.count { it.isAttending }}/${event.attendees.size}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+//                Text(
+//                    text = "${event.attendees.count { it.isAttending }}/${event.attendees.size}",
+//                    style = MaterialTheme.typography.bodyMedium
+//                )
 
-                Text(
-                    text = "attendees",
-                    style = MaterialTheme.typography.labelSmall
-                )
+//                Text(
+//                    text = "attendees",
+//                    style = MaterialTheme.typography.labelSmall
+//                )
             }
         }
     }
