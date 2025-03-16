@@ -7,12 +7,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,10 +29,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.EnhancedLottieAnimation
 import com.newton.common_ui.ui.LottieAnimationState
-import com.newton.core.navigation.NavigationRoutes
 import kotlinx.coroutines.delay
 
 @Composable
@@ -47,17 +43,16 @@ fun SignupSuccessScreen(
     var showContent by remember { mutableStateOf(false) }
     var showButton by remember { mutableStateOf(false) }
 
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
+    DefaultScaffold(
+        modifier = modifier,
+        showOrbitals = true
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(24.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
         ) {
             EnhancedLottieAnimation(
                 lottieFile = com.newton.common_ui.R.raw.innovators_success,
