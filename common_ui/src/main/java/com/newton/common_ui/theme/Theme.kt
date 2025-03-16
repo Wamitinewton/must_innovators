@@ -4,6 +4,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.newton.common_ui.theme.blackColor
 import com.newton.common_ui.theme.lightGrayBackgroundColor
@@ -69,9 +71,11 @@ object ThemeUtils {
         onSurface = AppColors.Text.light
     )
 
+    private val LocalThemeMode = staticCompositionLocalOf { false }
+
     @Composable
     fun ThemeColorPair.themed(): Color {
-        return if (isSystemInDarkTheme()) dark else light
+        return if (LocalThemeMode.current) dark else light
     }
 
     @Composable
@@ -84,19 +88,14 @@ object ThemeUtils {
         else
             LightColorPalette
 
-//        val view = LocalView.current
-//        if (!view.isInEditMode) {
-//            SideEffect {
-//                val window = (view.context as Activity).window
-//                window.statusBarColor = colorScheme.primary.toArgb()
-//                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-//            }
-//        }
+        CompositionLocalProvider(LocalThemeMode provides darkTheme) {
 
-        MaterialTheme(
-            colorScheme = colorScheme,
-            typography = Typography,
-            content = content
-        )
+            MaterialTheme(
+                colorScheme = colorScheme,
+                typography = Typography,
+                content = content
+            )
+        }
+
     }
 }

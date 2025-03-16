@@ -7,6 +7,7 @@ import com.newton.database.converters.DataConverters
 import com.newton.database.dao.CommunityDao
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.ExecutiveDao
+import com.newton.database.dao.PartnersDao
 import com.newton.database.dao.TicketDao
 import com.newton.database.dao.UserDao
 import com.newton.database.dao.UserFeedbackDao
@@ -14,6 +15,7 @@ import com.newton.database.entities.CommunityEntity
 import com.newton.database.entities.EventEntity
 import com.newton.database.entities.ExecutiveEntity
 import com.newton.database.entities.MemberEntity
+import com.newton.database.entities.PartnersDataEntity
 import com.newton.database.entities.SessionEntity
 import com.newton.database.entities.SocialMediaEntity
 import com.newton.database.entities.TechStackEntity
@@ -33,9 +35,10 @@ import com.newton.database.entities.UserFeedbackEntity
         SessionEntity::class,
         UserFeedbackEntity::class,
         ExecutiveEntity::class,
+        PartnersDataEntity::class
     ],
 
-    version = 19,
+    version = 20,
     exportSchema = false
 )
 
@@ -47,4 +50,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val communityDao: CommunityDao
     abstract val executiveDao: ExecutiveDao
     abstract val userFeedback: UserFeedbackDao
+    abstract val partnersDao: PartnersDao
 }

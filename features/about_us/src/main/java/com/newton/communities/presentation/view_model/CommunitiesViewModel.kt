@@ -69,7 +69,6 @@ class CommunitiesViewModel @Inject constructor(
                                     isLoading = false,
                                     isRefreshing = false,
                                     errorMessage = result.message,
-                                    communities = result.data ?: it.communities
                                 )
                             }
                             _eventFlow.emit(CommunityEvent.ShowSnackbar(

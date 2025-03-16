@@ -26,7 +26,6 @@ class UpdateUserRepositoryImpl @Inject constructor(
 
     private suspend fun updateLocalUserData(userData: UserData) {
         val existingUser = userDao.getUser()
-
         if (existingUser == null) {
             userDao.insertUser(userData.toUserEntity())
             return

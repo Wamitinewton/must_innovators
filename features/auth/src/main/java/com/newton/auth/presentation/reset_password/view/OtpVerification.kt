@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,9 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -53,6 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.auth.presentation.utils.handleOtpDigitChange
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.OtpDigitBox
 import com.newton.common_ui.ui.clickableWithRipple
 import kotlinx.coroutines.delay
@@ -114,12 +112,15 @@ fun OtpVerificationScreen(
     // Auto-verification when OTP is complete
     LaunchedEffect(otp) {
         if (otp.length == 6 && !isLoading) {
-            delay(300) // Small delay for visual feedback
+            delay(300)
             onVerifyOtp()
         }
     }
 
-    Scaffold(
+    DefaultScaffold(
+        snackbarHostState = snackbarHostState,
+        isLoading = isLoading,
+        showOrbitals = true,
         topBar = {
             TopAppBar(
                 title = { /* Empty title */ },
@@ -132,175 +133,165 @@ fun OtpVerificationScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = Color.Transparent
                 )
             )
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { padding ->
-        Box(
+        }
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Text(
+                text = "Verification Code",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            Text(
+                text = "We've sent a verification code to",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                text = email,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 36.dp)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                for (i in 0 until 6) {
+                    OtpDigitBox(
+                        value = otp.getOrNull(i)?.toString() ?: "",
+                        isFocused = focusStates[i].value,
+                        focusRequester = focusRequesters[i],
+                        onValueChanged = { newValue ->
+                            handleOtpDigitChange(
+                                index = i,
+                                newValue = newValue,
+                                currentOtp = otp,
+                                onOtpChanged = onOtpChanged,
+                                focusRequesters = focusRequesters,
+                                coroutineScope = coroutineScope,
+                                focusManager = focusManager
+                            )
+                        },
+                        onKeyEvent = { event ->
+                            if (event.key == Key.Backspace && otp.getOrNull(i) == null && i > 0) {
+                                val newOtp = otp.dropLast(1)
+                                onOtpChanged(newOtp)
+                                coroutineScope.launch {
+                                    focusRequesters[i - 1].requestFocus()
+                                }
+                                true
+                            } else {
+                                false
+                            }
+                        },
+                        onFocusChanged = { isFocused ->
+                            focusStates[i].value = isFocused
+                        }
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = otpError != null,
+                enter = fadeIn(),
+                exit = fadeOut()
             ) {
                 Text(
-                    text = "Verification Code",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    text = otpError ?: "",
+                    color = MaterialTheme.colorScheme.error,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(top = 16.dp)
                 )
+            }
 
-                Text(
-                    text = "We've sent a verification code to",
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
-                )
+            Spacer(modifier = Modifier.height(32.dp))
 
-                Text(
-                    text = email,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(bottom = 36.dp)
-                )
-
-                // OTP Boxes
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    for (i in 0 until 6) {
-                        OtpDigitBox(
-                            value = otp.getOrNull(i)?.toString() ?: "",
-                            isFocused = focusStates[i].value,
-                            focusRequester = focusRequesters[i],
-                            onValueChanged = { newValue ->
-                                handleOtpDigitChange(
-                                    index = i,
-                                    newValue = newValue,
-                                    currentOtp = otp,
-                                    onOtpChanged = onOtpChanged,
-                                    focusRequesters = focusRequesters,
-                                    coroutineScope = coroutineScope,
-                                    focusManager = focusManager
-                                )
-                            },
-                            onKeyEvent = { event ->
-                                if (event.key == Key.Backspace && otp.getOrNull(i) == null && i > 0) {
-                                    val newOtp = otp.dropLast(1)
-                                    onOtpChanged(newOtp)
-                                    coroutineScope.launch {
-                                        focusRequesters[i - 1].requestFocus()
-                                    }
-                                    true
-                                } else {
-                                    false
-                                }
-                            },
-                            onFocusChanged = { isFocused ->
-                                focusStates[i].value = isFocused
-                            }
-                        )
-                    }                }
-
-                // Error message
-                AnimatedVisibility(
-                    visible = otpError != null,
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
+            // Verify button
+            ElevatedButton(
+                onClick = onVerifyOtp,
+                enabled = !isLoading && otp.length == 6,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.elevatedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        strokeWidth = 2.dp
+                    )
+                } else {
                     Text(
-                        text = otpError ?: "",
-                        color = MaterialTheme.colorScheme.error,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(top = 16.dp)
+                        "Verify",
+                        fontSize = (16.sp),
+                        fontWeight = FontWeight.Medium
                     )
                 }
+            }
 
-                Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-                // Verify button
-                ElevatedButton(
-                    onClick = onVerifyOtp,
-                    enabled = !isLoading && otp.length == 6,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    colors = ButtonDefaults.elevatedButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                        disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            strokeWidth = 2.dp
-                        )
-                    } else {
-                        Text(
-                            "Verify",
-                            fontSize = (16.sp),
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                }
+            Row(
+                modifier = Modifier.padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Didn't receive the code? ",
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
 
-                Spacer(modifier = Modifier.height(24.dp))
-
-                // Resend code section
-                Row(
-                    modifier = Modifier.padding(top = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
+                if (remainingSeconds > 0) {
                     Text(
-                        "Didn't receive the code? ",
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "Wait ${remainingSeconds}s",
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp
                     )
-
-                    if (remainingSeconds > 0) {
-                        Text(
-                            text = "Wait ${remainingSeconds}s",
-                            color = MaterialTheme.colorScheme.tertiary,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 14.sp
-                        )
-                    } else {
-                        Text(
-                            text = "Resend",
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .padding(start = 4.dp)
-                                .border(
-                                    width = 0.dp,
-                                    color = Color.Transparent,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .padding(4.dp)
-                                .clickableWithRipple {
-                                    onResendOtp()
-                                    remainingSeconds = 60
-                                    isTimerRunning = true
-                                },
-                            fontSize = 14.sp
-                        )
-                    }
+                } else {
+                    Text(
+                        text = "Resend",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .border(
+                                width = 0.dp,
+                                color = Color.Transparent,
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .padding(4.dp)
+                            .clickableWithRipple {
+                                onResendOtp()
+                                remainingSeconds = 60
+                                isTimerRunning = true
+                            },
+                        fontSize = 14.sp
+                    )
                 }
             }
         }

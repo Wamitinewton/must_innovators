@@ -50,7 +50,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
         }
     }
     MeruinnovatorsTheme {
-        SetupSystemUi(rememberSystemUiController(), MaterialTheme.colorScheme.primary)
+        SetupSystemUi(rememberSystemUiController(), MaterialTheme.colorScheme.background)
         Scaffold(
             bottomBar = {
                 if (!isShowBottomBar) {
