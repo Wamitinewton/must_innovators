@@ -4,6 +4,7 @@
 -dontwarn okhttp3.**
 -dontwarn okio.**
 -keep class com.squareup.okhttp.** { *; }
+-keep class com.newton.core.**
 
 # Gson
 -keep class com.google.gson.** { *; }
