@@ -1,5 +1,7 @@
 package com.newton.core.utils
 
+import com.newton.core.enums.ErrorType
+
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(val isLoading: Boolean = true) : Resource<T>(null)
     class Success<T>(data: T?) : Resource<T>(data)
@@ -19,7 +21,6 @@ sealed class Resource<T>(val data: T? = null, val message: String? = null) {
  */
 sealed class ResourceMigration<T>(
     val data: T? = null,
-
     val message: String? = null,
     val errorType: ErrorType? = null,
     val httpCode: Int? = null

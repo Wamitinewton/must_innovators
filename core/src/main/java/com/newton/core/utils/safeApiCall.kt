@@ -51,13 +51,13 @@ fun <T> safeApiCall(
     apiCall: suspend () -> T,
     errorHandler: (Throwable) -> String = { it.localizedMessage ?: "Unknown error occurred" }
 ): Flow<ResourceMigration<T>> = flow {
+    emit(ResourceMigration.Loading(true))
+
     try {
-        emit(ResourceMigration.Loading(true))
-
         val response = apiCall()
-
         emit(ResourceMigration.Success(data = response))
     } catch (e: CancellationException) {
+        emit(ResourceMigration.Loading(false))
         throw e
     } catch (e: SocketTimeoutException) {
         emit(ResourceMigration.Error(message = "Request timed out. Please try again.", errorType = ErrorType.TIMEOUT))
@@ -80,14 +80,15 @@ fun <T> safeApiCall(
         val errorMessage = errorHandler(e)
         emit(ResourceMigration.Error(message = "An unexpected error occurred: $errorMessage", errorType = ErrorType.UNKNOWN))
     } finally {
-        emit(ResourceMigration.Loading(isLoading = false))
+        emit(ResourceMigration.Loading(false))
     }
 }.catch { e ->
     if (e is CancellationException) {
         throw e
+    } else {
+        emit(ResourceMigration.Error(message = "Fatal error: ${e.message ?: "Unknown error"}", errorType = ErrorType.FATAL))
+        emit(ResourceMigration.Loading(false))
     }
-    emit(ResourceMigration.Error(message = "Fatal error: ${e.message ?: "Unknown error"}", errorType = ErrorType.FATAL))
-    emit(ResourceMigration.Loading(isLoading = false))
 }
 
 /**
@@ -115,6 +116,7 @@ data class ErrorResponse(
     val message: String,
     val errorType: ErrorType
 )
+
 
 
 
