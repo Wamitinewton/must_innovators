@@ -1,12 +1,10 @@
 package com.newton.communities.di
 
-import com.newton.core.data.remote.AboutClubService
 import com.newton.communities.data.repository.CommunityRepositoryImpl
 import com.newton.communities.data.repository.ExecutiveRepositoryImpl
+import com.newton.core.data.remote.AboutClubService
 import com.newton.core.domain.repositories.CommunityRepository
 import com.newton.core.domain.repositories.ExecutiveRepository
-import com.newton.database.dao.CommunityDao
-import com.newton.database.dao.ExecutiveDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,14 +18,12 @@ object AboutUsRepositoryModule {
     @Singleton
     fun provideAboutUsRepository(
         aboutUsApi: AboutClubService,
-        dao: CommunityDao,
-    ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi, dao)
+    ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi)
 
     @Provides
     @Singleton
     fun provideExecutiveRepository(
         executiveApi: AboutClubService,
-        executiveDao: ExecutiveDao
-    ): ExecutiveRepository = ExecutiveRepositoryImpl(executiveApi, executiveDao)
+    ): ExecutiveRepository = ExecutiveRepositoryImpl(executiveApi)
 
 }

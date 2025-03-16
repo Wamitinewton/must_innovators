@@ -54,7 +54,6 @@ import com.newton.core.domain.models.about_us.Member
 import com.newton.core.utils.formatDateTime
 import kotlin.random.Random
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MembersTab(
     members: List<Member>,
