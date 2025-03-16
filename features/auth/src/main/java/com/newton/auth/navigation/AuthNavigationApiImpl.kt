@@ -9,6 +9,8 @@ import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.login.view.UserDataLoadingScreen
 import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import com.newton.auth.presentation.login.view_model.LoginViewModel
+import com.newton.auth.presentation.reset_password.view.ForgotPasswordRoute
+import com.newton.auth.presentation.reset_password.view_model.ForgotPasswordViewModel
 import com.newton.on_boarding.view.OnboardingScreen
 import com.newton.auth.presentation.sign_up.view.SignupScreen
 import com.newton.auth.presentation.sign_up.view.SignupSuccessScreen
@@ -50,7 +52,16 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 val loginViewModel = hiltViewModel<LoginViewModel>()
                 LoginScreen(
                     navHostController = navHostController,
-                    loginViewModel = loginViewModel
+                    loginViewModel = loginViewModel,
+                    onForgotPasswordClick = {navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.routes)}
+                )
+            }
+
+            composable(route = NavigationRoutes.ForgotPasswordRoute.routes) {
+                val forgotPasswordViewModel = hiltViewModel<ForgotPasswordViewModel>()
+                ForgotPasswordRoute(
+                    onNavigateToLogin = {},
+                    forgotPasswordViewModel = forgotPasswordViewModel
                 )
             }
 

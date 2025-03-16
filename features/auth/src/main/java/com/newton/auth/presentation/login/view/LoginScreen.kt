@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 fun LoginScreen(
     loginViewModel: LoginViewModel,
     navHostController: NavHostController,
+    onForgotPasswordClick: () -> Unit,
 ) {
     val uiState by loginViewModel.loginUiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -95,6 +96,7 @@ fun LoginScreen(
                     uiState = uiState,
                     onEvent = loginViewModel::onEvent,
                     onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
+                    onForgotPasswordClick = onForgotPasswordClick
                 )
                 if (uiState.isLoading) {
                     LoadingDialog()

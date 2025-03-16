@@ -1,6 +1,6 @@
 package com.newton.communities.di
 
-import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.data.remote.AboutClubService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 object AboutUsApiModule {
     @Provides
     @Singleton
-    fun provideAboutUsApi(retrofit: Retrofit): AboutUsApi {
-        return retrofit.create(AboutUsApi::class.java)
+    fun provideAboutUsApi(retrofit: Retrofit): AboutClubService {
+        return retrofit.create(AboutClubService::class.java)
     }
 }

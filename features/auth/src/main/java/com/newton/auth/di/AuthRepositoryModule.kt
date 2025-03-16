@@ -17,8 +17,8 @@ object AuthRepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepository(
-        networkService: AuthService,
+        authService: AuthService,
         sessionManager: SessionManager,
         userDao: UserDao,
-    ): AuthRepository = AuthRepositoryImpl(networkService, sessionManager, userDao)
+    ): AuthRepository = AuthRepositoryImpl(authService, sessionManager, userDao)
 }

@@ -1,8 +1,8 @@
 package com.newton.admin.data.remote
 
-import com.newton.core.data.response.events_response.EventApiResponse
-import com.newton.core.data.response.events_response.EventDto
-import com.newton.core.data.response.events_response.EventResponse
+import com.newton.core.data.response.events.EventApiResponse
+import com.newton.core.data.response.events.EventDto
+import com.newton.core.data.response.events.EventResponse
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
 import com.newton.core.domain.models.admin.NewsLetter

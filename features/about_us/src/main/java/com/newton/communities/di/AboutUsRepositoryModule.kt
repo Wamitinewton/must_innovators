@@ -1,6 +1,6 @@
 package com.newton.communities.di
 
-import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.data.remote.AboutClubService
 import com.newton.communities.data.repository.CommunityRepositoryImpl
 import com.newton.communities.data.repository.ExecutiveRepositoryImpl
 import com.newton.core.domain.repositories.CommunityRepository
@@ -19,14 +19,14 @@ object AboutUsRepositoryModule {
     @Provides
     @Singleton
     fun provideAboutUsRepository(
-        aboutUsApi: AboutUsApi,
+        aboutUsApi: AboutClubService,
         dao: CommunityDao,
     ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi, dao)
 
     @Provides
     @Singleton
     fun provideExecutiveRepository(
-        executiveApi: AboutUsApi,
+        executiveApi: AboutClubService,
         executiveDao: ExecutiveDao
     ): ExecutiveRepository = ExecutiveRepositoryImpl(executiveApi, executiveDao)
 

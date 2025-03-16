@@ -10,6 +10,10 @@ object ApiEndpoints {
     const val CHANGE_PWD = "api/account/change-password/"
     const val REFRESH_TOKEN = "api/account/token/refresh/"
     const val GET_USER_DATA = "api/account/get-user-data/"
+    const val UPDATE_USER_DATA = "api/account/update-user-profile/"
+    const val REQUEST_OTP = "api/account/password-reset/request/"
+    const val VERIFY_OTP = "api/account/password-reset/verify-otp/"
+    const val RESET_PASSWORD = "api/account/password-reset/reset/"
 
     const val GET_ALL_EVENTS = "events/list/"
     const val GET_EVENT_BY_ID = "events/{id}/view/"

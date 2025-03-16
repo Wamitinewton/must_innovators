@@ -2,39 +2,40 @@ package com.newton.communities.data.repository
 
 import com.newton.database.mappers.toExecutiveDomain
 import com.newton.database.mappers.toExecutiveEntity
-import com.newton.core.data.remote.AboutUsApi
+import com.newton.core.data.remote.AboutClubService
 import com.newton.core.domain.repositories.ExecutiveRepository
 import com.newton.core.domain.models.about_us.Executive
 import com.newton.core.utils.Resource
+import com.newton.core.utils.safeApiCall
 import com.newton.database.dao.ExecutiveDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
-import java.io.IOException
+import kotlinx.coroutines.flow.emitAll
 import javax.inject.Inject
 
 class ExecutiveRepositoryImpl @Inject constructor(
-    private val executiveApi: AboutUsApi,
+    private val executiveApi: AboutClubService,
     private val dao: ExecutiveDao
 ): ExecutiveRepository {
 
     override suspend fun getExecutives(): Flow<Resource<List<Executive>>> = flow {
-        emit(Resource.Loading(true))
         try {
-            val localExecutive = dao.getExecutives().map { it.toExecutiveDomain() }
-            if (localExecutive.isNotEmpty()) {
-                emit(Resource.Success(data = localExecutive))
+            val localExecutives = dao.getExecutives().map { it.toExecutiveDomain() }
+            if (localExecutives.isNotEmpty()) {
+                emit(Resource.Success(data = localExecutives))
             }
-            val response = executiveApi.getExecutives()
-            dao.insertExecutives(response.data.map { it.toExecutiveEntity() })
-            val updatedExecutives = dao.getExecutives().map { it.toExecutiveDomain() }
-            emit(Resource.Success(data = updatedExecutives))
-        } catch (e: HttpException) {
-            emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         } catch (e: Exception) {
-            emit(Resource.Error("An unexpected error occurred: ${e.message ?: "Unknown error"}"))
+            // If local data fetch fails, just continue to remote fetch
+            // We don't emit an error here as we'll try the remote source
         }
+
+        emitAll(fetchRemoteExecutives())
+    }
+
+    private fun fetchRemoteExecutives(): Flow<Resource<List<Executive>>> = safeApiCall {
+        val response = executiveApi.getExecutives()
+        dao.insertExecutives(response.data.map { it.toExecutiveEntity() })
+
+        dao.getExecutives().map { it.toExecutiveDomain() }
     }
 }

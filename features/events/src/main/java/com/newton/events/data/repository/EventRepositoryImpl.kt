@@ -16,7 +16,7 @@ import com.newton.database.dao.TicketDao
 import com.newton.database.db.AppDatabase
 import com.newton.events.data.paging.EventRemoteMediator
 import com.newton.events.data.paging.PagingConstants.NETWORK_PAGE_SIZE
-import com.newton.core.data.remote.EventApi
+import com.newton.core.data.remote.EventService
 import com.newton.core.domain.models.event_models.Event
 import com.newton.core.domain.models.event_models.EventRegistrationRequest
 import com.newton.core.domain.repositories.EventRepository
@@ -32,7 +32,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(
-    private val api: EventApi,
+    private val api: EventService,
     private val db: AppDatabase,
     private val networkConfiguration: NetworkConfiguration,
     private val ticketDao: TicketDao,

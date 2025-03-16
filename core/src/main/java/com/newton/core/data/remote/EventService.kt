@@ -1,9 +1,9 @@
 package com.newton.core.data.remote
 
-import com.newton.core.data.response.events_response.EventApiResponse
-import com.newton.core.data.response.events_response.EventDto
-import com.newton.core.data.response.events_response.EventRegistrationResponse
-import com.newton.core.data.response.events_response.EventResponse
+import com.newton.core.data.response.events.EventApiResponse
+import com.newton.core.data.response.events.EventDto
+import com.newton.core.data.response.events.EventRegistrationResponse
+import com.newton.core.data.response.events.EventResponse
 import com.newton.core.domain.models.event_models.EventRegistrationRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,7 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface EventApi {
+interface EventService {
 
     @POST(ApiEndpoints.RSVP_EVENT)
     suspend fun registerForEvent(

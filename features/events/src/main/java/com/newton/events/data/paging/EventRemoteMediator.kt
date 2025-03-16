@@ -12,7 +12,7 @@
     import com.newton.core.utils.toException
     import com.newton.database.db.AppDatabase
     import com.newton.database.entities.EventEntity
-    import com.newton.core.data.remote.EventApi
+    import com.newton.core.data.remote.EventService
     import com.newton.database.mappers.toEntity
     import kotlinx.coroutines.Dispatchers
     import kotlinx.coroutines.coroutineScope
@@ -25,7 +25,7 @@
 
     @OptIn(ExperimentalPagingApi::class)
     class EventRemoteMediator @Inject constructor(
-        private val api: EventApi,
+        private val api: EventService,
         private val db: AppDatabase,
         private val networkConfiguration: NetworkConfiguration
     ) : RemoteMediator<Int, EventEntity>() {
