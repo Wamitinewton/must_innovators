@@ -15,9 +15,7 @@ fun ForgotPasswordRoute(
 ) {
     val state by forgotPasswordViewModel.state.collectAsState()
 
-
     when {
-
         state.isPasswordResetComplete -> {
             PasswordResetSuccess(
                 onNavigateToLogin = {
