@@ -47,4 +47,6 @@ interface AuthRepository {
 
     suspend fun clearUserData()
 
+    suspend fun logoutUser(): Flow<Resource<Unit>>
+
 }
