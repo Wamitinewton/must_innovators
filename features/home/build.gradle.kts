@@ -53,6 +53,12 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
+    //Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
     //navigation
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
@@ -65,4 +71,5 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":features:events"))
     implementation(project(":common_ui"))
+    implementation(project(":database"))
 }

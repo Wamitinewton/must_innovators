@@ -9,7 +9,4 @@ interface CommunityRepository {
 
     suspend fun getCommunityById(communityId: Int): Resource<Community>
 
-    suspend fun deleteCommunity(communityId: Int): Resource<Unit>
-
-    suspend fun clearAllData(): Resource<Unit>
 }

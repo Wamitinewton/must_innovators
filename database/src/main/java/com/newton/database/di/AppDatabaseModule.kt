@@ -40,19 +40,7 @@ object AppDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideCommunityDao(db: AppDatabase) = db.communityDao
-
-    @Provides
-    @Singleton
-    fun provideExecutiveDao(db: AppDatabase) = db.executiveDao
-
-    @Provides
-    @Singleton
     fun provideUserFeedbackDao(db: AppDatabase) = db.userFeedback
-
-    @Provides
-    @Singleton
-    fun provideEventsFeedbackDao(db: AppDatabase) = db.eventsFeedback
 
     @Provides
     @Singleton

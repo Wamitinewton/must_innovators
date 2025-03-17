@@ -1,20 +1,20 @@
 package com.newton.database.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.newton.database.entities.PartnerEntity
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Upsert
+import com.newton.database.entities.PartnersDataEntity
+
 
 @Dao
 interface PartnersDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPartner(partners: PartnerEntity)
+
+    @Upsert
+    suspend fun insertPartners(partnersDataEntity: List<PartnersDataEntity>)
 
     @Query("SELECT * FROM partners")
-    fun getAllPartners(): Flow<List<PartnerEntity>>
+    suspend fun getPartners(): List<PartnersDataEntity>
 
     @Query("DELETE FROM partners")
-    fun deleteAllPartners()
+    suspend fun deletePartners()
 }

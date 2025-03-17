@@ -1,7 +1,5 @@
 package com.newton.communities.presentation.view.about_us
 
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,9 +11,7 @@ import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
@@ -30,15 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.newton.communities.presentation.events.UiEvent
+import com.newton.common_ui.composables.DefaultScaffold
+import com.newton.communities.presentation.events.CommunityUiEvent
 import com.newton.communities.presentation.view.about_us.composables.AboutSection
-import com.newton.communities.presentation.view.about_us.composables.CommunityCard
-import com.newton.communities.presentation.view.about_us.composables.CommunityCardShimmer
 import com.newton.communities.presentation.view.about_us.composables.SectionHeading
 import com.newton.communities.presentation.view.about_us.composables.VisionAndMission
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
 import com.newton.communities.presentation.view_model.ExecutiveViewModel
 import com.newton.core.domain.models.about_us.Community
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,9 +43,8 @@ fun AboutUsScreen(
     communitiesViewModel: CommunitiesViewModel,
     executiveViewModel: ExecutiveViewModel
 ) {
-    val state by communitiesViewModel.communityState.collectAsStateWithLifecycle()
+    val uiState by communitiesViewModel.uiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-    val communities = state.communities
     val communityName = "Meru Science Innovators Club"
     var isAboutExpanded by remember { mutableStateOf(false) }
 
@@ -81,23 +76,27 @@ fun AboutUsScreen(
 
     val vision = "To be a leading technology community that inspires the next generation of tech innovators and contributes to technological advancement through education, collaboration, and practical application."
 
-    LaunchedEffect(state.errorMessage) {
-        state.errorMessage?.let { errorMessage ->
-            val result = snackBarHostState.showSnackbar(
-                message = errorMessage,
-                actionLabel = "Retry",
-                duration = SnackbarDuration.Indefinite
-            )
-            when (result) {
-                SnackbarResult.ActionPerformed -> communitiesViewModel.onEvent(UiEvent.RefreshCommunities)
-                SnackbarResult.Dismissed -> {}
+    LaunchedEffect(key1 = true) {
+        communitiesViewModel.uiEvents.collectLatest { event ->
+            when (event) {
+                is CommunityUiEvent.Effect.ShowSnackbar -> {
+                    val result = snackBarHostState.showSnackbar(
+                        message = event.message,
+                        actionLabel = "Retry",
+                        duration = SnackbarDuration.Long
+                    )
+
+                    if (result == SnackbarResult.ActionPerformed) {
+                        communitiesViewModel.onEvent(CommunityUiEvent.Action.RefreshCommunities)
+                    }
+                }
             }
-            communitiesViewModel.onEvent(UiEvent.DismissError)
         }
     }
 
-
-    Scaffold(
+    DefaultScaffold(
+        snackbarHostState = snackBarHostState,
+        showOrbitals = true,
         topBar = {
             TopAppBar(
                 title = {
@@ -106,15 +105,14 @@ fun AboutUsScreen(
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                },
+                }
             )
-        },
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
-    ) { innerPadding ->
+        }
+    ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
@@ -139,41 +137,12 @@ fun AboutUsScreen(
                 )
             }
 
-            if (!state.isLoading) {
-                item {
-                    Text(
-                        text = "Explore our specialized communities that focus on different aspects of technology",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                    )
-                }
-            }
-
-
-            when {
-                state.isLoading -> {
-                    items(4) {
-                        CommunityCardShimmer()
-                    }
-                }
-                else -> {
-                    items(communities.size) { index ->
-                        val community = communities[index]
-                        CommunityCard(
-                            modifier = Modifier.animateItem(
-                                placementSpec = spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
-                                )
-                            ),
-                            community = community,
-                            onSeeDetailsClick = {
-                                onCommunityDetailsClick(community)
-                            }
-                        )
-                    }
-                }
+            item {
+                CommunityContent(
+                    uiState = uiState,
+                    onCommunityDetailsClick = onCommunityDetailsClick,
+                    communitiesViewModel = communitiesViewModel
+                )
             }
 
             item {
@@ -192,4 +161,5 @@ fun AboutUsScreen(
             }
         }
     }
+
 }

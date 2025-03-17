@@ -1,9 +1,10 @@
 package com.newton.home.presentation.states
 
-import com.newton.home.domain.models.AboutUs
-import com.newton.home.domain.models.Partner
+import com.newton.core.domain.models.home_models.PartnersData
 
-data class HomeState(
-    val partners: List<Partner> = emptyList(),
-    val aboutUs: AboutUs? = null
-)
+sealed class PartnersUiState {
+    data object Loading : PartnersUiState()
+    data class Success(val partners: List<PartnersData>) : PartnersUiState()
+    data class Error(val message: String) : PartnersUiState()
+    data object Empty : PartnersUiState()
+}

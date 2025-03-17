@@ -2,8 +2,8 @@ package com.newton.auth.presentation.reset_password.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.presentation.reset_password.events.ForgotPasswordState
-import com.newton.auth.presentation.reset_password.states.ForgotPasswordEvent
+import com.newton.auth.presentation.reset_password.states.ForgotPasswordState
+import com.newton.auth.presentation.reset_password.events.ForgotPasswordEvent
 import com.newton.core.domain.models.auth_models.OtpRequest
 import com.newton.core.domain.models.auth_models.ResetPasswordRequest
 import com.newton.core.domain.models.auth_models.VerifyOtp
@@ -69,7 +69,7 @@ class ForgotPasswordViewModel @Inject constructor(
             }
 
             is ForgotPasswordEvent.DismissError -> {
-                _state.update { it.copy(error = null) }
+                _state.update { it.copy(otpServerError = null, emailServerError = null, passwordServerError = null) }
             }
 
             is ForgotPasswordEvent.DismissSuccess -> {
@@ -94,7 +94,7 @@ class ForgotPasswordViewModel @Inject constructor(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message
+                                emailServerError = result.message
                             )
                         }
                     }
@@ -126,7 +126,7 @@ class ForgotPasswordViewModel @Inject constructor(
         if (!validateOtp(otp)) return
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, error = null) }
+            _state.update { it.copy(isLoading = true, otpServerError = null) }
 
             authRepository.verifyOtp(VerifyOtp(otp, email)).collect { result ->
                 when (result) {
@@ -134,7 +134,7 @@ class ForgotPasswordViewModel @Inject constructor(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message,
+                                otpServerError = result.message,
                                 otpError = "Invalid OTP"
                             )
                         }
@@ -166,7 +166,7 @@ class ForgotPasswordViewModel @Inject constructor(
         if (!validatePassword(password, confirmPassword)) return
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, error = null) }
+            _state.update { it.copy(isLoading = true, passwordServerError = null) }
 
             authRepository.resetPassword(
                 ResetPasswordRequest(password, email)
@@ -176,7 +176,7 @@ class ForgotPasswordViewModel @Inject constructor(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message
+                                passwordServerError = result.message
                             )
                         }
                     }

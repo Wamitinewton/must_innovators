@@ -35,6 +35,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,7 +54,10 @@ import com.newton.account.presentation.composables.account.FeedbackSelectionBott
 import com.newton.account.presentation.composables.account.ProfileSection
 import com.newton.account.presentation.composables.account.SectionHeader
 import com.newton.account.presentation.composables.account.UserInfoSection
-import com.newton.account.presentation.viewmodel.AccountViewModel
+import com.newton.account.presentation.events.LogoutEvent
+import com.newton.account.presentation.events.LogoutNavigationEvent
+import com.newton.account.presentation.viewmodel.AccountManagementViewModel
+import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,10 +66,15 @@ fun AccountScreen(
     onMyEventsClick: () -> Unit,
     onBugReportClick: () -> Unit,
     onGeneralFeedbackClick: () -> Unit,
+    onDeleteAccount: () -> Unit,
     onUpdateProfile: () -> Unit,
-    accountViewModel: AccountViewModel
+    onLogoutClicked: () -> Unit,
+    accountViewModel: UpdateAccountViewModel,
+    accountManagementViewModel: AccountManagementViewModel
 ) {
     val accountUiState by accountViewModel.accountState.collectAsState()
+    val logoutState by accountManagementViewModel.logoutState.collectAsState()
+
 
     val user = accountUiState.userData
 
@@ -127,6 +136,22 @@ fun AccountScreen(
         )
     }
 
+
+    LaunchedEffect(key1 = true) {
+        accountManagementViewModel.navigateAfterLogout.collect { event ->
+            when (event) {
+                LogoutNavigationEvent.NavigateToLogin -> {
+                    onLogoutClicked()
+                }
+            }
+        }
+    }
+
+    if (logoutState.isLoading) {
+        com.newton.common_ui.ui.LoadingDialog()
+    }
+
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scrollBehaviour = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val coroutine = rememberCoroutineScope()
@@ -142,11 +167,15 @@ fun AccountScreen(
             AccountDrawerContent(
                 drawerState = drawerState,
                 onMyEventsClick = onMyEventsClick,
+                onDeleteAccountClicked = onDeleteAccount,
                 onFeedbackClicked = {
                     coroutine.launch {
                         drawerState.close()
                         showBottomSheet = true
                     }
+                },
+                onLogoutClicked = {
+                    accountManagementViewModel.onLogoutEvent(LogoutEvent.Logout)
                 }
             )
         }

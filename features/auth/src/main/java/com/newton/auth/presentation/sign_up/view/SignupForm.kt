@@ -88,23 +88,21 @@ fun SignupForm(
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
         )
         PasswordTextInput(
+            value = password,
             onValueChange = {
                 onPasswordChanged(it)
             },
-            isError = isPasswordError,
-            errorMessage = passwordError,
-            value = password,
             label = "password",
+            isError = isPasswordError,
             imeAction = ImeAction.Next
         )
         PasswordTextInput(
+            value = confirmPassword,
             onValueChange = {
                 onConfirmPasswordChanged(it)
             },
-            isError = isConfirmPwdError,
-            errorMessage = confirmPwdError,
-            value = confirmPassword,
             label = "confirm password",
+            isError = isConfirmPwdError,
             imeAction = ImeAction.Next
         )
 

@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +19,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -33,7 +31,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -53,8 +50,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.common_ui.R
 import com.newton.common_ui.theme.PurpleGrey40
-import com.newton.meruinnovators.ui.theme.ThemeUtils
-import com.newton.meruinnovators.ui.theme.ThemeUtils.themed
 
 @Composable
 fun AuthTextFields(
@@ -175,7 +170,6 @@ fun PasswordTextInput(
     label: String,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    errorMessage: String? = null,
     imeAction: ImeAction = ImeAction.Done,
     onImeAction: () -> Unit = {}
 ) {
@@ -211,13 +205,6 @@ fun PasswordTextInput(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    if (isError) {
-                        Icon(
-                            painter = painterResource(R.drawable.error),
-                            contentDescription = "error",
-                            modifier = modifier.padding(end = 8.dp)
-                        )
-                    }
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(

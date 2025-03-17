@@ -2,10 +2,9 @@ package com.newton.communities.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.domain.repositories.CommunityRepository
-import com.newton.communities.presentation.events.CommunityEvent
-import com.newton.communities.presentation.events.UiEvent
+import com.newton.communities.presentation.events.CommunityUiEvent
 import com.newton.communities.presentation.state.CommunitiesUiState
+import com.newton.core.domain.repositories.CommunityRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,42 +14,28 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CommunitiesViewModel @Inject constructor(
     private val repository: CommunityRepository
-): ViewModel() {
+) : ViewModel() {
 
-    private val _state = MutableStateFlow(CommunitiesUiState())
-    val communityState: StateFlow<CommunitiesUiState> = _state.asStateFlow()
+    private val _uiState = MutableStateFlow<CommunitiesUiState>(CommunitiesUiState.Loading(isRefreshing = false))
+    val uiState: StateFlow<CommunitiesUiState> = _uiState.asStateFlow()
 
-    /**
-     * One Time Events
-     */
-    private val _eventFlow = MutableSharedFlow<CommunityEvent>()
-    val eventFlow: SharedFlow<CommunityEvent> = _eventFlow.asSharedFlow()
+    private val _uiEvents = MutableSharedFlow<CommunityUiEvent.Effect>()
+    val uiEvents: SharedFlow<CommunityUiEvent.Effect> = _uiEvents.asSharedFlow()
 
     init {
         loadCommunities()
     }
 
-    fun onEvent(event: UiEvent) {
+    fun onEvent(event: CommunityUiEvent.Action) {
         when (event) {
-            is UiEvent.RefreshCommunities -> {
-                refreshCommunities()
-            }
-            is UiEvent.DeleteCommunity -> {
-                deleteCommunity(event.communityId)
-            }
-            is UiEvent.ClearAllData -> {
-                clearAllData()
-            }
-            is UiEvent.DismissError -> {
-                _state.update { it.copy(errorMessage = null) }
-            }
+            is CommunityUiEvent.Action.RefreshCommunities -> refreshCommunities()
+            is CommunityUiEvent.Action.DismissError -> dismissError()
         }
     }
 
@@ -58,105 +43,74 @@ class CommunitiesViewModel @Inject constructor(
         loadCommunities(forceRefresh = true)
     }
 
+    private fun dismissError() {
+        val currentState = _uiState.value
+        if (currentState is CommunitiesUiState.Error) {
+            _uiState.value = CommunitiesUiState.Content(
+                communities = currentState.communities,
+                isRefreshing = false
+            )
+        }
+    }
+
     private fun loadCommunities(forceRefresh: Boolean = false) {
         viewModelScope.launch {
-
-                repository.getCommunities(isRefreshing = forceRefresh).collectLatest { result ->
-                    when (result) {
-                        is Resource.Error -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = false,
-                                    isRefreshing = false,
-                                    errorMessage = result.message,
-                                    communities = result.data ?: it.communities
-                                )
-                            }
-                            _eventFlow.emit(CommunityEvent.ShowSnackbar(
-                                result.message ?: "An unexpected error occurred"
-                            ))
-                        }
-                        is Resource.Loading -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = result.isLoading,
-                                    isRefreshing = forceRefresh
-                                )
-                            }
-                        }
-                        is Resource.Success -> {
-                            _state.update {
-                                it.copy(
-                                    communities = result.data ?: emptyList(),
-                                    isLoading = false,
-                                    isRefreshing = false,
-                                    errorMessage = null
-                                )
-                            }
-                            _eventFlow.emit(CommunityEvent.ShowSnackbar(
-                                "Communities loaded successfully"
-                            ))
-                        }
+            if (!forceRefresh) {
+                _uiState.value = CommunitiesUiState.Loading(isRefreshing = false)
+            } else {
+                when (val currentState = _uiState.value) {
+                    is CommunitiesUiState.Content -> {
+                        _uiState.value = CommunitiesUiState.Content(
+                            communities = currentState.communities,
+                            isRefreshing = true
+                        )
+                    }
+                    else -> {
+                        _uiState.value = CommunitiesUiState.Loading(isRefreshing = true)
                     }
                 }
             }
-        }
 
+            repository.getCommunities(isRefreshing = forceRefresh).collectLatest { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        val errorMessage = result.message ?: "An unexpected error occurred"
+                        val currentCommunities = when (val currentState = _uiState.value) {
+                            is CommunitiesUiState.Content -> currentState.communities
+                            is CommunitiesUiState.Error -> currentState.communities
+                            else -> emptyList()
+                        }
 
-    private fun deleteCommunity(communityId: Int) {
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-
-            when (val result = repository.deleteCommunity(communityId)) {
-                is Resource.Success -> {
-                    // Remove from state
-                    _state.update { currentState ->
-                        currentState.copy(
-                            communities = currentState.communities.filter { it.id != communityId },
-                            isLoading = false
+                        _uiState.value = CommunitiesUiState.Error(
+                            message = errorMessage,
+                            communities = currentCommunities
                         )
+
+                        _uiEvents.emit(CommunityUiEvent.Effect.ShowSnackbar(errorMessage))
                     }
-                    _eventFlow.emit(CommunityEvent.ShowSnackbar("Community deleted successfully"))
-                }
-                is Resource.Error -> {
-                    _state.update { it.copy(isLoading = false, errorMessage = result.message) }
-                    _eventFlow.emit(CommunityEvent.ShowSnackbar(
-                        result.message ?: "Failed to delete community"
-                    ))
-                }
-                else -> {
-                    // Loading handled above
+
+                    is Resource.Loading -> {
+                        if (_uiState.value is CommunitiesUiState.Loading) {
+                            _uiState.value = CommunitiesUiState.Loading(
+                                isRefreshing = forceRefresh
+                            )
+                        }
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.value = CommunitiesUiState.Content(
+                            communities = result.data ?: emptyList(),
+                            isRefreshing = false
+                        )
+
+                        if (forceRefresh) {
+                            _uiEvents.emit(CommunityUiEvent.Effect.ShowSnackbar("Communities loaded successfully"))
+                        }
+                    }
                 }
             }
         }
     }
-
-
-    private fun clearAllData() {
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-
-            when (val result = repository.clearAllData()) {
-                is Resource.Success -> {
-                    _state.update {
-                        it.copy(
-                            communities = emptyList(),
-                            isLoading = false
-                        )
-                    }
-                    _eventFlow.emit(CommunityEvent.ShowSnackbar("All data cleared successfully"))
-                }
-                is Resource.Error -> {
-                    _state.update { it.copy(isLoading = false, errorMessage = result.message) }
-                    _eventFlow.emit(CommunityEvent.ShowSnackbar(
-                        result.message ?: "Failed to clear data"
-                    ))
-                }
-                else -> {
-                }
-            }
-        }
-    }
-
 }
+
 

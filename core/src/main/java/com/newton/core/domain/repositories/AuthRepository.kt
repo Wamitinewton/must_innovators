@@ -2,6 +2,7 @@ package com.newton.core.domain.repositories
 
 import com.newton.core.data.response.auth.OtpVerificationResponse
 import com.newton.core.data.response.auth.RequestOtpResponse
+import com.newton.core.domain.models.auth_models.DeleteAccount
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResponse
 import com.newton.core.domain.models.auth_models.LoginResultData
@@ -41,5 +42,11 @@ interface AuthRepository {
     suspend fun verifyOtp(otp: VerifyOtp): Flow<Resource<OtpVerificationResponse>>
 
     suspend fun resetPassword(passwordRequest: ResetPasswordRequest): Flow<Resource<RequestOtpResponse>>
+
+    suspend fun deleteAccount(): Flow<Resource<DeleteAccount>>
+
+    suspend fun clearUserData()
+
+    suspend fun logoutUser(): Flow<Resource<Unit>>
 
 }

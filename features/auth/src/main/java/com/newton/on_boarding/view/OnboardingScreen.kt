@@ -49,13 +49,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.composables.animation.custom_animations.OrbitalsBackground
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.BodyLargeText
 import com.newton.common_ui.ui.DisplayLargeText
 import com.newton.common_ui.ui.DisplaySmallText
@@ -72,14 +71,6 @@ fun OnboardingScreen(
     onLoginClick: () -> Unit,
     onSignupClick: () -> Unit
 ) {
-    val gradientBackground = Brush.verticalGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.surface,
-            MaterialTheme.colorScheme.surfaceDim,
-            MaterialTheme.colorScheme.surfaceBright
-        )
-    )
-
     val visibleState = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
@@ -146,20 +137,9 @@ fun OnboardingScreen(
         label = "logo-scale"
     )
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
+    DefaultScaffold(
+        showOrbitals = true,
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    gradientBackground
-                )
-        )
-
-        OrbitalsBackground()
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -286,7 +266,7 @@ fun OnboardingScreen(
                                     modifier = Modifier
                                         .size(48.dp)
                                         .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.surface)
+                                        .background(MaterialTheme.colorScheme.primary)
                                         .padding(8.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
@@ -311,7 +291,6 @@ fun OnboardingScreen(
                             }
                         }
                     }
-
 
                     Spacer(modifier = Modifier.height(30.dp))
 
@@ -343,35 +322,35 @@ fun OnboardingScreen(
 
                     Spacer(modifier = Modifier.height(24.dp))
                 }
+            }
+        }
+    }
 
-                if (showBottomSheet) {
-                    ModalBottomSheet(
-                        onDismissRequest = { showBottomSheet = false },
-                        sheetState = bottomSheetState,
-                        containerColor = MaterialTheme.colorScheme.surface,
-                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                        tonalElevation = 8.dp
-                    ) {
-                        AuthBottomSheetContent(
-                            onDismiss = { showBottomSheet = false },
-                            onLoginClick = {
-                                scope.launch {
-                                    bottomSheetState.hide()
-                                    showBottomSheet = false
-                                    onLoginClick()
-                                }
-                            },
-                            onSignupClick = {
-                                scope.launch {
-                                    bottomSheetState.hide()
-                                    showBottomSheet = false
-                                    onSignupClick()
-                                }
-                            }
-                        )
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showBottomSheet = false },
+            sheetState = bottomSheetState,
+            containerColor = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+            tonalElevation = 8.dp
+        ) {
+            AuthBottomSheetContent(
+                onDismiss = { showBottomSheet = false },
+                onLoginClick = {
+                    scope.launch {
+                        bottomSheetState.hide()
+                        showBottomSheet = false
+                        onLoginClick()
+                    }
+                },
+                onSignupClick = {
+                    scope.launch {
+                        bottomSheetState.hide()
+                        showBottomSheet = false
+                        onSignupClick()
                     }
                 }
-            }
+            )
         }
     }
 }

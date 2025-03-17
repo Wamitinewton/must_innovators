@@ -6,6 +6,7 @@ import com.newton.auth.data.token_holder.AuthTokenHolder
 import com.newton.core.data.remote.AuthService
 import com.newton.core.data.response.auth.OtpVerificationResponse
 import com.newton.core.data.response.auth.RequestOtpResponse
+import com.newton.core.domain.models.auth_models.DeleteAccount
 import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResponse
@@ -19,10 +20,15 @@ import com.newton.core.domain.models.auth_models.VerifyOtp
 import com.newton.core.domain.repositories.AuthRepository
 import com.newton.core.utils.Resource
 import com.newton.core.utils.safeApiCall
+import com.newton.database.DbCleaner
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toAuthedUser
 import com.newton.database.mappers.toUserEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -31,6 +37,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val sessionManager: SessionManager,
     private val userDao: UserDao,
+    private val dbCleaner: DbCleaner
 ) : AuthRepository {
 
     init {
@@ -130,6 +137,41 @@ class AuthRepositoryImpl @Inject constructor(
         safeApiCall {
             authService.resetPassword(passwordRequest)
         }
+
+    override suspend fun deleteAccount(): Flow<Resource<DeleteAccount>> = flow {
+        emit(Resource.Loading(true))
+
+        try {
+            val response = authService.deleteAccount()
+            emit(Resource.Success(response))
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to delete account")
+            emit(Resource.Error(e.message ?: "Failed to delete account"))
+        } finally {
+            emit(Resource.Loading(false))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
+    override suspend fun clearUserData() {
+        sessionManager.clearTokens()
+        dbCleaner.clearAllTables()
+    }
+
+    override suspend fun logoutUser(): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading(true))
+
+        AuthTokenHolder.accessToken = null
+        AuthTokenHolder.refreshToken = null
+
+        sessionManager.clearTokens()
+        dbCleaner.clearAllTables()
+
+        emit(Resource.Success(Unit))
+    }.catch { e ->
+        Timber.e(e, "Failed to logout user")
+        emit(Resource.Error(e.message ?: "Failed to logout"))
+    }.flowOn(Dispatchers.IO)
 
     private fun verifyTokenPersistence() {
         val savedAccessToken = sessionManager.fetchAccessToken()

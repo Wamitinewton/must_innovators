@@ -31,4 +31,6 @@ sealed class NavigationRoutes(val routes: String) {
     data object BugReportingScreen : NavigationRoutes("bug_reporting")
     data object ProfileUpdateScreen : NavigationRoutes("profile_update")
     data object ForgotPasswordRoute: NavigationRoutes("forgot_password")
+    data object DeleteAccountRoute: NavigationRoutes("delete_account")
+    data object DeleteAccountSuccessRoute: NavigationRoutes("delete_account_success")
 }
