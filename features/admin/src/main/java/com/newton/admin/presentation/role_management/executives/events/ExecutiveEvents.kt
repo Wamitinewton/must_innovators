@@ -1,8 +1,8 @@
 package com.newton.admin.presentation.role_management.executives.events
 
+import com.newton.admin.data.mappers.User
 import com.newton.admin.presentation.role_management.executives.view.Community
 import com.newton.admin.presentation.role_management.executives.view.Executive
-import com.newton.admin.presentation.role_management.executives.view.User
 
 sealed class ExecutiveEvents {
     data class UsersChange(val users:List<User>): ExecutiveEvents()
