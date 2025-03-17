@@ -17,16 +17,16 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.newton.admin.presentation.home.views.SampleEvent
 import com.newton.core.domain.models.admin_models.DashboardColors
 import com.newton.core.domain.models.admin.TooltipData
-import com.newton.admin.presentation.home.views.EventData
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
 fun EventsPieChart(
-    events: List<EventData>,
+    events: List<SampleEvent>,
     onTooltipChanged: (TooltipData?) -> Unit,
 ) {
     var selectedSegment by remember { mutableStateOf<Int?>(null) }

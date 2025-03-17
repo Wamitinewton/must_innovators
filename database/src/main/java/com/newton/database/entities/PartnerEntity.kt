@@ -1,28 +1,32 @@
-package com.newton.core.domain.models.admin_models
+package com.newton.database.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.newton.core.enums.PartnerType
 import com.newton.core.enums.PartnershipStatus
-import java.time.LocalDate
+import java.io.File
 
-
-data class Partners(
+@Entity(tableName = "my_partners")
+data class PartnerEntity(
+    @PrimaryKey
+    val id: Int,
     val name:String,
-    val type:PartnerType,
+    val type: String,
     val description:String,
-    val logo:String,
+    val logo: String,
     val webUrl:String,
     val contactEmail:String,
     val contactPerson:String,
     val linkedIn:String,
     val twitter:String,
-    val startDate: LocalDate,
-    val endDate: LocalDate,
+    val startDate: String,
+    val endDate: String,
     val ongoing:Boolean,
-    val status: PartnershipStatus,
-    val scope:String, // what is the scope of collaboration eg mentorship
+    val status: String,
+    val scope:String,
     val benefits:String,
     val eventsSupported:String,
     val resources:String,
     val achievements:String,
-    val targetAudience:String //ml,Android,computer studies, engineering(eg IEEE)
+    val targetAudience:String
 )

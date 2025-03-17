@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.newton.admin.data.mappers.User
 import com.newton.admin.presentation.events.view.management.rememberScaffoldState
 import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
 import kotlinx.coroutines.delay
@@ -83,13 +84,6 @@ data class Executive(
 data class Community(
     val id: Int,
     val name: String
-)
-
-data class User(
-    val id: Int,
-    val name: String,
-    val email: String,
-    val photo:String?
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,14 +128,14 @@ fun UpdateExecutiveScreen(
     LaunchedEffect(execState.errorMessage, execState.successMessage) {
         execState.errorMessage?.let { message ->
             scope.launch {
-                scaffoldState.snackBarHostState.showSnackbar(message)
+                scaffoldState.snackBarHostState.showSnackBar(message)
                 viewModel.clearMessages()
             }
         }
 
         execState.successMessage?.let { message ->
             scope.launch {
-                scaffoldState.snackBarHostState.showSnackbar(message)
+                scaffoldState.snackBarHostState.showSnackBar(message)
                 viewModel.clearMessages()
             }
         }

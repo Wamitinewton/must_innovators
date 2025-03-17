@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.view.composable.CommunitySection
+import com.newton.admin.presentation.community.view.composable.ErrorCard
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
 import com.newton.admin.presentation.community.view.composable.SocialDialog
@@ -510,12 +511,15 @@ fun AddCommunityScreen(
                             items(8){
                                 UsersShimmer()
                             }
-                        } else{
+                        } else if (usersState.getUsersError != null){
+                            item {
+                                ErrorCard(usersState.getUsersError,onEvent)
+                            }
+                        }else{
                             items(usersState.users) { user ->
                                 UserListItem(
                                     user = user,
                                     onClick = {
-                                        // Set the selected user to the appropriate role
                                         when (addCommunityState.currentRoleSelection) {
                                             "lead" -> addCommunityState.lead = user.name
                                             "co-lead" -> addCommunityState.coLead = user.name

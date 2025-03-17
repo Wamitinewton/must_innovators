@@ -5,11 +5,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.newton.database.converters.DataConverters
 import com.newton.database.dao.EventDao
+import com.newton.database.dao.EventsFeedbackDao
 import com.newton.database.dao.PartnersDao
 import com.newton.database.dao.TicketDao
 import com.newton.database.dao.UserDao
 import com.newton.database.dao.UserFeedbackDao
 import com.newton.database.entities.EventEntity
+import com.newton.database.entities.EventsFeedbackEntity
+import com.newton.database.entities.PartnerEntity
 import com.newton.database.entities.PartnersDataEntity
 import com.newton.database.entities.TicketsEntity
 import com.newton.database.entities.UserEntity
@@ -21,7 +24,9 @@ import com.newton.database.entities.UserFeedbackEntity
         EventEntity::class,
         TicketsEntity::class,
         UserFeedbackEntity::class,
-        PartnersDataEntity::class
+        PartnersDataEntity::class,
+        EventsFeedbackEntity::class,
+        PartnerEntity::class
     ],
 
     version = 21,
@@ -34,5 +39,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val eventDao: EventDao
     abstract val ticketDao: TicketDao
     abstract val userFeedback: UserFeedbackDao
+    abstract val eventsFeedback: EventsFeedbackDao
     abstract val partnersDao: PartnersDao
 }

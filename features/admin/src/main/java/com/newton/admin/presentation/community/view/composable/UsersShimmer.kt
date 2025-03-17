@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,6 +42,7 @@ fun UsersShimmer() {
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
+
             ) {
                 Box(
                     modifier = Modifier
@@ -54,7 +56,8 @@ fun UsersShimmer() {
                 ShimmerWithFade(
                     modifier = Modifier
                         .height(12.dp)
-                        .width(200.dp)
+                        .fillMaxWidth(.6f)
+                        .clip(RoundedCornerShape(4.dp))
                 ) {
                     Box(
                         modifier = Modifier
@@ -65,7 +68,8 @@ fun UsersShimmer() {
                 ShimmerWithFade(
                     modifier = Modifier
                         .height(12.dp)
-                        .width(200.dp)
+                        .fillMaxWidth(.4f)
+                        .clip(RoundedCornerShape(4.dp))
                 ) {
                     Box(
                         modifier = Modifier

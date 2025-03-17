@@ -5,14 +5,18 @@ import com.newton.core.data.response.events.EventDto
 import com.newton.core.data.response.events.EventResponse
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.PaginationResponse
-import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin.NewsLetter
 import com.newton.core.domain.models.admin.NewsLetterResponse
+import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin_models.AddEventRequest
+import com.newton.core.domain.models.admin_models.Attendees
 import com.newton.core.domain.models.admin_models.CommunityData
-import com.newton.core.domain.models.admin_models.EventRegistrationData
+import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.models.home_models.PartnersData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -22,6 +26,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.PartMap
 import retrofit2.http.Path
 
 interface AdminApi {
@@ -39,16 +44,8 @@ interface AdminApi {
     @Multipart
     @POST(EventEndPoint.CREATE_EVENT)
     suspend fun createEvent(
-        @Part("name") name: RequestBody,
-        @Part("category") category: RequestBody,
-        @Part("description") description: RequestBody,
-        @Part image: MultipartBody.Part,
-        @Part("date") date: RequestBody,
-        @Part("location") location: RequestBody,
-        @Part("organizer") organizer: RequestBody,
-        @Part("contact_email") contactEmail: RequestBody,
-        @Part("title") title: RequestBody,
-        @Part("is_virtual") isVirtual : RequestBody
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part image: MultipartBody.Part
     ): EventApiResponse<EventDto>
 
     @POST(EventEndPoint.ADD_COMMUNITY)
@@ -62,23 +59,31 @@ interface AdminApi {
     ):NewsLetterResponse
 
     @GET(EventEndPoint.GET_RSVPS_DATA)
-    suspend fun getRsvpsData(
+    suspend fun getAttendeeData(
         @Path("id") id: Int
-    ): ApiResponse<PaginationResponse<EventRegistrationData>>
+    ): ApiResponse<PaginationResponse<Attendees>>
 
     @POST(EventEndPoint.UPDATE_COMMUNITY)
     suspend fun updateCommunity(
         @Path("id") id: Int,
         @Body community: AddCommunityRequest
     ): ApiResponse<PaginationResponse<CommunityData>>
-    @GET(EventEndPoint.EVENT_FEEDBACK_BY_ID)
-    suspend fun getEventFeedbackBYId(
-        @Path("id") id: Int,
-    ): ApiResponse<FeedbackData>
 
     suspend fun getUserFeedbacks(): ApiResponse<PaginationResponse<FeedbackData>>
 
+    @GET(EventEndPoint.GET_EVENTS_FEEDBACK)
+    suspend fun getEventsFeedback(eventId:Int): ApiResponse<PaginationResponse<EventsFeedback>>
 
     @GET(EventEndPoint.GET_ALL_USERS_DATA)
     suspend fun getAllUsers(): ApiResponse<List<UserData>>
+
+    @GET(EventEndPoint.GET_ALL_EVENTS_DATA)
+    suspend fun getAllEventsList(): ApiResponse<PaginationResponse<EventsData>>
+
+    @Multipart
+    @POST(EventEndPoint.ADD_PARTNER)
+    suspend fun addPartner(
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part image: MultipartBody.Part
+    ): ApiResponse<PartnersData>
 }

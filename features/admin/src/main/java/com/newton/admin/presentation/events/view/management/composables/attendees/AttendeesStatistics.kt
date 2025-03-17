@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.attendees
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

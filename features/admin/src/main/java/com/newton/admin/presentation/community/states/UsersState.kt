@@ -1,6 +1,6 @@
 package com.newton.admin.presentation.community.states
 
-import com.newton.admin.presentation.role_management.executives.view.User
+import com.newton.admin.data.mappers.User
 
 data class UsersState(
     val getUsersError:String? = null,

@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.overview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -14,27 +14,27 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Event
+import com.newton.core.domain.models.admin_models.EventsData
 import java.util.Locale
 
 
 @Composable
-fun DashboardStats(events: List<Event>) {
-    val totalAttendees = events.sumOf { it.attendees.size }
-    val confirmedAttendees = events.sumOf { event ->
-        event.attendees.count { it.isAttending }
-    }
-    val averageAttendanceRate = if (totalAttendees > 0) {
-        (confirmedAttendees.toFloat() / totalAttendees) * 100
-    } else {
-        0f
-    }
-    val totalFeedbacks = events.sumOf { it.feedbacks.size }
-    val averageRating = if (totalFeedbacks > 0) {
-        events.flatMap { it.feedbacks }.sumOf { it.rating }.toFloat() / totalFeedbacks
-    } else {
-        0f
-    }
+fun DashboardStats(events: List<EventsData>) {
+//    val totalAttendees = events.sumOf { it.members.size }
+//    val confirmedAttendees = events.sumOf { event ->
+//        event.members.count { true }
+//    }
+//    val averageAttendanceRate = if (totalAttendees > 0) {
+//        (confirmedAttendees.toFloat() / totalAttendees) * 100
+//    } else {
+//        0f
+//    }
+//    val totalFeedbacks = events.sumOf { it.feedbacks.size }
+//    val averageRating = if (totalFeedbacks > 0) {
+//        events.flatMap { it.feedbacks }.sumOf { it.rating }.toFloat() / totalFeedbacks
+//    } else {
+//        0f
+//    }
 
     Row(
         modifier = Modifier
@@ -53,7 +53,7 @@ fun DashboardStats(events: List<Event>) {
 
         StatCard(
             title = "Attendees",
-            value = "$confirmedAttendees/$totalAttendees",
+            value = "3",
             icon = Icons.Default.People,
             modifier = Modifier.weight(1f)
         )
@@ -62,7 +62,7 @@ fun DashboardStats(events: List<Event>) {
 
         StatCard(
             title = "Attendance Rate",
-            value = String.format(Locale.ENGLISH,"%.1f%%", averageAttendanceRate),
+            value ="12%",
             icon = Icons.Default.Percent,
             modifier = Modifier.weight(1f)
         )
@@ -71,7 +71,7 @@ fun DashboardStats(events: List<Event>) {
 
         StatCard(
             title = "Avg Rating",
-            value = String.format(null,"%.1f⭐", averageRating),
+            value = "3%",
             icon = Icons.Default.Star,
             modifier = Modifier.weight(1f)
         )

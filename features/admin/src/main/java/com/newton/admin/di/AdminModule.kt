@@ -6,6 +6,8 @@ import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.navigation.AdminNavigationApi
 import com.newton.admin.navigation.AdminNavigationApiImpl
 import com.newton.database.dao.EventDao
+import com.newton.database.dao.EventsFeedbackDao
+import com.newton.database.dao.PartnersDao
 import com.newton.database.dao.UserFeedbackDao
 import dagger.Module
 import dagger.Provides
@@ -34,7 +36,9 @@ object AdminModule {
     fun provideEventRepository(
         eventApi: AdminApi,
         eventDao:EventDao,
-        userFeedbackDao:UserFeedbackDao
-    ): AdminRepository = AdminRepositoryImpl(eventApi,eventDao,userFeedbackDao)
+        userFeedbackDao:UserFeedbackDao,
+        eventsFeedbackDao:EventsFeedbackDao,
+        partnersDao: PartnersDao
+    ): AdminRepository = AdminRepositoryImpl(eventApi,eventDao,userFeedbackDao, eventsFeedbackDao,partnersDao)
 
 }

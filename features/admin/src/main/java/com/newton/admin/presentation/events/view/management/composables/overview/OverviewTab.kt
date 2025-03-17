@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.overview
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,18 +13,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Event
+import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDateTime
 
 @Composable
 fun OverviewTab(
-    events: List<Event>,
+    events: List<EventsData>,
     listState: LazyListState,
     isScrolling: Boolean,
-    onEventSelected: (Event) -> Unit
+    onEventSelected: (EventsData) -> Unit
 ) {
-    val upcomingEvents = events.filter { it.startDateTime.isAfter(LocalDateTime.now()) }
-    val pastEvents = events.filter { it.endDateTime.isBefore(LocalDateTime.now()) }
+    val upcomingEvents = events.filter { it.date.fromStringToLocalTime().isAfter(LocalDateTime.now()) }
+    val pastEvents = events.filter { it.date.fromStringToLocalTime().isBefore(LocalDateTime.now()) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn(

@@ -66,7 +66,6 @@ class CommunityViewModel @Inject constructor(
     private fun getAllUsers(isRefresh:Boolean){
         viewModelScope.launch {
             repository.getAllUsers(isRefresh).collectLatest { result->
-
                 when (result) {
                     is Resource.Error -> {
                        _usersState.update { it.copy(getUsersError = result.message?: "Unknown error when adding community") }

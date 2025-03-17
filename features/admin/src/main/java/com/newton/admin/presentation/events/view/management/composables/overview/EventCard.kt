@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.events.view.management.composables
+package com.newton.admin.presentation.events.view.management.composables.overview
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -21,10 +21,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,18 +38,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.view.management.Event
 import com.newton.common_ui.ui.CustomCard
+import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun EventCard(
-    event: Event,
+    event: EventsData,
     isScrolling: Boolean,
     onClick: () -> Unit
 ) {
-    val isPast = event.endDateTime.isBefore(LocalDateTime.now())
+    val isPast = event.date.fromStringToLocalTime().isBefore(LocalDateTime.now())
     val density = LocalDensity.current
     val animatedOffset = remember { Animatable(0f) }
     val infiniteTransition = rememberInfiniteTransition()
@@ -71,7 +70,7 @@ fun EventCard(
     }
 
     // Pulse animation for upcoming events with reminders
-    val pulseScale = if (!isPast && event.isReminderSet) {
+    val pulseScale = if (!isPast && event.isVirtual) {
         infiniteTransition.animateFloat(
             initialValue = 1f,
             targetValue = 1.02f,
@@ -115,14 +114,14 @@ fun EventCard(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = event.startDateTime.format(DateTimeFormatter.ofPattern("dd")),
+                        text = event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("dd")),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         else MaterialTheme.colorScheme.onPrimary
                     )
                     Text(
-                        text = event.startDateTime.format(DateTimeFormatter.ofPattern("MMM")),
+                        text = event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("MMM")),
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         else MaterialTheme.colorScheme.onPrimary
@@ -134,7 +133,7 @@ fun EventCard(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = event.title,
+                    text = event.name,
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -149,8 +148,8 @@ fun EventCard(
                 )
 
                 Text(
-                    text = "${event.startDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))} - " +
-                            event.endDateTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = "${event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))} - " +
+                            event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.labelMedium
                 )
 
@@ -165,18 +164,18 @@ fun EventCard(
                         tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
 
-                    Text(
-                        text = "${event.attendees.count { it.isAttending }}/${event.attendees.size}",
-                        style = MaterialTheme.typography.labelMedium,
-                        modifier = Modifier.padding(start = 4.dp)
-                    )
+//                    Text(
+//                        text = "${event.attendees.count { it.isAttending }}/${event.attendees.size}",
+//                        style = MaterialTheme.typography.labelMedium,
+//                        modifier = Modifier.padding(start = 4.dp)
+//                    )
 
-                    if (event.isReminderSet) {
+                    if (event.isVirtual) {
                         Spacer(modifier = Modifier.width(16.dp))
 
                         Icon(
-                            imageVector = Icons.Default.Notifications,
-                            contentDescription = "Reminder Set",
+                            imageVector = Icons.Default.Videocam,
+                            contentDescription = "Virtual Event",
                             modifier = Modifier.size(16.dp),
                             tint = MaterialTheme.colorScheme.primary
                         )

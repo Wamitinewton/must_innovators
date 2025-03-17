@@ -3,10 +3,10 @@ package com.newton.admin.presentation.role_management.executives.viewModel
 // ExecutiveViewModel.kt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.newton.admin.data.mappers.User
 import com.newton.admin.presentation.role_management.executives.states.ExecutiveState
 import com.newton.admin.presentation.role_management.executives.view.Community
 import com.newton.admin.presentation.role_management.executives.view.Executive
-import com.newton.admin.presentation.role_management.executives.view.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

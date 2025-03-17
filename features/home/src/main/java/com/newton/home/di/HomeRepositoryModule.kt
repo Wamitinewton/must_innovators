@@ -2,7 +2,6 @@ package com.newton.home.di
 
 import com.newton.core.data.remote.HomeApiService
 import com.newton.core.domain.repositories.HomeRepository
-import com.newton.database.dao.PartnersDao
 import com.newton.home.data.HomeRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -19,6 +18,6 @@ object HomeRepositoryModule {
     @Singleton
     fun provideHomeRepository(
         partnersService: HomeApiService,
-        partnersDao: PartnersDao
+//        partnersDao: PartnersDao
     ): HomeRepository = HomeRepositoryImpl(partnersService)
 }
