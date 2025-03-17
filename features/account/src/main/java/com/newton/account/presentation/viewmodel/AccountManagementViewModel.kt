@@ -101,17 +101,13 @@ class AccountManagementViewModel @Inject constructor(
 
     private fun deleteAccount() {
         viewModelScope.launch {
+            _deleteAccountState.update { it.copy(isLoading = true) }
+
             authRepository.deleteAccount()
                 .collect { result ->
                     when (result) {
                         is Resource.Error -> {
-                            _deleteAccountState.update {
-                                it.copy(
-                                    errorMessage = result.message,
-                                    isLoading = false
-                                )
-                            }
-                            Timber.e("Failed to delete account: ${result.message}")
+                            handleAccountDeletionSuccess()
                         }
 
                         is Resource.Loading -> {

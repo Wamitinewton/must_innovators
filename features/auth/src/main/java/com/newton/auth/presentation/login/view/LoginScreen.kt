@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.newton.auth.presentation.login.event.LoginEvent
 import com.newton.auth.presentation.login.event.LoginNavigationEvent
 import com.newton.auth.presentation.login.view_model.LoginViewModel
 import com.newton.common_ui.composables.DefaultScaffold
@@ -52,6 +53,7 @@ fun LoginScreen(
                     message = error,
                     duration = SnackbarDuration.Short
                 )
+                loginViewModel.onEvent(LoginEvent.ClearError)
             }
         }
     }

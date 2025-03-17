@@ -60,14 +60,13 @@ fun UserDataLoadingScreen(
         }
     }
 
-    // Error effect
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let { error ->
             scope.launch {
                 snackbarHostState.showSnackbar(
                     message = error,
-                    duration = SnackbarDuration.Long,
-                    withDismissAction = true
+                    duration = SnackbarDuration.Indefinite,
+                    withDismissAction = false
                 )
             }
         }

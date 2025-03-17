@@ -35,13 +35,12 @@ fun LoginForm(
 
         )
         PasswordTextInput(
+            value = password,
             onValueChange = {
                 onPasswordChanged(it)
             },
-            isError = isPasswordError,
-            errorMessage = passwordError,
-            value = password,
             label = "password",
+            isError = isPasswordError,
             imeAction = ImeAction.Next
         )
     }

@@ -89,7 +89,6 @@ fun OtpVerificationScreen(
         }
     }
 
-    // Show error in snackbar if any
     LaunchedEffect(resendOtpError) {
         resendOtpError?.let {
             snackbarHostState.showSnackbar(
@@ -99,7 +98,6 @@ fun OtpVerificationScreen(
         }
     }
 
-    // Request focus for the first empty OTP box
     LaunchedEffect(otp) {
         val nextEmptyIndex = otp.length.coerceAtMost(5)
         if (nextEmptyIndex < 6) {
@@ -109,7 +107,6 @@ fun OtpVerificationScreen(
         }
     }
 
-    // Auto-verification when OTP is complete
     LaunchedEffect(otp) {
         if (otp.length == 6 && !isLoading) {
             delay(300)

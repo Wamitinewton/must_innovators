@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.reset_password.states
+package com.newton.auth.presentation.reset_password.events
 
 sealed class ForgotPasswordEvent {
     data class EmailChanged(val email: String) : ForgotPasswordEvent()
