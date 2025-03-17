@@ -25,7 +25,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountViewModel @Inject constructor(
+class UpdateAccountViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val updateUserRepository: UpdateUserRepository
 ) : ViewModel() {
@@ -278,5 +278,9 @@ class AccountViewModel @Inject constructor(
         _updateProfileState.update {
             it.copy(message = null, error = null, isSuccess = false)
         }
+    }
+
+    private fun deleteAccount() {
+
     }
 }

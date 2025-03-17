@@ -32,7 +32,8 @@ import kotlinx.coroutines.launch
 fun AccountDrawerContent(
     drawerState: DrawerState,
     onMyEventsClick: () -> Unit,
-    onFeedbackClicked: () -> Unit = {}
+    onFeedbackClicked: () -> Unit = {},
+    onDeleteAccountClicked: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -146,7 +147,6 @@ fun AccountDrawerContent(
                 )
             )
 
-            // Delete Account Item
             NavigationDrawerItem(
                 icon = {
                     Icon(
@@ -162,7 +162,9 @@ fun AccountDrawerContent(
                     )
                 },
                 selected = false,
-                onClick = {},
+                onClick = {
+                    onDeleteAccountClicked()
+                },
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent
                 )

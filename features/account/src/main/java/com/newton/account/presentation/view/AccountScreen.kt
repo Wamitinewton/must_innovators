@@ -53,7 +53,7 @@ import com.newton.account.presentation.composables.account.FeedbackSelectionBott
 import com.newton.account.presentation.composables.account.ProfileSection
 import com.newton.account.presentation.composables.account.SectionHeader
 import com.newton.account.presentation.composables.account.UserInfoSection
-import com.newton.account.presentation.viewmodel.AccountViewModel
+import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,8 +62,9 @@ fun AccountScreen(
     onMyEventsClick: () -> Unit,
     onBugReportClick: () -> Unit,
     onGeneralFeedbackClick: () -> Unit,
+    onDeleteAccount: () -> Unit,
     onUpdateProfile: () -> Unit,
-    accountViewModel: AccountViewModel
+    accountViewModel: UpdateAccountViewModel
 ) {
     val accountUiState by accountViewModel.accountState.collectAsState()
 
@@ -142,6 +143,7 @@ fun AccountScreen(
             AccountDrawerContent(
                 drawerState = drawerState,
                 onMyEventsClick = onMyEventsClick,
+                onDeleteAccountClicked = onDeleteAccount,
                 onFeedbackClicked = {
                     coroutine.launch {
                         drawerState.close()

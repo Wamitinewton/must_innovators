@@ -55,7 +55,7 @@ import com.newton.account.presentation.composables.update_profile.SaveButton
 import com.newton.account.presentation.composables.update_profile.SuccessDialog
 import com.newton.account.presentation.composables.update_profile.UnsavedChangesDialog
 import com.newton.account.presentation.composables.update_profile.YearOfStudyDropdown
-import com.newton.account.presentation.viewmodel.AccountViewModel
+import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
 import com.newton.common_ui.composables.animation.custom_animations.OrbitalsBackground
 import com.newton.common_ui.ui.DefaultTextField
 import com.newton.common_ui.ui.MultilineInputField
@@ -65,7 +65,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileUpdateScreen(
-    viewModel: AccountViewModel,
+    viewModel: UpdateAccountViewModel,
     onNavigateBack: () -> Unit
 ) {
     val profileFormState by viewModel.profileFormState.collectAsStateWithLifecycle()

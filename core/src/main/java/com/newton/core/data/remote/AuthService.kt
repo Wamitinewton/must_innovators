@@ -4,6 +4,7 @@ import com.newton.core.data.Authenticated
 import com.newton.core.data.response.auth.OtpVerificationResponse
 import com.newton.core.data.response.auth.RequestOtpResponse
 import com.newton.core.data.response.auth.UpdateProfileResponse
+import com.newton.core.domain.models.auth_models.DeleteAccount
 import com.newton.core.domain.models.auth_models.GetUserData
 import com.newton.core.domain.models.auth_models.LoginRequest
 import com.newton.core.domain.models.auth_models.LoginResponse
@@ -14,6 +15,7 @@ import com.newton.core.domain.models.auth_models.SignupResponse
 import com.newton.core.domain.models.auth_models.UpdateProfileRequest
 import com.newton.core.domain.models.auth_models.VerifyOtp
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -47,4 +49,8 @@ interface AuthService {
 
     @POST(ApiEndpoints.RESET_PASSWORD)
     suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): RequestOtpResponse
+
+    @Authenticated
+    @DELETE(ApiEndpoints.DELETE_ACCOUNT)
+    suspend fun deleteAccount(): DeleteAccount
 }

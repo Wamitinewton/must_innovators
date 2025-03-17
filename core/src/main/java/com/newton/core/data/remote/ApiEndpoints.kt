@@ -14,6 +14,7 @@ object ApiEndpoints {
     const val REQUEST_OTP = "api/account/password-reset/request/"
     const val VERIFY_OTP = "api/account/password-reset/verify-otp/"
     const val RESET_PASSWORD = "api/account/password-reset/reset/"
+    const val DELETE_ACCOUNT = "api/account/delete-account/"
 
     const val GET_ALL_EVENTS = "events/list/"
     const val GET_EVENT_BY_ID = "events/{id}/view/"
