@@ -6,7 +6,7 @@ import com.newton.core.enums.PartnerType
 import com.newton.core.enums.PartnershipStatus
 import java.io.File
 
-@Entity(tableName = "partners")
+@Entity(tableName = "my_partners")
 data class PartnerEntity(
     @PrimaryKey
     val id: Int,

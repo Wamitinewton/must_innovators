@@ -13,6 +13,7 @@ import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.core.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -26,5 +27,5 @@ interface AdminRepository {
     suspend fun getAllUsers(isRefresh:Boolean):Flow<Resource<List<UserData>>>
     suspend fun getRegistrationList(eventId: Int): Flow<Resource<List<Attendees>>>
     suspend fun getListOfEvents():Flow<Resource<List<EventsData>>>
-    suspend fun addPartner(partners: AddPartnerRequest):Flow<Resource<PartnersResponse>>
+    suspend fun addPartner(partners: AddPartnerRequest):Flow<Resource<PartnersData>>
 }

@@ -20,6 +20,7 @@ import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.AddPartnerRequest
 import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import com.newton.database.dao.EventDao
@@ -30,6 +31,7 @@ import com.newton.database.mappers.toDomain
 import com.newton.database.mappers.toEventDataList
 import com.newton.database.mappers.toEventsEntity
 import com.newton.database.mappers.toEventsFeedbackList
+import com.newton.database.mappers.toPartnerEntity
 import com.newton.database.mappers.toPartnersEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -241,7 +243,7 @@ class AdminRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersResponse>> = flow {
+    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> = flow {
         emit(Resource.Loading(true))
         try {
             val params = mapOf(
@@ -272,7 +274,7 @@ class AdminRepositoryImpl @Inject constructor(
             val response = adminApi.addPartner(params,imagePart)
             if (response.status == "success"){
                 emit(Resource.Success(response.data))
-                partnersDao.insertPartner(response.data.toPartnersEntity())
+                partnersDao.insertPartner(response.data.toPartnerEntity())
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.message?:"Unknown Error occurred"))

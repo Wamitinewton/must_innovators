@@ -16,6 +16,7 @@ import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.models.home_models.PartnersData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -84,5 +85,5 @@ interface AdminApi {
     suspend fun addPartner(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part image: MultipartBody.Part
-    ): ApiResponse<PartnersResponse>
+    ): ApiResponse<PartnersData>
 }
