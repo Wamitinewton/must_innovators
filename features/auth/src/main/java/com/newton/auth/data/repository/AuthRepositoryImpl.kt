@@ -25,6 +25,8 @@ import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toAuthedUser
 import com.newton.database.mappers.toUserEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -142,6 +144,21 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun clearUserData() {
         sessionManager.clearTokens()
         dbCleaner.clearAllTables()
+    }
+
+    override suspend fun logoutUser(): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+
+        AuthTokenHolder.accessToken = null
+        AuthTokenHolder.refreshToken = null
+
+        sessionManager.clearTokens()
+        dbCleaner.clearAllTables()
+
+        emit(Resource.Success(Unit))
+    }.catch { e ->
+        Timber.e(e, "Failed to logout user")
+        emit(Resource.Error(e.message ?: "Failed to logout"))
     }
 
     private fun verifyTokenPersistence() {
