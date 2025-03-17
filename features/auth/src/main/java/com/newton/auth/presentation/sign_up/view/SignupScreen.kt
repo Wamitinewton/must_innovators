@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
+import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.NetworkMonitor
@@ -52,6 +53,7 @@ fun SignupScreen(
                     message = error,
                     duration = SnackbarDuration.Short
                 )
+                signupViewModel.onEvent(SignupUiEvent.ClearError)
             }
         }
     }

@@ -26,6 +26,7 @@ class AccountNavigationApiImpl: AccountNavigationApi {
         ){
             composable(route = NavigationRoutes.AccountRoute.routes) {
                 val accountViewModel = hiltViewModel<UpdateAccountViewModel>()
+                val accountManagementViewModel = hiltViewModel<AccountManagementViewModel>()
                 AccountScreen(
                     onMyEventsClick = {
                         navHostController.navigate(NavigationRoutes.EventTicketsRoute.routes)
@@ -41,8 +42,14 @@ class AccountNavigationApiImpl: AccountNavigationApi {
                         navHostController.navigate(NavigationRoutes.ProfileUpdateScreen.routes)
                     },
                     onDeleteAccount = {
-                        navHostController.navigate(NavigationRoutes.DeleteAccountSuccessRoute.routes)
+                        navHostController.navigate(NavigationRoutes.DeleteAccountRoute.routes)
                     },
+                    onLogoutClicked = {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.routes) {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    },
+                    accountManagementViewModel = accountManagementViewModel,
                 )
             }
             composable(route = NavigationRoutes.ProfileUpdateScreen.routes) {

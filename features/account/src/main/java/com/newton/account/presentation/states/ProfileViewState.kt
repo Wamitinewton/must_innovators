@@ -13,3 +13,9 @@ data class DeleteAccountState(
     val isDeleted: Boolean = false,
     val errorMessage: String? = null
 )
+
+data class LogoutState(
+    val isLoading: Boolean = false,
+    val isLoggedOut: Boolean = false,
+    val errorMessage: String? = null
+)

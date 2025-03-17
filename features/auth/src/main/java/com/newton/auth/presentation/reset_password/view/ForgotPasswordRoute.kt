@@ -4,7 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.newton.auth.presentation.reset_password.states.ForgotPasswordEvent
+import com.newton.auth.presentation.reset_password.events.ForgotPasswordEvent
 import com.newton.auth.presentation.reset_password.view_model.ForgotPasswordViewModel
 import com.newton.core.enums.ForgotPassword
 
@@ -40,7 +40,7 @@ fun ForgotPasswordRoute(
                     },
                     onSubmit = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.RequestOtp) },
                     onBackPressed = onNavigateToLogin,
-                    otpError = state.error
+                    otpError = state.emailServerError
                 )
             }
 
@@ -59,7 +59,7 @@ fun ForgotPasswordRoute(
                     },
                     onVerifyOtp = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.VerifyOtp) },
                     onBackPressed = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.NavigateBack) },
-                    resendOtpError = state.error,
+                    resendOtpError = state.otpServerError,
                     onResendOtp = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.RequestOtp) }
                 )
             }
@@ -85,7 +85,8 @@ fun ForgotPasswordRoute(
                             )
                         )
                     },
-                    onSubmit = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.ResetPassword) }
+                    onSubmit = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.ResetPassword) },
+                    changePasswordError = state.passwordServerError
                 )
             }
         }
