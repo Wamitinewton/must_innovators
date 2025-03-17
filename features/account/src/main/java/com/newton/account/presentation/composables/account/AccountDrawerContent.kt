@@ -33,7 +33,8 @@ fun AccountDrawerContent(
     drawerState: DrawerState,
     onMyEventsClick: () -> Unit,
     onFeedbackClicked: () -> Unit = {},
-    onDeleteAccountClicked: () -> Unit
+    onDeleteAccountClicked: () -> Unit,
+    onLogoutClicked: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -141,7 +142,9 @@ fun AccountDrawerContent(
                     )
                 },
                 selected = false,
-                onClick = {},
+                onClick = {
+                    onLogoutClicked()
+                },
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent
                 )

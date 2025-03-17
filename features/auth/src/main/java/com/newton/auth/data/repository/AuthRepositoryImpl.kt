@@ -24,9 +24,11 @@ import com.newton.database.DbCleaner
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toAuthedUser
 import com.newton.database.mappers.toUserEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -147,7 +149,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logoutUser(): Flow<Resource<Unit>> = flow {
-        emit(Resource.Loading())
+        emit(Resource.Loading(true))
 
         AuthTokenHolder.accessToken = null
         AuthTokenHolder.refreshToken = null
@@ -159,7 +161,7 @@ class AuthRepositoryImpl @Inject constructor(
     }.catch { e ->
         Timber.e(e, "Failed to logout user")
         emit(Resource.Error(e.message ?: "Failed to logout"))
-    }
+    }.flowOn(Dispatchers.IO)
 
     private fun verifyTokenPersistence() {
         val savedAccessToken = sessionManager.fetchAccessToken()
