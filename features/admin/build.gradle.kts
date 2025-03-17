@@ -75,6 +75,9 @@ dependencies {
     implementation(Dependencies.pagingCompose)
     implementation(Dependencies.pagingRuntime)
 
+    // timber
+    implementation(Dependencies.timber)
+
 
     implementation(project(":core"))
     implementation(project(":database"))

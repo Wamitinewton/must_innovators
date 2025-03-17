@@ -1,7 +1,8 @@
 package com.newton.admin.presentation.community.view.composable
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.role_management.executives.view.User
+import com.newton.admin.data.mappers.User
+import com.newton.common_ui.ui.CustomDynamicAsyncImage
 
 @Composable
 fun UserListItem(
@@ -42,14 +43,27 @@ fun UserListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // User profile image
-//            Image(
-//                painter = painterResource(id = user.profileImageRes),
-//                contentDescription = "Profile picture of ${user.name}",
-//                modifier = Modifier
-//                    .size(48.dp)
-//                    .clip(CircleShape),
-//                contentScale = ContentScale.Crop
-//            )
+            if (user.photo != null) {
+                CustomDynamicAsyncImage(
+                    user.photo,
+                    contentDescription = "Profile picture of ${user.name}",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surface),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Box(modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)) {
+                    Text(
+                        user.name.take(1),
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.width(12.dp))
 

@@ -81,6 +81,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.newton.admin.presentation.community.view.composable.ErrorCard
 import com.newton.admin.presentation.events.view.composables.CloseButton
 import com.newton.admin.presentation.partners.events.AddPartnersEvent
 import com.newton.admin.presentation.partners.states.AddPartnersEffect
@@ -92,7 +93,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -876,8 +879,8 @@ fun AddPartnerScreen(
                 TextButton(
                     onClick = {
                         datePickerState.selectedDateMillis?.let { dateMillis ->
-                            val date = java.time.Instant.ofEpochMilli(dateMillis)
-                                .atZone(java.time.ZoneId.systemDefault())
+                            val date = Instant.ofEpochMilli(dateMillis)
+                                .atZone(ZoneId.systemDefault())
                                 .toLocalDate()
                             onEvent.invoke(AddPartnersEvent.StartDateChange(date))
                         }
@@ -917,8 +920,8 @@ fun AddPartnerScreen(
                 TextButton(
                     onClick = {
                         datePickerState.selectedDateMillis?.let { dateMillis ->
-                            val date = java.time.Instant.ofEpochMilli(dateMillis)
-                                .atZone(java.time.ZoneId.systemDefault())
+                            val date = Instant.ofEpochMilli(dateMillis)
+                                .atZone(ZoneId.systemDefault())
                                 .toLocalDate()
                             onEvent.invoke(AddPartnersEvent.EndDateChange(date))
                         }
@@ -942,5 +945,7 @@ fun AddPartnerScreen(
 
     if (partnersState.isLoading) {
         LoadingDialog()
+    }else if (partnersState.errorMessage != null){
+//        ErrorCard(partnersState.errorMessage,{})
     }
 }

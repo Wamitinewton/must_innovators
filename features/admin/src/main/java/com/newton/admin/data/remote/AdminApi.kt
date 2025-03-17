@@ -74,7 +74,7 @@ interface AdminApi {
     suspend fun getEventsFeedback(eventId:Int): ApiResponse<PaginationResponse<EventsFeedback>>
 
     @GET(EventEndPoint.GET_ALL_USERS_DATA)
-    suspend fun getAllUsers(): ApiResponse<PaginationResponse<UserData>>
+    suspend fun getAllUsers(): ApiResponse<List<UserData>>
 
     @GET(EventEndPoint.GET_ALL_EVENTS_DATA)
     suspend fun getAllEventsList(): ApiResponse<PaginationResponse<EventsData>>

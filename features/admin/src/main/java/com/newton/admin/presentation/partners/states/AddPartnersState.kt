@@ -1,6 +1,6 @@
 package com.newton.admin.presentation.partners.states
 
-import com.newton.admin.presentation.role_management.executives.view.User
+import com.newton.admin.data.mappers.User
 import java.io.File
 import java.time.LocalDate
 

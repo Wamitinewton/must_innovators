@@ -39,6 +39,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -182,12 +183,12 @@ class AdminRepositoryImpl @Inject constructor(
         try {
             if (isRefresh) {
                 val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data.results))
+                emit(Resource.Success(response.data))
 
             } else {
 //                usersDao.getAllUsers()
                 val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data.results))
+                emit(Resource.Success(response.data))
             }
         } catch (e: HttpException) {
             emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))
@@ -195,6 +196,8 @@ class AdminRepositoryImpl @Inject constructor(
             emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         } catch (e: Exception) {
             emit(Resource.Error("An unexpected error occurred: ${e.message ?: "Unknown error"}"))
+        }finally {
+            emit(Resource.Loading(false))
         }
     }
 
@@ -240,35 +243,42 @@ class AdminRepositoryImpl @Inject constructor(
 
     override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersResponse>> = flow {
         emit(Resource.Loading(true))
-        val params = mapOf(
-            "name" to partners.name.toCustomRequestBody(),
-            "type" to partners.type.toCustomRequestBody(),
-            "description" to partners.description.toCustomRequestBody(),
-            "web_url" to partners.webUrl.toCustomRequestBody(),
-            "contact_email" to partners.contactEmail.toCustomRequestBody(),
-            "contact_person" to partners.contactPerson.toCustomRequestBody(),
-            "linked_in" to partners.linkedIn.toCustomRequestBody(),
-            "twitter" to partners.twitter.toCustomRequestBody(),
-            "start_date" to partners.startDate.toCustomRequestBody(),
-            "end_date" to partners.endDate.toCustomRequestBody(),
-            "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
-            "status" to partners.status.toCustomRequestBody(),
-            "scope" to partners.scope.toCustomRequestBody(),
-            "benefits" to partners.benefits.toCustomRequestBody(),
-            "events_supported" to partners.eventsSupported.toCustomRequestBody(),
-            "resources" to partners.resources.toCustomRequestBody(),
-            "achievements" to partners.achievements.toCustomRequestBody(),
-            "target_audience" to partners.targetAudience.toCustomRequestBody()
-        )
-        val requestFile = partners.logo.asRequestBody("image/*".toMediaTypeOrNull())
-        val imagePart =
-            MultipartBody.Part.createFormData("image", partners.logo.name, requestFile)
+        try {
+            val params = mapOf(
+                "name" to partners.name.toCustomRequestBody(),
+                "type" to partners.type.toCustomRequestBody(),
+                "description" to partners.description.toCustomRequestBody(),
+                "web_url" to partners.webUrl.toCustomRequestBody(),
+                "contact_email" to partners.contactEmail.toCustomRequestBody(),
+                "contact_person" to partners.contactPerson.toCustomRequestBody(),
+                "linked_in" to partners.linkedIn.toCustomRequestBody(),
+                "twitter" to partners.twitter.toCustomRequestBody(),
+                "start_date" to partners.startDate.toCustomRequestBody(),
+                "end_date" to partners.endDate.toCustomRequestBody(),
+                "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
+                "status" to partners.status.toCustomRequestBody(),
+                "scope" to partners.scope.toCustomRequestBody(),
+                "benefits" to partners.benefits.toCustomRequestBody(),
+                "events_supported" to partners.eventsSupported.toCustomRequestBody(),
+                "resources" to partners.resources.toCustomRequestBody(),
+                "achievements" to partners.achievements.toCustomRequestBody(),
+                "target_audience" to partners.targetAudience.toCustomRequestBody()
+            )
+            val requestFile = partners.logo.asRequestBody("image/*".toMediaTypeOrNull())
+            val imagePart =
+                MultipartBody.Part.createFormData("image", partners.logo.name, requestFile)
 
 
-        val response = adminApi.addPartner(params,imagePart)
-        if (response.status == "success"){
-            emit(Resource.Success(response.data))
-            partnersDao.insertPartner(response.data.toPartnersEntity())
+            val response = adminApi.addPartner(params,imagePart)
+            if (response.status == "success"){
+                emit(Resource.Success(response.data))
+                partnersDao.insertPartner(response.data.toPartnersEntity())
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message?:"Unknown Error occurred"))
+
+        } finally {
+            emit(Resource.Loading(false))
         }
     }
 

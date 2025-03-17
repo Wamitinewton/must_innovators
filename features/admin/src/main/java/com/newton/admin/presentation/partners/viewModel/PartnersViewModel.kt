@@ -1,5 +1,6 @@
 package com.newton.admin.presentation.partners.viewModel
 
+import android.text.format.DateFormat
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -186,8 +188,8 @@ class PartnersViewModel @Inject constructor(
                 contactPerson = _addPartnersState.value.contactPerson,
                 linkedIn = _addPartnersState.value.socialLinkedIn,
                 twitter = _addPartnersState.value.socialTwitter,
-                startDate = _addPartnersState.value.partnershipStartDate.toStringLocalTime(),
-                endDate = _addPartnersState.value.partnershipEndDate?.toStringLocalTime() ?: "null",
+                startDate = _addPartnersState.value.partnershipStartDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                endDate = _addPartnersState.value.partnershipEndDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) ?: "null",
                 ongoing = _addPartnersState.value.ongoingPartnership,
                 status = _addPartnersState.value.status,
                 scope = _addPartnersState.value.collaborationScope,

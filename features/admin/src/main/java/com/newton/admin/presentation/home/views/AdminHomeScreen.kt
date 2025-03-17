@@ -51,7 +51,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class CommunityGroup(val name: String, val members: Int)
-data class ActiveUserData(val time: String, val users: Int)
 data class SampleEvent(val community: String, val events: Int)
 data class InteractionData(val day: String, val intensity: Int)
 @OptIn(ExperimentalMaterial3Api::class)
