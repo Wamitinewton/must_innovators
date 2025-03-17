@@ -4,6 +4,7 @@ import com.newton.auth.data.data_store.SessionManager
 import com.newton.auth.data.repository.AuthRepositoryImpl
 import com.newton.core.data.remote.AuthService
 import com.newton.core.domain.repositories.AuthRepository
+import com.newton.database.DbCleaner
 import com.newton.database.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,7 @@ object AuthRepositoryModule {
     fun provideAuthRepository(
         authService: AuthService,
         sessionManager: SessionManager,
+        dbCleaner: DbCleaner,
         userDao: UserDao,
-    ): AuthRepository = AuthRepositoryImpl(authService, sessionManager, userDao)
+    ): AuthRepository = AuthRepositoryImpl(authService, sessionManager, userDao, dbCleaner)
 }

@@ -6,8 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.account.presentation.view.AccountScreen
+import com.newton.account.presentation.view.DeleteAccountScreen
 import com.newton.account.presentation.view.ProfileUpdateScreen
-import com.newton.account.presentation.viewmodel.AccountViewModel
+import com.newton.account.presentation.viewmodel.AccountManagementViewModel
+import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
@@ -21,7 +23,7 @@ class AccountNavigationApiImpl: AccountNavigationApi {
             startDestination = NavigationRoutes.AccountRoute.routes
         ){
             composable(route = NavigationRoutes.AccountRoute.routes) {
-                val accountViewModel = hiltViewModel<AccountViewModel>()
+                val accountViewModel = hiltViewModel<UpdateAccountViewModel>()
                 AccountScreen(
                     onMyEventsClick = {
                         navHostController.navigate(NavigationRoutes.EventTicketsRoute.routes)
@@ -36,16 +38,36 @@ class AccountNavigationApiImpl: AccountNavigationApi {
                     onUpdateProfile = {
                         navHostController.navigate(NavigationRoutes.ProfileUpdateScreen.routes)
                     },
+                    onDeleteAccount = {
+                        navHostController.navigate(NavigationRoutes.DeleteAccountRoute.routes)
+                    },
                 )
             }
             composable(route = NavigationRoutes.ProfileUpdateScreen.routes) {
-                val accountViewModel = hiltViewModel<AccountViewModel>()
+                val accountViewModel = hiltViewModel<UpdateAccountViewModel>()
                 ProfileUpdateScreen(
                     viewModel = accountViewModel,
                     onNavigateBack = {
                         navHostController.navigateUp()
                     }
                 )
+            }
+
+            composable(route = NavigationRoutes.DeleteAccountRoute.routes){
+                val accountManagementViewModel = hiltViewModel<AccountManagementViewModel>()
+
+                DeleteAccountScreen(
+                    onNavigateBack = {
+                        navHostController.navigateUp()
+                    },
+                    onNavigateToAccountDeleted = {
+                        navHostController.navigate(NavigationRoutes.DeleteAccountSuccessRoute.routes)
+                    },
+                    viewModel = accountManagementViewModel
+                )
+            }
+            composable(route = NavigationRoutes.DeleteAccountSuccessRoute.routes){
+
             }
         }
     }

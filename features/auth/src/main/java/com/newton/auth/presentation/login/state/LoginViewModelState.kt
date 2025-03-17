@@ -12,3 +12,5 @@ data class LoginViewModelState(
     val emailError: String? = null,
     val passwordError: String? = null,
 )
+
+
