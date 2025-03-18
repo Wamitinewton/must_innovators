@@ -39,7 +39,7 @@ fun CustomCard(
 }
 
 @Composable
-fun ReusableDialog(
+fun CustomDialog(
     title: String,
     isErrorDialog: Boolean = false,
     onDismiss: () -> Unit,

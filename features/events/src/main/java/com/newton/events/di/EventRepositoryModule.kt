@@ -24,6 +24,6 @@ object EventRepositoryModule {
         networkConfiguration: NetworkConfiguration,
         ticketDao: TicketDao,
         eventDao: EventDao
-    ): EventRepository = EventRepositoryImpl(eventApi, db, networkConfiguration, ticketDao, eventDao)
+    ): EventRepository = EventRepositoryImpl(eventApi, db, ticketDao, eventDao)
 
 }

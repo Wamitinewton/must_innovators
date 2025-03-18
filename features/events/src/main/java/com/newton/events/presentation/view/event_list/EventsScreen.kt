@@ -1,121 +1,150 @@
 package com.newton.events.presentation.view.event_list
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.newton.common_ui.ui.AnimatedErrorScreen
-import com.newton.common_ui.ui.PaginationLoadingIndicator
-import com.newton.common_ui.ui.PullToRefreshLazyColumn
+import com.newton.common_ui.composables.DefaultScaffold
+import com.newton.common_ui.composables.rememberScrollMetricsState
 import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.events.presentation.view.composables.CustomAppBar
-import com.newton.events.presentation.view.composables.EventCardAnimation
-import com.newton.events.presentation.view.composables.EventCardShimmerList
+import com.newton.core.enums.ScreenMode
+import com.newton.events.presentation.events.SearchUiEvent
+import com.newton.events.presentation.states.SearchUiState
 import com.newton.events.presentation.viewmodel.EventViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun EventsScreen(
-    modifier: Modifier = Modifier,
     eventViewModel: EventViewModel,
     onEventClick: (EventsData) -> Unit,
-    onSearchClick: () -> Unit,
     onRsvpClick: () -> Unit
 ) {
     val pagingItems = eventViewModel.pagedEvents.collectAsLazyPagingItems()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val scrollState = rememberScrollMetricsState()
+    val focusManager = LocalFocusManager.current
+
+    val screenMode = rememberSaveable { mutableStateOf(ScreenMode.BROWSING) }
+
+    val uiState by eventViewModel.uiState.collectAsState()
+    val searchQuery by eventViewModel.searchQuery.collectAsState()
+
+    val searchResults = when (uiState) {
+        is SearchUiState.Success -> (uiState as SearchUiState.Success).events
+        else -> emptyList()
+    }
 
     val isInitialLoading = pagingItems.loadState.refresh is LoadState.Loading &&
-            pagingItems.itemCount == 0
+            pagingItems.itemCount == 0 && screenMode.value == ScreenMode.BROWSING
 
     val refreshState = pagingItems.loadState.refresh
 
-    LaunchedEffect(refreshState) {
-        if (refreshState is LoadState.Error && pagingItems.itemCount > 0) {
-            scope.launch {
-                snackbarHostState.showSnackbar(
-                    message = refreshState.error.message ?: "Error refreshing events"
+    HandleErrorEffects(refreshState, uiState, snackbarHostState, scope, pagingItems.itemCount)
+
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                focusManager.clearFocus()
+            }
+    ) {
+        DefaultScaffold(
+            snackbarHostState = snackbarHostState,
+            showOrbitals = true,
+            topBar = {
+                SearchBarComponent(
+                    searchQuery = searchQuery,
+                    screenMode = screenMode.value,
+                    onSearchQueryChanged = { query ->
+                        eventViewModel.onEvent(SearchUiEvent.Search(query))
+                        if (query.isNotEmpty()) {
+                            screenMode.value = ScreenMode.SEARCHING
+                        }
+                    },
+                    onSearchClick = {
+                        if (searchQuery.isNotEmpty()) {
+                            eventViewModel.onEvent(SearchUiEvent.ExecuteSearch)
+                            focusManager.clearFocus()
+                        }
+                    },
+                    onClearClick = {
+                        eventViewModel.onEvent(SearchUiEvent.ClearSearch)
+                        screenMode.value = ScreenMode.BROWSING
+                        focusManager.clearFocus()
+                    },
+                    onActiveChange = { isActive ->
+                        if (!isActive && searchQuery.isEmpty()) {
+                            screenMode.value = ScreenMode.BROWSING
+                        }
+                    },
+                    scrollState = scrollState
                 )
             }
-        }
-    }
-
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            CustomAppBar(
-                onSearchCardClick = onSearchClick
-            )
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { paddingValue ->
-        Box(
-            modifier = Modifier.padding(
-                top = paddingValue.calculateTopPadding(),
-                bottom = paddingValue.calculateBottomPadding(),
-            )
         ) {
-            when {
-                isInitialLoading -> {
-                    EventCardShimmerList()
-                }
+            Box(modifier = Modifier.fillMaxSize()) {
+                when {
+                    isInitialLoading -> LoadingStateView()
 
-                refreshState is LoadState.Error && pagingItems.itemCount == 0 -> {
-                    AnimatedErrorScreen(
-                        message = refreshState.error.message ?: "Error Loading Events",
-                        onRetry = { pagingItems.retry() }
-                    )
-                }
+                    uiState is SearchUiState.Loading && screenMode.value == ScreenMode.SEARCHING ->
+                        SearchLoadingView()
 
-                else -> {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        PullToRefreshLazyColumn(
-                            items = pagingItems.itemSnapshotList.items,
-                            content = { event ->
-                                EventCardAnimation(
-                                    event = event,
-                                    onClick = { onEventClick(event) },
-                                    onRsvpClick = {
-                                        onEventClick(event)
-                                        onRsvpClick()
-                                    }
-                                )
-                            },
-                            isRefreshing = pagingItems.loadState.refresh is LoadState.Loading,
-                            onRefresh = { pagingItems.refresh() },
-                            modifier = Modifier.fillMaxSize(),
+                    refreshState is LoadState.Error && pagingItems.itemCount == 0 &&
+                            screenMode.value == ScreenMode.BROWSING ->
+                        ErrorStateView(
+                            message = refreshState.error.message ?: "Error Loading Events",
+                            onRetry = { pagingItems.retry() }
                         )
 
-                        AnimatedVisibility(
-                            visible = pagingItems.loadState.append is LoadState.Loading && pagingItems.itemCount > 0,
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 16.dp),
-                            enter = fadeIn() + expandVertically(),
-                            exit = fadeOut() + shrinkVertically()
-                        ) {
-                            PaginationLoadingIndicator()
-                        }
-                    }
+                    uiState is SearchUiState.Error && screenMode.value == ScreenMode.SEARCHING ->
+                        ErrorStateView(
+                            message = (uiState as SearchUiState.Error).message,
+                            onRetry = { eventViewModel.onEvent(SearchUiEvent.RetrySearch) }
+                        )
+
+                    uiState is SearchUiState.Empty && screenMode.value == ScreenMode.SEARCHING ->
+                        EmptySearchView(
+                            searchQuery = searchQuery,
+                            onClearSearch = {
+                                eventViewModel.onEvent(SearchUiEvent.ClearSearch)
+                                screenMode.value = ScreenMode.BROWSING
+                            }
+                        )
+
+                    screenMode.value == ScreenMode.SEARCHING && searchResults.isNotEmpty() ->
+                        SearchResultsView(
+                            searchResults = searchResults,
+                            onEventClick = onEventClick,
+                            onRsvpClick = onRsvpClick
+                        )
+
+                    else ->
+                        EventListView(
+                            pagingItems = pagingItems,
+                            scrollState = scrollState,
+                            onEventClick = onEventClick,
+                            onRsvpClick = onRsvpClick
+                        )
                 }
             }
         }
     }
 }
+
+
