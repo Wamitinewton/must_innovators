@@ -14,6 +14,7 @@ import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.home_models.PartnersData
+import com.newton.core.enums.FeedbackStatus
 import com.newton.core.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -22,10 +23,21 @@ interface AdminRepository {
     suspend fun addCommunity(community: AddCommunityRequest): Flow<Resource<ApiResponse<CommunityData>>>
     suspend fun updateCommunity(community: AddCommunityRequest): Flow<Resource<CommunityData>>
     suspend fun sendNewsLetter(newsLetter: NewsLetter): Flow<Resource<NewsLetterResponse>>
-    suspend fun getEventFeedbackBYId(eventId: Int,isRefresh: Boolean): Flow<Resource<List<EventsFeedback>>>
-    suspend fun getAllFeedbacks(isRefresh:Boolean):Flow<Resource<List<FeedbackData>>>
-    suspend fun getAllUsers(isRefresh:Boolean):Flow<Resource<List<UserData>>>
+    suspend fun getEventFeedbackBYId(
+        eventId: Int,
+        isRefresh: Boolean
+    ): Flow<Resource<List<EventsFeedback>>>
+
+    suspend fun getAllFeedbacks(
+        isRefresh: Boolean,
+        category: String? = null,
+        ordering: String? = null,
+        status: FeedbackStatus? = null,
+        search: String? = null
+    ): Flow<Resource<List<FeedbackData>>>
+
+    suspend fun getAllUsers(isRefresh: Boolean): Flow<Resource<List<UserData>>>
     suspend fun getRegistrationList(eventId: Int): Flow<Resource<List<Attendees>>>
-    suspend fun getListOfEvents():Flow<Resource<List<EventsData>>>
-    suspend fun addPartner(partners: AddPartnerRequest):Flow<Resource<PartnersData>>
+    suspend fun getListOfEvents(): Flow<Resource<List<EventsData>>>
+    suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>>
 }

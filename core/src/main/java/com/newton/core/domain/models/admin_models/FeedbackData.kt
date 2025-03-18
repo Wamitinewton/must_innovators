@@ -5,13 +5,13 @@ import com.newton.core.enums.FeedbackPriority
 import com.newton.core.enums.FeedbackStatus
 
 data class FeedbackData(
-    val id: String,
-    val userId: String,
+    val id: Int,
+    val userId: Int,
     val userName: String,
     val userProfilePic: String,
     val userEmail: String,
     val content: String,
-    val submissionTimestamp: Long,
+    val submittedAt: String,
     val status: FeedbackStatus,
     val priority: FeedbackPriority,
     val category: FeedbackCategory,

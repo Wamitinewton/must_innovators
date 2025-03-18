@@ -29,7 +29,7 @@ import com.newton.database.entities.UserFeedbackEntity
         PartnerEntity::class
     ],
 
-    version = 21,
+    version = 22,
     exportSchema = false
 )
 

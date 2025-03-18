@@ -52,6 +52,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.newton.common_ui.ui.toFormatedDate
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.enums.AdminAction
 import com.newton.core.enums.FeedbackCategory
@@ -66,7 +67,7 @@ import java.util.Locale
 fun FeedbackCard(
     feedback: FeedbackData,
     onCardClick: () -> Unit,
-    onActionToggle: (String, AdminAction) -> Unit,
+    onActionToggle: (Int, AdminAction) -> Unit,
     modifier: Modifier = Modifier,
     index: Int
 ) {
@@ -108,8 +109,8 @@ fun FeedbackCard(
     }
 
     val dateFormat = remember { SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()) }
-    val formattedDate = remember(feedback.submissionTimestamp) {
-        dateFormat.format(Date(feedback.submissionTimestamp))
+    val formattedDate = remember(feedback.submittedAt) {
+       feedback.submittedAt.toFormatedDate()
     }
 
     Card(

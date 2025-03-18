@@ -16,6 +16,7 @@ import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.models.admin_models.UserFeedbackResponse
 import com.newton.core.domain.models.home_models.PartnersData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,6 +29,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.PartMap
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AdminApi {
     @PUT(EventEndPoint.UPDATE_EVENT)
@@ -69,7 +71,13 @@ interface AdminApi {
         @Body community: AddCommunityRequest
     ): ApiResponse<PaginationResponse<CommunityData>>
 
-    suspend fun getUserFeedbacks(): ApiResponse<PaginationResponse<FeedbackData>>
+    @GET(EventEndPoint.Get_USERS_FEEDBACK)
+    suspend fun getUserFeedbacks(
+        @Query("category") category: String? = null,
+        @Query("ordering") order: String? = null,
+        @Query("search") search: String? = null,
+        @Query("status") status: String? = null
+    ): PaginationResponse<UserFeedbackResponse>
 
     @GET(EventEndPoint.GET_EVENTS_FEEDBACK)
     suspend fun getEventsFeedback(eventId:Int): ApiResponse<PaginationResponse<EventsFeedback>>
@@ -84,6 +92,6 @@ interface AdminApi {
     @POST(EventEndPoint.ADD_PARTNER)
     suspend fun addPartner(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part image: MultipartBody.Part
+        @Part("logo_field") image: MultipartBody.Part
     ): ApiResponse<PartnersData>
 }

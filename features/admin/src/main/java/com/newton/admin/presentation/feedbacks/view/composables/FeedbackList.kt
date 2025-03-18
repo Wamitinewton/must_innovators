@@ -22,8 +22,8 @@ import com.newton.core.enums.AdminAction
 fun FeedbackList(
     feedbacks: List<FeedbackData>,
     listState: LazyListState,
-    onFeedbackClick: (String) -> Unit,
-    onActionToggle: (String, AdminAction) -> Unit
+    onFeedbackClick: (Int) -> Unit,
+    onActionToggle: (Int, AdminAction) -> Unit
 ) {
     LazyColumn(
         state = listState,
