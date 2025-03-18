@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.ReusableDialog
+import com.newton.common_ui.ui.CustomDialog
 
 @Composable
 fun DeleteConsequenceCard(
@@ -71,7 +71,7 @@ fun DeleteAccountConfirmationDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    ReusableDialog(
+    CustomDialog(
         title = "Confirm Account Deletion",
         isErrorDialog = true,
         onDismiss = onDismiss,

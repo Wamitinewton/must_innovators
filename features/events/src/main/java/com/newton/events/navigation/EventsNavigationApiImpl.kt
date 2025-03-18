@@ -12,7 +12,6 @@ import com.newton.core.navigation.NavigationSubGraphRoutes
 import com.newton.events.presentation.view.event_details.EventDetailsScreen
 import com.newton.events.presentation.view.event_list.EventsScreen
 import com.newton.events.presentation.view.event_registration.EventRegistrationScreen
-import com.newton.events.presentation.view.search_events.EventSearchScreen
 import com.newton.events.presentation.view.ticket_screen.RegisteredEventsScreen
 import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventViewModel
@@ -45,9 +44,6 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                         sharedViewModel.setSelectedEvent(eventsData)
                         navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)
                     },
-                    onSearchClick = {
-                        navHostController.navigate(NavigationRoutes.EventSearchScreen.routes)
-                    },
                     onRsvpClick = {
                         navHostController.navigate(NavigationRoutes.EventRegistrationScreen.routes)
                     }
@@ -65,21 +61,6 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                 )
             }
 
-            composable(route = NavigationRoutes.EventSearchScreen.routes) {
-                val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
-                }
-                val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
-                val eventViewModel = hiltViewModel<EventViewModel>()
-                EventSearchScreen(
-                    viewModel = eventViewModel,
-                    onBackPress = { navHostController.navigateUp() },
-                    onEventClick = { eventsData ->
-                        sharedViewModel.setSelectedEvent(eventsData)
-                        navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)
-                    }
-                )
-            }
 
             composable(route = NavigationRoutes.EventRegistrationScreen.routes) {
                 val parentEntry = remember(it) {
