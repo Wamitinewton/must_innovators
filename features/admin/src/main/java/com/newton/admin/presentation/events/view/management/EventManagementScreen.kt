@@ -123,7 +123,9 @@ fun EventManagementScreen(
                             events,
                             listState,
                             isScrolling,
-                            onEventSelected = { onEvent.invoke(EventEvents.SelectedEvent(it)) })
+                            onEventSelected = {
+                                onEvent.invoke(EventEvents.SelectedEvent(it))
+                            })
                     }
 
                 }
@@ -142,7 +144,9 @@ fun EventManagementScreen(
                 )
             }
             if (eventState.selectedEvent != null) {
-                navController.navigate(NavigationRoutes.ModifyEvent.routes)
+                navController.navigate(NavigationRoutes.ModifyEvent.routes){
+                    popUpTo(NavigationRoutes.AdminEvents.routes)
+                }
             }
         }
     }

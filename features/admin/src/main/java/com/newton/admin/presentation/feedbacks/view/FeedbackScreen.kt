@@ -44,7 +44,7 @@ import com.newton.common_ui.composables.MeruInnovatorsAppBar
 @Composable
 fun FeedbackScreen(
     viewModel: AdminFeedbackViewModel,
-    navigateToFeedbackDetail: (String) -> Unit = {},
+    navigateToFeedbackDetail: (Int) -> Unit = {},
     onEvent: (FeedbackEvent) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()

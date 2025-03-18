@@ -2,6 +2,8 @@ package com.newton.admin.data.mappers
 
 import com.newton.core.data.response.events.EventDto
 import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.UserFeedbackResponse
 import com.newton.database.entities.EventEntity
 
 object EventMapper {

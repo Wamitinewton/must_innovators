@@ -9,13 +9,13 @@ import com.newton.core.enums.FeedbackStatus
 @Entity(tableName = "user_feedbacks")
 data class UserFeedbackEntity (
     @PrimaryKey
-    val id: String,
-    val userId: String,
+    val id: Int,
+    val userId: Int,
     val userName: String,
     val userProfilePic: String,
     val userEmail: String,
     val content: String,
-    val submissionTimestamp: Long,
+    val submissionTimestamp: String,
     val status: FeedbackStatus,
     val priority: FeedbackPriority,
     val category: FeedbackCategory,

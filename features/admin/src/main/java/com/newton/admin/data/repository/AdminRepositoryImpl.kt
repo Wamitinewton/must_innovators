@@ -1,9 +1,9 @@
 package com.newton.admin.data.repository
 
-import android.util.Log
 import com.newton.admin.data.mappers.EventMapper.toEventDaoEntity
 import com.newton.admin.data.mappers.EventMapper.toEventData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
+import com.newton.admin.data.mappers.UserFeedbackMapper.toFeedbackData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
 import com.newton.admin.data.remote.AdminApi
 import com.newton.common_ui.ui.toCustomRequestBody
@@ -12,16 +12,16 @@ import com.newton.core.domain.models.admin.NewsLetter
 import com.newton.core.domain.models.admin.NewsLetterResponse
 import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin_models.AddEventRequest
+import com.newton.core.domain.models.admin_models.AddPartnerRequest
 import com.newton.core.domain.models.admin_models.Attendees
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
-import com.newton.core.domain.models.admin_models.AddPartnerRequest
-import com.newton.core.domain.models.admin_models.PartnersResponse
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.core.domain.repositories.AdminRepository
+import com.newton.core.enums.FeedbackStatus
 import com.newton.core.utils.Resource
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.EventsFeedbackDao
@@ -32,7 +32,6 @@ import com.newton.database.mappers.toEventDataList
 import com.newton.database.mappers.toEventsEntity
 import com.newton.database.mappers.toEventsFeedbackList
 import com.newton.database.mappers.toPartnerEntity
-import com.newton.database.mappers.toPartnersEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
@@ -72,7 +71,7 @@ class AdminRepositoryImpl @Inject constructor(
                 "is_virtual" to if (event.isVirtual) "True".toCustomRequestBody() else "False".toCustomRequestBody()
             )
 
-            val response = adminApi.createEvent(params, imagePart,)
+            val response = adminApi.createEvent(params, imagePart)
             if (response.status == "success") {
                 emit(Resource.Success(data = response.data.toEventData()))
                 eventDao.insertEvent(response.data.toEventDaoEntity())
@@ -150,12 +149,19 @@ class AdminRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllFeedbacks(isRefresh: Boolean): Flow<Resource<List<FeedbackData>>> =
+
+    override suspend fun getAllFeedbacks(
+        isRefresh: Boolean,
+        category: String?,
+        ordering: String?,
+        status: FeedbackStatus?,
+        search: String?
+    ): Flow<Resource<List<FeedbackData>>> =
         flow {
             emit(Resource.Loading(true))
             try {
                 if (isRefresh) {
-                    getRemoteFeedbacks()?.let {
+                    getRemoteFeedbacks(category,ordering,status?.name,search)?.let {
                         emit(it)
                     }
 
@@ -165,7 +171,7 @@ class AdminRepositoryImpl @Inject constructor(
                         if (feedback.isNotEmpty()) {
                             emit(Resource.Success(feedback.map { it.toDomain() }))
                         } else {
-                            getRemoteFeedbacks()?.let { emit(it) }
+                            getRemoteFeedbacks(category,ordering,status?.name,search)?.let { emit(it) }
                         }
                     }
                 }
@@ -198,7 +204,7 @@ class AdminRepositoryImpl @Inject constructor(
             emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         } catch (e: Exception) {
             emit(Resource.Error("An unexpected error occurred: ${e.message ?: "Unknown error"}"))
-        }finally {
+        } finally {
             emit(Resource.Loading(false))
         }
     }
@@ -243,58 +249,63 @@ class AdminRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            val params = mapOf(
-                "name" to partners.name.toCustomRequestBody(),
-                "type" to partners.type.toCustomRequestBody(),
-                "description" to partners.description.toCustomRequestBody(),
-                "web_url" to partners.webUrl.toCustomRequestBody(),
-                "contact_email" to partners.contactEmail.toCustomRequestBody(),
-                "contact_person" to partners.contactPerson.toCustomRequestBody(),
-                "linked_in" to partners.linkedIn.toCustomRequestBody(),
-                "twitter" to partners.twitter.toCustomRequestBody(),
-                "start_date" to partners.startDate.toCustomRequestBody(),
-                "end_date" to partners.endDate.toCustomRequestBody(),
-                "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
-                "status" to partners.status.toCustomRequestBody(),
-                "scope" to partners.scope.toCustomRequestBody(),
-                "benefits" to partners.benefits.toCustomRequestBody(),
-                "events_supported" to partners.eventsSupported.toCustomRequestBody(),
-                "resources" to partners.resources.toCustomRequestBody(),
-                "achievements" to partners.achievements.toCustomRequestBody(),
-                "target_audience" to partners.targetAudience.toCustomRequestBody()
-            )
-            val requestFile = partners.logo.asRequestBody("image/*".toMediaTypeOrNull())
-            val imagePart =
-                MultipartBody.Part.createFormData("image", partners.logo.name, requestFile)
+    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> =
+        flow {
+            emit(Resource.Loading(true))
+            try {
+                val params = mapOf(
+                    "name" to partners.name.toCustomRequestBody(),
+                    "type" to partners.type.toCustomRequestBody(),
+                    "description" to partners.description.toCustomRequestBody(),
+                    "web_url" to partners.webUrl.toCustomRequestBody(),
+                    "contact_email" to partners.contactEmail.toCustomRequestBody(),
+                    "contact_person" to partners.contactPerson.toCustomRequestBody(),
+                    "linked_in" to partners.linkedIn.toCustomRequestBody(),
+                    "twitter" to partners.twitter.toCustomRequestBody(),
+                    "start_date" to partners.startDate.toCustomRequestBody(),
+                    "end_date" to partners.endDate.toCustomRequestBody(),
+                    "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
+                    "status" to partners.status.toCustomRequestBody(),
+                    "scope" to partners.scope.toCustomRequestBody(),
+                    "benefits" to partners.benefits.toCustomRequestBody(),
+                    "events_supported" to partners.eventsSupported.toCustomRequestBody(),
+                    "resources" to partners.resources.toCustomRequestBody(),
+                    "achievements" to partners.achievements.toCustomRequestBody(),
+                    "target_audience" to partners.targetAudience.toCustomRequestBody()
+                )
+                val requestFile = partners.logo.asRequestBody("image/*".toMediaTypeOrNull())
+                val imagePart =
+                    MultipartBody.Part.createFormData("image", partners.logo.name, requestFile)
 
 
-            val response = adminApi.addPartner(params,imagePart)
-            if (response.status == "success"){
-                emit(Resource.Success(response.data))
-                partnersDao.insertPartner(response.data.toPartnerEntity())
+                val response = adminApi.addPartner(params, imagePart)
+                if (response.status == "success") {
+                    emit(Resource.Success(response.data))
+                    partnersDao.insertPartner(response.data.toPartnerEntity())
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message ?: "Unknown Error occurred"))
+
+            } finally {
+                emit(Resource.Loading(false))
             }
-        } catch (e: Exception) {
-            emit(Resource.Error(e.message?:"Unknown Error occurred"))
-
-        } finally {
-            emit(Resource.Loading(false))
         }
-    }
 
 
-    private suspend fun getRemoteFeedbacks(): Resource<List<FeedbackData>>? {
+    private suspend fun getRemoteFeedbacks(category:String?,ordering:String?,status:String?,search:String?): Resource<List<FeedbackData>>? {
         return try {
-            val response = adminApi.getUserFeedbacks()
+            val response = adminApi.getUserFeedbacks(category,ordering,search,status)
 
-            if (response.status == "success" && response.data.results.isNotEmpty()) {
-                val feedbacks = response.data.results
-                saveFeedbacks(feedbacks)
+            if (response.results.isNotEmpty()) {
+                val feedbacks = response.results.toFeedbackData()
+//                saveFeedbacks(feedbacks)
                 Resource.Success(data = feedbacks)
-            } else {
-                Resource.Error("Failed to fetch feedbacks: ${response.message}")
+            }
+//            else if(response.results.isEmpty()){
+//                Resource.Error("Failed to fetch feedbacks: ${response.message}")
+//            }
+            else {
+                Resource.Error("There is no feedbacks at the moment try again later")
             }
         } catch (e: HttpException) {
             Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}")
@@ -330,7 +341,7 @@ class AdminRepositoryImpl @Inject constructor(
             userFeedbackDao.deleteAllFeedbacks()
             userFeedbackDao.insertFeedbacks(feedbacks.toUserFeedbackListEntity())
         } catch (e: Exception) {
-            Log.e("Error saving feedbacks", e.message ?: "Unknown error saving feedbacks")
+            Timber.tag("Error saving feedbacks").e(e.message ?: "Unknown error saving feedbacks")
         }
     }
 
@@ -339,7 +350,8 @@ class AdminRepositoryImpl @Inject constructor(
             eventsFeedbackDao.deleteAllEventsFeedbacks()
             eventsFeedbackDao.insertEventsFeedback(feedbacks.toEventsFeedbackList())
         } catch (e: Exception) {
-            Log.e("Error saving events feedbacks", e.message ?: "Unknown error saving feedbacks")
+            Timber.tag("Error saving events feedbacks")
+                .e(e.message ?: "Unknown error saving feedbacks")
         }
     }
 
@@ -348,7 +360,8 @@ class AdminRepositoryImpl @Inject constructor(
             eventDao.clearEvents()
             eventDao.insertEvents(events.toEventsEntity())
         } catch (e: Exception) {
-            Log.e("Error saving events feedbacks", e.message ?: "Unknown error saving feedbacks")
+            Timber.tag("Error saving events feedbacks")
+                .e(e.message ?: "Unknown error saving feedbacks")
         }
     }
 }

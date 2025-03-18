@@ -1,6 +1,8 @@
 package com.newton.admin.data.mappers
 
 import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.UserFeedbackResponse
+import com.newton.core.enums.FeedbackPriority
 import com.newton.database.entities.UserFeedbackEntity
 
 object UserFeedbackMapper {
@@ -13,7 +15,7 @@ object UserFeedbackMapper {
             userProfilePic,
             userEmail,
             content,
-            submissionTimestamp,
+            submittedAt,
             status,
             priority,
             category,
@@ -38,6 +40,24 @@ object UserFeedbackMapper {
             assignedTo
         )
     }
+
+    private fun UserFeedbackResponse.toFeedbackData():FeedbackData{
+        return FeedbackData(
+            id = id,
+            userId = user,
+            userName = user_name,
+            userProfilePic = "",
+            userEmail = email,
+            content = comment,
+            submittedAt = submitted_at,
+            status = enumValueOf(status),
+            priority = FeedbackPriority.LOW,
+            category = enumValueOf(category),
+            hasGrammarIssues = false
+        )
+    }
+
+    fun List<UserFeedbackResponse>.toFeedbackData():List<FeedbackData> = map{it.toFeedbackData()}
 
     fun List<FeedbackData>.toUserFeedbackListEntity(): List<UserFeedbackEntity> =
         map { it.toUserFeedbackEntity() }
