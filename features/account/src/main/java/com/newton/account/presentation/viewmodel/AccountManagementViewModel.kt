@@ -107,7 +107,7 @@ class AccountManagementViewModel @Inject constructor(
                 .collect { result ->
                     when (result) {
                         is Resource.Error -> {
-                            handleAccountDeletionSuccess()
+                            _deleteAccountState.update { it.copy(errorMessage = result.message) }
                         }
 
                         is Resource.Loading -> {
