@@ -35,7 +35,6 @@ fun CommunityHeader(community: Community) {
         MaterialTheme.colorScheme.primary,
         MaterialTheme.colorScheme.tertiary,
     )
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,7 +62,7 @@ fun CommunityHeader(community: Community) {
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Lead: ${community.communityLead}",
+                text = "Lead: ${community.communityLead.name}",
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )

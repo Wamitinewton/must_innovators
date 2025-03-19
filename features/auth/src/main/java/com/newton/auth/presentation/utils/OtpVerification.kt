@@ -1,11 +1,10 @@
-package com.newton.auth.presentation.reset_password.view
+package com.newton.auth.presentation.utils
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -49,7 +48,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.auth.presentation.utils.handleOtpDigitChange
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.OtpDigitBox
 import com.newton.common_ui.ui.clickableWithRipple
@@ -69,7 +67,6 @@ fun OtpVerificationScreen(
     resendOtpError: String?,
     onBackPressed: () -> Unit
 ) {
-    // State variables
     var remainingSeconds by remember { mutableIntStateOf(60) }
     var isTimerRunning by remember { mutableStateOf(true) }
     val focusRequesters = remember { List(6) { FocusRequester() } }

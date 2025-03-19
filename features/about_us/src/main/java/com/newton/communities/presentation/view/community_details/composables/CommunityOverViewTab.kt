@@ -118,7 +118,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Community Lead",
-                            name = community.communityLead,
+                            name = community.communityLead.name,
                             icon = Icons.Default.Stars
                         )
 
@@ -126,7 +126,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Co-Lead",
-                            name = community.coLead,
+                            name = community.communityLead.name,
                             icon = Icons.Default.Person
                         )
 
@@ -134,7 +134,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Secretary",
-                            name = community.secretary,
+                            name = community.communityLead.name,
                             icon = Icons.Default.Edit
                         )
                     }

@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 data class Community(
     val id: Int,
     val name: String,
-    val communityLead: String,
-    val coLead: String,
-    val secretary: String,
+    val communityLead: CommunityLeads,
+    val coLead: CommunityLeads,
+    val secretary: CommunityLeads,
     val email: String,
     val phoneNumber: String,
     val description: String,
@@ -19,6 +19,15 @@ data class Community(
     val members: List<Member>,
     val totalMembers: Int,
     val sessions: List<Session>
+)
+
+@Serializable
+data class CommunityLeads(
+    val id: Int,
+    val name: String,
+    val email: String,
+    val position: String,
+    val bio: String?
 )
 
 @Serializable

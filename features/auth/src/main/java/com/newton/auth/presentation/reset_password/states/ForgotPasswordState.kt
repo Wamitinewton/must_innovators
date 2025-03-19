@@ -1,6 +1,6 @@
 package com.newton.auth.presentation.reset_password.states
 
-import com.newton.core.enums.ForgotPassword
+import com.newton.core.enums.AuthFlow
 
 data class ForgotPasswordState(
     val email: String = "",
@@ -13,7 +13,7 @@ data class ForgotPasswordState(
     val confirmPasswordError: String? = null,
     val isLoading: Boolean = false,
     val successMessage: String? = null,
-    val currentStep: ForgotPassword = ForgotPassword.EMAIL_INPUT,
+    val passwordRecoveryFlow: AuthFlow = AuthFlow.EMAIL_INPUT,
     val isPasswordResetComplete: Boolean = false,
     val emailServerError: String? = null,
     val otpServerError: String? = null,

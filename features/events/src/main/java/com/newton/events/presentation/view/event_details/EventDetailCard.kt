@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view.composables
+package com.newton.events.presentation.view.event_details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

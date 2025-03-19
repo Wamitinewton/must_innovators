@@ -1,11 +1,13 @@
 package com.newton.core.data.mappers
 
 import com.newton.core.data.response.about_us.CommunitiesResponse
+import com.newton.core.data.response.about_us.CommunityLeadsResponse
 import com.newton.core.data.response.about_us.CommunityResponse
 import com.newton.core.data.response.about_us.MemberResponse
 import com.newton.core.data.response.about_us.SessionResponse
 import com.newton.core.data.response.about_us.SocialMediaResponse
 import com.newton.core.domain.models.about_us.Community
+import com.newton.core.domain.models.about_us.CommunityLeads
 import com.newton.core.domain.models.about_us.Member
 import com.newton.core.domain.models.about_us.Session
 import com.newton.core.domain.models.about_us.SocialMedia
@@ -14,9 +16,9 @@ fun CommunityResponse.toDomain(): Community {
     return Community(
         id = id,
         name = name,
-        communityLead = community_lead,
-        coLead = co_lead,
-        secretary = secretary,
+        communityLead = community_lead_details.toDomain(),
+        coLead = co_lead_details.toDomain(),
+        secretary = secretary_details.toDomain(),
         email = email,
         phoneNumber = phone_number,
         description = description,
@@ -27,6 +29,16 @@ fun CommunityResponse.toDomain(): Community {
         members = members.map { it.toDomain() },
         totalMembers = total_members,
         sessions = sessions.map { it.toDomain() }
+    )
+}
+
+fun CommunityLeadsResponse.toDomain(): CommunityLeads {
+    return CommunityLeads(
+        id = id,
+        name = name,
+        email = email,
+        position = position,
+        bio = bio,
     )
 }
 
