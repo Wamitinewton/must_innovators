@@ -13,12 +13,10 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.composables.ScrollMetricsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,30 +68,3 @@ fun <T> PullToRefreshLazyColumn(
 }
 
 
-@Composable
-fun <T : Any> AnimatedSearchPullToRefreshLazyColumn(
-    items: List<T>,
-    content: @Composable (T) -> Unit,
-    isRefreshing: Boolean,
-    onRefresh: () -> Unit,
-    modifier: Modifier = Modifier,
-    scrollMetricsState: ScrollMetricsState
-) {
-    val listState = rememberLazyListState()
-
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemScrollOffset }
-            .collect { offset ->
-                scrollMetricsState.onScroll(offset.toFloat())
-            }
-    }
-
-    PullToRefreshLazyColumn(
-        items = items,
-        content = content,
-        isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
-        modifier = modifier,
-        lazyListState = listState
-    )
-}

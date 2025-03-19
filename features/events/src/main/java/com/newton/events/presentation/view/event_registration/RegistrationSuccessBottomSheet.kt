@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view.composables
+package com.newton.events.presentation.view.event_registration
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOut

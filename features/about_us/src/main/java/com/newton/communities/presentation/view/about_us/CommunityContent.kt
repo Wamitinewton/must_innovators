@@ -37,7 +37,7 @@ fun CommunityContent(
     when (uiState) {
         is CommunitiesUiState.Loading -> {
             if (!uiState.isRefreshing) {
-                repeat(3) {
+                repeat(1) {
                     CommunityCardShimmer()
                 }
             }

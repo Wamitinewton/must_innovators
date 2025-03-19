@@ -84,3 +84,19 @@ data class ValidationResult(
     val isValid: Boolean,
     val errorMessage: String? = null
 )
+
+object OTPValidator {
+    fun validateOtp(otp: String, onError: (String) -> Unit): Boolean {
+        return when {
+            otp.isBlank() -> {
+                onError("OTP cannot be empty")
+                false
+            }
+            otp.length < 6 -> {
+                onError("Invalid OTP")
+                false
+            }
+            else -> true
+        }
+    }
+}

@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.newton.auth.presentation.login.event.LoginEvent
 import com.newton.auth.presentation.login.state.LoginViewModelState
@@ -29,7 +30,8 @@ fun LoginContent(
     uiState: LoginViewModelState,
     onEvent: (LoginEvent) -> Unit,
     onBackClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit
+    onForgotPasswordClick: () -> Unit,
+    onVerifyAccountClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -67,7 +69,6 @@ fun LoginContent(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-
         CustomButton(
             onClick = {
                 onEvent(LoginEvent.Login)
@@ -80,12 +81,24 @@ fun LoginContent(
                 )
             }
         )
+        Spacer(modifier = Modifier.height(15.dp))
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 11.dp),
-            horizontalArrangement = Arrangement.End
+                .padding(horizontal = 11.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            Text(
+                text = "verify existing account",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable(
+                    onClick = {
+                        onVerifyAccountClick()
+                    }
+                )
+            )
+
             Text(
                 text = "Forgot password?",
                 color = MaterialTheme.colorScheme.primary,

@@ -22,9 +22,9 @@ data class CommunitiesResponse(
 data class CommunityResponse(
     val id: Int,
     val name: String,
-    val community_lead: String,
-    val co_lead: String,
-    val secretary: String,
+    val community_lead_details: CommunityLeadsResponse,
+    val co_lead_details: CommunityLeadsResponse,
+    val secretary_details: CommunityLeadsResponse,
     val email: String,
     val phone_number: String,
     val description: String,
@@ -36,6 +36,16 @@ data class CommunityResponse(
     val total_members: Int,
     val sessions: List<SessionResponse>
 )
+
+@Serializable
+data class CommunityLeadsResponse(
+    val id: Int,
+    val name: String,
+    val email: String,
+    val position: String,
+    val bio: String?
+)
+
 
 @Serializable
 data class SocialMediaResponse(

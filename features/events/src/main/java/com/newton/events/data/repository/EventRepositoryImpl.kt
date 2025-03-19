@@ -42,13 +42,13 @@ class EventRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
-                prefetchDistance = 2,
-                enablePlaceholders = true,
+                prefetchDistance = 1,
+                enablePlaceholders = false,
                 maxSize = NETWORK_PAGE_SIZE * 5,
                 initialLoadSize = NETWORK_PAGE_SIZE * 2,
                 jumpThreshold = NETWORK_PAGE_SIZE * 4
             ),
-            remoteMediator = EventRemoteMediator(api, db),
+            remoteMediator = EventRemoteMediator(api, db, eventDao),
             pagingSourceFactory = {
                 db.eventDao.getPagedEvents()
             }

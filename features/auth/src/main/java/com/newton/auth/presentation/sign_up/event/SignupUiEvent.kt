@@ -8,10 +8,8 @@ sealed class SignupUiEvent {
     data class ConfirmPasswordChanged(val confirmPwd: String): SignupUiEvent()
     data class CourseChanged(val course: String): SignupUiEvent()
     data object SignUp: SignupUiEvent()
+    data object VerifyOtp: SignupUiEvent()
     data object ClearError: SignupUiEvent()
     data class UsernameChanged(val username: String):SignupUiEvent()
-}
-
-sealed class SignUpNavigationEvent {
-   data object NavigateToSuccess: SignUpNavigationEvent()
+    data class OtpChanged(val otp: String):SignupUiEvent()
 }

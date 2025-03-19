@@ -107,7 +107,7 @@ class AccountManagementViewModel @Inject constructor(
                 .collect { result ->
                     when (result) {
                         is Resource.Error -> {
-                            _deleteAccountState.update { it.copy(errorMessage = result.message) }
+                            _deleteAccountState.update { it.copy(errorMessage = "Failed to delete account") }
                         }
 
                         is Resource.Loading -> {

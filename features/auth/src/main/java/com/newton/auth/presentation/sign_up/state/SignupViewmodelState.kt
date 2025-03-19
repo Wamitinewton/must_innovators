@@ -1,6 +1,9 @@
 package com.newton.auth.presentation.sign_up.state
 
+import com.newton.core.enums.AuthFlow
+
 data class SignupViewmodelState(
+    val otp: String = "",
     val userName:String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
@@ -13,5 +16,8 @@ data class SignupViewmodelState(
     val passwordError: String? = null,
     val confirmPasswordError: String? = null,
     val emailError: String? = null,
-    val success: String? = null
-)
+    val success: String? = null,
+    val authFlow: AuthFlow = AuthFlow.SIGN_UP,
+    val otpServerError: String? = null,
+    val otpError: String? = null,
+    )
