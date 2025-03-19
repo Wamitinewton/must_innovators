@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view.composables
+package com.newton.events.presentation.view.ticket_screen
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -51,8 +51,6 @@ import com.newton.common_ui.ui.CopyableText
 import com.newton.core.utils.ShareManager
 import com.newton.core.utils.formatDateTime
 import com.newton.core.domain.models.event_models.TicketColorScheme
-import com.newton.events.presentation.view.ticket_screen.EventTicket
-import com.newton.events.presentation.view.ticket_screen.TicketType
 import com.newton.events.ticket_pdf.TicketPdfGenerator
 
 @Composable

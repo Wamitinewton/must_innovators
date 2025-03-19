@@ -82,7 +82,6 @@ fun MembersTab(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MemberCard(
     member: Member,

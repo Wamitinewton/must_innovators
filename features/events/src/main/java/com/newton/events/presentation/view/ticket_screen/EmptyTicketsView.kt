@@ -1,6 +1,5 @@
-package com.newton.events.presentation.view.composables
+package com.newton.events.presentation.view.ticket_screen
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

@@ -50,7 +50,9 @@ fun EmailInput(
     onEmailChanged: (String) -> Unit,
     onSubmit: () -> Unit,
     onBackPressed: () -> Unit,
-    otpError: String? = null
+    otpError: String? = null,
+    topBarTitle: String,
+    screenTitle: String
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -76,7 +78,7 @@ fun EmailInput(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Forgot password")
+                    Text(topBarTitle)
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
@@ -131,13 +133,13 @@ fun EmailInput(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Email,
-                            contentDescription = "Forgot Password",
+                            contentDescription = screenTitle,
                             modifier = Modifier.padding(8.dp)
                         )
                     }
 
                     Text(
-                        text = "Forgot Password",
+                        text = screenTitle,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,

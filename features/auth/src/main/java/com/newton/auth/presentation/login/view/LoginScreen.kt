@@ -67,7 +67,8 @@ fun LoginScreen(
           uiState = uiState,
           onEvent = loginViewModel::onEvent,
           onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
-          onForgotPasswordClick = onForgotPasswordClick
+          onForgotPasswordClick = onForgotPasswordClick,
+          onVerifyAccountClick = {}
       )
   }
 }

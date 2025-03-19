@@ -83,7 +83,7 @@ fun SignupSuccessScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Account Created Successfully!",
+                        text = "Account Verified Successfully!",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -93,7 +93,7 @@ fun SignupSuccessScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Check your email and click on the verification link to activate your account, Then proceed to login with your credentials",
+                        text = "Login in with your credentials to continue",
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)

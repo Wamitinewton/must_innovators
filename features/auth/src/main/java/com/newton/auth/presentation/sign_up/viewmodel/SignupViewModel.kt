@@ -2,179 +2,90 @@ package com.newton.auth.presentation.sign_up.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.domain.models.auth_models.SignupRequest
-import com.newton.core.domain.repositories.AuthRepository
-import com.newton.auth.presentation.sign_up.event.SignUpNavigationEvent
 import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.auth.presentation.sign_up.state.SignupViewmodelState
-import com.newton.core.utils.InputValidators
-import com.newton.core.utils.PasswordValidator
+import com.newton.core.domain.repositories.AuthRepository
+import com.newton.core.enums.AuthFlow
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SignupViewModel @Inject constructor(
+    private val stateHolder: SignupStateHolder,
     private val authRepository: AuthRepository
 ): ViewModel() {
 
-    private val _navigateToLogin = Channel<SignUpNavigationEvent>()
-    val navigateToLogin = _navigateToLogin.receiveAsFlow()
 
-    private val _signUpState: MutableStateFlow<SignupViewmodelState> = MutableStateFlow(SignupViewmodelState())
-    val authUiState: StateFlow<SignupViewmodelState> get() = _signUpState
+
+    val authUiState: StateFlow<SignupViewmodelState> = stateHolder.signUpState
 
     fun onEvent(event: SignupUiEvent) {
+        stateHolder.updateState(event)
+
         when(event) {
-            SignupUiEvent.ClearError -> clearErrors()
-            is SignupUiEvent.ConfirmPasswordChanged ->  {
-                val validateResult = _signUpState.value.passwordInput.let { password ->
-                    PasswordValidator.validatePasswordMatch(password, event.confirmPwd)
-                }
-                _signUpState.update { currentState ->
-                    currentState.copy(
-                        confirmPassword = event.confirmPwd,
-                        confirmPasswordError = validateResult.errorMessage
-                    )
-                }
-            }
-            is SignupUiEvent.UsernameChanged -> userNameChanged(event.username)
-            is SignupUiEvent.CourseChanged -> courseNameChanged(event.course)
-            is SignupUiEvent.EmailChanged -> validateEmail(event.email)
-            is SignupUiEvent.FirstNameChanged -> firstNameChanged(event.firstName)
-            is SignupUiEvent.LastNameChanged -> lastNameChanged(event.lastname)
-            is SignupUiEvent.PasswordChanged -> passwordChanged(event.password)
-
-            is SignupUiEvent.SignUp ->createUserWithEmailAndPassword()
-
+            is SignupUiEvent.SignUp -> createUserWithEmailAndPassword()
+            is SignupUiEvent.VerifyOtp -> verifyAuthOtp()
+            else -> {}
         }
-    }
-
-    private fun clearErrors() {
-        _signUpState.update { it.copy(
-            emailError = null,
-            passwordError = null,
-            confirmPasswordError = null,
-            errorMessage = null
-        ) }
-    }
-
-    private fun validateEmail(email: String) {
-        val validationResult = InputValidators.validateEmail(email)
-        _signUpState.update { it.copy(
-            emailInput = email,
-            emailError = validationResult.errorMessage
-        ) }
-    }
-
-    private fun courseNameChanged(course: String){
-        _signUpState.update { currentState ->
-            currentState.copy(courseName = course)
-        }
-    }
-    private fun firstNameChanged(firstName: String) {
-        _signUpState.update { currentState ->
-            currentState.copy(firstNameInput = firstName)
-        }
-    }
-    private fun lastNameChanged(lastName: String) {
-        _signUpState.update { currentState ->
-            currentState.copy(lastNameInput = lastName)
-        }
-    }
-    private fun userNameChanged(userName: String) {
-        _signUpState.update { currentState ->
-            currentState.copy(userName = userName)
-        }
-    }
-
-
-    private fun passwordChanged(password: String) {
-        val validationResult = PasswordValidator.validatePassword(password)
-        _signUpState.update { currentState ->
-            currentState.copy(
-                passwordInput = password,
-                passwordError = validationResult.errorMessage
-            )
-        }
-    }
-
-    private fun isFormValid(): Boolean {
-        val emailValidation = _signUpState.value.emailInput.let { InputValidators.validateEmail(it) }
-        val passwordValidation = _signUpState.value.passwordInput.let { PasswordValidator.validatePassword(it) }
-        val confirmPasswordValidation = _signUpState.value.confirmPassword.let {
-            _signUpState.value.passwordInput.let { it1 ->
-                PasswordValidator.validatePasswordMatch(
-                    it1,
-                    it
-                )
-            }
-        }
-
-
-        _signUpState.update { currentState ->
-            currentState.copy(
-                emailError = emailValidation.errorMessage,
-                passwordError = passwordValidation.errorMessage,
-                confirmPasswordError = confirmPasswordValidation.errorMessage,
-            )
-        }
-
-        return emailValidation.isValid  &&
-                passwordValidation.isValid  &&
-                confirmPasswordValidation.isValid
     }
 
     private fun createUserWithEmailAndPassword() {
-
-        if (!isFormValid()) {
+        if (!stateHolder.isFormValid()) {
             return
         }
+
         viewModelScope.launch {
             try {
-                val signUpRequest = SignupRequest(
-                    firstname  = _signUpState.value.firstNameInput,
-                    lastname = _signUpState.value.lastNameInput,
-                    email = _signUpState.value.emailInput,
-                    password = _signUpState.value.passwordInput,
-                    course = _signUpState.value.courseName,
-                    username = _signUpState.value.userName,
-                )
-                authRepository.createUserWithEmailAndPassword(
-                    signUpRequest
-                )
+                stateHolder.setLoading(true)
+
+                authRepository.createUserWithEmailAndPassword(stateHolder.getSignupRequest())
                     .collectLatest { result ->
                         when(result) {
                             is Resource.Error -> {
-                                _signUpState.value = _signUpState.value.copy(errorMessage = result.message)
+                                stateHolder.setError(result.message)
                             }
                             is Resource.Loading -> {
-                                _signUpState.value = _signUpState.value.copy(isLoading = result.isLoading)
+                                stateHolder.setLoading(result.isLoading)
                             }
                             is Resource.Success -> {
-                                _signUpState.value = _signUpState.value.copy(
-                                    isLoading = false,
-                                    errorMessage = null,
-                                    success = result.message
-                                )
-                                _navigateToLogin.send(SignUpNavigationEvent.NavigateToSuccess)
+                                stateHolder.setSuccess(result.message, AuthFlow.OTP_INPUT)
                             }
                         }
                     }
             } catch (e: Exception) {
-                _signUpState.update { it.copy(
-                    isLoading = false,
-                    errorMessage = e.message
-                ) }
+                stateHolder.setLoading(false)
+                stateHolder.setError(e.message)
             }
+        }
+    }
 
+    private fun verifyAuthOtp() {
+        if (!stateHolder.validateOtp(authUiState.value.otp)) return
+
+        viewModelScope.launch {
+            stateHolder.setLoading(true)
+            stateHolder.setOtpServerError(null)
+
+            authRepository.verifyOtp(stateHolder.getVerifyOtpRequest()).collect { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        stateHolder.setLoading(false)
+                        stateHolder.setOtpServerError(result.message)
+                    }
+                    is Resource.Loading -> {
+                        stateHolder.setLoading(result.isLoading)
+                    }
+                    is Resource.Success -> {
+                        stateHolder.setSuccess(result.message, AuthFlow.SUCCESS)
+                        Timber.d("OTP verified successfully")
+                    }
+                }
+            }
         }
     }
 }

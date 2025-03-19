@@ -6,6 +6,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.newton.auth.presentation.reset_password.events.ForgotPasswordEvent
 import com.newton.auth.presentation.reset_password.view_model.ForgotPasswordViewModel
+import com.newton.auth.presentation.utils.OtpVerificationScreen
+import com.newton.core.enums.AuthFlow
 import com.newton.core.enums.ForgotPassword
 
 @Composable
@@ -25,8 +27,8 @@ fun ForgotPasswordRoute(
             )
         }
 
-        else -> when (state.currentStep) {
-            ForgotPassword.EMAIL_INPUT -> {
+        else -> when (state.passwordRecoveryFlow) {
+            AuthFlow.EMAIL_INPUT -> {
                 EmailInput(
                     email = state.email,
                     isLoading = state.isLoading,
@@ -40,11 +42,13 @@ fun ForgotPasswordRoute(
                     },
                     onSubmit = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.RequestOtp) },
                     onBackPressed = onNavigateToLogin,
-                    otpError = state.emailServerError
+                    otpError = state.emailServerError,
+                    topBarTitle = "Forgot password",
+                    screenTitle = "Create a new password"
                 )
             }
 
-            ForgotPassword.OTP_INPUT -> {
+            AuthFlow.OTP_INPUT -> {
                 OtpVerificationScreen(
                     otp = state.otp,
                     isLoading = state.isLoading,
@@ -64,7 +68,7 @@ fun ForgotPasswordRoute(
                 )
             }
 
-            ForgotPassword.PASSWORD_RESET -> {
+            AuthFlow.PASSWORD_RESET -> {
                 NewPasswordScreen(
                     newPassword = state.password,
                     confirmPassword = state.confirmPassword,
@@ -89,10 +93,12 @@ fun ForgotPasswordRoute(
                     changePasswordError = state.passwordServerError
                 )
             }
+
+            else -> {}
         }
     }
 
-    BackHandler(enabled = state.currentStep != ForgotPassword.EMAIL_INPUT) {
+    BackHandler(enabled = state.passwordRecoveryFlow != AuthFlow.EMAIL_INPUT) {
         forgotPasswordViewModel.onEvent(ForgotPasswordEvent.NavigateBack)
     }
 

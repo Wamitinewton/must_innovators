@@ -52,7 +52,6 @@ import com.newton.core.utils.formatDateTime
 import com.newton.events.presentation.events.RsvpEvent
 import com.newton.events.presentation.states.EventDetailsState
 import com.newton.events.presentation.states.RegistrationState
-import com.newton.events.presentation.view.composables.EventRegistrationSuccessScreen
 import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 

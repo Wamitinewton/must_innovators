@@ -11,14 +11,14 @@ import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
 import com.newton.auth.presentation.login.view_model.LoginViewModel
 import com.newton.auth.presentation.reset_password.view.ForgotPasswordRoute
 import com.newton.auth.presentation.reset_password.view_model.ForgotPasswordViewModel
-import com.newton.on_boarding.view.OnboardingScreen
-import com.newton.auth.presentation.sign_up.view.SignupScreen
+import com.newton.auth.presentation.sign_up.view.SignupRoute
 import com.newton.auth.presentation.sign_up.view.SignupSuccessScreen
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.on_boarding.view.OnboardingScreen
 
-class AuthNavigationApiImpl: AuthNavigationApi {
+class AuthNavigationApiImpl : AuthNavigationApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navHostController: NavHostController,
@@ -26,12 +26,19 @@ class AuthNavigationApiImpl: AuthNavigationApi {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Auth.route,
             startDestination = NavigationRoutes.OnboardingRoute.routes
-        ){
+        ) {
             composable(route = NavigationRoutes.SignupRoute.routes) {
                 val signupViewModel = hiltViewModel<SignupViewModel>()
-                SignupScreen(
+                SignupRoute(
                     signupViewModel = signupViewModel,
-                    navHostController = navHostController,
+                    onNavigateToOnboarding = {},
+                    onContinueToLogin = {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.routes) {
+                            popUpTo(NavigationSubGraphRoutes.Auth.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 )
             }
             composable(route = NavigationRoutes.OnboardingRoute.routes) {
@@ -53,7 +60,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 LoginScreen(
                     navHostController = navHostController,
                     loginViewModel = loginViewModel,
-                    onForgotPasswordClick = {navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.routes)}
+                    onForgotPasswordClick = { navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.routes) }
                 )
             }
 
