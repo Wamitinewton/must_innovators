@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,6 +49,7 @@ fun EventManagementScreen(
     val scaffoldState = rememberScaffoldState()
     val eventState by viewModel.eventList.collectAsState()
     val events = eventState.events
+
     // Calendar preparation
     val today = LocalDate.now()
     val calendarDays = remember {
@@ -61,7 +63,7 @@ fun EventManagementScreen(
         }
         days
     }
-    var selectedTab by remember { mutableStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Overview", "Calendar", "Attendees", "Feedback")
     var selectedEvent by remember { mutableStateOf<EventsData?>(null) }
     // Animation for the feedback card
@@ -90,7 +92,6 @@ fun EventManagementScreen(
     }
 
     Scaffold(
-//        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 title = { Text("Events Management") },

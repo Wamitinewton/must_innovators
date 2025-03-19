@@ -298,7 +298,7 @@ class AdminRepositoryImpl @Inject constructor(
 
             if (response.results.isNotEmpty()) {
                 val feedbacks = response.results.toFeedbackData()
-//                saveFeedbacks(feedbacks)
+                saveFeedbacks(feedbacks)
                 Resource.Success(data = feedbacks)
             }
 //            else if(response.results.isEmpty()){

@@ -51,7 +51,6 @@ fun AttendeesTab(
         events.sortedByDescending { it.date.fromStringToLocalTime().isAfter(LocalDateTime.now()) }
     var expanded by remember { mutableStateOf(false) }
     val attendeesState by viewModel.rsvpState.collectAsState()
-
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -122,7 +121,7 @@ fun AttendeesTab(
 
             if (attendeesState.isLoading){
                 CircularProgressIndicator()
-            }else if (attendeesState.isSuccess){
+            }else if (attendeesState.isSuccess && attendeesState.attendees.isNotEmpty()){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -133,6 +132,16 @@ fun AttendeesTab(
                         attended = 3,
                         confirmed = 8,
                         total = attendeesState.attendees.size,
+                    )
+                }
+            }else if (attendeesState.attendees.isNotEmpty()){
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Their are no attendees available at the moment",
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }else{
@@ -150,7 +159,8 @@ fun AttendeesTab(
                     AttendeeItem(attendee = attendee)
                 }
             }
-        } else {
+        }
+        else {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
