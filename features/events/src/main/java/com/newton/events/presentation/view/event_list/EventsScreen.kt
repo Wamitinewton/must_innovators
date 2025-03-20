@@ -23,10 +23,12 @@ import com.newton.events.presentation.viewmodel.EventViewModel
 fun EventsScreen(
     eventViewModel: EventViewModel,
     onEventClick: (EventsData) -> Unit,
-    onRsvpClick: () -> Unit
+    onRsvpClick: (EventsData) -> Unit
 ) {
     val pagingItems = eventViewModel.pagedEvents.collectAsLazyPagingItems()
 
+    val isInitialLoading = pagingItems.loadState.refresh is LoadState.Loading &&
+            pagingItems.itemCount == 0
 
     DefaultScaffold(
         showOrbitals = true,
@@ -40,7 +42,7 @@ fun EventsScreen(
         ){
             when {
 
-                pagingItems.loadState.refresh is LoadState.Loading -> {
+                isInitialLoading -> {
                     EventShimmerList(count = 3)
                 }
 
@@ -53,7 +55,7 @@ fun EventsScreen(
                     )
                 }
 
-                pagingItems.itemCount == 0 -> {
+                pagingItems.itemCount == 0 && pagingItems.loadState.refresh !is LoadState.Loading -> {
                     EmptyEventsCard(modifier = Modifier.fillMaxSize())
                 }
 
