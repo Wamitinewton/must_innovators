@@ -21,8 +21,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.home.domain.models.AboutUs
-import com.newton.home.domain.models.Testimonial
 import com.newton.home.presentation.view.composables.AboutUsSection
 import com.newton.home.presentation.view.composables.PartnersContent
 import com.newton.home.presentation.view.composables.SectionHeader
@@ -35,7 +33,6 @@ fun HomeScreen(
     partnersViewModel: PartnersViewModel,
     testimonialsViewModel: TestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
-    onNavigateToEvents: () -> Unit,
     onNavigateToAboutUs: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
@@ -118,7 +115,6 @@ fun HomeScreen(
 
             item {
                 AboutUsSection(
-                    aboutUs = sampleAboutUs,
                     configuration = configuration,
                     onClick = { onNavigateToAboutUs() }
                 )
@@ -132,21 +128,4 @@ fun HomeScreen(
 }
 
 
-val sampleAboutUs = AboutUs(
-    title = "Innovation Club",
-    description = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
-)
-val sampleTestimonials = listOf(
-    Testimonial(
-        id = 1,
-        author = "Bett",
-        role = "Android Lead",
-        content = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
-    ),
-    Testimonial(
-        id = 1,
-        author = "Bett",
-        role = "Android Lead",
-        content = "Contrary to popular belief, Lorem Ipsum is not simply random text..."
-    )
-)
+

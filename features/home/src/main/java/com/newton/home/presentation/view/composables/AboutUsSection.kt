@@ -21,11 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.newton.home.domain.models.AboutUs
 
 @Composable
 fun AboutUsSection(
-    aboutUs: AboutUs,
     configuration: Configuration,
     onClick:()->Unit
 ) {
@@ -42,7 +40,7 @@ fun AboutUsSection(
                     modifier = Modifier.width((configuration.screenWidthDp*.4).dp)
                 ){
                     AsyncImage(
-                        model = "https://images.unsplash.com/photo-1736821481668-2cb07ceed73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw3NXx8fGVufDB8fHx8fA%3D%3D",
+                        model = com.newton.common_ui.R.drawable.innovation,
                         contentDescription = "Innovators Image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -52,8 +50,8 @@ fun AboutUsSection(
                     )
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(text = aboutUs.title, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                    Text(text = aboutUs.description, maxLines = 7)
+                    Text(text = "Club Bio", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(text = "Click here to view our communities and the club background", maxLines = 7)
                 }
             }
         }

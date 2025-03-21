@@ -24,17 +24,14 @@ class HomeNavigationApiImpl: HomeNavigationApi {
                 val partnersViewModel = hiltViewModel<PartnersViewModel>()
                 val testimonialsViewModel = hiltViewModel<TestimonialsViewModel>()
                 HomeScreen(
+                    partnersViewModel = partnersViewModel,
+                    testimonialsViewModel = testimonialsViewModel,
                     onNavigateToAdmin = {
                         navHostController.navigate(NavigationRoutes.AdminDashboard.routes)
                     },
-                    onNavigateToEvents = {
-                        navHostController.navigate(NavigationRoutes.EventsRoute.routes)
-                    },
                     onNavigateToAboutUs = {
                         navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
-                    },
-                    partnersViewModel = partnersViewModel,
-                    testimonialsViewModel = testimonialsViewModel
+                    }
                 )
             }
         }
