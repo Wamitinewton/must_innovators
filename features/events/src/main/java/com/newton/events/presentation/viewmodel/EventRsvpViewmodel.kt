@@ -2,178 +2,116 @@ package com.newton.events.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.utils.Resource
-import com.newton.core.utils.ValidationResult
-import com.newton.core.domain.models.event_models.EventRegistrationRequest
+import com.newton.core.domain.models.admin_models.RegistrationResponse
 import com.newton.core.domain.repositories.EventRepository
-import com.newton.events.presentation.events.RsvpEvent
-import com.newton.events.presentation.states.EventRegistrationFormState
-import com.newton.events.presentation.states.RegistrationState
-import com.newton.events.presentation.states.RegistrationValidationResult
-import com.newton.events.presentation.states.RegistrationValidationState
+import com.newton.core.enums.EventRegistrationFlow
+import com.newton.core.utils.Resource
+import com.newton.events.presentation.events.EventRsvpUiEvent
+import com.newton.events.presentation.states.EventRegistrationState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class EventRsvpViewmodel @Inject constructor(
-    private val repository: EventRepository
-): ViewModel() {
-    // Channel for success event
-    private val _rsvpEvents = Channel<RsvpEvent>()
-    val rsvpEvent = _rsvpEvents.receiveAsFlow()
+    private val repository: EventRepository,
+    private val stateHolder: EventRegistrationStateHolder,
+    private val ticketStateBus: TicketStateBus
+) : ViewModel() {
 
-    // UI State for reg
-    private val _registrationState = MutableStateFlow<RegistrationState>(RegistrationState.Initial)
-    val registrationState: StateFlow<RegistrationState> = _registrationState
+    val eventRegistrationState: StateFlow<EventRegistrationState> = stateHolder.registrationState
 
-    /**
-     * Form state for collecting reg data
-     */
-    private val _formState = MutableStateFlow(EventRegistrationFormState())
-    val formState: StateFlow<EventRegistrationFormState> = _formState
+    private val _navigationEvents = Channel<NavigationEvent>()
+    val navigationEvents = _navigationEvents.receiveAsFlow()
 
-    // Field validation states
-    private val _validationState = MutableStateFlow(RegistrationValidationState())
-    val validationState: StateFlow<RegistrationValidationState> = _validationState
 
-    //Submit registration request
+    fun onEvent(event: EventRsvpUiEvent) {
+        stateHolder.updateState(event)
 
-    fun registerForEvent(eventId: Int) {
-        val validationResults = validateAllFields()
+        when (event) {
+            is EventRsvpUiEvent.SubmitRegistration -> {
+                registerForEvent(event.eventId)
+            }
 
-        if (!validationResults.isFormValid) {
+            else -> {}
+        }
+    }
+
+
+    private fun registerForEvent(eventId: Int) {
+
+        if (!stateHolder.isFormValid()) {
             return
         }
-
-        val request = EventRegistrationRequest(
-            full_name = "${_formState.value.firstName} ${_formState.value.lastName}",
-            email = _formState.value.email,
-            course = _formState.value.course,
-            educational_level = _formState.value.educationLevel,
-            phone_number = _formState.value.phoneNumber,
-            expectations = _formState.value.expectations
-        )
-
         viewModelScope.launch {
-            repository.registerForEvent(eventId, request).onEach { result ->
-                when(result) {
-                    is Resource.Error -> {
-                        _registrationState.value = RegistrationState.Error(
-                            result.message ?: "An Error occuured"
-                        )
-                        _rsvpEvents.send(RsvpEvent.ShowError)
-                    }
-                    is Resource.Loading -> {
-                        _registrationState.value = RegistrationState.Loading(result.isLoading)
-                    }
-                    is Resource.Success -> {
-                        result.data?.let { response ->
-                            _registrationState.value = RegistrationState.Success(response)
+            try {
+                stateHolder.setLoading(true)
+                repository.registerForEvent(eventId, stateHolder.getEventRegistrationRequest())
+                    .onEach { result ->
+                        when (result) {
+                            is Resource.Error -> {
+                                stateHolder.setError(result.message)
+                            }
 
-                            _rsvpEvents.send(RsvpEvent.ShowSuccessBottomSheet(response))
-                            resetForm()
+                            is Resource.Loading -> {
+                                stateHolder.setLoading(result.isLoading)
+                            }
+
+                            is Resource.Success -> {
+                                stateHolder.setSuccess(
+                                    result.data,
+                                    EventRegistrationFlow.REGISTRATION_SUCCESS
+                                )
+                                ticketStateBus.updateTicket(result.data)
+                                _navigationEvents.send(NavigationEvent.NavigateToTicket)
+                            }
                         }
+
                     }
-                }
-            }.launchIn(this)
+                    .catch { e ->
+                        stateHolder.setLoading(false)
+                        stateHolder.setError(e.message)
+                    }
+                    .launchIn(this)
+            } catch (e: Exception) {
+                stateHolder.setLoading(false)
+                stateHolder.setError(e.message)
+            }
         }
     }
+}
 
-    fun updateFirstName(firstName: String) {
-        _formState.value = _formState.value.copy(firstName = firstName)
+@ActivityRetainedScoped
+class TicketStateBus @Inject constructor() {
+    private val _ticketState = MutableStateFlow<RegistrationResponse?>(null)
+    val ticketState: StateFlow<RegistrationResponse?> = _ticketState
+
+    fun updateTicket(ticket: RegistrationResponse?) {
+        _ticketState.value = ticket
     }
+}
 
-    fun updateLastName(lastName: String) {
-        _formState.value = _formState.value.copy(lastName = lastName)
-    }
+class RsvpSharedViewModel @Inject constructor(
+    ticketStateBus: TicketStateBus
+) : ViewModel() {
+    var eventTicket: StateFlow<RegistrationResponse?> =
+        ticketStateBus.ticketState.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    fun updateEmail(email: String) {
-        _formState.value = _formState.value.copy(email = email)
-    }
 
-    fun updatePhoneNumber(phoneNumber: String) {
-        if (phoneNumber.all { it.isDigit() } || phoneNumber.isEmpty()) {
-            _formState.value = _formState.value.copy(phoneNumber = phoneNumber)
-            validatePhoneNumber()
-        }
-    }
+}
 
-    fun updateCourse(course: String) {
-        _formState.value = _formState.value.copy(course = course)
-    }
 
-    fun updateEducationLevel(level: String) {
-        _formState.value = _formState.value.copy(educationLevel = level)
-    }
-
-    fun updateExpectations(expectations: String) {
-        _formState.value = _formState.value.copy(expectations = expectations)
-    }
-
-    private fun validateExpectations(): ValidationResult {
-        val expectations = _formState.value.expectations
-        val result = when {
-            expectations.isBlank() -> ValidationResult(false, "Please share your expectations")
-            expectations.length < 10 -> ValidationResult(false, "Please provide more details about your expectations")
-            else -> ValidationResult(true)
-        }
-
-        _validationState.value = _validationState.value.copy(
-            expectationsError = if (!result.isValid) result.errorMessage else null
-        )
-        return result
-    }
-
-    private fun validatePhoneNumber(): ValidationResult {
-        val phoneNumber = _formState.value.phoneNumber
-        val result = when {
-            phoneNumber.isBlank() -> ValidationResult(false, "Phone number is needed")
-            phoneNumber.length < 10 -> ValidationResult(false, "Phone number must be at least 10 digits")
-            !phoneNumber.all { it.isDigit() } -> ValidationResult(false, "Phone number must contain only digits")
-            else -> ValidationResult(true)
-        }
-        _validationState.value = _validationState.value.copy(
-            phoneNumberError = if (!result.isValid) result.errorMessage else null
-        )
-        return result
-    }
-
-    private fun validateAllFields(): RegistrationValidationResult {
-        val phoneValidation = validatePhoneNumber()
-        val expectationsValidation = validateExpectations()
-
-        val isFormValid = phoneValidation.isValid &&
-                expectationsValidation.isValid &&
-                _formState.value.firstName.isNotBlank() &&
-                _formState.value.lastName.isNotBlank() &&
-                _formState.value.course.isNotBlank() &&
-                _formState.value.educationLevel.isNotBlank()
-
-        return RegistrationValidationResult(isFormValid)
-    }
-
-    /**
-     * In case of successful registration, we want to clear form data
-     * Before navigating users to event details screen
-     */
-    private fun resetForm() {
-        _formState.value = EventRegistrationFormState(
-            firstName = _formState.value.firstName,
-            lastName = _formState.value.lastName,
-            email = _formState.value.email,
-            course = _formState.value.course,
-            phoneNumber = "",
-            educationLevel = "1",
-            expectations = ""
-        )
-
-        _validationState.value = RegistrationValidationState()
-    }
+sealed class NavigationEvent {
+    data object NavigateToTicket : NavigationEvent()
 }

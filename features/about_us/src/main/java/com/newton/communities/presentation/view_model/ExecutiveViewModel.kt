@@ -20,59 +20,48 @@ class ExecutiveViewModel @Inject constructor(
     private val repository: ExecutiveRepository
 ) : ViewModel() {
 
-    // Private mutable state flow to track UI state internally
-    private val _uiState = MutableStateFlow(ExecutiveUiState())
-
-    // Public immutable state flow exposed to the UI
+    private val _uiState = MutableStateFlow<ExecutiveUiState>(ExecutiveUiState.Loading)
     val uiState: StateFlow<ExecutiveUiState> = _uiState.asStateFlow()
 
     init {
-        // Load executives when ViewModel is created
         loadExecutives()
     }
 
-
     private fun loadExecutives() {
         viewModelScope.launch {
-            _uiState.value = ExecutiveUiState(isLoading = true)
+            _uiState.value = ExecutiveUiState.Loading
 
             repository.getExecutives().onEach { result ->
                 when (result) {
                     is Resource.Success -> {
-                        _uiState.value = ExecutiveUiState(
-                            communities = result.data ?: emptyList(),
-                            isLoading = false
+                        _uiState.value = ExecutiveUiState.Success(
+                            executives = result.data ?: emptyList()
                         )
                     }
 
                     is Resource.Error -> {
-                        _uiState.value = ExecutiveUiState(
-                            errorMessage = result.message,
-                            isLoading = false,
-                            communities = _uiState.value.communities
+                        _uiState.value = ExecutiveUiState.Error(
+                            message = result.message ?: "Unknown error occurred"
                         )
                     }
 
                     is Resource.Loading -> {
-                        _uiState.value = _uiState.value.copy(
-                            isLoading = result.isLoading,
-                            communities = _uiState.value.communities,
-                            errorMessage = null
-                        )
+                        if (result.isLoading) {
+                            _uiState.value = ExecutiveUiState.Loading
+                        }
                     }
                 }
             }.launchIn(viewModelScope)
         }
     }
 
-
     fun retryLoadExecutives() {
-        _uiState.value = _uiState.value.copy(errorMessage = null)
         loadExecutives()
     }
 
-
     fun clearError() {
-        _uiState.value = _uiState.value.copy(errorMessage = null)
+        if (_uiState.value is ExecutiveUiState.Error) {
+            loadExecutives()
+        }
     }
 }

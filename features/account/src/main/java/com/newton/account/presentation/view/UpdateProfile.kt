@@ -1,8 +1,6 @@
 package com.newton.account.presentation.view
 
 import android.webkit.URLUtil.isValidUrl
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,9 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -38,7 +34,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -56,7 +51,7 @@ import com.newton.account.presentation.composables.update_profile.SuccessDialog
 import com.newton.account.presentation.composables.update_profile.UnsavedChangesDialog
 import com.newton.account.presentation.composables.update_profile.YearOfStudyDropdown
 import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
-import com.newton.common_ui.composables.animation.custom_animations.OrbitalsBackground
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.DefaultTextField
 import com.newton.common_ui.ui.MultilineInputField
 import kotlinx.coroutines.delay
@@ -100,12 +95,6 @@ fun ProfileUpdateScreen(
         firstNameFocusRequester.requestFocus()
     }
 
-    val colors = listOf(
-        MaterialTheme.colorScheme.surface,
-        MaterialTheme.colorScheme.surfaceDim,
-        MaterialTheme.colorScheme.surfaceBright
-    )
-
     if (showSuccessDialog) {
         SuccessDialog(
             name = "${updateProfileState.userData?.first_name ?: ""} ${updateProfileState.userData?.last_name ?: ""}",
@@ -131,8 +120,9 @@ fun ProfileUpdateScreen(
         }
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState) },
+    DefaultScaffold (
+        snackbarHostState = snackBarHostState,
+        isLoading = updateProfileState.isLoading,
         topBar = {
             TopAppBar(
                 title = { Text("Update Profile") },
@@ -163,20 +153,8 @@ fun ProfileUpdateScreen(
                 }
             )
         }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = colors,
-                        startY = 0f,
-                        endY = 2000f
-                    )
-                )
-                .padding(paddingValues)
-        ) {
-            OrbitalsBackground(modifier = Modifier.fillMaxSize())
+    ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -214,7 +192,6 @@ fun ProfileUpdateScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Last Name Field
                     DefaultTextField(
                         value = profileFormState.lastName,
                         onValueChange = {
@@ -245,7 +222,6 @@ fun ProfileUpdateScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 FormSection(title = "Academic Information") {
-                    // Course Field
                     DefaultTextField(
                         value = profileFormState.course,
                         onValueChange = {
@@ -263,7 +239,6 @@ fun ProfileUpdateScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Registration Number Field
                     DefaultTextField(
                         value = profileFormState.registrationNo,
                         onValueChange = {
@@ -414,8 +389,6 @@ fun ProfileUpdateScreen(
             }
 
         }
-    }
-
     DisposableEffect(Unit) {
         onDispose {
             if (hasUnsavedChanges) {
@@ -423,4 +396,5 @@ fun ProfileUpdateScreen(
             }
         }
     }
-}
+    }
+

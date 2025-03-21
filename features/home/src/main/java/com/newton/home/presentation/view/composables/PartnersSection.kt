@@ -1,5 +1,6 @@
 package com.newton.home.presentation.view.composables
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,16 +21,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.newton.common_ui.ui.EmptyStateCard
 import com.newton.common_ui.ui.ErrorBanner
+import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.home.presentation.states.PartnersUiState
 
@@ -63,7 +70,6 @@ fun SectionHeader(
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
-
         if (showViewAll) {
             Box(
                 modifier = Modifier
@@ -89,7 +95,7 @@ fun PartnersContent(
 ) {
     when (partnersState) {
         is PartnersUiState.Loading -> {
-            PartnersLoadingIndicator()
+            LoadingIndicator(text = "Loading Partners....")
         }
 
         is PartnersUiState.Error -> {
@@ -122,33 +128,7 @@ fun PartnersContent(
     }
 }
 
-@Composable
-fun PartnersLoadingIndicator() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(48.dp)
-            )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Loading partners...",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-            )
-        }
-    }
-}
 
 @Composable
 fun PartnersSection(
@@ -188,7 +168,7 @@ fun PartnerCard(
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -196,7 +176,7 @@ fun PartnerCard(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(64.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.primaryContainer),
                     contentAlignment = Alignment.Center
@@ -211,8 +191,7 @@ fun PartnerCard(
                     )
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
-
+                Spacer(modifier = Modifier.width(12.dp))
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -223,75 +202,116 @@ fun PartnerCard(
                     )
 
                     Text(
-                        text = partner.type,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    Text(
-                        text = partner.scope,
+                        text = "${partner.type} • ${partner.scope}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.outline
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
                 StatusBadge(status = partner.status)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = partner.description,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 3
+                maxLines = 2
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-            Spacer(modifier = Modifier.height(16.dp))
-
-            InfoSection(
-                title = "Contact Information",
-                content = {
-                    ContactInfoItem(
-                        icon = Icons.Filled.Person,
-                        label = "Contact Person",
-                        text = partner.contact_person
-                    )
-
-                    ContactInfoItem(
-                        icon = Icons.Filled.Email,
-                        label = "Email",
-                        text = partner.contact_email
-                    )
-                }
+            Spacer(modifier = Modifier.height(8.dp))
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.outlineVariant,
+                thickness = 0.5.dp
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                CompactInfoItem(
+                    icon = Icons.Filled.Person,
+                    text = partner.contact_person,
+                    modifier = Modifier.weight(1f)
+                )
 
-            Spacer(modifier = Modifier.height(12.dp))
+                CompactInfoItem(
+                    icon = Icons.Filled.Email,
+                    text = partner.contact_email,
+                    modifier = Modifier.weight(1f)
+                )
 
-            InfoSection(
-                title = "Partnership Details",
-                content = {
-                    ContactInfoItem(
-                        icon = Icons.Filled.CalendarMonth,
-                        label = "Since",
-                        text = partner.start_date
-                    )
-                }
+                CompactInfoItem(
+                    icon = Icons.Filled.CalendarMonth,
+                    text = partner.start_date,
+                    modifier = Modifier.weight(0.8f)
+                )
+            }
+
+            ExpandableAchievementsSection(achievements = partner.achievements)
+        }
+    }
+}
+
+@Composable
+fun CompactInfoItem(
+    icon: ImageVector,
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.padding(vertical = 4.dp)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@Composable
+fun ExpandableAchievementsSection(achievements: String) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = !expanded }
+                .padding(vertical = 4.dp)
+        ) {
+            Text(
+                text = "Achievements",
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary
             )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                contentDescription = if (expanded) "Collapse" else "Expand",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(16.dp)
+            )
+        }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            InfoSection(
-                title = "Achievements",
-                content = {
-                    Text(
-                        text = partner.achievements,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+        AnimatedVisibility(visible = expanded) {
+            Text(
+                text = achievements,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 4.dp)
             )
         }
     }
@@ -324,58 +344,3 @@ fun StatusBadge(status: String) {
     }
 }
 
-@Composable
-fun InfoSection(
-    title: String,
-    content: @Composable () -> Unit
-) {
-    Column {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        content()
-    }
-}
-
-@Composable
-fun ContactInfoItem(
-    icon: ImageVector,
-    label: String,
-    text: String
-) {
-    Row(
-        verticalAlignment = Alignment.Top,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(16.dp),
-            tint = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Column {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Text(
-                text = text,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        }
-    }
-}

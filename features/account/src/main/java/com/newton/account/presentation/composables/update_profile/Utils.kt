@@ -1,6 +1,5 @@
 package com.newton.account.presentation.composables.update_profile
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,17 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -38,40 +32,6 @@ import com.newton.common_ui.ui.EnhancedLottieAnimation
 
 
 @Composable
-fun EmptyProjectsPlaceholder(
-    onAddProject: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "No projects added yet",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ElevatedButton(
-            onClick = onAddProject,
-            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                modifier = Modifier.size(18.dp)
-            )
-            Spacer(modifier = Modifier.size(8.dp))
-            Text("Add Your First Project")
-        }
-    }
-}
-
-@Composable
 fun SaveButton(
     isSaving: Boolean,
     onClick: () -> Unit
@@ -82,17 +42,9 @@ fun SaveButton(
         modifier = Modifier.padding(end = 8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        AnimatedVisibility(visible = !isSaving) {
-            Text("Save")
-        }
+        Text("Save")
 
-        AnimatedVisibility(visible = isSaving) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(24.dp),
-                strokeWidth = 2.dp,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        }
+
     }
 }
 
@@ -119,9 +71,9 @@ fun SuccessDialog(
                         .size(200.dp)
                         .padding(16.dp)
                 ) {
-                   EnhancedLottieAnimation(
-                       lottieFile = com.newton.common_ui.R.raw.innovators_success
-                   )
+                    EnhancedLottieAnimation(
+                        lottieFile = com.newton.common_ui.R.raw.innovators_success
+                    )
                 }
 
                 Text(

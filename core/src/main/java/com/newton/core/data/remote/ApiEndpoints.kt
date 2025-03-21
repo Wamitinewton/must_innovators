@@ -2,8 +2,8 @@ package com.newton.core.data.remote
 
 object ApiEndpoints {
     const val GET_COMMUNITIES = "list-communities/"
-    const val GET_EXECUTIVES = "executives/"
-
+    const val GET_EXECUTIVES = "api/executives/"
+    const val GET_CLUB_BIO = "api/club/"
 
     const val REGISTER = "api/account/register/"
     const val LOGIN = "api/account/login/"
@@ -12,7 +12,7 @@ object ApiEndpoints {
     const val GET_USER_DATA = "api/account/get-user-data/"
     const val UPDATE_USER_DATA = "api/account/update-user-profile/"
     const val REQUEST_OTP = "api/account/password-reset/request/"
-    const val VERIFY_OTP = "api/account/password-reset/verify-otp/"
+    const val VERIFY_OTP = "api/account/verify-otp/"
     const val RESET_PASSWORD = "api/account/password-reset/reset/"
     const val DELETE_ACCOUNT = "api/account/delete-account/"
 
@@ -22,5 +22,6 @@ object ApiEndpoints {
     const val SEARCH_EVENT = "events/by-name/"
 
     const val GET_PARTNERS = "partners/"
+    const val GET_TESTIMONIALS = "testimonies/testimonials/"
 
 }

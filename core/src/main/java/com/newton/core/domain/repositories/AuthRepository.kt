@@ -49,4 +49,6 @@ interface AuthRepository {
 
     suspend fun logoutUser(): Flow<Resource<Unit>>
 
+    fun observeLoggedInUser(): Flow<UserData?>
+
 }

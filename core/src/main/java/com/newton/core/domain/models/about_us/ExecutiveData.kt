@@ -11,7 +11,7 @@ data class ExecutiveData(
 
 @Serializable
 data class Executive(
-    val bio: String,
+    val bio: String?,
     val email: String,
     val id: Int,
     val name: String,

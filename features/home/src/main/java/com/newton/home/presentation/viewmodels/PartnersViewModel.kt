@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class PartnersViewModel @Inject constructor(
     private val homeRepository: HomeRepository
 ) : ViewModel() {
 

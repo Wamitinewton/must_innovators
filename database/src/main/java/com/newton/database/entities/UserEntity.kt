@@ -10,7 +10,6 @@ import com.newton.core.domain.models.auth_models.Project
 import com.newton.core.domain.models.auth_models.SocialMedia
 
 @Entity(tableName = "user")
-@TypeConverters(UserConverters::class)
 data class UserEntity(
     val course: String? = null,
     val email: String,
@@ -30,45 +29,3 @@ data class UserEntity(
     val id: Int = 1
 )
 
-
-class UserConverters {
-  private val gson = Gson()
-
-    @TypeConverter
-    fun fromStringList(value: List<String>?): String? {
-        return value?.let { gson.toJson(it) }
-    }
-
-    @TypeConverter
-    fun toStringList(value: String?): List<String>? {
-        return value?.let {
-            val type = object : TypeToken<List<String>>() {}.type
-            gson.fromJson(it, type)
-        }
-    }
-
-    @TypeConverter
-    fun fromSocialMedia(value: SocialMedia?): String? {
-        return value?.let { gson.toJson(it) }
-    }
-
-    @TypeConverter
-    fun toSocialMedia(value: String?): SocialMedia? {
-        return value?.let {
-            gson.fromJson(it, SocialMedia::class.java)
-        }
-    }
-
-    @TypeConverter
-    fun fromProjectList(value: List<Project>?): String? {
-        return value?.let { gson.toJson(it) }
-    }
-
-    @TypeConverter
-    fun toProjectList(value: String?): List<Project>? {
-        return value?.let {
-            val type = object : TypeToken<List<Project>>() {}.type
-            gson.fromJson(it, type)
-        }
-    }
-}

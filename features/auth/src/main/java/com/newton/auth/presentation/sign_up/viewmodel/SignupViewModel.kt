@@ -9,7 +9,8 @@ import com.newton.core.enums.AuthFlow
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class SignupViewModel @Inject constructor(
                 stateHolder.setLoading(true)
 
                 authRepository.createUserWithEmailAndPassword(stateHolder.getSignupRequest())
-                    .collectLatest { result ->
+                    .onEach { result ->
                         when(result) {
                             is Resource.Error -> {
                                 stateHolder.setError(result.message)
@@ -56,7 +57,7 @@ class SignupViewModel @Inject constructor(
                                 stateHolder.setSuccess(result.message, AuthFlow.OTP_INPUT)
                             }
                         }
-                    }
+                    }.launchIn(this)
             } catch (e: Exception) {
                 stateHolder.setLoading(false)
                 stateHolder.setError(e.message)
@@ -71,7 +72,8 @@ class SignupViewModel @Inject constructor(
             stateHolder.setLoading(true)
             stateHolder.setOtpServerError(null)
 
-            authRepository.verifyOtp(stateHolder.getVerifyOtpRequest()).collect { result ->
+            authRepository.verifyOtp(stateHolder.getVerifyOtpRequest())
+                .onEach { result ->
                 when (result) {
                     is Resource.Error -> {
                         stateHolder.setLoading(false)
@@ -85,7 +87,7 @@ class SignupViewModel @Inject constructor(
                         Timber.d("OTP verified successfully")
                     }
                 }
-            }
+            }.launchIn(this)
         }
     }
 }

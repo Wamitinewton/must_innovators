@@ -50,7 +50,9 @@ object AppDatabaseModule {
     @Singleton
     fun providePartnersDao(db: AppDatabase) = db.partnersDao
 
-
+    @Provides
+    @Singleton
+    fun provideClubBioDao(db: AppDatabase) = db.clubBioDao
 
 }
 

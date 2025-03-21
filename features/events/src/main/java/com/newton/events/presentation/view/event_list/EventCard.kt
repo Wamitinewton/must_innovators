@@ -187,7 +187,7 @@ fun EventCard(
 fun EventListView(
     pagingItems: LazyPagingItems<EventsData>,
     onEventClick: (EventsData) -> Unit,
-    onRsvpClick: () -> Unit,
+    onRsvpClick: (EventsData) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
@@ -198,8 +198,7 @@ fun EventListView(
                     event = event,
                     onClick = { onEventClick(event) },
                     onRsvpClick = {
-                        onEventClick(event)
-                        onRsvpClick()
+                        onRsvpClick(event)
                     },
 
                     )

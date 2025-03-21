@@ -83,8 +83,9 @@ dependencies {
     implementation(Dependencies.material_icons_core)
     implementation(Dependencies.material_icons_extended)
 
-    //zxing
     implementation(Dependencies.zxing_qr)
+
+    implementation(Dependencies.timber)
 
 
 

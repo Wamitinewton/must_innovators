@@ -13,6 +13,7 @@ import com.newton.common_ui.ui.EmptyStateCard
 import com.newton.common_ui.ui.ErrorBanner
 import com.newton.communities.presentation.events.CommunityUiEvent
 import com.newton.communities.presentation.state.CommunitiesUiState
+import com.newton.communities.presentation.view.about_us.composables.CommunitiesList
 import com.newton.communities.presentation.view.about_us.composables.CommunityCard
 import com.newton.communities.presentation.view.about_us.composables.CommunityCardShimmer
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
@@ -91,14 +92,10 @@ fun CommunityContent(
                     }
                 )
 
-                communities.forEach { community ->
-                    CommunityCard(
-                        community = community,
-                        onSeeDetailsClick = {
-                            onCommunityDetailsClick(community)
-                        }
-                    )
-                }
+                CommunitiesList(
+                    communities = communities,
+                    onCommunityClick = onCommunityDetailsClick
+                )
             }
         }
     }
