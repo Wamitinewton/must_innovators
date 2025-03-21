@@ -28,6 +28,7 @@ import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 import com.newton.events.presentation.viewmodel.NavigationEvent
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,10 +59,11 @@ fun EventRegistrationScreen(
 
     LaunchedEffect(uiState.errorMessage) {
         uiState.errorMessage?.let { error ->
+            Timber.e(error)
             scope.launch {
                 snackbarHostState.showSnackbar(
                     message = error,
-                    duration = SnackbarDuration.Short
+                    duration = SnackbarDuration.Indefinite
                 )
                 eventRsvpViewmodel.onEvent(EventRsvpUiEvent.ClearError)
             }

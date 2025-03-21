@@ -5,6 +5,7 @@ import com.newton.communities.data.repository.ExecutiveRepositoryImpl
 import com.newton.core.data.remote.AboutClubService
 import com.newton.core.domain.repositories.CommunityRepository
 import com.newton.core.domain.repositories.ExecutiveRepository
+import com.newton.database.dao.ClubBioDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,8 @@ object AboutUsRepositoryModule {
     @Singleton
     fun provideAboutUsRepository(
         aboutUsApi: AboutClubService,
-    ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi)
+        clubBioDao: ClubBioDao
+    ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi, clubBioDao)
 
     @Provides
     @Singleton
