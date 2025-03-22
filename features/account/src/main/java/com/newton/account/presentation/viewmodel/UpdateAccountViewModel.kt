@@ -110,7 +110,7 @@ class UpdateAccountViewModel @Inject constructor(
                         }
                     }
                 }
-                .launchIn(viewModelScope)
+                .launchIn(this)
         }
     }
 
