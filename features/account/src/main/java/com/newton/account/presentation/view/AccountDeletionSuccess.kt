@@ -1,18 +1,10 @@
 package com.newton.account.presentation.view
 
 import android.app.Activity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,60 +18,32 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 
 @Composable
 fun AccountDeletedScreen(
     onCreateNewAccount: () -> Unit,
     onExitApp: (Activity) -> Unit
 ) {
-    var showCheckmark by remember { mutableStateOf(false) }
-    var showContent by remember { mutableStateOf(false) }
-    var showButtons by remember { mutableStateOf(false) }
 
-    // Animation scales
-    val checkmarkScale by animateFloatAsState(
-        targetValue = if (showCheckmark) 1f else 0f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-        ),
-        label = "checkmark scale"
-    )
+
 
 
     val currentContext = LocalContext.current
-
-    LaunchedEffect(Unit) {
-        showCheckmark = true
-        delay(1500)
-        showContent = true
-        delay(1000)
-        showButtons = true
-    }
 
     Scaffold { paddingValues ->
         Box(
@@ -102,8 +66,7 @@ fun AccountDeletedScreen(
                         .padding(bottom = 48.dp)
                         .size(120.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .scale(checkmarkScale),
+                        .background(MaterialTheme.colorScheme.primaryContainer),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -113,12 +76,7 @@ fun AccountDeletedScreen(
                         modifier = Modifier.size(64.dp)
                     )
                 }
-
-                AnimatedVisibility(
-                    visible = showContent,
-                    enter = fadeIn() + slideInVertically { it / 2 } + expandVertically()
-                ) {
-                    Column(
+                Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
@@ -149,10 +107,6 @@ fun AccountDeletedScreen(
                     }
                 }
 
-                AnimatedVisibility(
-                    visible = showButtons,
-                    enter = fadeIn() + slideInVertically { it / 2 }
-                ) {
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -179,7 +133,7 @@ fun AccountDeletedScreen(
                         }
 
                         OutlinedButton(
-                         onClick = {
+                            onClick = {
                                 (currentContext as? Activity)?.let { activity ->
                                     onExitApp(activity)
                                 }
@@ -202,24 +156,5 @@ fun AccountDeletedScreen(
                 }
             }
         }
-    }
-}
 
 
-@Composable
-private fun LoadingDialog() {
-    AlertDialog(
-        onDismissRequest = { },
-        title = { Text("Please wait") },
-        text = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                CircularProgressIndicator(modifier = Modifier.size(24.dp))
-                Text("Logging out...")
-            }
-        },
-        confirmButton = { }
-    )
-}
