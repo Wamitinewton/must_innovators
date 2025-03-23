@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +38,7 @@ import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewMod
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.OopsError
 import com.newton.common_ui.ui.LoadingDialog
+import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin.Session
 import com.newton.core.domain.models.admin.Socials
@@ -47,15 +49,15 @@ import com.newton.core.domain.models.admin.Socials
 fun UpdateCommunityScreen(
     sharedViewModel: CommunitySharedViewModel,
     viewModel: UpdateCommunityViewModel,
-    onEvent:(UpdateCommunityEvent)->Unit
+    onEvent: (UpdateCommunityEvent) -> Unit
 ) {
     val updateCommunityEffect by sharedViewModel.uiState.collectAsState()
     val communityState by viewModel.updateCommunityState.collectAsState()
-
-//    var showAddSessionDialog by remember { mutableStateOf(false) }
-//    var sessionToEdit by remember { mutableStateOf<Session?>(null) }
-
-
+    DisposableEffect(Unit) {
+        onDispose {
+            sharedViewModel.clearSelectedCommunity()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -110,48 +112,22 @@ fun UpdateCommunityScreen(
             }
         }
     ) { paddingValues ->
-        DefaultScaffold(isLoading = communityState.isLoading) {
-          Box(modifier = Modifier.fillMaxSize().padding(paddingValues))  {
-              when(updateCommunityEffect){
-                  is UpdateCommunityEffect.Error -> {
-                      OopsError(errorMessage = (updateCommunityEffect as UpdateCommunityEffect.Error).message)
-                  }
-                  UpdateCommunityEffect.Initial -> TODO()
-                  is UpdateCommunityEffect.Success -> {
-                      val community = (updateCommunityEffect as UpdateCommunityEffect.Success).community
-                      UpdateCommunityCard(
-                          community, onEvent,
-                          isEditing = communityState.isEditing
-                      )
-                  }
+        when (updateCommunityEffect) {
+            is UpdateCommunityEffect.Error -> {
+                OopsError(errorMessage = (updateCommunityEffect as UpdateCommunityEffect.Error).message)
+            }
 
-              }
-
-          }
-        }
-        if (communityState.showAddSessionDialog) {
-            SessionDialog(
-                session = communityState.sessionToEdit,
-                onDismiss = {
-                    onEvent.invoke(UpdateCommunityEvent.ShowAddSession(false))
-                            },
-                onSave = { session ->
-                    val newSessions = communityState.sessions?.toMutableList()
-                    if (communityState.sessionToEdit == null) {
-                        newSessions!!.add(session)
-                    } else {
-                        val index = newSessions?.indexOf(communityState.sessionToEdit)
-                        if (index != -1) {
-                            newSessions?.set(index?:0, session)
-                        }
-                    }
-                    newSessions?.let {
-                        onEvent.invoke(UpdateCommunityEvent.SessionsChanged(it))
-                    }
-                    onEvent.invoke(UpdateCommunityEvent.ShowAddSocialDialog(false))
-                    onEvent.invoke(UpdateCommunityEvent.SessionToEdit(null))
-                }
-            )
+            UpdateCommunityEffect.Initial -> {}
+            is UpdateCommunityEffect.Success -> {
+                val community =
+                    (updateCommunityEffect as UpdateCommunityEffect.Success).community
+                UpdateCommunityCard(
+                    community, onEvent,
+                    isEditing = communityState.isEditing,
+                    padding = paddingValues,
+                    communityState = communityState
+                )
+            }
         }
     }
 }

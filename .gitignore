@@ -16,5 +16,5 @@ local.properties
 keys.properties
 innovation_keystore.jks
 /.kotlin
-/.idea
+/.idea/
 /app/google-services.json
