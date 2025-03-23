@@ -11,6 +11,7 @@ import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
 import com.newton.core.domain.models.admin_models.UpdateEventRequest
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.home_models.PartnersData
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 interface AdminRepository {
     suspend fun addEvent(event: AddEventRequest): Flow<Resource<EventsData>>
     suspend fun addCommunity(community: AddCommunityRequest): Flow<Resource<ApiResponse<CommunityData>>>
-    suspend fun updateCommunity(community: AddCommunityRequest): Flow<Resource<CommunityData>>
+    suspend fun updateCommunity(communityId:Int,community: UpdateCommunityRequest): Flow<Resource<CommunityData>>
     suspend fun updateEvent(event: UpdateEventRequest,eventId:Int): Flow<Resource<EventsData>>
     suspend fun sendNewsLetter(newsLetter: NewsLetter): Flow<Resource<NewsLetterResponse>>
     suspend fun getEventFeedbackBYId(

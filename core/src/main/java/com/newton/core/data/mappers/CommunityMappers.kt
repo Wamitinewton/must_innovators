@@ -11,6 +11,7 @@ import com.newton.core.domain.models.about_us.CommunityLeads
 import com.newton.core.domain.models.about_us.Member
 import com.newton.core.domain.models.about_us.Session
 import com.newton.core.domain.models.about_us.SocialMedia
+import com.newton.core.domain.models.admin.Session as AdminSession
 
 fun CommunityResponse.toDomain(): Community {
     return Community(
@@ -80,3 +81,9 @@ private fun parseTechStack(techStack: Any): List<String> {
         else -> emptyList()
     }
 }
+
+fun Session.toAdminSession():AdminSession{
+    return AdminSession(day, endTime, location, meetingType, startTime)
+}
+
+fun List<Session>.toAdminSessionList():List<AdminSession> = map{it.toAdminSession()}

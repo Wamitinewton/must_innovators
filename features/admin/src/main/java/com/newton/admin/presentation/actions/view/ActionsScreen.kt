@@ -33,6 +33,7 @@ val actionList: List<NavItem> = listOf(
     NavItem("Add Community", NavigationRoutes.AddCommunity.routes),
     NavItem("Add Event", NavigationRoutes.AddEvent.routes),
     NavItem("Add Executive", NavigationRoutes.UpdateExecutive.routes),
+    NavItem("Update Community", NavigationRoutes.AdminCommunityList.routes),
 )
 
 data class NavItem(
@@ -47,7 +48,6 @@ data class NotificationItem(
 
 val notificationList: List<NotificationItem> = listOf(
     NotificationItem("Send Newsletter", NavigationRoutes.SendNewsLetter.routes)
-
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
