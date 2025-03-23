@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,35 +23,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.admin.presentation.community.states.UpdateCommunityState
 import com.newton.common_ui.ui.CustomCard
+import com.newton.common_ui.ui.FlowRow
 import com.newton.core.domain.models.about_us.Community
 
 
 @Composable
 fun CommunityCard(
-    community:Community,
-    onSelectedCommunity:(Community)->Unit
+    community: Community,
+    onSelectedCommunity: () -> Unit
 ) {
     CustomCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable{
-                onSelectedCommunity(community)
+            .clickable {
+                onSelectedCommunity()
             },
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Gradient Header
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
-                                Color(0xFF3A7BD5),
-                                Color(0xFF00D2FF)
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary
                             )
                         )
                     )
@@ -63,31 +64,20 @@ fun CommunityCard(
                     fontWeight = FontWeight.SemiBold
                 )
             }
-
-            // Card Body
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp)
             ) {
-                // Tech Stack
                 Column(modifier = Modifier.padding(bottom = 16.dp)) {
                     LabelText(text = "Tech Stack")
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        TechStackItem(community.techStack)
-                    }
+                    TechStackItem(community.techStack)
                 }
 
-                // Email
                 Column(modifier = Modifier.padding(bottom = 16.dp)) {
                     LabelText(text = "Email")
                     DataText(text = community.email)
                 }
-
-                // Description
                 Column(modifier = Modifier.padding(bottom = 16.dp)) {
                     LabelText(text = "Description")
                     Text(
@@ -114,9 +104,7 @@ fun CommunityCard(
 fun LabelText(text: String) {
     Text(
         text = text,
-        color = Color(0xFF94A3B8),
-        fontSize = 12.sp,
-        fontWeight = FontWeight.SemiBold,
+        style = MaterialTheme.typography.bodyLarge,
         letterSpacing = 0.7.sp,
         modifier = Modifier.padding(bottom = 6.dp)
     )
@@ -126,25 +114,26 @@ fun LabelText(text: String) {
 fun DataText(text: String) {
     Text(
         text = text,
-        color = Color(0xFF334155),
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
         fontSize = 16.sp
     )
 }
 
 @Composable
 fun TechStackItem(techList: List<String>) {
-    techList.forEach { tech ->
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(4.dp))
-                .background(Color(0xFFEEF2FF))
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            Text(
-                text = tech,
-                color = Color(0xFF4F46E5),
-                fontSize = 14.sp
-            )
+    FlowRow(modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)) {
+        techList.forEach { tech ->
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = tech,
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
         }
     }
 }

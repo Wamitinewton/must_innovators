@@ -10,6 +10,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,6 +44,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.admin.presentation.community.events.UpdateCommunityEvent
+import com.newton.admin.presentation.community.states.CommunityState
+import com.newton.admin.presentation.community.states.UpdateCommunityState
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.toFormatedDate
 import com.newton.core.data.mappers.toAdminSession
 import com.newton.core.data.mappers.toAdminSessionList
@@ -52,23 +56,21 @@ import com.newton.core.domain.models.about_us.Community
 fun UpdateCommunityCard(
     communityData: Community,
     onEvent: (UpdateCommunityEvent) -> Unit,
-    isEditing:Boolean
+    isEditing:Boolean,
+    padding:PaddingValues,
+    communityState: UpdateCommunityState
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
+    DefaultScaffold () {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .padding(padding)
         ) {
             // Community header with name and recruitment status
             CommunityHeader(
                 communityName = communityData.name,
-                isRecruiting = communityData.isRecruiting ?: false,
+                isRecruiting = communityData.isRecruiting,
                 isEditing = isEditing,
                 onNameChange = {
                     onEvent.invoke(UpdateCommunityEvent.NameChanged(it))
@@ -239,7 +241,7 @@ fun UpdateCommunityCard(
             ) {
                 DetailRow(
                     label = "Founding Date",
-                    value = communityData.foundingDate.toFormatedDate(),
+                    value = communityData.foundingDate,
                     icon = Icons.Default.CalendarMonth,
                     isEditing = isEditing,
                     onValueChange = { onEvent.invoke(UpdateCommunityEvent.DateFoundedChanged(it)) }
@@ -348,6 +350,30 @@ fun UpdateCommunityCard(
                     )
                 }
             }
+        }
+        if (communityState.showAddSessionDialog) {
+            SessionDialog(
+                session = communityState.sessionToEdit,
+                onDismiss = {
+                    onEvent.invoke(UpdateCommunityEvent.ShowAddSession(false))
+                },
+                onSave = { session ->
+                    val newSessions = communityState.sessions?.toMutableList()
+                    if (communityState.sessionToEdit == null) {
+                        newSessions!!.add(session)
+                    } else {
+                        val index = newSessions?.indexOf(communityState.sessionToEdit)
+                        if (index != -1) {
+                            newSessions?.set(index ?: 0, session)
+                        }
+                    }
+                    newSessions?.let {
+                        onEvent.invoke(UpdateCommunityEvent.SessionsChanged(it))
+                    }
+                    onEvent.invoke(UpdateCommunityEvent.ShowAddSocialDialog(false))
+                    onEvent.invoke(UpdateCommunityEvent.SessionToEdit(null))
+                }
+            )
         }
     }
 

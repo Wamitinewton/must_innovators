@@ -19,6 +19,7 @@ import com.newton.admin.presentation.community.view.composable.CommunityCard
 import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.OopsError
+import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.core.domain.models.about_us.Community
 import com.newton.core.navigation.NavigationRoutes
 
@@ -31,26 +32,18 @@ fun AdminCommunityList(
     val communityState by viewModel.updateCommunityState.collectAsState()
     DefaultScaffold(topBar = {
         TopAppBar(title = { Text("Select Community to update") })
-    }) {
-        if (communityState.isLoading) {
-            Box(modifier = Modifier.fillMaxSize()){
-                CircularProgressIndicator()
-            }
-        } else if (communityState.errorMessage != null) {
+    }, isLoading = communityState.isLoading) {
+        if (communityState.errorMessage != null) {
             OopsError(errorMessage = communityState.errorMessage!!)
-        } else if (communityState.isSuccess) {
+        } else{
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(communityState.communities, key = { it.id }) { community ->
                     CommunityCard(
                         community,
-                        onSelectedCommunity = onCommunitySelected
+                        onSelectedCommunity = { onCommunitySelected(community) }
                     )
                 }
             }
-        } else {
-            OopsError(
-                errorMessage = "Unknown error occurred"
-            )
         }
 
     }

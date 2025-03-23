@@ -125,7 +125,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             }
             composable(route=NavigationRoutes.AdminCommunityList.routes) {
                 val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationRoutes.AdminActions.routes)
+                    navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
                 }
                 val viewModel = hiltViewModel<UpdateCommunityViewModel>()
                 val sharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
