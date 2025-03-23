@@ -69,7 +69,6 @@ fun DefaultScaffold(
                 secondaryAlpha = 0.25f,
                 tertiaryAlpha = 0.3f,
                 backgroundAlpha = 1f,
-                showStars = true
             )
         }
 
