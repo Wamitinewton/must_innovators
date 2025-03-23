@@ -32,7 +32,7 @@ import com.newton.database.entities.UserFeedbackEntity
         ClubBioEntity::class
     ],
 
-    version = 22,
+    version = 23,
     exportSchema = false
 )
 

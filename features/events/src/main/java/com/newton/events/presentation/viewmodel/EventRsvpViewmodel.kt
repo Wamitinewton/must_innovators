@@ -2,7 +2,7 @@ package com.newton.events.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.domain.repositories.EventRepository
 import com.newton.core.enums.EventRegistrationFlow
 import com.newton.core.utils.Resource

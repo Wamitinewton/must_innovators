@@ -1,6 +1,6 @@
 package com.newton.events.presentation.states
 
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.enums.EventRegistrationFlow
 
 data class EventRegistrationState(
