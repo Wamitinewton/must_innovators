@@ -1,4 +1,4 @@
-package com.newton.admin.data.remote
+package com.newton.core.data.remote
 
 import com.newton.core.data.response.events.EventApiResponse
 import com.newton.core.data.response.events.EventDto
@@ -9,12 +9,11 @@ import com.newton.core.domain.models.admin.NewsLetter
 import com.newton.core.domain.models.admin.NewsLetterResponse
 import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin_models.AddEventRequest
-import com.newton.core.domain.models.admin_models.Attendees
+import com.newton.core.data.response.admin.AttendeeResponse
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
-import com.newton.core.domain.models.admin_models.FeedbackData
-import com.newton.core.domain.models.admin_models.PartnersResponse
+import com.newton.core.domain.models.admin_models.UpdateEventRequest
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.admin_models.UserFeedbackResponse
 import com.newton.core.domain.models.home_models.PartnersData
@@ -24,6 +23,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -32,46 +32,46 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AdminApi {
-    @PUT(EventEndPoint.UPDATE_EVENT)
+    @PATCH(AdminEndPoint.UPDATE_EVENT)
     suspend fun updateEvent(
         @Path("id") id: Int,
-        @Body request: AddEventRequest
-    ): EventResponse
+        @Body request: UpdateEventRequest
+    ): ApiResponse<EventDto>
 
-    @DELETE(EventEndPoint.DELETE_EVENT)
+    @DELETE(AdminEndPoint.DELETE_EVENT)
     suspend fun deleteEvent(
         @Path("id") id: Int
     ): EventResponse
 
     @Multipart
-    @POST(EventEndPoint.CREATE_EVENT)
+    @POST(AdminEndPoint.CREATE_EVENT)
     suspend fun createEvent(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part image: MultipartBody.Part
     ): EventApiResponse<EventDto>
 
-    @POST(EventEndPoint.ADD_COMMUNITY)
+    @POST(AdminEndPoint.ADD_COMMUNITY)
     suspend fun addCommunity(
         @Body request: AddCommunityRequest
     ): ApiResponse<CommunityData>
 
-    @POST(EventEndPoint.SEND_NEWSLETTER)
+    @POST(AdminEndPoint.SEND_NEWSLETTER)
     suspend fun sendNewsLetter(
         @Body request:NewsLetter
     ):NewsLetterResponse
 
-    @GET(EventEndPoint.GET_RSVPS_DATA)
+    @GET(AdminEndPoint.GET_RSVPS_DATA)
     suspend fun getAttendeeData(
         @Path("id") id: Int
-    ): ApiResponse<PaginationResponse<Attendees>>
+    ): ApiResponse<PaginationResponse<AttendeeResponse>>
 
-    @POST(EventEndPoint.UPDATE_COMMUNITY)
+    @POST(AdminEndPoint.UPDATE_COMMUNITY)
     suspend fun updateCommunity(
         @Path("id") id: Int,
         @Body community: AddCommunityRequest
     ): ApiResponse<PaginationResponse<CommunityData>>
 
-    @GET(EventEndPoint.Get_USERS_FEEDBACK)
+    @GET(AdminEndPoint.Get_USERS_FEEDBACK)
     suspend fun getUserFeedbacks(
         @Query("category") category: String? = null,
         @Query("ordering") order: String? = null,
@@ -79,17 +79,17 @@ interface AdminApi {
         @Query("status") status: String? = null
     ): PaginationResponse<UserFeedbackResponse>
 
-    @GET(EventEndPoint.GET_EVENTS_FEEDBACK)
+    @GET(AdminEndPoint.GET_EVENTS_FEEDBACK)
     suspend fun getEventsFeedback(eventId:Int): ApiResponse<PaginationResponse<EventsFeedback>>
 
-    @GET(EventEndPoint.GET_ALL_USERS_DATA)
+    @GET(AdminEndPoint.GET_ALL_USERS_DATA)
     suspend fun getAllUsers(): ApiResponse<List<UserData>>
 
-    @GET(EventEndPoint.GET_ALL_EVENTS_DATA)
+    @GET(AdminEndPoint.GET_ALL_EVENTS_DATA)
     suspend fun getAllEventsList(): ApiResponse<PaginationResponse<EventsData>>
 
     @Multipart
-    @POST(EventEndPoint.ADD_PARTNER)
+    @POST(AdminEndPoint.ADD_PARTNER)
     suspend fun addPartner(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part("logo_field") image: MultipartBody.Part

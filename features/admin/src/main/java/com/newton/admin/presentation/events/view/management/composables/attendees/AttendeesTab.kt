@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -24,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.viewmodel.EventsViewModel
+import com.newton.common_ui.composables.OopsError
 import com.newton.common_ui.ui.fromStringToLocalTime
 import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDateTime
@@ -51,6 +52,14 @@ fun AttendeesTab(
         events.sortedByDescending { it.date.fromStringToLocalTime().isAfter(LocalDateTime.now()) }
     var expanded by remember { mutableStateOf(false) }
     val attendeesState by viewModel.rsvpState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        allEvents.firstOrNull()?.let { firstEvent ->
+            selectedEvent = firstEvent
+            onEvent.invoke(EventEvents.GetEventsAttendees(firstEvent.id))
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -119,9 +128,10 @@ fun AttendeesTab(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
             )
 
-            if (attendeesState.isLoading){
-                CircularProgressIndicator()
-            }else if (attendeesState.isSuccess && attendeesState.attendees.isNotEmpty()){
+            if (attendeesState.isLoading) {
+                AttendeesShimmer()
+            } else if (attendeesState.isSuccess && attendeesState.attendees.isNotEmpty()) {
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -129,47 +139,44 @@ fun AttendeesTab(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     AttendanceStatistics(
-                        attended = 3,
+                        attended = attendeesState.attendees.size,
                         confirmed = 8,
                         total = attendeesState.attendees.size,
                     )
                 }
-            }else if (attendeesState.attendees.isNotEmpty()){
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Their are no attendees available at the moment",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }else{
-                Box {
-                    Text("There is an error loading attendees data")
-                }
-            }
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-            // Attendees list
-            LazyColumn(
-                contentPadding = PaddingValues(bottom = 80.dp)
-            ) {
-                items(attendeesState.attendees) { attendee ->
-                    AttendeeItem(attendee = attendee)
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // Attendees list
+                LazyColumn(
+                    contentPadding = PaddingValues(bottom = 80.dp)
+                ) {
+                    items(attendeesState.attendees) { member ->
+                        AttendeeItem(attendee = member)
+                    }
+
                 }
-            }
-        }
-        else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "No events available",
-                    style = MaterialTheme.typography.headlineMedium
+            }else if(attendeesState.hasError != null){
+                OopsError(
+                    errorMessage = attendeesState.hasError!!,
+                )
+            }else if (attendeesState.attendees.isEmpty()){
+                OopsError(
+                    errorMessage = "There are no attendees right now try again letter",
+                    onClick = {
+                        onEvent.invoke(EventEvents.GetEventsAttendees(selectedEvent!!.id))
+                    },
+                    showButton = true
                 )
             }
+        } else {
+            OopsError(
+                errorMessage = "No available event available now",
+                onClick = {
+                    onEvent.invoke(EventEvents.GetEventsAttendees(selectedEvent!!.id))
+                },
+                showButton = true
+            )
         }
     }
 }

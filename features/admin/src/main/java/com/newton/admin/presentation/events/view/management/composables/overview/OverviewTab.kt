@@ -64,7 +64,7 @@ fun OverviewTab(
                 EventCard(
                     event = event,
                     isScrolling = isScrolling,
-                    onClick = { onEventSelected(event) }
+                    onClick = {}
                 )
             }
 

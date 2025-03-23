@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -38,6 +37,7 @@ import com.newton.admin.presentation.feedbacks.view.composables.FilterSection
 import com.newton.admin.presentation.feedbacks.view.composables.StatsSummary
 import com.newton.admin.presentation.feedbacks.view.composables.StatsSummaryShimmer
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 
 
@@ -51,7 +51,7 @@ fun FeedbackScreen(
     val listState = rememberLazyListState()
     var isSearchVisible by remember { mutableStateOf(false) }
 
-    Scaffold(
+    DefaultScaffold(
         topBar = {
             MeruInnovatorsAppBar(
                 title = "Feedback Screen",
@@ -94,11 +94,10 @@ fun FeedbackScreen(
                 }
             )
         },
-    ) { paddingValues ->
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
         ) {
             // Filter Chips
             FilterSection(

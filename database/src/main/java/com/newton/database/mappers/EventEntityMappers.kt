@@ -1,7 +1,7 @@
 package com.newton.database.mappers
 
 import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.database.entities.EventEntity
 import com.newton.database.entities.TicketsEntity
 

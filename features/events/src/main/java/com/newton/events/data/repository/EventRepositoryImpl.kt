@@ -9,7 +9,7 @@ import com.newton.core.data.mappers.toDomainEvents
 import com.newton.core.data.mappers.toEventRegistration
 import com.newton.core.data.remote.EventService
 import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.domain.models.event_models.Event
 import com.newton.core.domain.models.event_models.EventRegistrationRequest
 import com.newton.core.domain.repositories.EventRepository

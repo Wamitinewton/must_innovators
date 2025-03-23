@@ -8,14 +8,17 @@ import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.EventSeat
 import androidx.compose.material.icons.filled.Feedback
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocalActivity
 import androidx.compose.material.icons.filled.SettingsSuggest
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.CallToAction
 import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.DashboardCustomize
 import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.EventSeat
 import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LocalActivity
 import androidx.compose.material.icons.outlined.SettingsSuggest
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.newton.core.navigation.NavigationRoutes
@@ -96,11 +99,11 @@ sealed class Screens(
 
     data object AdminSettings : Screens(
         NavigationRoutes.AdminSettings.routes,
-        Icons.Filled.SettingsSuggest,
-        Icons.Outlined.SettingsSuggest,
+        Icons.Filled.LocalActivity,
+        Icons.Outlined.LocalActivity,
         false,
         null,
-        "Settings"
+        "Actions"
     )
 
 

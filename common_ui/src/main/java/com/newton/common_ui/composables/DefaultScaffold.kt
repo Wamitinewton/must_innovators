@@ -37,6 +37,7 @@ fun DefaultScaffold(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState? = null,
     topBar: @Composable () -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
     showOrbitals: Boolean = true,
     isLoading: Boolean = false,
     gradientColors: List<Color> = listOf(
@@ -52,7 +53,9 @@ fun DefaultScaffold(
         snackbarHost = {
             snackbarHostState?.let { SnackbarHost(hostState = it) }
         },
+        bottomBar = bottomBar,
         topBar = topBar
+
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize())
 

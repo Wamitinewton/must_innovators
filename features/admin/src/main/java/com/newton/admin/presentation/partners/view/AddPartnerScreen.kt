@@ -91,6 +91,7 @@ import com.newton.common_ui.ui.CustomDynamicAsyncImage
 import com.newton.common_ui.ui.LoadingDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.time.Instant
@@ -836,6 +837,8 @@ fun AddPartnerScreen(
             // Save Button
             CustomButton(
                 onClick = {
+                    Timber.d("Add partner event screen clicked")
+                    Timber.d("Errors: " + partnersState.errors.toString())
                     onEvent.invoke(AddPartnersEvent.AddPartners)
                     if (partnersState.isSuccess) {
                         scope.launch {

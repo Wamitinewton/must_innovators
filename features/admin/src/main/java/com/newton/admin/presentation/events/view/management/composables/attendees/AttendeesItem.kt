@@ -18,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.ui.CustomCard
-import com.newton.core.domain.models.admin_models.Attendees
+import com.newton.core.domain.models.admin_models.Attendee
 
 @Composable
-fun AttendeeItem(attendee: Attendees) {
+fun AttendeeItem(attendee: Attendee) {
     CustomCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +44,7 @@ fun AttendeeItem(attendee: Attendees) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = attendee.fullName.first().toString(),
+                    text = attendee.fullName.take(1),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -58,7 +58,6 @@ fun AttendeeItem(attendee: Attendees) {
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Medium
                 )
-
                 Text(
                     text = attendee.email,
                     style = MaterialTheme.typography.bodyMedium,
@@ -67,38 +66,46 @@ fun AttendeeItem(attendee: Attendees) {
             }
 
             Column(horizontalAlignment = Alignment.End) {
-                if (attendee.educationalLevel == "2") {
-                    AttendeeBadge(
-                        backgroundColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ) {
-                        Text(
-                            text = "Checked In",
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
+                when (attendee.year) {
+                    "2" -> {
+                        AttendeeBadge(
+                            backgroundColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ) {
+                            Text(
+                                text = "Checked In",
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
+                        }
                     }
-                } else if (attendee.educationalLevel == "1") {
-                    AttendeeBadge(
-                        backgroundColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary
-                    ) {
-                        Text(
-                            text = "Confirmed",
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
+
+                    "1" -> {
+                        AttendeeBadge(
+                            backgroundColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary
+                        ) {
+                            Text(
+                                text = "Confirmed",
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
+                        }
                     }
-                } else {
-                    AttendeeBadge(
-                        backgroundColor = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
-                        contentColor = MaterialTheme.colorScheme.error
-                    ) {
-                        Text(
-                            text = "Pending",
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
+
+                    else -> {
+                        AttendeeBadge(
+                            backgroundColor = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
+                            contentColor = MaterialTheme.colorScheme.error
+                        ) {
+                            Text(
+                                text = "Pending",
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
+                        }
                     }
                 }
             }
+
+
         }
     }
 }

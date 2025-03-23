@@ -1,11 +1,12 @@
 package com.newton.admin.data.repository
 
+import com.newton.admin.data.mappers.AttendeeMapper.toAttendeeList
 import com.newton.admin.data.mappers.EventMapper.toEventDaoEntity
 import com.newton.admin.data.mappers.EventMapper.toEventData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
 import com.newton.admin.data.mappers.UserFeedbackMapper.toFeedbackData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
-import com.newton.admin.data.remote.AdminApi
+import com.newton.core.data.remote.AdminApi
 import com.newton.common_ui.ui.toCustomRequestBody
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.admin.NewsLetter
@@ -13,11 +14,12 @@ import com.newton.core.domain.models.admin.NewsLetterResponse
 import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.domain.models.admin_models.AddPartnerRequest
-import com.newton.core.domain.models.admin_models.Attendees
+import com.newton.core.domain.models.admin_models.Attendee
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.UpdateEventRequest
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.core.domain.repositories.AdminRepository
@@ -103,6 +105,22 @@ class AdminRepositoryImpl @Inject constructor(
             emit(Resource.Loading(true))
 //        val response =  adminApi.updateCommunity(community)
         }
+
+    override suspend fun updateEvent(event: UpdateEventRequest,eventId: Int): Flow<Resource<EventsData>> = flow{
+        emit(Resource.Loading(true))
+        try {
+            val response = adminApi.updateEvent(eventId,event)
+            if (response.message == "success"){
+                emit(Resource.Success(response.data.toEventData()))
+            }else{
+                emit(Resource.Error(response.message))
+            }
+        } catch (e: Exception) {
+           emit(Resource.Error(e.message?: "Unknown error wile uploading. Try again later"))
+        } finally {
+            emit(Resource.Loading(false))
+        }
+    }
 
     override suspend fun sendNewsLetter(newsLetter: NewsLetter): Flow<Resource<NewsLetterResponse>> =
         flow {
@@ -209,13 +227,13 @@ class AdminRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRegistrationList(eventId: Int): Flow<Resource<List<Attendees>>> =
+    override suspend fun getRegistrationList(eventId: Int): Flow<Resource<List<Attendee>>> =
         flow {
             emit(Resource.Loading(true))
             try {
                 val response = adminApi.getAttendeeData(eventId)
                 if (response.status == "success") {
-                    emit(Resource.Success(response.data.results))
+                    emit(Resource.Success(response.data.results.toAttendeeList()))
                 } else {
                     emit(Resource.Error(response.message))
                 }
