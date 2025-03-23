@@ -1,6 +1,4 @@
-package com.newton.events.presentation.view.ticket_screen
-
-import java.time.LocalDateTime
+package com.newton.events.presentation.view.user_tickets
 
 data class EventTicket(
     val id: String,

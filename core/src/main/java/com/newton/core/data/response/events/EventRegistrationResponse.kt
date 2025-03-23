@@ -10,6 +10,13 @@ data class EventRegistrationResponse(
 )
 
 @Serializable
+data class UserTicketsResponse(
+    val data: List<EventRegistrationResponseDto>,
+    val message: String,
+    val status: String
+)
+
+@Serializable
 data class EventRegistrationResponseDto(
     val course: String,
     val educational_level: String,

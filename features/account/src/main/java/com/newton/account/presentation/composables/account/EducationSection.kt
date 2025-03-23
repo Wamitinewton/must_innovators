@@ -37,20 +37,12 @@ fun EducationSection(user: UserData) {
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
-                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
-                        )
-                    )
-                )
                 .padding(16.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {

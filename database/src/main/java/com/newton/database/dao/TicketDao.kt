@@ -16,7 +16,7 @@ interface TicketDao {
     suspend fun insertTicket(ticket: TicketsEntity)
 
     @Query("SELECT * FROM eventTickets ORDER BY registrationTimestamp DESC")
-    fun getAllTickets(): Flow<List<TicketsEntity>>
+    fun getAllTickets(): List<TicketsEntity>
 
     @Query("SELECT * FROM eventTickets WHERE event = :eventId LIMIT 1")
     fun getTicketByEventId(eventId: Int): Flow<TicketsEntity?>
