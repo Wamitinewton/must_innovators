@@ -35,7 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.newton.common_ui.ui.CustomElevatedButton
 import com.newton.common_ui.ui.CustomOutlinedButton
 import com.newton.common_ui.ui.LabelLargeText
-import com.newton.core.utils.formatDateTime
+import com.newton.common_ui.ui.toFormatedDate
 import com.newton.events.presentation.viewmodel.RsvpSharedViewModel
 
 @Composable
@@ -136,7 +136,7 @@ fun EventRegistrationSuccessScreen(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = formatDateTime(ticket!!.registrationTimestamp),
+                            text = ticket!!.registrationTimestamp.toFormatedDate(),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

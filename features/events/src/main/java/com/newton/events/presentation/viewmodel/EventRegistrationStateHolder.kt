@@ -1,6 +1,6 @@
 package com.newton.events.presentation.viewmodel
 
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.domain.models.event_models.EventRegistrationRequest
 import com.newton.core.enums.EventRegistrationFlow
 import com.newton.events.presentation.events.EventRsvpUiEvent

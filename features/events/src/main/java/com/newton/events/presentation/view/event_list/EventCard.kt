@@ -35,6 +35,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil3.compose.AsyncImage
 import com.newton.common_ui.ui.PullToRefreshLazyColumn
+import com.newton.common_ui.ui.toFormatedDate
 import com.newton.core.domain.models.admin_models.EventsData
 
 
@@ -129,7 +130,7 @@ fun EventCard(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = event.date,
+                            text = event.date.toFormatedDate(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
