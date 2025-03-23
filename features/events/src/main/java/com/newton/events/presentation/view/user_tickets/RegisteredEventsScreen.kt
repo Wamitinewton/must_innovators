@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view.ticket_screen
+package com.newton.events.presentation.view.user_tickets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -27,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.newton.common_ui.composables.DefaultScaffold
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,7 +81,8 @@ fun RegisteredEventsScreen(
     }
 
 
-    Scaffold(
+    DefaultScaffold(
+        showOrbitals = true,
         topBar = {
             TopAppBar(
                 title = { Text("My Event Tickets") },
@@ -98,14 +99,12 @@ fun RegisteredEventsScreen(
                 )
             )
         }
-    ) { paddingValues ->
-
+    ) {
         if (tickets.isEmpty()){
-            EmptyTicketsView(modifier = Modifier.padding(paddingValues))
+            EmptyTicketsView()
         }
         Box(
             modifier = Modifier.fillMaxSize()
-                .padding(paddingValues)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(

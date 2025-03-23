@@ -39,6 +39,10 @@ fun EventDto.toDomainEvent(): EventsData {
     fun List<EventDto>.toDomainEvents(): List<EventsData> =
         map { it.toDomainEvent() }
 
+fun List<EventRegistrationResponseDto>.toDomainUserTickets(): List<RegistrationResponse> =
+    map { it.toEventRegistration() }
+
+
 
 
 

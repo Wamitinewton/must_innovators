@@ -38,7 +38,7 @@ fun TechStacksSection(techStacks: List<String>?) {
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
@@ -64,15 +64,6 @@ fun TechStacksSection(techStacks: List<String>?) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
-                                MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.1f)
-                            )
-                        ),
-                        shape = RoundedCornerShape(12.dp)
-                    )
                     .padding(12.dp)
             ) {
                 FlowRow {

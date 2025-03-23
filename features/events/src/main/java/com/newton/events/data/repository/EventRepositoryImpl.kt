@@ -14,6 +14,7 @@ import com.newton.core.domain.models.event_models.Event
 import com.newton.core.domain.models.event_models.EventRegistrationRequest
 import com.newton.core.domain.repositories.EventRepository
 import com.newton.core.utils.Resource
+import com.newton.core.utils.safeApiCall
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.TicketDao
 import com.newton.database.db.AppDatabase
@@ -24,10 +25,10 @@ import com.newton.database.mappers.toTicketEntity
 import com.newton.events.data.paging.EventRemoteMediator
 import com.newton.events.data.paging.PagingConstants.NETWORK_PAGE_SIZE
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(
@@ -57,80 +58,59 @@ class EventRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun registerForEvent(eventId: Int, registrationRequest: EventRegistrationRequest): Flow<Resource<RegistrationResponse>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            val response = api.registerForEvent(eventId = eventId, registrationRequest = registrationRequest)
+    override suspend fun registerForEvent(
+        eventId: Int,
+        registrationRequest: EventRegistrationRequest
+    ): Flow<Resource<RegistrationResponse>> = flow {
+        emitAll(safeApiCall {
+            val response =
+                api.registerForEvent(eventId = eventId, registrationRequest = registrationRequest)
             val registrationResponse = response.data.toEventRegistration()
 
             ticketDao.insertTicket(registrationResponse.toTicketEntity())
 
-            ticketDao.getTicketByEventId(eventId)
-                .collect { ticketEntity ->
-                    if (ticketEntity != null) {
-                        emit(Resource.Success(data = ticketEntity.toRegistrationResponse()))
-                    } else {
-                        emit(Resource.Error(message = "Failed to retrieve ticket from database"))
-                    }
-                }
-
-        } catch (e: HttpException) {
-            emit(Resource.Error(message = handleHttpError(e)))
-        } catch (e: IOException) {
-            emit(Resource.Error(message = "Network error: Please check your internet connection"))
-        } catch (e: Exception) {
-            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
-        } finally {
-            emit(Resource.Loading(false))
-        }
+            ticketDao.getTicketByEventId(eventId).first()?.toRegistrationResponse()
+                ?: throw Exception("Failed to retrieve ticket from database")
+        })
     }
 
     override suspend fun searchEvents(eventName: String): Flow<Resource<List<EventsData>>> = flow {
-        emit(Resource.Loading(true))
-        try {
-
+        emitAll(safeApiCall {
             val localEvents = eventDao.searchEvents("%${eventName}%")
+
             if (localEvents.isNotEmpty()) {
-                emit(Resource.Success(data = localEvents.map { it.toDomainEvent() }))
+                return@safeApiCall localEvents.map { it.toDomainEvent() }
             }
             val response = api.searchEvents(eventName)
             val data = response.data.toDomainEvents()
-            eventDao.insertEvents(
-                events = data.toEventsEntity()
-            )
-
-            emit(Resource.Success(data = data))
-        } catch (e: HttpException) {
-            emit(Resource.Error(message = handleHttpError(e)))
-        } catch (e: IOException) {
-            emit(Resource.Error(message = "Network error: Please check your internet connection"))
-        } catch (e: Exception) {
-            emit(Resource.Error(message = "An unexpected error occurred: ${e.message}"))
-        } finally {
-            emit(Resource.Loading(false))
-        }
+            eventDao.insertEvents(events = data.toEventsEntity())
+            data
+        })
     }
 
     override suspend fun getLatestEvents(count: Int): Flow<Resource<List<EventsData>>> {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getUserTickets(email: String): Flow<Resource<List<RegistrationResponse>>> =
+        flow {
+            emitAll(safeApiCall {
+                val localTickets = ticketDao.getAllTickets()
+                if (localTickets.isNotEmpty()) {
+                    return@safeApiCall localTickets.map { it.toRegistrationResponse() }
+                }
+                val response = api.getUserTickets(email)
+                val tickets = response.data.map { it.toEventRegistration() }
+                ticketDao.insertTickets(tickets.map { it.toTicketEntity() })
+                tickets
+            })
+        }
+
 
     override suspend fun getEventById(id: Int): Flow<Resource<Event>> = flow {
 
     }
 
-
-    private fun handleHttpError(error: HttpException): String {
-        return when (error.code()) {
-            400 -> "Invalid request: Please check your input"
-            401 -> "Unauthorized: Please log in again"
-            403 -> "Access denied"
-            404 -> "Resource not found"
-            500, 502, 503 -> "Server error: Please try again later"
-            else -> "Network error: ${error.message()}"
-        }
-    }
 
 }
 

@@ -20,6 +20,7 @@ object ApiEndpoints {
     const val GET_EVENT_BY_ID = "events/{id}/view/"
     const val RSVP_EVENT = "events/{id}/registrations/"
     const val SEARCH_EVENT = "events/by-name/"
+    const val GET_USER_TICKETS = "event-registrations/user-registrations/"
 
     const val GET_PARTNERS = "partners/"
     const val GET_TESTIMONIALS = "testimonies/testimonials/"

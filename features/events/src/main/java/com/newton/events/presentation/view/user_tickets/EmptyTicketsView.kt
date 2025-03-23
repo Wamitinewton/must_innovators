@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view.ticket_screen
+package com.newton.events.presentation.view.user_tickets
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -50,6 +50,7 @@ import com.newton.account.presentation.events.LogoutEvent
 import com.newton.account.presentation.events.LogoutNavigationEvent
 import com.newton.account.presentation.viewmodel.AccountManagementViewModel
 import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
+import com.newton.common_ui.composables.DefaultScaffold
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -109,7 +110,7 @@ fun AccountScreen(
             )
         }
     ) {
-        Scaffold(
+        DefaultScaffold(
             modifier = Modifier
                 .fillMaxSize()
                 .nestedScroll(scrollBehaviour.nestedScrollConnection),
@@ -154,11 +155,10 @@ fun AccountScreen(
                     Icon(Icons.Outlined.Edit, contentDescription = "Edit profile")
                 }
             }
-        ) { innerPadding ->
+        ) {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {

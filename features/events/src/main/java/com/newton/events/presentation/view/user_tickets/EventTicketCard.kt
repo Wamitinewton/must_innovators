@@ -1,4 +1,4 @@
-package com.newton.events.presentation.view.ticket_screen
+package com.newton.events.presentation.view.user_tickets
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background

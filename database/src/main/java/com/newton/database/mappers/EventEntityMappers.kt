@@ -76,5 +76,8 @@ fun RegistrationResponse.toTicketEntity() = TicketsEntity(
 fun List<EventsData>.toEventsEntity(): List<EventEntity> =
     map { it.toEventEntity() }
 
+fun List<RegistrationResponse>.toUserTicketsEntity(): List<TicketsEntity> =
+    map { it.toTicketEntity() }
+
 fun List<EventEntity>.toEventDataList():List<EventsData> = map { it.toDomainEvent() }
 
