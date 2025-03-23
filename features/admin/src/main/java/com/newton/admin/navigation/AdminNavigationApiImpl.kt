@@ -25,6 +25,9 @@ import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
 import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
 import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
 import com.newton.admin.presentation.actions.view.ActionsScreen
+import com.newton.admin.presentation.community.view.AdminCommunityList
+import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
+import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
 import com.newton.admin.presentation.events.viewmodel.AdminEventsSharedViewModel
 import com.newton.admin.presentation.events.viewmodel.UpdateEventsViewModel
 import com.newton.core.navigation.NavigationRoutes
@@ -62,7 +65,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val viewModel = hiltViewModel<AdminFeedbackViewModel>()
                 FeedbackScreen(viewModel, onEvent = viewModel::handleEvent)
             }
-            composable(route = NavigationRoutes.AdminSettings.routes) {
+            composable(route = NavigationRoutes.AdminActions.routes) {
                 ActionsScreen(navHostController)
             }
             composable(route = NavigationRoutes.AddEvent.routes) {
@@ -101,12 +104,16 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                     navController = navHostController
                 )
             }
-            composable(route = NavigationRoutes.UpdateCommunityRoute.routes) {
-                val viewModel = hiltViewModel<CommunityViewModel>()
+            composable(route = NavigationRoutes.UpdateCommunity.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
+                }
+                val viewModel = hiltViewModel<UpdateCommunityViewModel>()
+                val sharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 UpdateCommunityScreen(
-                    onBackPressed = { },
-                    onSavePressed = { },
-                    viewModel
+                    sharedViewModel,
+                    viewModel = viewModel,
+                    onEvent = viewModel::handleEvents
                 )
             }
             composable(route = NavigationRoutes.UpdateExecutive.routes) {
@@ -114,6 +121,20 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 UpdateExecutiveScreen(
                     navController = navHostController,
                     viewModel = viewModel
+                )
+            }
+            composable(route=NavigationRoutes.AdminCommunityList.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationRoutes.AdminActions.routes)
+                }
+                val viewModel = hiltViewModel<UpdateCommunityViewModel>()
+                val sharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
+                AdminCommunityList(
+                    viewModel = viewModel,
+                    onCommunitySelected = {community->
+                        sharedViewModel.setSelectedCommunity(community)
+                        navHostController.navigate(NavigationRoutes.UpdateCommunity.routes)
+                    }
                 )
             }
 

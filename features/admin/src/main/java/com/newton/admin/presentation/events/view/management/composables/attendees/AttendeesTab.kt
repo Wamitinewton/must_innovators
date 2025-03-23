@@ -172,10 +172,6 @@ fun AttendeesTab(
         } else {
             OopsError(
                 errorMessage = "No available event available now",
-                onClick = {
-                    onEvent.invoke(EventEvents.GetEventsAttendees(selectedEvent!!.id))
-                },
-                showButton = true
             )
         }
     }

@@ -13,6 +13,7 @@ import com.newton.core.data.response.admin.AttendeeResponse
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
+import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
 import com.newton.core.domain.models.admin_models.UpdateEventRequest
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.admin_models.UserFeedbackResponse
@@ -36,7 +37,7 @@ interface AdminApi {
     suspend fun updateEvent(
         @Path("id") id: Int,
         @Body request: UpdateEventRequest
-    ): ApiResponse<EventDto>
+    ): ApiResponse<EventsData>
 
     @DELETE(AdminEndPoint.DELETE_EVENT)
     suspend fun deleteEvent(
@@ -68,8 +69,8 @@ interface AdminApi {
     @POST(AdminEndPoint.UPDATE_COMMUNITY)
     suspend fun updateCommunity(
         @Path("id") id: Int,
-        @Body community: AddCommunityRequest
-    ): ApiResponse<PaginationResponse<CommunityData>>
+        @Body community: UpdateCommunityRequest
+    ): CommunityData
 
     @GET(AdminEndPoint.Get_USERS_FEEDBACK)
     suspend fun getUserFeedbacks(

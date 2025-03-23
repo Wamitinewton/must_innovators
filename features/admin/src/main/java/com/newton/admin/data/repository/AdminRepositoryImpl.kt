@@ -19,12 +19,14 @@ import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
 import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
 import com.newton.core.domain.models.admin_models.UpdateEventRequest
 import com.newton.core.domain.models.admin_models.UserData
 import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.enums.FeedbackStatus
 import com.newton.core.utils.Resource
+import com.newton.core.utils.safeApiCall
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.EventsFeedbackDao
 import com.newton.database.dao.PartnersDao
@@ -100,71 +102,47 @@ class AdminRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun updateCommunity(community: AddCommunityRequest): Flow<Resource<CommunityData>> =
-        flow {
-            emit(Resource.Loading(true))
-//        val response =  adminApi.updateCommunity(community)
+    override suspend fun updateCommunity(
+        commnityId: Int,
+        community: UpdateCommunityRequest
+    ): Flow<Resource<CommunityData>> =
+        safeApiCall {
+            adminApi.updateCommunity(commnityId, community)
         }
 
-    override suspend fun updateEvent(event: UpdateEventRequest,eventId: Int): Flow<Resource<EventsData>> = flow{
-        emit(Resource.Loading(true))
-        try {
-            val response = adminApi.updateEvent(eventId,event)
-            if (response.message == "success"){
-                emit(Resource.Success(response.data.toEventData()))
-            }else{
-                emit(Resource.Error(response.message))
+    override suspend fun updateEvent(
+        event: UpdateEventRequest,
+        eventId: Int
+    ): Flow<Resource<EventsData>> =
+        safeApiCall {
+            val response = adminApi.updateEvent(eventId, event)
+            if (response.message == "success") {
+                response.data
+            } else {
+                throw Exception(response.message)
             }
-        } catch (e: Exception) {
-           emit(Resource.Error(e.message?: "Unknown error wile uploading. Try again later"))
-        } finally {
-            emit(Resource.Loading(false))
         }
-    }
 
     override suspend fun sendNewsLetter(newsLetter: NewsLetter): Flow<Resource<NewsLetterResponse>> =
-        flow {
-            emit(Resource.Loading(true))
-            try {
-                val response: NewsLetterResponse = adminApi.sendNewsLetter(newsLetter)
-                emit(Resource.Success(response))
-            } catch (e: Exception) {
-                emit(Resource.Error(e.message ?: "Error occurred when sending newsletter"))
-            } finally {
-                emit(Resource.Loading(false))
-            }
+        safeApiCall {
+            adminApi.sendNewsLetter(newsLetter)
         }
 
     override suspend fun getEventFeedbackBYId(
         eventId: Int,
         isRefresh: Boolean
-    ): Flow<Resource<List<EventsFeedback>>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            if (isRefresh) {
-                getRemoteEventsFeedbacks(eventId)?.let {
-                    emit(it)
-                }
+    ): Flow<Resource<List<EventsFeedback>>> = safeApiCall {
 
+            val response = adminApi.getEventsFeedback(eventId)
+
+            if (response.status == "success" && response.data.results.isNotEmpty()) {
+                response.data.results
+//                saveEventsFeedbacks(feedbacks)
+//                Resource.Success(data = feedbacks)
             } else {
-                val localFeedbacks = eventsFeedbackDao.getAllEventsFeedbacks()
-                localFeedbacks.collectLatest { feedback ->
-                    if (feedback.isNotEmpty()) {
-                        emit(Resource.Success(feedback.map { it.toDomain() }))
-                    } else {
-                        getRemoteEventsFeedbacks(eventId)?.let { emit(it) }
-                    }
-                }
+                throw Exception("Failed to fetch feedbacks: ${response.message}")
             }
-        } catch (e: Exception) {
-            emit(
-                Resource.Error(
-                    e.message ?: "Unknown error occurred while getting all users feedback"
-                )
-            )
-        } finally {
-            emit(Resource.Loading(false))
-        }
+
     }
 
 
@@ -179,7 +157,7 @@ class AdminRepositoryImpl @Inject constructor(
             emit(Resource.Loading(true))
             try {
                 if (isRefresh) {
-                    getRemoteFeedbacks(category,ordering,status?.name,search)?.let {
+                    getRemoteFeedbacks(category, ordering, status?.name, search)?.let {
                         emit(it)
                     }
 
@@ -189,7 +167,12 @@ class AdminRepositoryImpl @Inject constructor(
                         if (feedback.isNotEmpty()) {
                             emit(Resource.Success(feedback.map { it.toDomain() }))
                         } else {
-                            getRemoteFeedbacks(category,ordering,status?.name,search)?.let { emit(it) }
+                            getRemoteFeedbacks(
+                                category,
+                                ordering,
+                                status?.name,
+                                search
+                            )?.let { emit(it) }
                         }
                     }
                 }
@@ -204,28 +187,29 @@ class AdminRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getAllUsers(isRefresh: Boolean): Flow<Resource<List<UserData>>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            if (isRefresh) {
-                val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data))
+    override suspend fun getAllUsers(isRefresh: Boolean): Flow<Resource<List<UserData>>> =
+        flow {
+            emit(Resource.Loading(true))
+            try {
+                if (isRefresh) {
+                    val response = adminApi.getAllUsers()
+                    emit(Resource.Success(response.data))
 
-            } else {
+                } else {
 //                usersDao.getAllUsers()
-                val response = adminApi.getAllUsers()
-                emit(Resource.Success(response.data))
+                    val response = adminApi.getAllUsers()
+                    emit(Resource.Success(response.data))
+                }
+            } catch (e: HttpException) {
+                emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))
+            } catch (e: IOException) {
+                emit(Resource.Error("Couldn't reach server. Check your internet connection."))
+            } catch (e: Exception) {
+                emit(Resource.Error("An unexpected error occurred: ${e.message ?: "Unknown error"}"))
+            } finally {
+                emit(Resource.Loading(false))
             }
-        } catch (e: HttpException) {
-            emit(Resource.Error("An HTTP error occurred: ${e.message ?: "Unknown HTTP error"}"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
-        } catch (e: Exception) {
-            emit(Resource.Error("An unexpected error occurred: ${e.message ?: "Unknown error"}"))
-        } finally {
-            emit(Resource.Loading(false))
         }
-    }
 
     override suspend fun getRegistrationList(eventId: Int): Flow<Resource<List<Attendee>>> =
         flow {
@@ -238,7 +222,11 @@ class AdminRepositoryImpl @Inject constructor(
                     emit(Resource.Error(response.message))
                 }
             } catch (e: Exception) {
-                emit(Resource.Error(e.message ?: "Unknown error occurred while getting rsvps data"))
+                emit(
+                    Resource.Error(
+                        e.message ?: "Unknown error occurred while getting rsvps data"
+                    )
+                )
             } finally {
                 emit(Resource.Loading(false))
             }
@@ -310,9 +298,14 @@ class AdminRepositoryImpl @Inject constructor(
         }
 
 
-    private suspend fun getRemoteFeedbacks(category:String?,ordering:String?,status:String?,search:String?): Resource<List<FeedbackData>>? {
+    private suspend fun getRemoteFeedbacks(
+        category: String?,
+        ordering: String?,
+        status: String?,
+        search: String?
+    ): Resource<List<FeedbackData>>? {
         return try {
-            val response = adminApi.getUserFeedbacks(category,ordering,search,status)
+            val response = adminApi.getUserFeedbacks(category, ordering, search, status)
 
             if (response.results.isNotEmpty()) {
                 val feedbacks = response.results.toFeedbackData()
@@ -359,7 +352,8 @@ class AdminRepositoryImpl @Inject constructor(
             userFeedbackDao.deleteAllFeedbacks()
             userFeedbackDao.insertFeedbacks(feedbacks.toUserFeedbackListEntity())
         } catch (e: Exception) {
-            Timber.tag("Error saving feedbacks").e(e.message ?: "Unknown error saving feedbacks")
+            Timber.tag("Error saving feedbacks")
+                .e(e.message ?: "Unknown error saving feedbacks")
         }
     }
 

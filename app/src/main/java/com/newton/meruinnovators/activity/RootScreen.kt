@@ -34,13 +34,13 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
     val isShowBottomBar = when (currentDestination?.route) {
         NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.BlogsRoute.routes,
         NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
-        NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminSettings.routes -> true
+        NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminActions.routes -> true
 
         else -> false
     }
     val isAdminNavBar = when (currentDestination?.route) {
         NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
-        NavigationRoutes.AdminSettings.routes -> true
+        NavigationRoutes.AdminActions.routes -> true
 
         else -> false
     }
