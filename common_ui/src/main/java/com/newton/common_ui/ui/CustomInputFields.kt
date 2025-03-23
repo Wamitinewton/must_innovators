@@ -369,8 +369,8 @@ fun MultilineInputField(
     minLines: Int = 4,
     maxLines: Int = 6,
     placeholder: String = "",
-    maxChar: Int = 300
-) {
+    maxChar: Int = 300,
+    ) {
     val charCount = value.length
 
     Column(modifier = modifier.fillMaxWidth()) {

@@ -18,29 +18,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.home.domain.models.AboutUs
-import com.newton.home.domain.models.Testimonial
 import com.newton.home.presentation.view.composables.AboutUsSection
 import com.newton.home.presentation.view.composables.PartnersContent
 import com.newton.home.presentation.view.composables.SectionHeader
 import com.newton.home.presentation.view.composables.TestimonialsSection
-import com.newton.home.presentation.viewmodels.HomeViewModel
+import com.newton.home.presentation.viewmodels.PartnersViewModel
+import com.newton.home.presentation.viewmodels.TestimonialsViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
+    partnersViewModel: PartnersViewModel,
+    testimonialsViewModel: TestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
-    onNavigateToEvents: () -> Unit,
     onNavigateToAboutUs: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    val context = LocalContext.current
-    val partnersState by viewModel.partnersState.collectAsState()
+    val partnersState by partnersViewModel.partnersState.collectAsState()
+    val testimonialsUiState by testimonialsViewModel.uiState.collectAsState()
 
     DefaultScaffold(
         showOrbitals = true,
@@ -88,7 +85,7 @@ fun HomeScreen(
             item {
                 PartnersContent(
                     partnersState = partnersState,
-                    onRetry = { viewModel.refreshPartners() }
+                    onRetry = { partnersViewModel.refreshPartners() }
                 )
             }
 
@@ -102,9 +99,10 @@ fun HomeScreen(
 
             item {
                 TestimonialsSection(
-                    testimonials = sampleTestimonials,
-                    configuration = configuration,
-                    context = context
+                    uiState = testimonialsUiState,
+                    onRetryClick = {
+                        testimonialsViewModel.retryLoadingTestimonials()
+                    }
                 )
             }
 
@@ -117,7 +115,6 @@ fun HomeScreen(
 
             item {
                 AboutUsSection(
-                    aboutUs = sampleAboutUs,
                     configuration = configuration,
                     onClick = { onNavigateToAboutUs() }
                 )
@@ -131,21 +128,4 @@ fun HomeScreen(
 }
 
 
-val sampleAboutUs = AboutUs(
-    title = "Innovation Club",
-    description = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
-)
-val sampleTestimonials = listOf(
-    Testimonial(
-        id = 1,
-        author = "Bett",
-        role = "Android Lead",
-        content = "Meru Science Innovation Club is meant to be helpful in innovation and mentoring students to find their trends in Technology field..."
-    ),
-    Testimonial(
-        id = 1,
-        author = "Bett",
-        role = "Android Lead",
-        content = "Contrary to popular belief, Lorem Ipsum is not simply random text..."
-    )
-)
+

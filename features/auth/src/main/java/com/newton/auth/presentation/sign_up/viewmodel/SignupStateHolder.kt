@@ -3,7 +3,6 @@ package com.newton.auth.presentation.sign_up.viewmodel
 
 import com.newton.auth.presentation.sign_up.event.SignupUiEvent
 import com.newton.auth.presentation.sign_up.state.SignupViewmodelState
-import com.newton.core.domain.models.auth_models.OtpRequest
 import com.newton.core.domain.models.auth_models.SignupRequest
 import com.newton.core.domain.models.auth_models.VerifyOtp
 import com.newton.core.enums.AuthFlow
@@ -42,7 +41,7 @@ class SignupStateHolder @Inject constructor(
         ) }
     }
 
-    fun updateOtp(otp: String) {
+    private fun updateOtp(otp: String) {
         _signUpState.update { it.copy(otp = otp, otpError = null) }
     }
 

@@ -62,6 +62,10 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
+    //coil
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.coilNetwork)
+
     // Compose Icons
     implementation(Dependencies.extendedIcons)
 

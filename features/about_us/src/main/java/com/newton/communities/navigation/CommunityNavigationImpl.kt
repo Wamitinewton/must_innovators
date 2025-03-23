@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.newton.communities.presentation.view.about_us.AboutUsScreen
 import com.newton.communities.presentation.view.community_details.CommunityDetailsScreen
 import com.newton.communities.presentation.view_model.AboutUsSharedViewModel
+import com.newton.communities.presentation.view_model.ClubBioViewModel
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
 import com.newton.communities.presentation.view_model.ExecutiveViewModel
 import com.newton.core.navigation.NavigationRoutes
@@ -30,13 +31,15 @@ class CommunityNavigationImpl: CommunityNavigationApi {
                 }
                 val aboutUsSharedViewModel = hiltViewModel<AboutUsSharedViewModel>(parentEntry)
                 val executiveViewModel = hiltViewModel<ExecutiveViewModel>()
+                val clubBioViewModel = hiltViewModel<ClubBioViewModel>()
                 AboutUsScreen(
                     communitiesViewModel = communityViewModel,
                     onCommunityDetailsClick = { community ->
                         aboutUsSharedViewModel.selectCommunity(community)
                         navHostController.navigate(NavigationRoutes.CommunitiesDetailsRoute.routes)
                     },
-                    executiveViewModel = executiveViewModel
+                    executiveViewModel = executiveViewModel,
+                    clubBioViewModel = clubBioViewModel
                 )
             }
 

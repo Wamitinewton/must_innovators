@@ -26,15 +26,10 @@ class EventRemoteMediator @Inject constructor(
 ) : RemoteMediator<Int, EventEntity>() {
 
     override suspend fun initialize(): InitializeAction {
-        val lastUpdateTimeStamp = eventDao.getPageTimeStamp(PagingConstants.STARTING_PAGE_INDEX)
-            ?: return InitializeAction.LAUNCH_INITIAL_REFRESH
-
-        val cacheTimeout = TimeUnit.HOURS.toMillis(PagingConstants.CACHE_TIMEOUT_HOURS.toLong())
-        return if (System.currentTimeMillis() - lastUpdateTimeStamp >= cacheTimeout) {
-            InitializeAction.LAUNCH_INITIAL_REFRESH
-        } else {
-            InitializeAction.SKIP_INITIAL_REFRESH
+        if (eventDao.getEventCount() > 0) {
+            return InitializeAction.SKIP_INITIAL_REFRESH
         }
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
     override suspend fun load(

@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -172,6 +173,11 @@ class AuthRepositoryImpl @Inject constructor(
         Timber.e(e, "Failed to logout user")
         emit(Resource.Error(e.message ?: "Failed to logout"))
     }.flowOn(Dispatchers.IO)
+
+    override fun observeLoggedInUser(): Flow<UserData?> =
+        userDao.observeUser().map { userEntity ->
+            userEntity?.toAuthedUser()
+        }
 
     private fun verifyTokenPersistence() {
         val savedAccessToken = sessionManager.fetchAccessToken()

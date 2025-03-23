@@ -7,7 +7,7 @@ import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.graphics.pdf.PdfDocument.PageInfo
 import com.newton.core.utils.formatDateTime
-import com.newton.events.presentation.view.ticket_screen.EventTicket
+import com.newton.events.presentation.view.user_tickets.EventTicket
 import java.io.File
 import java.io.FileOutputStream
 

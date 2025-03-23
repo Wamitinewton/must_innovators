@@ -13,5 +13,7 @@ data class RegistrationResponse(
     val phoneNumber: String,
     val registrationTimestamp: String,
     val ticketNumber: String,
-    val uid: String
+    val uid: String,
+    val eventDate: String? = null,
+    val isUsed: Boolean = false
 )

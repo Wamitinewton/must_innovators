@@ -7,7 +7,7 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.newton.core.utils.formatDateTime
-import com.newton.events.presentation.view.ticket_screen.EventTicket
+import com.newton.events.presentation.view.user_tickets.EventTicket
 
 class TicketQrGenerator {
 

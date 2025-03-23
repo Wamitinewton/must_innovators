@@ -12,10 +12,12 @@ import com.newton.core.navigation.NavigationSubGraphRoutes
 import com.newton.events.presentation.view.event_details.EventDetailsScreen
 import com.newton.events.presentation.view.event_list.EventsScreen
 import com.newton.events.presentation.view.event_registration.EventRegistrationScreen
-import com.newton.events.presentation.view.ticket_screen.RegisteredEventsScreen
+import com.newton.events.presentation.view.event_registration.EventRegistrationSuccessScreen
+import com.newton.events.presentation.view.user_tickets.RegisteredEventsScreen
 import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventViewModel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
+import com.newton.events.presentation.viewmodel.RsvpSharedViewModel
 
 class EventsNavigationApiImpl: EventsNavigationApi {
     override fun registerGraph(
@@ -44,7 +46,8 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                         sharedViewModel.setSelectedEvent(eventsData)
                         navHostController.navigate(NavigationRoutes.EventDetailsRoute.routes)
                     },
-                    onRsvpClick = {
+                    onRsvpClick = { eventsData ->
+                        sharedViewModel.setSelectedEvent(eventsData)
                         navHostController.navigate(NavigationRoutes.EventRegistrationScreen.routes)
                     }
                 )
@@ -76,8 +79,8 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                     eventsSharedViewModel = sharedViewModel,
                     userDataViewModel = getUserDataViewModel,
                     eventRsvpViewmodel = eventRsvpViewmodel,
-                    onNavigateToTickets = {
-                        navHostController.navigate(NavigationRoutes.EventTicketsRoute.routes)
+                    onNavigateToSuccess = {
+                        navHostController.navigate(NavigationRoutes.EventRegistrationSuccessScreen.routes)
                     }
                 )
             }
@@ -88,6 +91,15 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                         navHostController.navigateUp()
                     },
                     onTicketSelected = {}
+                )
+            }
+
+            composable(route = NavigationRoutes.EventRegistrationSuccessScreen.routes) {
+                val eventRegistrationSharedViewModel = hiltViewModel<RsvpSharedViewModel>()
+                EventRegistrationSuccessScreen(
+                    onNavigateToHome = {},
+                    onViewMyTickets = {},
+                    sharedViewModel = eventRegistrationSharedViewModel
                 )
             }
         }
