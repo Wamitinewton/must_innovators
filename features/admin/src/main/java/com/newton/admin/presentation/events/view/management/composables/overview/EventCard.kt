@@ -55,7 +55,6 @@ fun EventCard(
     val animatedOffset = remember { Animatable(0f) }
     val infiniteTransition = rememberInfiniteTransition()
 
-    // Subtle animation when scrolling
     LaunchedEffect(isScrolling) {
         if (isScrolling) {
             animatedOffset.animateTo(

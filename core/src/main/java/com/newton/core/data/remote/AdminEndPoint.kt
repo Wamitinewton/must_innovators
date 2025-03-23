@@ -1,6 +1,6 @@
-package com.newton.admin.data.remote
+package com.newton.core.data.remote
 
-object EventEndPoint {
+object AdminEndPoint {
     const val CREATE_EVENT = "events/add/"
     const val UPDATE_EVENT = "events/update/{id}"
     const val DELETE_EVENT = "events/delete/{id}"

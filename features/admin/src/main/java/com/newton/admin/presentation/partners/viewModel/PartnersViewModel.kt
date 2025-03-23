@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -108,14 +109,12 @@ class PartnersViewModel @Inject constructor(
                     showStartDatePicker = event.shown
                 )
             }
-
-            AddPartnersEvent.AddPartners -> addPartner()
             is AddPartnersEvent.OnGoingPartnership -> _addPartnersState.update {
                 it.copy(
                     ongoingPartnership = event.ongoing
                 )
             }
-
+            AddPartnersEvent.AddPartners -> addPartner()
             AddPartnersEvent.PickImage -> emit(AddPartnersEffect.PickImage)
         }
     }
@@ -178,6 +177,7 @@ class PartnersViewModel @Inject constructor(
 
     private fun addPartner() {
         if (validateAndSubmit()) {
+            Timber.e("Adding partners")
             val partner = AddPartnerRequest(
                 name = _addPartnersState.value.partnerName,
                 type = _addPartnersState.value.partnerType,

@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.home.views.composables
+package com.newton.admin.presentation.home.view.composables
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -16,7 +16,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.newton.core.domain.models.admin_models.DashboardColors
 import com.newton.core.domain.models.admin.TooltipData
-import com.newton.admin.presentation.home.views.CommunityGroup
+import com.newton.admin.presentation.home.view.CommunityGroup
 
 @Composable
 fun BarGraph(

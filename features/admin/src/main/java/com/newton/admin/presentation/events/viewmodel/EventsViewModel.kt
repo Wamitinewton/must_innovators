@@ -99,7 +99,7 @@ class EventsViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
-                        result.data?.let { attendee ->
+                        result.data?.let {attendee->
                             _rsvps.update {
                                 it.copy(
                                     isSuccess = true,
@@ -107,7 +107,8 @@ class EventsViewModel @Inject constructor(
                                     hasError = null,
                                     attendees = attendee
                                 )
-                            }
+                        }
+
                         }
 
                     }

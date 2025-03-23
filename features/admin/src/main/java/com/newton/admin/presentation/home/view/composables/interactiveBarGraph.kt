@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.home.views.composables
+package com.newton.admin.presentation.home.view.composables
 
 import android.graphics.Color
 import android.graphics.Paint
@@ -20,7 +20,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.newton.core.domain.models.admin_models.DashboardColors
 import com.newton.core.domain.models.admin.TooltipData
-import com.newton.admin.presentation.home.views.InteractionData
+import com.newton.admin.presentation.home.view.InteractionData
 
 @Composable
 fun InteractiveBarGraph(

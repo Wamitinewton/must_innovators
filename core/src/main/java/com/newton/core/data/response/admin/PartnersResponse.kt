@@ -1,4 +1,4 @@
-package com.newton.core.domain.models.admin_models
+package com.newton.core.data.response.admin
 
 data class PartnersResponse(
     val achievements: String,

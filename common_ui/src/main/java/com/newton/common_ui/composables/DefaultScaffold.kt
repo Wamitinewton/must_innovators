@@ -40,6 +40,7 @@ fun DefaultScaffold(
     showOrbitals: Boolean = true,
     isLoading: Boolean = false,
     gradientColors: List<Color> = getDefaultGradientColors(),
+    bottomBar: @Composable () -> Unit = {},
     content: @Composable BoxScope.() -> Unit
 ) {
     Scaffold(
@@ -48,6 +49,7 @@ fun DefaultScaffold(
             snackbarHostState?.let { SnackbarHost(hostState = it) }
         },
         floatingActionButton = floatingActionButton,
+        bottomBar = bottomBar,
         topBar = topBar
     ) { padding ->
         Box(

@@ -3,7 +3,7 @@ package com.newton.core.data.mappers
 import com.newton.core.data.response.events.EventDto
 import com.newton.core.data.response.events.EventRegistrationResponseDto
 import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 
 
 fun EventDto.toDomainEvent(): EventsData {

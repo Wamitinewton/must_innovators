@@ -3,6 +3,7 @@ package com.newton.admin.navigation
 import AddCommunityScreen
 import NewsletterAdminScreen
 import UpdateCommunityScreen
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -17,13 +18,15 @@ import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
 import com.newton.admin.presentation.feedbacks.view.FeedbackScreen
 import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
-import com.newton.admin.presentation.home.views.AdminHome
+import com.newton.admin.presentation.home.view.AdminHome
 import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
 import com.newton.admin.presentation.partners.view.AddPartnerScreen
 import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
 import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
 import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
-import com.newton.admin.presentation.settings.view.AdminSettingsScreen
+import com.newton.admin.presentation.actions.view.ActionsScreen
+import com.newton.admin.presentation.events.viewmodel.AdminEventsSharedViewModel
+import com.newton.admin.presentation.events.viewmodel.UpdateEventsViewModel
 import com.newton.core.navigation.NavigationRoutes
 import com.newton.core.navigation.NavigationSubGraphRoutes
 
@@ -41,11 +44,18 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 AdminHome(viewModel, viewModel::handleEvents, navHostController)
             }
             composable(route = NavigationRoutes.AdminEvents.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Admin.route)
+                }
                 val viewModel = hiltViewModel<EventsViewModel>()
+                val sharedViewModel = hiltViewModel<AdminEventsSharedViewModel> (parentEntry)
                 EventManagementScreen(
-                    navHostController,
                     onEvent = viewModel::handleEvent,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onEventSelected = {event->
+                        sharedViewModel.setSelectedEvent(event)
+                        navHostController.navigate(NavigationRoutes.ModifyEvent.routes)
+                    }
                 )
             }
             composable(route = NavigationRoutes.AdminFeedbacks.routes) {
@@ -53,17 +63,22 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 FeedbackScreen(viewModel, onEvent = viewModel::handleEvent)
             }
             composable(route = NavigationRoutes.AdminSettings.routes) {
-                AdminSettingsScreen()
+                ActionsScreen(navHostController)
             }
             composable(route = NavigationRoutes.AddEvent.routes) {
                 val viewModel = hiltViewModel<AddEventViewModel>()
                 AddEvents(viewModel, viewModel::handleEvent, navHostController)
             }
             composable(route = NavigationRoutes.ModifyEvent.routes) {
-                val viewModel = hiltViewModel<EventsViewModel>()
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Admin.route)
+                }
+                val viewModel = hiltViewModel<AdminEventsSharedViewModel>(parentEntry)
+                val updateViewModel = hiltViewModel<UpdateEventsViewModel>()
                 ModifyEvent(
                     viewModel = viewModel,
-                    onEvent = viewModel::handleEvent
+                    onEvent = updateViewModel::handleEvents,
+                    updateViewModel
                 )
             }
             composable(route = NavigationRoutes.AddCommunity.routes) {
@@ -78,7 +93,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val viewModel = hiltViewModel<PartnersViewModel>()
                 AddPartnerScreen(viewModel, viewModel::handleEvent)
             }
-            composable(route = NavigationRoutes.NewsLetterScreen.routes) {
+            composable(route = NavigationRoutes.SendNewsLetter.routes) {
                 val viewModel = hiltViewModel<NotificationsViewModel>()
                 NewsletterAdminScreen(
                     viewModel = viewModel,

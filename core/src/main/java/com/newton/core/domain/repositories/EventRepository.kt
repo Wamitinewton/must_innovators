@@ -2,7 +2,7 @@ package com.newton.core.domain.repositories
 
 import androidx.paging.PagingData
 import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.models.admin_models.RegistrationResponse
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.utils.Resource
 import com.newton.core.domain.models.event_models.Event
 import com.newton.core.domain.models.event_models.EventRegistrationRequest

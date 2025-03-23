@@ -1,6 +1,6 @@
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.admin_models.PartnersResponse
+import com.newton.core.data.response.admin.PartnersResponse
 import com.newton.database.entities.PartnerEntity
 
 fun PartnersResponse.toPartnersEntity(): PartnerEntity {

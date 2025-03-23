@@ -1,6 +1,6 @@
 package com.newton.admin.di
 
-import com.newton.admin.data.remote.AdminApi
+import com.newton.core.data.remote.AdminApi
 import com.newton.admin.data.repository.AdminRepositoryImpl
 import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.navigation.AdminNavigationApi

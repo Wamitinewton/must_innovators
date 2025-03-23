@@ -1,4 +1,4 @@
-package com.newton.admin.presentation.home.views.composables
+package com.newton.admin.presentation.home.view.composables
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
@@ -17,7 +17,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.home.views.SampleEvent
+import com.newton.admin.presentation.home.view.SampleEvent
 import com.newton.core.domain.models.admin_models.DashboardColors
 import com.newton.core.domain.models.admin.TooltipData
 import kotlin.math.PI
