@@ -51,6 +51,7 @@ fun ExecutivesSection(
             is ExecutiveUiState.Error -> {
                 val errorMessage = uiState.message
                 ErrorScreen(
+                    titleText = "Failed to load COMMUNITY EXECUTIVES",
                     message = errorMessage,
                     onRetry = { }
                 )

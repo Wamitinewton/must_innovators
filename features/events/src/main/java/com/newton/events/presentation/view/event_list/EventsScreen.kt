@@ -49,6 +49,7 @@ fun EventsScreen(
                 pagingItems.loadState.refresh is LoadState.Error -> {
                     val error = pagingItems.loadState.refresh as LoadState.Error
                     ErrorScreen(
+                        titleText = "failed to load CLUB EVENTS",
                         message = error.error.localizedMessage ?: "Something went wrong",
                         onRetry = { pagingItems.refresh() },
                         modifier = Modifier.fillMaxSize()

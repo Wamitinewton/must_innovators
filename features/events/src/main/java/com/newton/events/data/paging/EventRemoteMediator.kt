@@ -10,12 +10,10 @@ import com.newton.core.data.remote.EventService
 import com.newton.database.dao.EventDao
 import com.newton.database.db.AppDatabase
 import com.newton.database.entities.EventEntity
+import com.newton.database.entities.EventPaginationMetadata
 import com.newton.database.mappers.toEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
@@ -24,6 +22,7 @@ class EventRemoteMediator @Inject constructor(
     private val db: AppDatabase,
     private val eventDao: EventDao
 ) : RemoteMediator<Int, EventEntity>() {
+
 
     override suspend fun initialize(): InitializeAction {
         if (eventDao.getEventCount() > 0) {
@@ -37,11 +36,24 @@ class EventRemoteMediator @Inject constructor(
         state: PagingState<Int, EventEntity>
     ): MediatorResult {
         val page = when (loadType) {
-            LoadType.REFRESH -> PagingConstants.STARTING_PAGE_INDEX
-            LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+            LoadType.REFRESH -> {
+                PagingConstants.STARTING_PAGE_INDEX
+            }
+
+            LoadType.PREPEND -> {
+                return MediatorResult.Success(endOfPaginationReached = true)
+            }
+
             LoadType.APPEND -> {
                 val lastPage = eventDao.getLastPage()
                     ?: return MediatorResult.Success(endOfPaginationReached = true)
+
+                val metadata = eventDao.getPaginationMetadata(lastPage)
+
+                if (metadata?.nextPageUrl == null) {
+                    return MediatorResult.Success(endOfPaginationReached = true)
+                }
+
                 lastPage + 1
             }
         }
@@ -49,9 +61,7 @@ class EventRemoteMediator @Inject constructor(
         val pageSize = state.config.pageSize.coerceAtMost(PagingConstants.NETWORK_PAGE_SIZE)
 
         return try {
-            val response = withContext(Dispatchers.IO) {
-                api.getAllEvents(page = page, pageSize = pageSize)
-            }
+            val response = api.getAllEvents(page = page, pageSize = pageSize)
 
             if (response.status != "success") {
                 return MediatorResult.Error(Exception(response.message))
@@ -60,6 +70,7 @@ class EventRemoteMediator @Inject constructor(
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     eventDao.clearEvents()
+                    eventDao.clearPaginationMetadata()
                 }
 
                 val events = response.data.results.map { event ->
@@ -67,22 +78,18 @@ class EventRemoteMediator @Inject constructor(
                 }
                 eventDao.insertEvents(events)
 
-                eventDao.updatePageTimestamp(page, System.currentTimeMillis())
+                val paginationMetadata = EventPaginationMetadata(
+                    pageNumber = page,
+                    nextPageUrl = response.data.next,
+                    timestamp = System.currentTimeMillis()
+                )
+                eventDao.insertPaginationMetadata(paginationMetadata)
             }
+
 
             MediatorResult.Success(endOfPaginationReached = response.data.next == null)
         } catch (e: IOException) {
-            val hasData = if (loadType == LoadType.REFRESH) {
-                eventDao.getEventCount() > 0
-            } else {
-                true
-            }
-
-            if (hasData) {
-                return MediatorResult.Success(endOfPaginationReached = true)
-            }
-
-            MediatorResult.Error(Exception("Network connection failed. Please check your connection and try again."))
+            return MediatorResult.Error(Exception("Network error: ${e.message}"))
         } catch (e: HttpException) {
             MediatorResult.Error(Exception("Server error occurred. Error code: ${e.code()}"))
         } catch (e: Exception) {
