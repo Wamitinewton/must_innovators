@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.ui.EmptyStateCard
-import com.newton.common_ui.ui.ErrorBanner
+import com.newton.common_ui.ui.ErrorScreen
 import com.newton.communities.presentation.events.CommunityUiEvent
 import com.newton.communities.presentation.state.CommunitiesUiState
 import com.newton.communities.presentation.view.about_us.composables.CommunitiesList
@@ -85,9 +85,10 @@ fun CommunityContent(
                     buttonColor = MaterialTheme.colorScheme.error
                 )
             } else {
-                ErrorBanner(
-                    errorMessage = uiState.message,
-                    onRetryClick = {
+                ErrorScreen(
+                    titleText = "Failed to load COMMUNITIES",
+                    message = uiState.message,
+                    onRetry = {
                         communitiesViewModel.onEvent(CommunityUiEvent.Action.RefreshCommunities)
                     }
                 )

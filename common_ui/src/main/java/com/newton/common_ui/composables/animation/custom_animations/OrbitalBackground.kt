@@ -50,11 +50,12 @@ fun OrbitalsBackground(
     primaryColor: Color = MaterialTheme.colorScheme.primary,
     secondaryColor: Color = MaterialTheme.colorScheme.secondary,
     tertiaryColor: Color = MaterialTheme.colorScheme.tertiary,
-    primaryAlpha: Float = 0.35f,
-    secondaryAlpha: Float = 0.25f,
-    tertiaryAlpha: Float = 0.3f,
-    backgroundAlpha: Float = 1f,
-    showStars: Boolean = true
+    primaryAlpha: Float = 0.15f,      // Reduced from 0.35f
+    secondaryAlpha: Float = 0.12f,    // Reduced from 0.25f
+    tertiaryAlpha: Float = 0.1f,      // Reduced from 0.3f
+    backgroundAlpha: Float = 0.7f,    // Reduced from 1f
+    showStars: Boolean = true,
+    starDensity: Float = 0.5f         // New parameter to control star density
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "space-animation")
 
@@ -79,7 +80,7 @@ fun OrbitalsBackground(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = tween(40000, easing = LinearEasing),
+            animation = tween(60000, easing = LinearEasing), // Slowed down from 40000
             repeatMode = RepeatMode.Restart
         ),
         label = "rotation1"
@@ -89,47 +90,47 @@ fun OrbitalsBackground(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = tween(60000, easing = LinearEasing),
+            animation = tween(80000, easing = LinearEasing), // Slowed down from 60000
             repeatMode = RepeatMode.Restart
         ),
         label = "rotation2"
     )
 
     val orbitPulse by infiniteTransition.animateFloat(
-        initialValue = 0.85f,
-        targetValue = 1.15f,
+        initialValue = 0.95f, // Reduced pulse range from 0.85f
+        targetValue = 1.05f,  // Reduced pulse range from 1.15f
         animationSpec = infiniteRepeatable(
-            animation = tween(8000, easing = LinearEasing),
+            animation = tween(10000, easing = LinearEasing), // Slowed down from 8000
             repeatMode = RepeatMode.Reverse
         ),
         label = "orbitPulse"
     )
 
     val starAlpha1 by infiniteTransition.animateFloat(
-        initialValue = 0.1f,
-        targetValue = 0.9f,
+        initialValue = 0.05f, // Reduced from 0.1f
+        targetValue = 0.4f,   // Reduced from 0.9f
         animationSpec = infiniteRepeatable(
-            animation = tween(2000, easing = LinearEasing),
+            animation = tween(3000, easing = LinearEasing), // Slowed down from 2000
             repeatMode = RepeatMode.Reverse
         ),
         label = "starAlpha1"
     )
 
     val starAlpha2 by infiniteTransition.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.7f,
+        initialValue = 0.1f,  // Reduced from 0.2f
+        targetValue = 0.3f,   // Reduced from 0.7f
         animationSpec = infiniteRepeatable(
-            animation = tween(3000, easing = LinearEasing),
+            animation = tween(4000, easing = LinearEasing), // Slowed down from 3000
             repeatMode = RepeatMode.Reverse
         ),
         label = "starAlpha2"
     )
 
     val starAlpha3 by infiniteTransition.animateFloat(
-        initialValue = 0.05f,
-        targetValue = 0.6f,
+        initialValue = 0.02f, // Reduced from 0.05f
+        targetValue = 0.25f,  // Reduced from 0.6f
         animationSpec = infiniteRepeatable(
-            animation = tween(4000, easing = LinearEasing),
+            animation = tween(5000, easing = LinearEasing), // Slowed down from 4000
             repeatMode = RepeatMode.Reverse
         ),
         label = "starAlpha3"
@@ -137,29 +138,30 @@ fun OrbitalsBackground(
 
     val starRotation by infiniteTransition.animateFloat(
         initialValue = 0f,
-        targetValue = 45f,
+        targetValue = 30f, // Reduced from 45f for subtler rotation
         animationSpec = infiniteRepeatable(
-            animation = tween(10000, easing = LinearEasing),
+            animation = tween(15000, easing = LinearEasing), // Slowed down from 10000
             repeatMode = RepeatMode.Reverse
         ),
         label = "starRotation"
     )
 
-    val dashPattern1 = remember { floatArrayOf(20f, 10f) }
-    val dashPattern2 = remember { floatArrayOf(15f, 15f) }
-    val dashPattern3 = remember { floatArrayOf(8f, 12f) }
+    val dashPattern1 = remember { floatArrayOf(15f, 15f) } // Adjusted for subtler pattern
+    val dashPattern2 = remember { floatArrayOf(10f, 20f) } // Adjusted for subtler pattern
+    val dashPattern3 = remember { floatArrayOf(5f, 15f) }  // Adjusted for subtler pattern
 
-    val smallStarCount = remember { 60 }
-    val mediumStarCount = remember { 40 }
-    val largeStarCount = remember { 20 }
-    val extraLargeStarCount = remember { 8 }
+    // Apply star density factor to reduce star counts
+    val smallStarCount = remember { (60 * starDensity).toInt() }
+    val mediumStarCount = remember { (40 * starDensity).toInt() }
+    val largeStarCount = remember { (20 * starDensity).toInt() }
+    val extraLargeStarCount = remember { (8 * starDensity).toInt() }
 
     val smallStars = remember {
         List(smallStarCount) {
             Star(
                 x = Random.nextFloat(),
                 y = Random.nextFloat(),
-                size = Random.nextFloat() * 1.2f + 0.8f,
+                size = Random.nextFloat() * 0.8f + 0.5f, // Reduced size
                 alphaGroup = Random.nextInt(3) + 1,
                 pointCount = 5,
                 rotation = Random.nextFloat() * 360f
@@ -172,7 +174,7 @@ fun OrbitalsBackground(
             Star(
                 x = Random.nextFloat(),
                 y = Random.nextFloat(),
-                size = Random.nextFloat() * 1.8f + 1.4f,
+                size = Random.nextFloat() * 1.2f + 1.0f, // Reduced from 1.8f + 1.4f
                 alphaGroup = Random.nextInt(3) + 1,
                 pointCount = Random.nextInt(4, 7),
                 rotation = Random.nextFloat() * 360f
@@ -185,7 +187,7 @@ fun OrbitalsBackground(
             Star(
                 x = Random.nextFloat(),
                 y = Random.nextFloat(),
-                size = Random.nextFloat() * 2.5f + 2.0f,
+                size = Random.nextFloat() * 1.5f + 1.5f, // Reduced from 2.5f + 2.0f
                 alphaGroup = Random.nextInt(3) + 1,
                 pointCount = Random.nextInt(5, 8),
                 rotation = Random.nextFloat() * 360f
@@ -198,7 +200,7 @@ fun OrbitalsBackground(
             Star(
                 x = Random.nextFloat(),
                 y = Random.nextFloat(),
-                size = Random.nextFloat() * 3.5f + 3.0f,
+                size = Random.nextFloat() * 2.0f + 2.0f, // Reduced from 3.5f + 3.0f
                 alphaGroup = Random.nextInt(3) + 1,
                 pointCount = Random.nextInt(6, 9),
                 rotation = Random.nextFloat() * 360f
@@ -206,14 +208,15 @@ fun OrbitalsBackground(
         }
     }
 
+    // Reduced galaxy clusters from 3 to 2
     val galaxyClusters = remember {
-        List(3) {
+        List(2) {
             GalaxyCluster(
                 centerX = Random.nextFloat() * 0.8f + 0.1f,
                 centerY = Random.nextFloat() * 0.8f + 0.1f,
-                radius = Random.nextFloat() * 0.15f + 0.05f,
+                radius = Random.nextFloat() * 0.10f + 0.03f, // Reduced from 0.15f + 0.05f
                 rotation = Random.nextFloat() * 360f,
-                starCount = Random.nextInt(15, 30)
+                starCount = Random.nextInt(10, 20) // Reduced from 15, 30
             )
         }
     }
@@ -221,17 +224,17 @@ fun OrbitalsBackground(
     val primaryWithAlpha = remember(primaryColor, primaryAlpha) { primaryColor.copy(alpha = primaryAlpha) }
     val secondaryWithAlpha = remember(secondaryColor, secondaryAlpha) { secondaryColor.copy(alpha = secondaryAlpha) }
     val tertiaryWithAlpha = remember(tertiaryColor, tertiaryAlpha) { tertiaryColor.copy(alpha = tertiaryAlpha) }
-    val waveFillColor = remember(secondaryColor) { secondaryColor.copy(alpha = 0.05f) }
-    val pointColor = remember(primaryColor) { primaryColor.copy(alpha = 0.5f) }
-    val circleColor = remember(primaryColor) { primaryColor.copy(alpha = 0.1f) }
+    val waveFillColor = remember(secondaryColor) { secondaryColor.copy(alpha = 0.03f) } // Reduced from 0.05f
+    val pointColor = remember(primaryColor) { primaryColor.copy(alpha = 0.25f) } // Reduced from 0.5f
+    val circleColor = remember(primaryColor) { primaryColor.copy(alpha = 0.06f) } // Reduced from 0.1f
 
     val starBaseColor = MaterialTheme.colorScheme.onSurface
-    val starColor1 = remember(starBaseColor) { starBaseColor.copy(alpha = 0.9f) }
-    val starColor2 = remember(tertiaryColor) { tertiaryColor.copy(alpha = 0.7f) }
-    val starColor3 = remember(secondaryColor) { secondaryColor.copy(alpha = 0.8f) }
-    val brightStar = remember(primaryColor) { Color.White.copy(alpha = 0.95f) }
-    val blueStar = remember { Color(0xFF8EB8FF).copy(alpha = 0.9f) }
-    val redStar = remember { Color(0xFFFF9E9E).copy(alpha = 0.9f) }
+    val starColor1 = remember(starBaseColor) { starBaseColor.copy(alpha = 0.4f) } // Reduced from 0.9f
+    val starColor2 = remember(tertiaryColor) { tertiaryColor.copy(alpha = 0.3f) } // Reduced from 0.7f
+    val starColor3 = remember(secondaryColor) { secondaryColor.copy(alpha = 0.35f) } // Reduced from 0.8f
+    val brightStar = remember(primaryColor) { Color.White.copy(alpha = 0.5f) } // Reduced from 0.95f
+    val blueStar = remember { Color(0xFF8EB8FF).copy(alpha = 0.4f) } // Reduced from 0.9f
+    val redStar = remember { Color(0xFFFF9E9E).copy(alpha = 0.4f) } // Reduced from 0.9f
 
     Canvas(
         modifier = modifier
@@ -249,7 +252,7 @@ fun OrbitalsBackground(
             val clusterRadius = cluster.radius * minOf(canvasWidth, canvasHeight)
 
             drawCircle(
-                color = tertiaryColor.copy(alpha = 0.05f),
+                color = tertiaryColor.copy(alpha = 0.02f), // Reduced from 0.05f
                 radius = clusterRadius * 1.5f,
                 center = clusterCenter
             )
@@ -261,12 +264,12 @@ fun OrbitalsBackground(
                 val x = clusterCenterX + cos(angle * PI.toFloat() / 180) * distance
                 val y = clusterCenterY + sin(angle * PI.toFloat() / 180) * distance
 
-                val starSize = 1.0f + distanceFactor * 1.5f
+                val starSize = 0.8f + distanceFactor * 1.0f // Reduced from 1.0f + distanceFactor * 1.5f
                 val starColor = when {
                     i % 5 == 0 -> blueStar
                     i % 7 == 0 -> redStar
                     else -> starColor1
-                }.copy(alpha = 0.3f + distanceFactor * 0.6f)
+                }.copy(alpha = 0.2f + distanceFactor * 0.3f) // Reduced from 0.3f + distanceFactor * 0.6f
 
                 drawStar(
                     center = Offset(x, y),
@@ -333,10 +336,10 @@ fun OrbitalsBackground(
                     rotation = star.rotation + starRotation * 0.5f
                 )
 
-                // Add a subtle glow around large stars
+                // Add a subtle glow around large stars (reduced radius)
                 drawCircle(
-                    color = starColor3.copy(alpha = starAlpha * 0.3f),
-                    radius = star.size * 2.0f,
+                    color = starColor3.copy(alpha = starAlpha * 0.15f), // Reduced from 0.3f
+                    radius = star.size * 1.5f, // Reduced from 2.0f
                     center = Offset(star.x * canvasWidth, star.y * canvasHeight)
                 )
             }
@@ -344,9 +347,9 @@ fun OrbitalsBackground(
             // Draw extra large stars with glow effects
             extraLargeStars.forEach { star ->
                 val starAlpha = when (star.alphaGroup) {
-                    1 -> starAlpha1 * 0.9f + 0.1f
-                    2 -> starAlpha2 * 0.9f + 0.1f
-                    else -> starAlpha3 * 0.9f + 0.1f
+                    1 -> starAlpha1 * 0.7f + 0.1f // Reduced intensity
+                    2 -> starAlpha2 * 0.7f + 0.1f // Reduced intensity
+                    else -> starAlpha3 * 0.7f + 0.1f // Reduced intensity
                 }
 
                 // Draw multiple layer glows
@@ -358,63 +361,63 @@ fun OrbitalsBackground(
 
                 // Outer glow
                 drawCircle(
-                    color = starColor.copy(alpha = starAlpha * 0.15f),
-                    radius = star.size * 4.0f,
+                    color = starColor.copy(alpha = starAlpha * 0.08f), // Reduced from 0.15f
+                    radius = star.size * 3.0f, // Reduced from 4.0f
                     center = Offset(star.x * canvasWidth, star.y * canvasHeight)
                 )
 
                 // Middle glow
                 drawCircle(
-                    color = starColor.copy(alpha = starAlpha * 0.3f),
-                    radius = star.size * 2.5f,
+                    color = starColor.copy(alpha = starAlpha * 0.15f), // Reduced from 0.3f
+                    radius = star.size * 2.0f, // Reduced from 2.5f
                     center = Offset(star.x * canvasWidth, star.y * canvasHeight)
                 )
 
                 // Inner glow
                 drawCircle(
-                    color = starColor.copy(alpha = starAlpha * 0.5f),
-                    radius = star.size * 1.5f,
+                    color = starColor.copy(alpha = starAlpha * 0.25f), // Reduced from 0.5f
+                    radius = star.size * 1.2f, // Reduced from 1.5f
                     center = Offset(star.x * canvasWidth, star.y * canvasHeight)
                 )
 
                 // Star shape
                 drawStar(
                     center = Offset(star.x * canvasWidth, star.y * canvasHeight),
-                    outerRadius = star.size * 1.4f,
+                    outerRadius = star.size * 1.2f, // Reduced from 1.4f
                     innerRadius = star.size * 0.5f,
                     points = star.pointCount,
                     color = starColor.copy(alpha = starAlpha),
                     rotation = star.rotation + starRotation * 0.3f
                 )
 
-                // Sparkle lines for extra effect
+                // Sparkle lines for extra effect (reduced)
                 val sparkleCount = 4
                 for (i in 0 until sparkleCount) {
                     val angle = (i * 360f / sparkleCount + rotation1 * 0.1f) % 360
                     val startX = star.x * canvasWidth + cos(angle * PI.toFloat() / 180) * (star.size * 0.8f)
                     val startY = star.y * canvasHeight + sin(angle * PI.toFloat() / 180) * (star.size * 0.8f)
-                    val endX = star.x * canvasWidth + cos(angle * PI.toFloat() / 180) * (star.size * 3.5f)
-                    val endY = star.y * canvasHeight + sin(angle * PI.toFloat() / 180) * (star.size * 3.5f)
+                    val endX = star.x * canvasWidth + cos(angle * PI.toFloat() / 180) * (star.size * 2.5f) // Reduced from 3.5f
+                    val endY = star.y * canvasHeight + sin(angle * PI.toFloat() / 180) * (star.size * 2.5f) // Reduced from 3.5f
 
                     drawLine(
-                        color = starColor.copy(alpha = starAlpha * 0.2f),
+                        color = starColor.copy(alpha = starAlpha * 0.1f), // Reduced from 0.2f
                         start = Offset(startX, startY),
                         end = Offset(endX, endY),
-                        strokeWidth = 1f
+                        strokeWidth = 0.5f // Reduced from 1f
                     )
                 }
             }
         }
 
-        // Define orbit dimensions
-        val orbit1RadiusX = canvasWidth * 0.42f * orbitPulse
-        val orbit1RadiusY = canvasHeight * 0.34f
-        val orbit2RadiusX = canvasWidth * 0.52f
-        val orbit2RadiusY = canvasHeight * 0.26f * orbitPulse
-        val orbit3RadiusX = canvasWidth * 0.62f * orbitPulse
-        val orbit3RadiusY = canvasHeight * 0.48f * orbitPulse
+        // Define orbit dimensions - reduced sizes for subtlety
+        val orbit1RadiusX = canvasWidth * 0.38f * orbitPulse // Reduced from 0.42f
+        val orbit1RadiusY = canvasHeight * 0.30f // Reduced from 0.34f
+        val orbit2RadiusX = canvasWidth * 0.46f // Reduced from 0.52f
+        val orbit2RadiusY = canvasHeight * 0.24f * orbitPulse // Reduced from 0.26f
+        val orbit3RadiusX = canvasWidth * 0.54f * orbitPulse // Reduced from 0.62f
+        val orbit3RadiusY = canvasHeight * 0.40f * orbitPulse // Reduced from 0.48f
         val orbit3Center = Offset(canvasWidth * 0.6f, canvasHeight * 0.7f)
-        val circleRadius = canvasWidth * 0.2f * orbitPulse
+        val circleRadius = canvasWidth * 0.16f * orbitPulse // Reduced from 0.2f
         val circleCenter = Offset(canvasWidth * 0.2f, canvasHeight * 0.25f)
 
         // Draw primary orbit
@@ -424,7 +427,7 @@ fun OrbitalsBackground(
             radiusY = orbit1RadiusY,
             rotation = rotation1,
             color = primaryWithAlpha,
-            strokeWidth = 2.0f,
+            strokeWidth = 1.5f, // Reduced from 2.0f
             dashPattern = dashPattern1
         )
 
@@ -435,7 +438,7 @@ fun OrbitalsBackground(
             radiusY = orbit2RadiusY,
             rotation = rotation2,
             color = secondaryWithAlpha,
-            strokeWidth = 3.0f,
+            strokeWidth = 1.8f, // Reduced from 3.0f
             dashPattern = dashPattern2
         )
 
@@ -446,7 +449,7 @@ fun OrbitalsBackground(
             radiusY = orbit3RadiusY,
             rotation = rotation1 * 0.7f,
             color = tertiaryWithAlpha,
-            strokeWidth = 1.5f,
+            strokeWidth = 1.0f, // Reduced from 1.5f
             dashPattern = dashPattern3
         )
 
@@ -456,43 +459,42 @@ fun OrbitalsBackground(
             radius = circleRadius,
             center = circleCenter,
             style = Stroke(
-                width = 2.0f,
+                width = 1.5f, // Reduced from 2.0f
                 pathEffect = PathEffect.dashPathEffect(dashPattern2, 0f)
             )
         )
 
-        // Draw orbital points
-        val pointsCount = 5
+        val pointsCount = 4 // Reduced from 5
         for (i in 0 until pointsCount) {
             val angle = (i * 2 * PI / pointsCount + rotation1 * PI / 180).toFloat()
             val x = center.x + cos(angle) * orbit1RadiusX
             val y = center.y + sin(angle) * orbit1RadiusY
             drawCircle(
                 color = pointColor,
-                radius = 3.5f,
+                radius = 2.5f, // Reduced from 3.5f
                 center = Offset(x, y)
             )
         }
 
-        // Draw smaller points on the second orbit
-        val smallPointsCount = 7
+        // Draw smaller points on the second orbit (reduced size and count)
+        val smallPointsCount = 5 // Reduced from 7
         for (i in 0 until smallPointsCount) {
             val angle = (i * 2 * PI / smallPointsCount + rotation2 * PI / 180).toFloat()
             val x = center.x + cos(angle) * orbit2RadiusX
             val y = center.y + sin(angle) * orbit2RadiusY
             drawCircle(
                 color = secondaryWithAlpha,
-                radius = 2.5f,
+                radius = 2.0f, // Reduced from 2.5f
                 center = Offset(x, y)
             )
         }
 
-        // Draw subtle wave effect
+        // Draw subtle wave effect (reduced amplitude)
         val wavePath = Path().apply {
             moveTo(0f, canvasHeight * 0.5f)
-            for (i in 0..canvasWidth.toInt() step 100) {
+            for (i in 0..canvasWidth.toInt() step 120) { // Increased step from 100 for fewer waves
                 val x = i.toFloat()
-                val y = canvasHeight * 0.5f + sin((x + rotation1) * PI / 180 * 2) * 40
+                val y = canvasHeight * 0.5f + sin((x + rotation1) * PI / 180 * 2) * 25 // Reduced amplitude from 40
                 lineTo(x, y.toFloat())
             }
         }
@@ -501,7 +503,7 @@ fun OrbitalsBackground(
             path = wavePath,
             color = waveFillColor,
             style = Stroke(
-                width = 2f,
+                width = 1.5f, // Reduced from 2f
                 cap = StrokeCap.Round
             )
         )

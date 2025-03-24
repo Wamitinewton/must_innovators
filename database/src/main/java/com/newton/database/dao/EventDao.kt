@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import com.newton.database.entities.EventEntity
+import com.newton.database.entities.EventPaginationMetadata
 
 @Dao
 interface EventDao {
@@ -51,4 +52,16 @@ interface EventDao {
 
     @Query("SELECT * FROM events ORDER BY date DESC LIMIT :count")
     suspend fun getLatestEvents(count: Int): List<EventEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPaginationMetadata(metadata: EventPaginationMetadata)
+
+    @Query("SELECT nextPageUrl FROM events_pagination_metadata WHERE pageNumber = :pageNumber")
+    suspend fun getNextPageUrl(pageNumber: Int): String?
+
+    @Query("DELETE FROM events_pagination_metadata")
+    suspend fun clearPaginationMetadata()
+
+    @Query("SELECT * FROM events_pagination_metadata WHERE pageNumber = :pageNumber")
+    suspend fun getPaginationMetadata(pageNumber: Int): EventPaginationMetadata?
 }

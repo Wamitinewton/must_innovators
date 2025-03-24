@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 fun ErrorScreen(
     message: String,
     onRetry: () -> Unit,
+    titleText: String = "Oops! Something went wrong",
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -48,7 +49,7 @@ fun ErrorScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Oops! Something went wrong",
+                text = titleText,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface

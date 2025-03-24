@@ -13,6 +13,7 @@ import com.newton.database.dao.UserDao
 import com.newton.database.dao.UserFeedbackDao
 import com.newton.database.entities.ClubBioEntity
 import com.newton.database.entities.EventEntity
+import com.newton.database.entities.EventPaginationMetadata
 import com.newton.database.entities.EventsFeedbackEntity
 import com.newton.database.entities.PartnerEntity
 import com.newton.database.entities.PartnersDataEntity
@@ -29,7 +30,8 @@ import com.newton.database.entities.UserFeedbackEntity
         PartnersDataEntity::class,
         EventsFeedbackEntity::class,
         PartnerEntity::class,
-        ClubBioEntity::class
+        ClubBioEntity::class,
+        EventPaginationMetadata::class
     ],
 
     version = 23,

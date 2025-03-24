@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.ErrorBanner
+import com.newton.common_ui.ui.ErrorScreen
 import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.communities.presentation.state.ClubBioUiState
 import com.newton.communities.presentation.view.about_us.composables.AboutSection
@@ -23,9 +23,10 @@ fun ClubBioContent(
             LoadingIndicator(text = "Loading club bio...")
         }
         is ClubBioUiState.Error -> {
-            ErrorBanner(
-                errorMessage = uiState.message,
-                onRetryClick = {}
+            ErrorScreen(
+                message = uiState.message,
+                titleText = "Failed to load CLUB BIO",
+                onRetry = {}
             )
         }
         is ClubBioUiState.Success -> {
