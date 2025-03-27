@@ -11,10 +11,28 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+val properties = Properties()
+val store = rootProject.file("keys.properties")
+
+// Early loading of properties
+if (store.exists()) {
+    properties.load(store.inputStream())
+} else {
+    throw GradleException("keys.properties file not found")
+}
+
+
+val prodBackendUrl = properties.getProperty("PROD_BACKEND_URL")
+    ?: throw GradleException("PROD_BACKEND_URL not found in keys.properties")
+val devBackendUrl = properties.getProperty("DEV_BACKEND_URL")
+    ?: throw GradleException("DEV_BACKEND_URL not found in keys.properties")
+val stagingBackendUrl = properties.getProperty("STAGING_BACKEND_URL")
+    ?: throw GradleException("STAGING_BACKEND_URL not found in keys.properties")
+
+
 android {
     namespace = "com.newton.meruinnovators"
     compileSdk = 35
-    val properties = Properties()
 
 
     defaultConfig {
@@ -30,14 +48,8 @@ android {
             logger.warn("Warning: ${e.message}")
         }
 
-        val backendUrl = properties.getProperty("BACKEND_URL")
-            ?: throw GradleException("BACKEND_URL not found in keys.properties")
-
-
-        buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
-
-
-
+//        val backendUrl = properties.getProperty("BACKEND_URL")
+//            ?: throw GradleException("BACKEND_URL not found in keys.properties")
 
         applicationId = "com.newton.meruinnovators"
         minSdk = 28
@@ -68,6 +80,16 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            buildConfigField("String", "BACKEND_URL", "\"$devBackendUrl\"")
+        }
+        create("stagging") {
+            isMinifyEnabled = true
+            isShrinkResources = false
+            buildConfigField("String", "BACKEND_URL", "\"$stagingBackendUrl\"")
+        }
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
@@ -76,7 +98,25 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
+            buildConfigField("String", "BACKEND_URL", "\"$prodBackendUrl\"")
+        }
+    }
+    flavorDimensions += "appStatus"
+    productFlavors {
+        create("production") {
+            applicationIdSuffix = ""
+            dimension = "appStatus"
+            manifestPlaceholders["appName"] = "M.U.S.I.C"
+        }
+        create("dev") {
+            applicationIdSuffix = ".dev"
+            dimension = "appStatus"
+            manifestPlaceholders["appName"] = "[DEV] M.U.S.I.C"
+        }
+        create("staging") {
+            applicationIdSuffix = ".stg"
+            dimension = "appStatus"
+            manifestPlaceholders["appName"] = "[STG] M.U.S.I.C"
         }
     }
     compileOptions {
