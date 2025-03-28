@@ -24,10 +24,13 @@ import com.newton.database.mappers.toRegistrationResponse
 import com.newton.database.mappers.toTicketEntity
 import com.newton.events.data.paging.EventRemoteMediator
 import com.newton.events.data.paging.PagingConstants.NETWORK_PAGE_SIZE
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -92,19 +95,24 @@ class EventRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserTickets(email: String): Flow<Resource<List<RegistrationResponse>>> =
-        flow {
-            emitAll(safeApiCall {
-                val localTickets = ticketDao.getAllTickets()
-                if (localTickets.isNotEmpty()) {
-                    return@safeApiCall localTickets.map { it.toRegistrationResponse() }
-                }
-                val response = api.getUserTickets(email)
-                val tickets = response.data.map { it.toEventRegistration() }
-                ticketDao.insertTickets(tickets.map { it.toTicketEntity() })
-                tickets
-            })
+    override suspend fun getUserTickets(): Flow<Resource<List<RegistrationResponse>>> = flow {
+        emit(Resource.Loading())
+
+        val localTickets = ticketDao.getAllTickets().firstOrNull()?.map { it.toRegistrationResponse() }
+        if (!localTickets.isNullOrEmpty()) {
+            emit(Resource.Success(localTickets))
+            return@flow
         }
+        safeApiCall {
+            val response = api.getUserTickets()
+            val tickets = response.data.map { it.toEventRegistration() }
+
+            ticketDao.insertTickets(tickets.map { it.toTicketEntity() })
+
+            tickets
+        }.collect { emit(it) }
+    }.flowOn(Dispatchers.IO)
+
 
 
     override suspend fun getEventById(id: Int): Flow<Resource<Event>> = flow {

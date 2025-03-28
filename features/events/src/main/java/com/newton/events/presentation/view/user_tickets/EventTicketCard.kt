@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.newton.common_ui.ui.CopyableText
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.utils.ShareManager
 import com.newton.core.utils.formatDateTime
 import com.newton.core.domain.models.event_models.TicketColorScheme
@@ -55,7 +56,7 @@ import com.newton.events.ticket_pdf.TicketPdfGenerator
 
 @Composable
 fun EventTicketCard(
-    ticket: EventTicket,
+    ticket: RegistrationResponse,
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -64,17 +65,18 @@ fun EventTicketCard(
         targetValue = if (ticket.isUsed) 0.7f else 1f,
         label = "alpha"
     )
-    val ticketColorScheme = when (ticket.ticketType) {
-        TicketType.STANDARD -> TicketColorScheme(
+    val ticketColorScheme = if (ticket.isUsed){
+        TicketColorScheme(
             primary = MaterialTheme.colorScheme.primary,
             secondary = MaterialTheme.colorScheme.primaryContainer,
             textColor = MaterialTheme.colorScheme.onPrimary
         )
 
-        TicketType.EARLY_BIRD -> TicketColorScheme(
-            primary = MaterialTheme.colorScheme.secondary,
-            secondary = MaterialTheme.colorScheme.secondaryContainer,
-            textColor = MaterialTheme.colorScheme.onSecondary
+    } else {
+      TicketColorScheme(
+        primary = MaterialTheme.colorScheme.secondary,
+        secondary = MaterialTheme.colorScheme.secondaryContainer,
+        textColor = MaterialTheme.colorScheme.onSecondary
         )
     }
 
@@ -135,25 +137,6 @@ fun EventTicketCard(
                                 text = formatDateTime(ticket.eventDate),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = ticketColorScheme.textColor.copy(alpha = 0.9f)
-                            )
-                        }
-                    }
-
-                    if (ticket.ticketType != TicketType.STANDARD) {
-                        Box(
-                            modifier = Modifier
-                                .zIndex(10f)
-                                .padding(start = 8.dp)
-                                .clip(CircleShape)
-                                .background(Color.White.copy(alpha = 0.2f))
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = ticket.ticketType.name,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
@@ -246,7 +229,7 @@ fun EventTicketCard(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Registered on : ${formatDateTime(ticket.registrationDate)}",
+                            text = "Registered on : ${formatDateTime(ticket.registrationTimestamp)}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )

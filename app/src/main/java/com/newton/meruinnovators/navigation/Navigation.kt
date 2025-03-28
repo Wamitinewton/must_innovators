@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.newton.auth.presentation.login.view_model.LoginViewModel
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 
 @Composable
 fun MeruInnovatorsNavigation(

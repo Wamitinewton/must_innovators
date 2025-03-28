@@ -14,8 +14,8 @@ import com.newton.auth.presentation.reset_password.view_model.ForgotPasswordView
 import com.newton.auth.presentation.sign_up.view.SignupRoute
 import com.newton.auth.presentation.sign_up.view.SignupSuccessScreen
 import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 import com.newton.on_boarding.view.OnboardingScreen
 
 class AuthNavigationApiImpl : AuthNavigationApi {

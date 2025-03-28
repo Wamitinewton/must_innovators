@@ -83,4 +83,5 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":common_ui"))
     implementation(project(":database"))
+    implementation(project(":navigation"))
 }

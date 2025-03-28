@@ -1,5 +1,5 @@
 package com.newton.blogs.navigation
 
-import com.newton.core.navigation.NavigationApi
+import com.newton.navigation.NavigationApi
 
 interface BlogsNavigationApi: NavigationApi

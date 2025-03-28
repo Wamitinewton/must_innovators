@@ -1,4 +1,4 @@
-package com.newton.core.navigation
+package com.newton.navigation
 
 sealed class NavigationRoutes(val routes: String) {
     data object SignupRoute: NavigationRoutes("sign-up-screen")
@@ -34,4 +34,5 @@ sealed class NavigationRoutes(val routes: String) {
     data object ForgotPasswordRoute: NavigationRoutes("forgot_password")
     data object DeleteAccountRoute: NavigationRoutes("delete_account")
     data object DeleteAccountSuccessRoute: NavigationRoutes("delete_account_success")
+    data object CreateTestimonialsRoute: NavigationRoutes("create_testimonial")
 }

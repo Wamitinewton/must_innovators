@@ -58,4 +58,7 @@ dependencies {
     // paging
     implementation(Dependencies.pagingCompose)
     implementation(Dependencies.pagingRuntime)
+
+    //timber
+    implementation(Dependencies.timber)
 }

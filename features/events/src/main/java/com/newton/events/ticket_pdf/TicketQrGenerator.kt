@@ -6,16 +6,16 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.utils.formatDateTime
 import com.newton.events.presentation.view.user_tickets.EventTicket
 
 class TicketQrGenerator {
 
-    fun generateQrCode(ticket: EventTicket, size: Int): Bitmap {
+    fun generateQrCode(ticket: RegistrationResponse, size: Int): Bitmap {
         val qrContent = buildString {
             append("Event: ${ticket.eventName}\n")
             append("Ticket: ${ticket.ticketNumber}\n")
-            append("Type: ${ticket.ticketType}\n")
             append("Date: ${formatDateTime(ticket.eventDate)}")
         }
 

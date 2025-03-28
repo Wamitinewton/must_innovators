@@ -1,5 +1,5 @@
 package com.newton.home.navigation
 
-import com.newton.core.navigation.NavigationApi
+import com.newton.navigation.NavigationApi
 
 interface HomeNavigationApi: NavigationApi

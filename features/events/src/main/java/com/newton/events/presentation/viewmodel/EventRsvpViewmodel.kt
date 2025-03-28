@@ -73,7 +73,7 @@ class EventRsvpViewmodel @Inject constructor(
                                     result.data,
                                     EventRegistrationFlow.REGISTRATION_SUCCESS
                                 )
-                                ticketStateBus.updateTicket(result.data)
+//                                ticketStateBus.updateTicket(result.data)
                                 _navigationEvents.send(NavigationEvent.NavigateToTicket)
                             }
                         }

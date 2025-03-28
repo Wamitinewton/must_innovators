@@ -17,7 +17,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.newton.core.navigation.NavigationRoutes
+import com.newton.navigation.NavigationRoutes
 import com.newton.meruinnovators.navigation.AdminNavBar
 import com.newton.meruinnovators.navigation.BottomNavigationBar
 import com.newton.meruinnovators.navigation.MeruInnovatorsNavigation

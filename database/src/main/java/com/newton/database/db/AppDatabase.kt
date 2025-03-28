@@ -8,6 +8,7 @@ import com.newton.database.dao.ClubBioDao
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.EventsFeedbackDao
 import com.newton.database.dao.PartnersDao
+import com.newton.database.dao.TestimonialsDao
 import com.newton.database.dao.TicketDao
 import com.newton.database.dao.UserDao
 import com.newton.database.dao.UserFeedbackDao
@@ -17,6 +18,7 @@ import com.newton.database.entities.EventPaginationMetadata
 import com.newton.database.entities.EventsFeedbackEntity
 import com.newton.database.entities.PartnerEntity
 import com.newton.database.entities.PartnersDataEntity
+import com.newton.database.entities.TestimonialsEntity
 import com.newton.database.entities.TicketsEntity
 import com.newton.database.entities.UserEntity
 import com.newton.database.entities.UserFeedbackEntity
@@ -31,10 +33,11 @@ import com.newton.database.entities.UserFeedbackEntity
         EventsFeedbackEntity::class,
         PartnerEntity::class,
         ClubBioEntity::class,
-        EventPaginationMetadata::class
+        EventPaginationMetadata::class,
+        TestimonialsEntity::class
     ],
 
-    version = 23,
+    version = 25,
     exportSchema = false
 )
 
@@ -47,4 +50,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val eventsFeedback: EventsFeedbackDao
     abstract val partnersDao: PartnersDao
     abstract val clubBioDao: ClubBioDao
+    abstract val testimonialsDao: TestimonialsDao
 }

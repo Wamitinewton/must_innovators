@@ -1,4 +1,4 @@
-package com.newton.core.domain.models.home_models
+package com.newton.core.domain.models.testimonials
 
 import kotlinx.serialization.Serializable
 

@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 import com.newton.feedback.presentation.view.bug_report.BugReportsScreen
 import com.newton.feedback.presentation.view.general_feedback.GeneralFeedbackScreen
 import com.newton.feedback.presentation.viewmodel.UserFeedbackViewModel

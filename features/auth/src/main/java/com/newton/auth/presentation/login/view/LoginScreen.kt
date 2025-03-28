@@ -15,7 +15,7 @@ import com.newton.auth.presentation.login.event.LoginNavigationEvent
 import com.newton.auth.presentation.login.view_model.LoginViewModel
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.NetworkMonitor
-import com.newton.core.navigation.NavigationRoutes
+import com.newton.navigation.NavigationRoutes
 import com.newton.core.network.NetworkConfiguration
 import kotlinx.coroutines.launch
 

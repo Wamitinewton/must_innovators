@@ -3,6 +3,7 @@ package com.newton.home.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.core.domain.repositories.HomeRepository
+import com.newton.core.sharedBus.TestimonialsEventBus
 import com.newton.core.utils.Resource
 import com.newton.home.presentation.states.TestimonialsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TestimonialsViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository,
+    private val testimonialsEventBus: TestimonialsEventBus
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Initial)
@@ -23,6 +25,12 @@ class TestimonialsViewModel @Inject constructor(
 
     init {
         loadTestimonials()
+
+        viewModelScope.launch {
+            testimonialsEventBus.testimonialUpdate.collect {
+                loadTestimonials()
+            }
+        }
     }
 
 
