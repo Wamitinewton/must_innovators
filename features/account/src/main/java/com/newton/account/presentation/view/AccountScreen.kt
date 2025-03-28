@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.NoteAdd
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.DrawerValue
@@ -19,7 +19,6 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
@@ -61,6 +60,7 @@ fun AccountScreen(
     onGeneralFeedbackClick: () -> Unit,
     onDeleteAccount: () -> Unit,
     onUpdateProfile: () -> Unit,
+    onCreateTestimonial: () -> Unit,
     onLogoutClicked: () -> Unit,
     accountViewModel: UpdateAccountViewModel,
     accountManagementViewModel: AccountManagementViewModel
@@ -148,11 +148,11 @@ fun AccountScreen(
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { onUpdateProfile() },
+                    onClick = { onCreateTestimonial() },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ) {
-                    Icon(Icons.Outlined.Edit, contentDescription = "Edit profile")
+                    Icon(Icons.AutoMirrored.Outlined.NoteAdd, contentDescription = "Edit profile")
                 }
             }
         ) {

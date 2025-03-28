@@ -15,5 +15,10 @@ data class TicketsEntity(
     val fullName: String,
     val phoneNumber: String,
     val registrationTimestamp: String,
-    val uid: String
+    val uid: String,
+    val eventName: String,
+    val eventDescription: String,
+    val eventLocation: String,
+    val eventDate: String,
+    val isUsed: Boolean
 )

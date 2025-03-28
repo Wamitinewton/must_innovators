@@ -61,7 +61,6 @@ fun HomeScreen(
                     Box(modifier = Modifier
                         .clip(CircleShape)
                         .clickable {
-                            // Notification action
                         }
                         .padding(10.dp)
                     ) {
@@ -93,7 +92,7 @@ fun HomeScreen(
                 SectionHeader(
                     title = "Testimonials",
                     showViewAll = true,
-                    onViewAllClick = { /* View all testimonials action */ }
+                    onViewAllClick = {  }
                 )
             }
 

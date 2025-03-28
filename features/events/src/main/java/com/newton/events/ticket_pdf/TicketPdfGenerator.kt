@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.graphics.pdf.PdfDocument.PageInfo
+import com.newton.core.data.response.admin.RegistrationResponse
 import com.newton.core.utils.formatDateTime
 import com.newton.events.presentation.view.user_tickets.EventTicket
 import java.io.File
@@ -45,7 +46,7 @@ class TicketPdfGenerator(private val context: Context) {
         color = android.graphics.Color.BLACK
     }
 
-    fun generatePdf(ticket: EventTicket): File {
+    fun generatePdf(ticket: RegistrationResponse): File {
         val pdfDocument = PdfDocument()
         val pageInfo = PageInfo.Builder(pageWidth, pageHeight, 1).create()
         val page = pdfDocument.startPage(pageInfo)
@@ -81,20 +82,19 @@ class TicketPdfGenerator(private val context: Context) {
         return pdfFile
     }
 
-    private fun drawTicketDetails(canvas: Canvas, ticket: EventTicket, startY: Float) {
+    private fun drawTicketDetails(canvas: Canvas, ticket: RegistrationResponse, startY: Float) {
         var yPosition = startY
 
         // Draw ticket information in sections
         drawSection(canvas, "Event Details", yPosition) { y ->
             drawLabeledText("Date", formatDateTime(ticket.eventDate), y, canvas)
             drawLabeledText("Location", ticket.eventLocation, y + 20, canvas)
-            drawLabeledText("Type", ticket.ticketType.name, y + 40, canvas)
             y + 60f
         }.also { yPosition = it + 20f }
 
         drawSection(canvas, "Ticket Information", yPosition) { y ->
             drawLabeledText("Ticket Number", ticket.ticketNumber, y, canvas)
-            drawLabeledText("Registration Date", formatDateTime(ticket.registrationDate), y + 20, canvas)
+            drawLabeledText("Registration Date", formatDateTime(ticket.registrationTimestamp), y + 20, canvas)
             drawLabeledText("Status", if (ticket.isUsed) "USED" else "VALID", y + 40, canvas)
             y + 60f
         }.also { yPosition = it + 20f }

@@ -1,5 +1,5 @@
 package com.newton.admin.navigation
 
-import com.newton.core.navigation.NavigationApi
+import com.newton.navigation.NavigationApi
 
 interface AdminNavigationApi: NavigationApi

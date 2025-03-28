@@ -32,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,7 +44,7 @@ import coil3.compose.AsyncImage
 import com.newton.common_ui.ui.EmptyStateCard
 import com.newton.common_ui.ui.ErrorScreen
 import com.newton.common_ui.ui.LoadingIndicator
-import com.newton.core.domain.models.home_models.TestimonialsData
+import com.newton.core.domain.models.testimonials.TestimonialsData
 import com.newton.core.utils.formatDateTime
 import com.newton.home.presentation.states.TestimonialsUiState
 import kotlinx.coroutines.delay
@@ -237,16 +239,26 @@ fun PagerIndicator(
     pagerState: PagerState,
     pageCount: Int,
 ) {
+    val MAX_TOTAL_INDICATORS = 4
+
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        repeat(pageCount) { iteration ->
+        repeat(minOf(pageCount, MAX_TOTAL_INDICATORS)) { iteration ->
             val color = if (pagerState.currentPage == iteration) {
                 MaterialTheme.colorScheme.primary
             } else {
                 MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+            }
+
+            val alpha = when {
+                iteration < 4 -> 1f
+                iteration < MAX_TOTAL_INDICATORS -> {
+                    maxOf(0f, 1f - (iteration - 3) * 0.3f)
+                }
+                else -> 0f
             }
 
             Box(
@@ -254,7 +266,7 @@ fun PagerIndicator(
                     .padding(4.dp)
                     .size(8.dp)
                     .clip(CircleShape)
-                    .background(color)
+                    .background(color.copy(alpha = alpha))
             )
         }
     }

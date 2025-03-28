@@ -18,3 +18,7 @@ sealed class DeleteAccountNavigationEvent {
 sealed class LogoutNavigationEvent {
     data object NavigateToLogin : LogoutNavigationEvent()
 }
+
+sealed class TestimonialsNavigationEvent {
+    data object NavigateToHome : TestimonialsNavigationEvent()
+}

@@ -2,7 +2,7 @@ package com.newton.home.data
 
 import com.newton.core.data.remote.HomeApiService
 import com.newton.core.domain.models.home_models.PartnersData
-import com.newton.core.domain.models.home_models.TestimonialsData
+import com.newton.core.domain.models.testimonials.TestimonialsData
 import com.newton.core.domain.repositories.HomeRepository
 import com.newton.core.utils.Resource
 import com.newton.core.utils.safeApiCall

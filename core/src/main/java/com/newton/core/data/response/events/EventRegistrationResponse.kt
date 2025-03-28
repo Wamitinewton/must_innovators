@@ -18,6 +18,10 @@ data class UserTicketsResponse(
 
 @Serializable
 data class EventRegistrationResponseDto(
+    val eventName: String,
+    val eventDescription: String,
+    val eventLocation: String,
+    val eventDate: String,
     val course: String,
     val educational_level: String,
     val email: String,

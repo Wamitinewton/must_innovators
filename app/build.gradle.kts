@@ -201,6 +201,7 @@ dependencies {
     implementation(project(":features:about_us"))
     implementation(project(":notifications"))
     implementation(project(":features:feedback"))
+    implementation(project(":navigation"))
 }
 
 

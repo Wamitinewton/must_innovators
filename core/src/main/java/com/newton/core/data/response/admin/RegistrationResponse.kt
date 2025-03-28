@@ -4,6 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RegistrationResponse(
+    val eventName: String,
+    val eventDescription: String,
+    val eventLocation: String,
     val course: String,
     val educationalLevel: String,
     val email: String,
@@ -14,6 +17,6 @@ data class RegistrationResponse(
     val registrationTimestamp: String,
     val ticketNumber: String,
     val uid: String,
-    val eventDate: String? = null,
+    val eventDate: String,
     val isUsed: Boolean = false
 )

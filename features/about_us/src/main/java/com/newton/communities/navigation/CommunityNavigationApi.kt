@@ -1,5 +1,5 @@
 package com.newton.communities.navigation
 
-import com.newton.core.navigation.NavigationApi
+import com.newton.navigation.NavigationApi
 
 interface CommunityNavigationApi: NavigationApi

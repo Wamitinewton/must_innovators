@@ -24,5 +24,6 @@ object ApiEndpoints {
 
     const val GET_PARTNERS = "partners/"
     const val GET_TESTIMONIALS = "testimonies/testimonials/"
+    const val CREATE_TESTIMONIAL = "testimonies/testimonials/"
 
 }
