@@ -50,6 +50,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.view.composable.CommunitySection
+import com.newton.admin.presentation.community.view.composable.LeadershipSelectField
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
 import com.newton.admin.presentation.community.view.composable.SocialDialog
@@ -74,7 +75,6 @@ fun AddCommunityScreen(
     val usersState by viewModel.userState.collectAsState()
     val scrollState = rememberScrollState()
     val datePickerState = rememberDatePickerState()
-    val bottomSheetState = rememberModalBottomSheetState()
     val sessions = addCommunityState.sessions
     val socials = addCommunityState.socials
 
@@ -152,8 +152,6 @@ fun AddCommunityScreen(
                             addCommunityState.errors["date"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                         }
                     )
-
-                    // Description of the community
                     OutlinedTextField(
                         value = addCommunityState.description,
                         onValueChange = {
@@ -170,8 +168,6 @@ fun AddCommunityScreen(
                     )
                 }
             }
-
-            // Leadership Card with clickable fields
             CustomCard(
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -186,8 +182,6 @@ fun AddCommunityScreen(
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
-
-                    // Lead - Clickable
                     LeadershipSelectField(
                         label = "Lead",
                         value = addCommunityState.lead,
@@ -197,7 +191,6 @@ fun AddCommunityScreen(
                         }
                     )
                     addCommunityState.errors["lead"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
-                    // Co-lead - Clickable
                     LeadershipSelectField(
                         label = "Co-Lead",
                         value = addCommunityState.coLead,
@@ -207,7 +200,6 @@ fun AddCommunityScreen(
                         }
                     )
                     addCommunityState.errors["colead"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
-                    // Secretary - Clickable
                     LeadershipSelectField(
                         label = "Secretary",
                         value = addCommunityState.secretary,
@@ -504,119 +496,6 @@ fun AddCommunityScreen(
                 errorMessage = usersState.getUsersError,
                 onErrorRetry = { onEvent.invoke(CommunityEvent.LoadUsers(true)) },
                 onDismiss = { onEvent.invoke(CommunityEvent.ShowBottomSheet(false)) }
-            )
-//            ModalBottomSheet(
-//                onDismissRequest = {
-//                    onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
-//                },
-//                sheetState = bottomSheetState
-//            ) {
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(16.dp)
-//                ) {
-//                    Text(
-//                        text = "Select ${
-//                            addCommunityState.currentRoleSelection.replaceFirstChar {
-//                                if (it.isLowerCase()) it.titlecase(
-//                                    Locale.getDefault()
-//                                ) else it.toString()
-//                            }
-//                        }",
-//                        style = MaterialTheme.typography.headlineSmall,
-//                        modifier = Modifier.padding(bottom = 16.dp)
-//                    )
-//
-//                    HorizontalDivider()
-//
-//                    LazyColumn(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        contentPadding = PaddingValues(vertical = 8.dp)
-//                    ) {
-//                        if (usersState.isLoading) {
-//                            items(8){
-//                                UsersShimmer()
-//                            }
-//                        } else if (usersState.getUsersError != null){
-//                            item {
-//                                ErrorCard(usersState.getUsersError,onEvent)
-//                            }
-//                        }else{
-//
-//
-//
-//                            items(usersState.users) { user ->
-//                                UserListItem(
-//                                    user = user,
-//                                    onClick = {
-//                                        when (addCommunityState.currentRoleSelection) {
-//                                            "lead" ->{
-//                                                onEvent.invoke(CommunityEvent.LeadChanged(user.name))
-//                                                onEvent.invoke(CommunityEvent.LeadIdChanged(user.id))
-//                                            }
-//                                            "co-lead" -> {
-//                                                onEvent.invoke(CommunityEvent.CoLeadChanged(user.name))
-//                                                onEvent.invoke(CommunityEvent.CoLeadIdChanged(user.id))
-//
-//                                            }
-//                                            "secretary" -> {
-//                                                onEvent.invoke(CommunityEvent.SecretaryChanged(user.name))
-//                                                onEvent.invoke(CommunityEvent.SecretaryIdChanged(user.id))
-//                                            }
-//                                        }
-//                                        onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
-//                                    }
-//                                )
-//                            }
-//                        }
-//                    }
-//                    Spacer(modifier = Modifier.height(32.dp))
-//                }
-//            }
-        }
-    }
-}
-
-@Composable
-fun LeadershipSelectField(
-    label: String,
-    value: String,
-    onClick: () -> Unit
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = value.ifEmpty { "Select $label" },
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
