@@ -34,6 +34,7 @@ val actionList: List<NavItem> = listOf(
     NavItem("Add Event", NavigationRoutes.AddEvent.routes),
     NavItem("Add Executive", NavigationRoutes.UpdateExecutive.routes),
     NavItem("Update Community", NavigationRoutes.AdminCommunityList.routes),
+    NavItem("Club Update", NavigationRoutes.ClubUpdate.routes),
 )
 
 data class NavItem(

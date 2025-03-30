@@ -138,7 +138,7 @@ fun OrbitingParticles(rotation: Float) {
         Color(0xFFFFAB40), // Orange
         Color(0xFF7E57C2), // Purple
         Color(0xFF43A047), // Green
-        Color(0xFFE53935)  // Red
+        Color(0xFFE53935)
     )
 
     Box(

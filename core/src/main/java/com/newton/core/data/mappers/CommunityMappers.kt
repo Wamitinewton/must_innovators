@@ -82,8 +82,24 @@ private fun parseTechStack(techStack: Any): List<String> {
     }
 }
 
-fun Session.toAdminSession():AdminSession{
-    return AdminSession(day, endTime, location, meetingType, startTime)
+fun Session.toAdminSession(): AdminSession {
+    return AdminSession(
+        day = day,
+        end_time = endTime,
+        location = location,
+        meeting_type = meetingType,
+        start_time = startTime
+    )
 }
 
-fun List<Session>.toAdminSessionList():List<AdminSession> = map{it.toAdminSession()}
+fun AdminSession.toAboutUs(): Session {
+    return Session(
+        day = day,
+        startTime = start_time,
+        endTime = end_time,
+        meetingType = meeting_type,
+        location = location
+    )
+}
+
+fun List<Session>.toAdminSessionList(): List<AdminSession> = map { it.toAdminSession() }

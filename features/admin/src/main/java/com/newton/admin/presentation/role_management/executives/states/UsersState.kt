@@ -1,8 +1,8 @@
-package com.newton.admin.presentation.community.states
+package com.newton.admin.presentation.role_management.executives.states
 
 import com.newton.admin.data.mappers.User
 
-data class UsersState(
+data class ExecutiveUsersState(
     val getUsersError:String? = null,
     val isLoading: Boolean = false,
     val users: List<User> = emptyList(),

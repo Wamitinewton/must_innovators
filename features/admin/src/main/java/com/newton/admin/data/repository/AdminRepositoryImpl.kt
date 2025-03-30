@@ -6,8 +6,8 @@ import com.newton.admin.data.mappers.EventMapper.toEventData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
 import com.newton.admin.data.mappers.UserFeedbackMapper.toFeedbackData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
-import com.newton.core.data.remote.AdminApi
 import com.newton.common_ui.ui.toCustomRequestBody
+import com.newton.core.data.remote.AdminApi
 import com.newton.core.domain.models.ApiResponse
 import com.newton.core.domain.models.admin.NewsLetter
 import com.newton.core.domain.models.admin.NewsLetterResponse
@@ -15,9 +15,12 @@ import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.domain.models.admin_models.AddPartnerRequest
 import com.newton.core.domain.models.admin_models.Attendee
+import com.newton.core.domain.models.admin_models.Club
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
+import com.newton.core.domain.models.admin_models.ExecutiveRequest
+import com.newton.core.domain.models.admin_models.ExecutiveResponse
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
 import com.newton.core.domain.models.admin_models.UpdateEventRequest
@@ -30,8 +33,8 @@ import com.newton.core.utils.safeApiCall
 import com.newton.database.dao.EventDao
 import com.newton.database.dao.EventsFeedbackDao
 import com.newton.database.dao.PartnersDao
+import com.newton.database.dao.UserDao
 import com.newton.database.dao.UserFeedbackDao
-import com.newton.database.mappers.toDomain
 import com.newton.database.mappers.toEventDataList
 import com.newton.database.mappers.toEventsEntity
 import com.newton.database.mappers.toEventsFeedbackList
@@ -53,7 +56,7 @@ class AdminRepositoryImpl @Inject constructor(
     private val eventDao: EventDao,
     private val userFeedbackDao: UserFeedbackDao,
     private val eventsFeedbackDao: EventsFeedbackDao,
-    private val partnersDao: PartnersDao
+    private val partnersDao: PartnersDao,
 ) : AdminRepository {
     override suspend fun addEvent(event: AddEventRequest): Flow<Resource<EventsData>> = flow {
         emit(Resource.Loading(true))
@@ -103,11 +106,11 @@ class AdminRepositoryImpl @Inject constructor(
         }
 
     override suspend fun updateCommunity(
-        commnityId: Int,
+        communityId: Int,
         community: UpdateCommunityRequest
     ): Flow<Resource<CommunityData>> =
         safeApiCall {
-            adminApi.updateCommunity(commnityId, community)
+            adminApi.updateCommunity(communityId, community)
         }
 
     override suspend fun updateEvent(
@@ -255,8 +258,7 @@ class AdminRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> =
-        flow {
+    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> = flow {
             emit(Resource.Loading(true))
             try {
                 val params = mapOf(
@@ -297,6 +299,38 @@ class AdminRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun updateExecutive(executive: ExecutiveRequest): Flow<Resource<ExecutiveResponse>> =
+        flow {
+            emit(Resource.Loading(true))
+            try {
+                val response = adminApi.addExecutive(executive)
+                if (response.status == "success") {
+                    response.data
+                } else {
+                    emit(Resource.Error("Failed to fetch users: ${response.message}"))
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message?:"Unknown error occurred"))
+            } finally {
+                emit(Resource.Loading(false))
+            }
+        }
+
+    override suspend fun updateClub(clubRequest: Club): Flow<Resource<Club>> = flow{
+        try {
+            val response = adminApi.updateClub(clubRequest)
+            if (response.status == "success"){
+                response.data
+            }else{
+                emit(Resource.Error("Error occurred when updating club"))
+                throw Exception(response.message)
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message ?:"Unknown error occurred"))
+        } finally {
+        }
+    }
+
 
     private suspend fun getRemoteFeedbacks(
         category: String?,
@@ -311,11 +345,7 @@ class AdminRepositoryImpl @Inject constructor(
                 val feedbacks = response.results.toFeedbackData()
                 saveFeedbacks(feedbacks)
                 Resource.Success(data = feedbacks)
-            }
-//            else if(response.results.isEmpty()){
-//                Resource.Error("Failed to fetch feedbacks: ${response.message}")
-//            }
-            else {
+            } else {
                 Resource.Error("There is no feedbacks at the moment try again later")
             }
         } catch (e: HttpException) {

@@ -25,6 +25,8 @@ import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
 import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
 import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
 import com.newton.admin.presentation.actions.view.ActionsScreen
+import com.newton.admin.presentation.club.view.AddClubScreen
+import com.newton.admin.presentation.club.viewmodel.ClubViewModel
 import com.newton.admin.presentation.community.view.AdminCommunityList
 import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
 import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
@@ -89,7 +91,6 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 AddCommunityScreen(
                     viewModel = viewModel,
                     onEvent = viewModel::handleEvent,
-                    navController = navHostController,
                 )
             }
             composable(route = NavigationRoutes.AddPartners.routes) {
@@ -120,7 +121,9 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val viewModel = hiltViewModel<ExecutiveViewModel>()
                 UpdateExecutiveScreen(
                     navController = navHostController,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    executiveId = null,
+                    onEvent = viewModel::handleEvents
                 )
             }
             composable(route=NavigationRoutes.AdminCommunityList.routes) {
@@ -135,6 +138,13 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                         sharedViewModel.setSelectedCommunity(community)
                         navHostController.navigate(NavigationRoutes.UpdateCommunity.routes)
                     }
+                )
+            }
+            composable(route = NavigationRoutes.ClubUpdate.routes) {
+                val viewModel = hiltViewModel<ClubViewModel>()
+                AddClubScreen(
+                    viewmodel = viewModel,
+                    onEvent = viewModel::handleEvent
                 )
             }
 

@@ -12,5 +12,7 @@ object AdminEndPoint {
     const val GET_EVENTS_FEEDBACK = "events/{id}/feedback/"
     const val GET_ALL_EVENTS_DATA = "events/list/"
     const val ADD_PARTNER = "partners/"
-    const val Get_USERS_FEEDBACK = "feedbacks/"
+    const val GET_USERS_FEEDBACK = "feedbacks/"
+    const val ADD_EXECUTIVE = "api/executives/"
+    const val UPDATE_CLUB = "api/club/"
 }

@@ -23,9 +23,12 @@ fun OopsError(
     errorMessage: String,
     buttonText: String = "Try Again",
     showButton: Boolean = false,
-    onClick: () -> Unit = {},
+    onClick: (() -> Unit)? = null,
     imageHeight: Dp = 200.dp
 ) {
+    require(!showButton || onClick != null) {
+        "onClick must be provided when showButton is true"
+    }
     Box(
         modifier = Modifier
             .padding(12.dp)
@@ -41,10 +44,12 @@ fun OopsError(
             )
             Spacer(Modifier.height(12.dp))
             if (showButton) {
-                CustomElevatedButton(
-                    onClick = onClick,
-                    content = { Text(buttonText, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface) }
-                )
+                if (onClick != null) {
+                    CustomElevatedButton(
+                        onClick = onClick,
+                        content = { Text(buttonText, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface) }
+                    )
+                }
             }
         }
     }

@@ -86,6 +86,8 @@ import com.newton.admin.presentation.events.view.composables.CloseButton
 import com.newton.admin.presentation.partners.events.AddPartnersEvent
 import com.newton.admin.presentation.partners.states.AddPartnersEffect
 import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
+import com.newton.common_ui.composables.DefaultScaffold
+import com.newton.common_ui.composables.OopsError
 import com.newton.common_ui.ui.CustomButton
 import com.newton.common_ui.ui.CustomDynamicAsyncImage
 import com.newton.common_ui.ui.LoadingDialog
@@ -147,8 +149,8 @@ fun AddPartnerScreen(
         }
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
+    DefaultScaffold(
+        isLoading = partnersState.isLoading,
         topBar = {
             TopAppBar(
                 title = {
@@ -170,16 +172,14 @@ fun AddPartnerScreen(
                 }
             )
         },
-    ) { paddingValues ->
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Basic Info Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
@@ -198,8 +198,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Partner Name
                     OutlinedTextField(
                         value = partnersState.partnerName,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.NameChange(it)) },
@@ -219,8 +217,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Partner Type Dropdown
                     ExposedDropdownMenuBox(
                         expanded = partnersState.partnerTypeExpanded,
                         onExpandedChange = {
@@ -269,8 +265,6 @@ fun AddPartnerScreen(
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Description
                     OutlinedTextField(
                         value = partnersState.description,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.DescriptionChange(it)) },
@@ -308,8 +302,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Logo Placeholder
                     if (partnersState.partnershipLogo != null) {
                         val uri = partnersState.partnershipLogo
                         uri?.let { safeUri ->
@@ -393,8 +385,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Website URL
                     OutlinedTextField(
                         value = partnersState.website,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.WebsiteChange(it)) },
@@ -418,8 +408,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Contact Email
                     OutlinedTextField(
                         value = partnersState.contactEmail,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.ContactEmailChange(it)) },
@@ -443,8 +431,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Contact Person
                     OutlinedTextField(
                         value = partnersState.contactPerson,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.ContactPersonChange(it)) },
@@ -471,8 +457,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
-
-                    // LinkedIn
                     OutlinedTextField(
                         value = partnersState.socialLinkedIn,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.LinkedInChange(it)) },
@@ -494,8 +478,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Twitter
                     OutlinedTextField(
                         value = partnersState.socialTwitter,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.TwitterChange(it)) },
@@ -517,8 +499,6 @@ fun AddPartnerScreen(
                     )
                 }
             }
-
-            // Partnership Details Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
@@ -602,8 +582,6 @@ fun AddPartnerScreen(
                             },
                         )
                     }
-
-                    // End Date (visible only if not ongoing)
                     AnimatedVisibility(visible = !partnersState.ongoingPartnership) {
                         Row(
                             modifier = Modifier
@@ -641,7 +619,6 @@ fun AddPartnerScreen(
                     partnersState.errors["endDate"]?.let { Text(it) }
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Status Dropdown
                     ExposedDropdownMenuBox(
                         expanded = partnersState.statusExpanded,
                         onExpandedChange = {
@@ -687,8 +664,6 @@ fun AddPartnerScreen(
                     }
                 }
             }
-
-            // Collaboration Details Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
@@ -707,8 +682,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Collaboration Scope
                     OutlinedTextField(
                         value = partnersState.collaborationScope,
                         onValueChange = {
@@ -731,8 +704,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Key Benefits
                     OutlinedTextField(
                         value = partnersState.keyBenefits,
                         onValueChange = {
@@ -755,8 +726,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Events Supported
                     OutlinedTextField(
                         value = partnersState.eventsSupported,
                         onValueChange = {
@@ -776,8 +745,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Resources Provided
                     OutlinedTextField(
                         value = partnersState.resourcesProvided,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.ResourcesChange(it)) },
@@ -795,8 +762,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Achievements
                     OutlinedTextField(
                         value = partnersState.achievements,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.AchievementsChange(it)) },
@@ -814,8 +779,6 @@ fun AddPartnerScreen(
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
-
-                    // Target Audience
                     OutlinedTextField(
                         value = partnersState.targetAudience,
                         onValueChange = { onEvent.invoke(AddPartnersEvent.AudienceTargetChange(it)) },
@@ -837,14 +800,9 @@ fun AddPartnerScreen(
             // Save Button
             CustomButton(
                 onClick = {
-                    Timber.d("Add partner event screen clicked")
-                    Timber.d("Errors: " + partnersState.errors.toString())
                     onEvent.invoke(AddPartnersEvent.AddPartners)
-                    if (partnersState.isSuccess) {
-                        scope.launch {
-                            snackbarHostState.showSnackbar("Partner added successfully")
-                        }
-                    }
+                    Timber.d("Adding partner")
+                    Timber.d("errors: "+ partnersState.errors)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -858,17 +816,12 @@ fun AddPartnerScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     "Save Partner",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
-
-            // Extra space at bottom for better scrolling
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
-
-    // Start Date Picker Dialog
     if (partnersState.showStartDatePicker) {
         val datePickerState = rememberDatePickerState(
             initialSelectedDateMillis = partnersState.partnershipStartDate.toEpochDay() * 24 * 60 * 60 * 1000
@@ -906,8 +859,6 @@ fun AddPartnerScreen(
             DatePicker(state = datePickerState)
         }
     }
-
-    // End Date Picker Dialog
     if (partnersState.showEndDatePicker) {
         val datePickerState = rememberDatePickerState(
             initialSelectedDateMillis = partnersState.partnershipEndDate?.toEpochDay()
@@ -946,9 +897,9 @@ fun AddPartnerScreen(
         }
     }
 
-    if (partnersState.isLoading) {
-        LoadingDialog()
-    }else if (partnersState.errorMessage != null){
-//        ErrorCard(partnersState.errorMessage,{})
+     if (partnersState.errorMessage != null){
+         OopsError(
+             errorMessage = partnersState.errorMessage!!
+         )
     }
 }

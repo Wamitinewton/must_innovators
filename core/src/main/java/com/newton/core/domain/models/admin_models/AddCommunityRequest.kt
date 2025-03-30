@@ -5,9 +5,9 @@ import com.newton.core.domain.models.admin.Socials
 
 data class AddCommunityRequest(
     val name: String,
-    val community_lead: String,
-    val co_lead: String,
-    val secretary: String,
+    val community_lead: Int,
+    val co_lead: Int,
+    val secretary: Int,
     val email: String,
     val phone_number: String,
     val is_recruiting: Boolean? = false,

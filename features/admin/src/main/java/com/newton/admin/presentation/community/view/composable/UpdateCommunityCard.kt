@@ -7,8 +7,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -36,216 +34,248 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.admin.presentation.community.events.UpdateCommunityEvent
-import com.newton.admin.presentation.community.states.CommunityState
 import com.newton.admin.presentation.community.states.UpdateCommunityState
 import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.toFormatedDate
+import com.newton.common_ui.ui.FlowRow
+import com.newton.core.data.mappers.toAboutUs
 import com.newton.core.data.mappers.toAdminSession
-import com.newton.core.data.mappers.toAdminSessionList
 import com.newton.core.domain.models.about_us.Community
+import com.newton.core.domain.models.about_us.Session
 
 @Composable
 fun UpdateCommunityCard(
     communityData: Community,
     onEvent: (UpdateCommunityEvent) -> Unit,
-    isEditing:Boolean,
-    padding:PaddingValues,
+    isEditing: Boolean,
     communityState: UpdateCommunityState
 ) {
-    DefaultScaffold () {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(padding)
+    var name by remember { mutableStateOf(communityData.name) }
+    var description by remember { mutableStateOf(communityData.description) }
+    var lead by remember { mutableStateOf(communityData.communityLead.name) }
+    var coLead by remember { mutableStateOf(communityData.coLead.name) }
+    var secretary by remember { mutableStateOf(communityData.secretary.name) }
+    var email by remember { mutableStateOf(communityData.email) }
+    var sessions by remember { mutableStateOf(communityData.sessions) }
+    var phone by remember { mutableStateOf(communityData.phoneNumber) }
+    var tools by remember { mutableStateOf(communityData.techStack) }
+    var foundedOn by remember { mutableStateOf(communityData.foundingDate) }
+    var recruiting by remember { mutableStateOf(communityData.isRecruiting) }
+    var sessionToEdit by remember { mutableStateOf<Session?>(null) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        // Community header with name and recruitment status
+        CommunityHeader(
+            communityName = name,
+            isRecruiting = recruiting,
+            isEditing = isEditing,
+            onNameChange = {
+                name = it
+            },
+            onRecruitingChange = {
+                recruiting = it
+            }
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Community description
+        CommunitySection(
+            title = "About",
+            icon = Icons.Default.Description
         ) {
-            // Community header with name and recruitment status
-            CommunityHeader(
-                communityName = communityData.name,
-                isRecruiting = communityData.isRecruiting,
+            if (isEditing) {
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = {
+                        description = it
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Description") },
+                    maxLines = 5
+                )
+            } else {
+                Text(
+                    text = communityData.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Leadership section
+        CommunitySection(
+            title = "Leadership",
+            icon = Icons.Default.Group
+        ) {
+            LeadershipField(
+                label = "Community Lead",
+                value = lead,
                 isEditing = isEditing,
-                onNameChange = {
-                    onEvent.invoke(UpdateCommunityEvent.NameChanged(it))
-                },
-                onRecruitingChange = {
-                    onEvent.invoke(UpdateCommunityEvent.IsRecruitingChanged(it))
+                onValueChange = {
+                    lead = it
                 }
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            LeadershipField(
+                label = "Co-Lead",
+                value = coLead,
+                isEditing = isEditing,
+                onValueChange = {
+                    coLead = it
+                }
+            )
 
-            // Community description
-            CommunitySection(
-                title = "About",
-                icon = Icons.Default.Description
-            ) {
-                if (isEditing) {
-                    OutlinedTextField(
-                        value = communityData.description,
-                        onValueChange = {
-                            onEvent.invoke(UpdateCommunityEvent.DescriptionChanged(it))
+            LeadershipField(
+                label = "Secretary",
+                value = secretary,
+                isEditing = isEditing,
+                onValueChange = {
+                    secretary = it
+                }
+            )
+        }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Contact information
+        CommunitySection(
+            title = "Contact Information",
+            icon = Icons.Default.Call
+        ) {
+            ContactField(
+                label = "Email",
+                value = email,
+                icon = Icons.Default.Email,
+                isEditing = isEditing,
+                keyboardType = KeyboardType.Email,
+                onValueChange = {
+                    email = it
+                }
+            )
+
+            ContactField(
+                label = "Phone",
+                value = phone,
+                icon = Icons.Default.Phone,
+                isEditing = isEditing,
+                keyboardType = KeyboardType.Phone,
+                onValueChange = {
+                    phone = it
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Sessions section - NEW
+        CommunitySection(
+            title = "Meeting Sessions",
+            icon = Icons.Default.Schedule
+        ) {
+            if (sessions.isEmpty()) {
+                Text(
+                    text = "No scheduled sessions",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                )
+            } else {
+                sessions.forEachIndexed { index, data ->
+                    SessionItem(
+                        session = data.toAdminSession(),
+                        isEditing = isEditing,
+                        onEditClick = {
+                            sessionToEdit = data
+                            onEvent.invoke(UpdateCommunityEvent.ShowAddSession(true))
                         },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text("Description") },
-                        maxLines = 5
+                        onDeleteClick = {
+                            val newSessions = sessions.toMutableList()
+                            newSessions.removeAt(index)
+                            sessions = newSessions
+                        }
                     )
-                } else {
-                    Text(
-                        text = communityData.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
+
+                    if (index < communityData.sessions.size - 1) {
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    }
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Leadership section
-            CommunitySection(
-                title = "Leadership",
-                icon = Icons.Default.Group
-            ) {
-                LeadershipField(
-                    label = "Community Lead",
-                    value = communityData.communityLead.name,
-                    isEditing = isEditing,
-                    onValueChange = {
-                        onEvent.invoke(UpdateCommunityEvent.LeadChanged(it))
-                    }
+        // Tech stack
+        CommunitySection(
+            title = "Tech Stack",
+            icon = Icons.Default.Settings
+        ) {
+            if (isEditing) {
+                OutlinedTextField(
+                    value = tools.joinToString(),
+                    onValueChange = { tool ->
+                        tools = tool.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Tech Stack") }
                 )
-
-                LeadershipField(
-                    label = "Co-Lead",
-                    value = communityData.coLead.name,
-                    isEditing = isEditing,
-                    onValueChange = {
-                        onEvent.invoke(UpdateCommunityEvent.CoLeadChanged(it))
-                    }
-                )
-
-                LeadershipField(
-                    label = "Secretary",
-                    value = communityData.secretary.name,
-                    isEditing = isEditing,
-                    onValueChange = {
-                        onEvent.invoke(UpdateCommunityEvent.SecretaryChanged(it)) }
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Contact information
-            CommunitySection(
-                title = "Contact Information",
-                icon = Icons.Default.Call
-            ) {
-                ContactField(
-                    label = "Email",
-                    value = communityData.email,
-                    icon = Icons.Default.Email,
-                    isEditing = isEditing,
-                    keyboardType = KeyboardType.Email,
-                    onValueChange = {
-                        onEvent.invoke(UpdateCommunityEvent.EmailCHanged(it))}
-                )
-
-                ContactField(
-                    label = "Phone",
-                    value = communityData.phoneNumber,
-                    icon = Icons.Default.Phone,
-                    isEditing = isEditing,
-                    keyboardType = KeyboardType.Phone,
-                    onValueChange = {
-                        onEvent.invoke(UpdateCommunityEvent.PhoneChanged(it))}
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Sessions section - NEW
-            CommunitySection(
-                title = "Meeting Sessions",
-                icon = Icons.Default.Schedule
-            ) {
-                if (communityData.sessions.isEmpty()) {
-                    Text(
-                        text = "No scheduled sessions",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier
-                            .padding(vertical = 16.dp)
-                            .fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                    )
-                } else {
-                    communityData.sessions.forEachIndexed { index, data ->
-                        val session = data.toAdminSession()
-                        SessionItem(
-                            session = session,
-                            isEditing = isEditing,
-                            onEditClick = {
-                                onEvent.invoke(UpdateCommunityEvent.SessionToEdit(session))
-                                onEvent.invoke(UpdateCommunityEvent.ShowAddSession(true))
-                            },
-                            onDeleteClick = {
-                                val newSessions = communityData.sessions.toAdminSessionList().toMutableList()
-                                newSessions.removeAt(index)
-                                onEvent.invoke(UpdateCommunityEvent.SessionsChanged(newSessions))
-                            }
-                        )
-
-                        if (index < communityData.sessions.size - 1) {
-                            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+            } else {
+                FlowRow {
+                    tools.forEach { tool ->
+                        Surface(
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            modifier = Modifier.padding(horizontal = 3.dp)
+                        ) {
+                            Text(
+                                text = tool,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
                         }
                     }
                 }
+//                    Text(
+//                        text = communityData.techStack.toString(),
+//                        style = MaterialTheme.typography.bodyMedium,
+//                        modifier = Modifier.padding(top = 8.dp)
+//                    )
             }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Tech stack
-            CommunitySection(
-                title = "Tech Stack",
-                icon = Icons.Default.Settings
-            ) {
-                if (isEditing) {
-                    OutlinedTextField(
-                        value = communityData.techStack.joinToString(),
-                        onValueChange = { onEvent.invoke(UpdateCommunityEvent.ToolsChanged(it)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text("Tech Stack") }
-                    )
-                } else {
-                    Text(
-                        text = communityData.techStack.toString(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Community details
-            CommunitySection(
-                title = "Community Details",
-                icon = Icons.Default.LocationOn
-            ) {
-                DetailRow(
-                    label = "Founding Date",
-                    value = communityData.foundingDate,
-                    icon = Icons.Default.CalendarMonth,
-                    isEditing = isEditing,
-                    onValueChange = { onEvent.invoke(UpdateCommunityEvent.DateFoundedChanged(it)) }
-                )
+        // Community details
+        CommunitySection(
+            title = "Community Details",
+            icon = Icons.Default.LocationOn
+        ) {
+            DetailRow(
+                label = "Founding Date",
+                value = foundedOn,
+                icon = Icons.Default.CalendarMonth,
+                isEditing = isEditing,
+                onValueChange = { foundedOn = it }
+            )
 
 //                    DetailRow(
 //                        label = "Total Members",
@@ -258,11 +288,11 @@ fun UpdateCommunityCard(
 //                            communityData = communityData.copy(total_members = newValue)
 //                        }
 //                    )
-            }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Social links
+        // Social links
 //                CommunitySection(
 //                    title = "Social Media",
 //                    icon = Icons.Default.LocationOn
@@ -312,69 +342,68 @@ fun UpdateCommunityCard(
 //                    )
 //                }
 
-            Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-            // Save button (visible only in edit mode)
-            AnimatedVisibility(
-                visible = isEditing,
-                enter = fadeIn() + expandVertically(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessMedium
-                    )
-                ),
-                exit = fadeOut() + shrinkVertically()
+        // Save button (visible only in edit mode)
+        AnimatedVisibility(
+            visible = isEditing,
+            enter = fadeIn() + expandVertically(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessMedium
+                )
+            ),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Button(
+                onClick = {
+                    onEvent.invoke(UpdateCommunityEvent.UpdateCommunity(communityData.id))
+                    onEvent.invoke(UpdateCommunityEvent.IsEditingChange(false))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             ) {
-                Button(
-                    onClick = {
-                        onEvent.invoke(UpdateCommunityEvent.UpdateCommunity(communityData.id))
-                        onEvent.invoke(UpdateCommunityEvent.IsEditingChange(false))
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Save,
-                        contentDescription = "Save",
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
-                    Text(
-                        text = "Save Changes",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = "Save",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = "Save Changes",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
-        if (communityState.showAddSessionDialog) {
-            SessionDialog(
-                session = communityState.sessionToEdit,
-                onDismiss = {
-                    onEvent.invoke(UpdateCommunityEvent.ShowAddSession(false))
-                },
-                onSave = { session ->
-                    val newSessions = communityState.sessions?.toMutableList()
-                    if (communityState.sessionToEdit == null) {
-                        newSessions!!.add(session)
-                    } else {
-                        val index = newSessions?.indexOf(communityState.sessionToEdit)
-                        if (index != -1) {
-                            newSessions?.set(index ?: 0, session)
-                        }
-                    }
-                    newSessions?.let {
-                        onEvent.invoke(UpdateCommunityEvent.SessionsChanged(it))
-                    }
-                    onEvent.invoke(UpdateCommunityEvent.ShowAddSocialDialog(false))
-                    onEvent.invoke(UpdateCommunityEvent.SessionToEdit(null))
-                }
-            )
-        }
     }
-
+    if (communityState.showAddSessionDialog) {
+        SessionDialog(
+            session = sessionToEdit?.toAdminSession(),
+            onDismiss = {
+                onEvent.invoke(UpdateCommunityEvent.ShowAddSession(false))
+            },
+            onSave = { session ->
+                val newSessions = sessions.toMutableList()
+                if (sessionToEdit == null) {
+                    newSessions.add(session.toAboutUs())
+                } else {
+                    val index = newSessions.indexOf(sessionToEdit)
+                    if (index != -1) {
+                        newSessions[index] = session.toAboutUs()
+                    }
+                }
+                newSessions.let {
+                    sessions = it
+                }
+                onEvent.invoke(UpdateCommunityEvent.ShowAddSocialDialog(false))
+                sessionToEdit = null
+            }
+        )
+    }
 }
+
