@@ -59,7 +59,7 @@ fun UpdateCommunityScreen(
         }
     }
 
-    Scaffold(
+    DefaultScaffold(
         topBar = {
             TopAppBar(
                 title = {
@@ -111,20 +111,20 @@ fun UpdateCommunityScreen(
                 }
             }
         }
-    ) { paddingValues ->
+    ) {
         when (updateCommunityEffect) {
             is UpdateCommunityEffect.Error -> {
                 OopsError(errorMessage = (updateCommunityEffect as UpdateCommunityEffect.Error).message)
             }
-
-            UpdateCommunityEffect.Initial -> {}
+            UpdateCommunityEffect.Initial -> {
+                LoadingDialog()
+            }
             is UpdateCommunityEffect.Success -> {
                 val community =
                     (updateCommunityEffect as UpdateCommunityEffect.Success).community
                 UpdateCommunityCard(
                     community, onEvent,
                     isEditing = communityState.isEditing,
-                    padding = paddingValues,
                     communityState = communityState
                 )
             }

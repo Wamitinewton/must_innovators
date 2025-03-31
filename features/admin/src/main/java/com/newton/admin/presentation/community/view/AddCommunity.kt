@@ -2,7 +2,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -36,9 +33,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -53,21 +48,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.view.composable.CommunitySection
-import com.newton.admin.presentation.community.view.composable.ErrorCard
+import com.newton.admin.presentation.community.view.composable.LeadershipSelectField
 import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SessionItem
 import com.newton.admin.presentation.community.view.composable.SocialDialog
 import com.newton.admin.presentation.community.view.composable.SocialItem
-import com.newton.admin.presentation.community.view.composable.UserListItem
-import com.newton.admin.presentation.community.view.composable.UsersShimmer
 import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
+import com.newton.admin.presentation.role_management.executives.view.composables.UsersListModalBottomSheet
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.common_ui.ui.CustomButton
 import com.newton.common_ui.ui.CustomCard
-import com.newton.common_ui.ui.LoadingDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -76,31 +69,30 @@ import java.util.Locale
 @Composable
 fun AddCommunityScreen(
     onEvent: (CommunityEvent) -> Unit,
-    onCancelClicked: () -> Unit = {},
     viewModel: CommunityViewModel,
-    navController: NavController
 ) {
     val addCommunityState by viewModel.communityState.collectAsState()
     val usersState by viewModel.userState.collectAsState()
     val scrollState = rememberScrollState()
     val datePickerState = rememberDatePickerState()
-    val bottomSheetState = rememberModalBottomSheetState()
     val sessions = addCommunityState.sessions
     val socials = addCommunityState.socials
 
-    LaunchedEffect(addCommunityState.showBottomSheet) {
-        onEvent.invoke(CommunityEvent.LoadUsers(true))
+    LaunchedEffect(key1=usersState.isLoading) {
+        if (usersState.users.isEmpty()) {
+            onEvent.invoke(CommunityEvent.LoadUsers(true))
+        }
     }
 
-    Scaffold(
+    DefaultScaffold(
         topBar = {
             MeruInnovatorsAppBar("Add New Community")
         },
-    ) { paddingValues ->
+        isLoading = addCommunityState.isLoading
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
                 .padding(16.dp)
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -130,10 +122,11 @@ fun AddCommunityScreen(
                         leadingIcon = { Icon(Icons.Default.Group, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                        singleLine = true
+                        singleLine = true,
+                        supportingText = {
+                            addCommunityState.errors["name"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-
-                    // Date Founded with date picker
                     OutlinedTextField(
                         value = addCommunityState.dateFounded,
                         onValueChange = {
@@ -154,10 +147,11 @@ fun AddCommunityScreen(
                                 )
                             }
                         },
-                        readOnly = true
+                        readOnly = true,
+                        supportingText = {
+                            addCommunityState.errors["date"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-
-                    // Description of the community
                     OutlinedTextField(
                         value = addCommunityState.description,
                         onValueChange = {
@@ -168,11 +162,12 @@ fun AddCommunityScreen(
                             .fillMaxWidth()
                             .heightIn(min = 100.dp),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        supportingText = {
+                            addCommunityState.errors["description"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
                 }
             }
-
-            // Leadership Card with clickable fields
             CustomCard(
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -187,8 +182,6 @@ fun AddCommunityScreen(
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
-
-                    // Lead - Clickable
                     LeadershipSelectField(
                         label = "Lead",
                         value = addCommunityState.lead,
@@ -197,8 +190,7 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
                         }
                     )
-
-                    // Co-lead - Clickable
+                    addCommunityState.errors["lead"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                     LeadershipSelectField(
                         label = "Co-Lead",
                         value = addCommunityState.coLead,
@@ -207,8 +199,7 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
                         }
                     )
-
-                    // Secretary - Clickable
+                    addCommunityState.errors["colead"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                     LeadershipSelectField(
                         label = "Secretary",
                         value = addCommunityState.secretary,
@@ -216,6 +207,7 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.CurrentRoleSelectionChange("secretary"))
                             onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
                         })
+                    addCommunityState.errors["secretary"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 }
             }
             // sessions
@@ -267,6 +259,7 @@ fun AddCommunityScreen(
                         }
                     }
                 }
+                addCommunityState.errors["sessions"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             }
 
             CommunitySection(
@@ -394,12 +387,7 @@ fun AddCommunityScreen(
                 Text("Add Community")
             }
         }
-        if (addCommunityState.isLoading) {
-            LoadingDialog()
-        }
-        if (addCommunityState.uploadSuccess) {
-            onEvent.invoke(CommunityEvent.ToDefault)
-        }
+
         if (addCommunityState.showAddSessionDialog) {
             SessionDialog(
                 session = addCommunityState.sessionToEdit,
@@ -478,105 +466,36 @@ fun AddCommunityScreen(
             }
         }
         if (addCommunityState.showBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = {
-                    onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
-                },
-                sheetState = bottomSheetState
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "Select ${
-                            addCommunityState.currentRoleSelection.replaceFirstChar {
-                                if (it.isLowerCase()) it.titlecase(
-                                    Locale.getDefault()
-                                ) else it.toString()
-                            }
-                        }",
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+            val users = viewModel.getSearchedUser()
+            UsersListModalBottomSheet(
+                users = users,
+                onUserSelected = { user ->
+                    when (addCommunityState.currentRoleSelection) {
+                        "lead" -> {
+                            onEvent.invoke(CommunityEvent.LeadChanged(user.name))
+                            onEvent.invoke(CommunityEvent.LeadIdChanged(user.id))
+                        }
 
-                    HorizontalDivider()
+                        "co-lead" -> {
+                            onEvent.invoke(CommunityEvent.CoLeadChanged(user.name))
+                            onEvent.invoke(CommunityEvent.CoLeadIdChanged(user.id))
 
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(vertical = 8.dp)
-                    ) {
-                        if (usersState.isLoading) {
-                            items(8){
-                                UsersShimmer()
-                            }
-                        } else if (usersState.getUsersError != null){
-                            item {
-                                ErrorCard(usersState.getUsersError,onEvent)
-                            }
-                        }else{
-                            items(usersState.users) { user ->
-                                UserListItem(
-                                    user = user,
-                                    onClick = {
-                                        when (addCommunityState.currentRoleSelection) {
-                                            "lead" -> addCommunityState.lead = user.name
-                                            "co-lead" -> addCommunityState.coLead = user.name
-                                            "secretary" -> addCommunityState.secretary = user.name
-                                        }
-                                        onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
-                                    }
-                                )
-                            }
+                        }
+
+                        "secretary" -> {
+                            onEvent.invoke(CommunityEvent.SecretaryChanged(user.name))
+                            onEvent.invoke(CommunityEvent.SecretaryIdChanged(user.id))
                         }
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun LeadershipSelectField(
-    label: String,
-    value: String,
-    onClick: () -> Unit
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = value.ifEmpty { "Select $label" },
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    onEvent.invoke(CommunityEvent.ShowBottomSheet(false))
+                },
+                searchQuery = usersState.searchQuery,
+                onSearchQueryChange = { onEvent.invoke(CommunityEvent.SearchQuery(it)) },
+                onSearchClicked = { onEvent.invoke(CommunityEvent.SearchQuery("")) },
+                isLoading = usersState.isLoading,
+                errorMessage = usersState.getUsersError,
+                onErrorRetry = { onEvent.invoke(CommunityEvent.LoadUsers(true)) },
+                onDismiss = { onEvent.invoke(CommunityEvent.ShowBottomSheet(false)) }
             )
         }
     }

@@ -1,0 +1,212 @@
+package com.newton.admin.presentation.club.view
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.newton.admin.presentation.club.event.ClubEvent
+import com.newton.admin.presentation.club.viewmodel.ClubViewModel
+import com.newton.common_ui.composables.DefaultScaffold
+import com.newton.common_ui.ui.CustomButton
+import com.newton.core.domain.models.admin.Socials
+import timber.log.Timber
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddClubScreen(
+    viewmodel: ClubViewModel,
+    onEvent: (ClubEvent) -> Unit
+) {
+    val clubState by viewmodel.clubState.collectAsState()
+
+    var socialMediaLinks by remember {
+        mutableStateOf(
+            listOf(
+                SocialMediaLink("", "")
+            )
+        )
+    }
+
+    DefaultScaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Update Club") },
+            )
+        },
+        isLoading = clubState.isLoading
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                OutlinedTextField(
+                    value = clubState.name,
+                    onValueChange = { onEvent.invoke(ClubEvent.NameChanged(it)) },
+                    label = { Text("Club Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    supportingText = {
+                        clubState.errors["name"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    }
+                )
+            }
+            item {
+                OutlinedTextField(
+                    value = clubState.clubDetails,
+                    onValueChange = { onEvent.invoke(ClubEvent.ClubDetailChanged(it)) },
+                    label = { Text("About Us") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3,
+                    supportingText = {
+                        clubState.errors["aboutus"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    }
+                )
+            }
+            item {
+                OutlinedTextField(
+                    value = clubState.vision,
+                    onValueChange = { onEvent.invoke(ClubEvent.VisionChanged(it)) },
+                    label = { Text("Vision") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 2,
+                    supportingText = {
+                        clubState.errors["vision"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    }
+                )
+            }
+            item {
+                OutlinedTextField(
+                    value = clubState.mission,
+                    onValueChange = { onEvent.invoke(ClubEvent.MissionChanged(it)) },
+                    label = { Text("Mission") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 2,
+                    supportingText = {
+                        clubState.errors["mission"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    }
+                )
+            }
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Social Media Links",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    IconButton(
+                        onClick = {
+                            socialMediaLinks = socialMediaLinks + SocialMediaLink("", "")
+                        }
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = "Add Social Media Link")
+                    }
+                }
+            }
+            itemsIndexed(socialMediaLinks) { index, link ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+
+                    OutlinedTextField(
+                        value = link.platform,
+                        onValueChange = {
+                            socialMediaLinks = socialMediaLinks.toMutableList().apply {
+                                this[index] = link.copy(platform = it)
+                            }
+
+                        },
+                        label = { Text("Platform") },
+                        modifier = Modifier.weight(.3f),
+                        singleLine = true
+                    )
+                    OutlinedTextField(
+                        value = link.url,
+                        onValueChange = {
+                            socialMediaLinks = socialMediaLinks.toMutableList().apply {
+                                this[index] = link.copy(url = it)
+                            }
+                        },
+                        label = { Text("URL") },
+                        modifier = Modifier.weight(.6f),
+                        singleLine = true
+                    )
+                    AnimatedVisibility(
+                        visible = socialMediaLinks.size > 1,
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        IconButton(
+                            onClick = {
+                                socialMediaLinks =
+                                    socialMediaLinks.filterIndexed { i, _ -> i != index }
+                            }
+                        ) {
+                            Icon(Icons.Default.Delete, contentDescription = "Remove Link")
+                        }
+                    }
+                }
+//                clubState.errors["socials"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+            }
+
+            item {
+                CustomButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    onClick = {
+                        Timber.d(".......................Update clicked...................")
+                        val socials: List<Socials> = socialMediaLinks.map {
+                            Socials(it.platform, it.url)
+                        }
+                        onEvent.invoke(
+                            ClubEvent.SocialsChanged(socials)
+                        )
+                        Timber.d("Socials:", socials)
+                        onEvent.invoke(ClubEvent.UpdateClub)
+                        Timber.d("Added")
+                    }
+                ) {
+                    Text("Update Club")
+                }
+            }
+        }
+    }
+}
+
+data class SocialMediaLink(
+    val platform: String,
+    val url: String
+)

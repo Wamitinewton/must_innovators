@@ -16,7 +16,7 @@ fun scheduleTokenRefreshWork(context: Context) {
         .build()
 
     val tokenRefreshWorkRequest =
-        PeriodicWorkRequestBuilder<TokenRefreshWorker>(10, TimeUnit.DAYS)
+        PeriodicWorkRequestBuilder<TokenRefreshWorker>(1, TimeUnit.HOURS)
             .setConstraints(constraints)
             .setBackoffCriteria(
                 BackoffPolicy.EXPONENTIAL,
@@ -32,3 +32,5 @@ fun scheduleTokenRefreshWork(context: Context) {
             tokenRefreshWorkRequest
         )
 }
+
+

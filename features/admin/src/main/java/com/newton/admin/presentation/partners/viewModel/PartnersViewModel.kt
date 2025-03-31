@@ -177,7 +177,7 @@ class PartnersViewModel @Inject constructor(
 
     private fun addPartner() {
         if (validateAndSubmit()) {
-            Timber.e("Adding partners")
+            Timber.d("Adding partner1")
             val partner = AddPartnerRequest(
                 name = _addPartnersState.value.partnerName,
                 type = _addPartnersState.value.partnerType,
@@ -200,6 +200,7 @@ class PartnersViewModel @Inject constructor(
                 targetAudience = _addPartnersState.value.targetAudience
             )
             viewModelScope.launch {
+                Timber.d("Adding partner2")
                 adminRepository.addPartner(partner).collectLatest { result ->
                     when (result) {
                         is Resource.Error -> {

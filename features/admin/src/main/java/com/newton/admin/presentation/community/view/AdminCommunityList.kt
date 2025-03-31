@@ -26,19 +26,20 @@ fun AdminCommunityList(
     DefaultScaffold(topBar = {
         TopAppBar(title = { Text("Select Community to update") })
     }, isLoading = communityState.isLoading) {
-        if (communityState.errorMessage != null) {
-            OopsError(errorMessage = communityState.errorMessage!!)
-        } else{
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(communityState.communities, key = { it.id }) { community ->
-                    CommunityCard(
-                        community,
-                        onSelectedCommunity = { onCommunitySelected(community) }
-                    )
+        when{
+            communityState.errorMessage != null ->OopsError(errorMessage = communityState.errorMessage!!)
+            communityState.communities.isNotEmpty()->{
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(communityState.communities, key = { it.id }) { community ->
+                        CommunityCard(
+                            community,
+                            onSelectedCommunity = { onCommunitySelected(community) }
+                        )
+                    }
                 }
             }
+            else->OopsError(errorMessage = "Their is an error occurred when fetching communitues")
         }
-
     }
 
 }

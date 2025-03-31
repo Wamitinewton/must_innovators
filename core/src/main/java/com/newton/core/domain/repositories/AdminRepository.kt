@@ -7,9 +7,12 @@ import com.newton.core.domain.models.admin_models.AddCommunityRequest
 import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.domain.models.admin_models.AddPartnerRequest
 import com.newton.core.domain.models.admin_models.Attendee
+import com.newton.core.domain.models.admin_models.Club
 import com.newton.core.domain.models.admin_models.CommunityData
 import com.newton.core.domain.models.admin_models.EventsData
 import com.newton.core.domain.models.admin_models.EventsFeedback
+import com.newton.core.domain.models.admin_models.ExecutiveRequest
+import com.newton.core.domain.models.admin_models.ExecutiveResponse
 import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
 import com.newton.core.domain.models.admin_models.UpdateEventRequest
@@ -42,4 +45,6 @@ interface AdminRepository {
     suspend fun getRegistrationList(eventId: Int): Flow<Resource<List<Attendee>>>
     suspend fun getListOfEvents(): Flow<Resource<List<EventsData>>>
     suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>>
+    suspend fun updateExecutive(executive: ExecutiveRequest):Flow<Resource<ExecutiveResponse>>
+    suspend fun updateClub(clubRequest: Club):Flow<Resource<Club>>
 }

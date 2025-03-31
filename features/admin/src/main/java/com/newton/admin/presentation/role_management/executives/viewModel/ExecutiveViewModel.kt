@@ -1,410 +1,137 @@
 package com.newton.admin.presentation.role_management.executives.viewModel
 
-// ExecutiveViewModel.kt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.admin.data.mappers.User
+import com.newton.admin.data.mappers.UserDataMappers.toDomainList
+import com.newton.admin.presentation.role_management.executives.events.ExecutiveEvents
 import com.newton.admin.presentation.role_management.executives.states.ExecutiveState
-import com.newton.admin.presentation.role_management.executives.view.Community
-import com.newton.admin.presentation.role_management.executives.view.Executive
+import com.newton.admin.presentation.role_management.executives.states.ExecutiveUsersState
+import com.newton.core.domain.models.admin_models.ExecutiveRequest
+import com.newton.core.domain.models.admin_models.FeedbackData
+import com.newton.core.domain.repositories.AdminRepository
+import com.newton.core.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.IOException
+import javax.inject.Inject
 
-class ExecutiveViewModel : ViewModel() {
+@HiltViewModel
+class ExecutiveViewModel @Inject constructor(
+    private val repository: AdminRepository
+): ViewModel() {
     private val _execState = MutableStateFlow(ExecutiveState())
     val execState: StateFlow<ExecutiveState> = _execState.asStateFlow()
-
-    private val client = OkHttpClient()
-    private val baseUrl = "https://7h3pspsq-8000.uks1.devtunnels.ms/"
-
-    init {
-        loadCommunities()
-    }
-
-    fun loadExecutive(id: Int) {
-        viewModelScope.launch {
-            _execState.update {
-                it.copy(
-                    isLoading = true,
-                    errorMessage = null
-                )
-            }
+    private val _userState = MutableStateFlow(ExecutiveUsersState())
+    val userState: StateFlow<ExecutiveUsersState> = _userState.asStateFlow()
 
 
-            try {
-                val request = Request.Builder()
-                    .url("$baseUrl/executives/$id/")
-                    .build()
-
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    val responseBody =
-                        response.body?.string() ?: throw IOException("Empty response")
-                    val jsonObject = JSONObject(responseBody)
-
-                    _execState.update {
-                        it.copy(
-                            executiveState = Executive(
-                                id = jsonObject.optInt("id"),
-                                name = jsonObject.getString("name"),
-                                position = jsonObject.getString("position"),
-                                bio = jsonObject.getString("bio"),
-                                email = jsonObject.getString("email"),
-                                communityId = jsonObject.optInt("community").takeIf { it > 0 },
-                                clubId = jsonObject.optInt("club").takeIf { it > 0 }
-                            )
-
-                        )
-                    }
-
-                    // Find the corresponding community
-                    _execState.value.executiveState?.communityId?.let { communityId ->
-                        _execState.update { it ->
-                            it.copy(
-                                selectedCommunity = _execState.value.communities.find { it.id == communityId }
-                            )
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                _execState.update {
-                    it.copy(
-                        errorMessage = "Failed to load executive: ${e.message}"
-                    )
-                }
-            } finally {
-                _execState.update {
-                    it.copy(
-                        isLoading = false
-                    )
-                }
-            }
+    fun handleEvents(event:ExecutiveEvents){
+        when(event){
+            is ExecutiveEvents.BioChanged -> _execState.update { it.copy(bio=event.bio) }
+            is ExecutiveEvents.IsSearching -> _execState.update { it.copy(isSearching = event.searching) }
+            ExecutiveEvents.LoadUsers ->loadUsers()
+            is ExecutiveEvents.PositionChanged -> _execState.update { it.copy(position = event.position) }
+            is ExecutiveEvents.SelectedUserChange -> _execState.update { it.copy(selectedUser = event.user) }
+            is ExecutiveEvents.ShowBottomSheet -> _execState.update { it.copy(showBottomSheet = event.shown) }
+            is ExecutiveEvents.ShowPositionDropdown -> _execState.update { it.copy(showPosition=event.shown) }
+            ExecutiveEvents.AddExecutive -> addExecutive()
+            is ExecutiveEvents.Expanded -> _execState.update { it.copy(expanded = event.expanded) }
+            is ExecutiveEvents.SearchQuery -> _userState.update { it.copy(searchQuery = event.query) }
         }
     }
 
-    fun searchExecutiveByEmail(email: String) {
+
+    private fun loadUsers(){
         viewModelScope.launch {
-            _execState.update {
-                it.copy(
-                    isSearching = true,
-                    errorMessage = null
-                )
-            }
-
-
-            try {
-                val request = Request.Builder()
-                    .url("$baseUrl/executives/search/?email=$email")
-                    .build()
-
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    val responseBody =
-                        response.body?.string() ?: throw IOException("Empty response")
-                    val jsonArray = JSONArray(responseBody)
-
-                    if (jsonArray.length() > 0) {
-                        val jsonObject = jsonArray.getJSONObject(0)
-
-                        _execState.update {
-                            it.copy(
-                                executiveState = Executive(
-                                    id = jsonObject.optInt("id"),
-                                    name = jsonObject.getString("name"),
-                                    position = jsonObject.getString("position"),
-                                    bio = jsonObject.getString("bio"),
-                                    email = jsonObject.getString("email"),
-                                    communityId = jsonObject.optInt("community").takeIf { it > 0 },
-                                    clubId = jsonObject.optInt("club").takeIf { it > 0 }
-                                )
-                            )
+            repository.getAllUsers(true).collectLatest { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        result.message?.let { error ->
+                            _userState.update { it.copy(getUsersError = error) }
                         }
+                    }
 
+                    is Resource.Loading -> {
+                        _userState.update { it.copy(isLoading = result.isLoading) }
+                    }
 
-                        // Find the corresponding community
-                        _execState.value.executiveState?.communityId?.let { communityId ->
-                            _execState.update {
+                    is Resource.Success -> {
+                        val userData = result.data?.toDomainList()
+                        userData?.let { users ->
+                            _userState.update {
                                 it.copy(
-                                    selectedCommunity = _execState.value.communities.find { it.id == communityId }
+                                    isLoading = false,
+                                    getUsersError = null,
+                                    users = users
                                 )
                             }
                         }
-                        _execState.update {
-                            it.copy(
-                                successMessage = "Executive found! Information loaded."
-                            )
-                        }
-                    } else {
-                        _execState.update {
-                            it.copy(
-                                successMessage = "No executive found with this email. Creating new."
-                            )
-                        }
                     }
                 }
-            } catch (e: Exception) {
-                _execState.update {
-                    it.copy(
-                        errorMessage = "Failed to search for executive: ${e.message}"
-                    )
-                }
-            } finally {
-                _execState.update {
-                    it.copy(
-                        isSearching = false
-                    )
-                }
-
             }
         }
     }
+    private fun validate(): Boolean {
+        val errors = mutableMapOf<String, String>()
+        if (_execState.value.bio.isBlank()) {
+            errors["bio"] = "Users bio is required"
+        }
+        if (_execState.value.position == null) {
+            errors["position"] = "Users position cannot be empty"
+        }
+        if (_execState.value.selectedUser == null) {
+            errors["user"] = "Select the user to add as an Executive"
+        }
+        _execState.value = _execState.value.copy(errors = errors)
+        return errors.isEmpty()
+    }
 
-    fun loadCommunities() {
-        viewModelScope.launch {
-            _execState.update {
-                it.copy(
-                    isLoading = true,
-                    errorMessage = null
-                )
-            }
+    private fun toDefault(){
+        _execState.value = ExecutiveState()
+        _userState.value = ExecutiveUsersState()
+    }
 
-
-            try {
-                val request = Request.Builder()
-                    .url("$baseUrl/communities/")
-                    .build()
-
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    val responseBody =
-                        response.body?.string() ?: throw IOException("Empty response")
-                    val jsonArray = JSONArray(responseBody)
-
-                    val loadedCommunities = mutableListOf<Community>()
-                    for (i in 0 until jsonArray.length()) {
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        loadedCommunities.add(
-                            Community(
-                                id = jsonObject.getInt("id"),
-                                name = jsonObject.getString("name")
-                            )
-                        )
-                    }
-                    _execState.update {
-                        it.copy(
-                            communities = loadedCommunities
-                        )
-                    }
-
-
-                    if (_execState.value.communities.isNotEmpty() && _execState.value.selectedCommunity == null) {
-                        _execState.update {
-                            it.copy(
-                                selectedCommunity = _execState.value.communities.first()
-                            )
+    private fun addExecutive(){
+        if (validate()){
+            val executive = ExecutiveRequest(
+                userId = _execState.value.selectedUser!!.id,
+                position = _execState.value.position!!,
+                bio =_execState.value.bio
+            )
+            viewModelScope.launch {
+                repository.updateExecutive(executive).collectLatest { result->
+                    when (result) {
+                        is Resource.Error -> {
+                            result.message?.let {
+                                _execState.value = _execState.value.copy(errorMessage = it)
+                            }
+                            
                         }
 
+                        is Resource.Loading -> {
+                            _execState.value = _execState.value.copy(isLoading = result.isLoading)
+                        }
+                        is Resource.Success -> {
+                           toDefault()
+                        }
                     }
                 }
-            } catch (e: Exception) {
-                _execState.update {
-                    it.copy(
-                        errorMessage = "Failed to load communities: ${e.message}"
-                    )
-                }
-            } finally {
-                _execState.update {
-                    it.copy(
-                        isLoading = false
-                    )
-                }
             }
         }
     }
 
-    fun loadUsers(onUsersLoaded: (List<User>) -> Unit) {
-        viewModelScope.launch {
-            _execState.update {
-                it.copy(
-                    isLoading = true,
-                    errorMessage = null
-                )
+    fun getSearchedUser(): List<User> {
+        val query = _userState.value.searchQuery.lowercase()
+        return _userState.value.users.filter { user ->
+                val matchesSearch = query.isEmpty() ||
+                        user.name.lowercase().contains(query) ||
+                        user.email.lowercase().contains(query)
+                matchesSearch
             }
-
-
-            try {
-                val request = Request.Builder()
-                    .url("$baseUrl/users/")
-                    .build()
-
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    val responseBody =
-                        response.body?.string() ?: throw IOException("Empty response")
-                    val jsonArray = JSONArray(responseBody)
-
-                    val users = mutableListOf<User>()
-                    for (i in 0 until jsonArray.length()) {
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        users.add(
-                            User(
-                                id = jsonObject.getInt("id"),
-                                name = jsonObject.optString("name", "Unknown"),
-                                email = jsonObject.getString("email"),
-                                photo = ""
-                            )
-                        )
-                    }
-
-                    onUsersLoaded(users)
-                }
-            } catch (e: Exception) {
-                _execState.update {
-                    it.copy(
-                        errorMessage = "Failed to load users: ${e.message}"
-                    )
-                }
-            } finally {
-                _execState.update {
-                    it.copy(
-                        isLoading = false
-                    )
-                }
-            }
-        }
-    }
-
-    fun setSelectedCommunity(community: Community) {
-        _execState.update {
-            it.copy(
-                selectedCommunity = community
-            )
-        }
-
-    }
-
-    fun setSelectedUser(user: User) {
-        _execState.update {
-            it.copy(
-                selectedUser = user
-            )
-        }
-        searchExecutiveByEmail(user.email)
-    }
-
-    fun saveExecutive(
-        name: String,
-        position: String,
-        bio: String,
-        email: String,
-        onSuccess: () -> Unit
-    ) {
-        viewModelScope.launch {
-            _execState.update {
-                it.copy(
-                    isLoading = true,
-                    errorMessage = null,
-                    successMessage = null
-                )
-            }
-
-            if (_execState.value.selectedCommunity == null) {
-                _execState.update {
-                    it.copy(
-                        errorMessage = "Please select a community",
-                        isLoading = false
-                    )
-                }
-
-                return@launch
-            }
-
-            try {
-                val builder = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("name", name)
-                    .addFormDataPart("position", position)
-                    .addFormDataPart("bio", bio)
-                    .addFormDataPart("email", email)
-                    .addFormDataPart(
-                        "community",
-                        _execState.value.selectedCommunity!!.id.toString()
-                    )
-                    .addFormDataPart("club", "2") // Default club ID from your sample request
-
-                val url = if (_execState.value.executiveState?.id != null) {
-                    "$baseUrl/executives/${_execState.value.executiveState!!.id}/"
-                } else {
-                    "$baseUrl/executives/"
-                }
-
-                val request = Request.Builder()
-                    .url(url)
-                    .method(
-                        if (_execState.value.executiveState?.id != null) "PUT" else "POST",
-                        builder.build()
-                    )
-                    .build()
-
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    val responseBody =
-                        response.body?.string() ?: throw IOException("Empty response")
-                    val jsonObject = JSONObject(responseBody)
-
-                    _execState.update {
-                        it.copy(
-                            executiveState = Executive(
-                                id = jsonObject.optInt("id"),
-                                name = jsonObject.getString("name"),
-                                position = jsonObject.getString("position"),
-                                bio = jsonObject.getString("bio"),
-                                email = jsonObject.getString("email"),
-                                communityId = jsonObject.optInt("community").takeIf { it > 0 },
-                                clubId = jsonObject.optInt("club").takeIf { it > 0 }
-                            ),
-                            successMessage = "Executive saved successfully"
-                        )
-                    }
-                    onSuccess()
-                }
-            } catch (e: Exception) {
-                _execState.update {
-                    it.copy(
-                        errorMessage = "Failed to save executive: ${e.message}"
-                    )
-                }
-            } finally {
-                _execState.update {
-                    it.copy(
-                        isLoading = false
-                    )
-                }
-
-            }
-        }
-    }
-
-    fun clearMessages() {
-        _execState.update {
-            it.copy(
-                errorMessage = null,
-                successMessage = null
-            )
-        }
     }
 }
