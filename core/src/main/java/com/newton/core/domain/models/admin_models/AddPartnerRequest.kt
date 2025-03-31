@@ -1,7 +1,5 @@
 package com.newton.core.domain.models.admin_models
 
-import com.newton.core.enums.PartnerType
-import com.newton.core.enums.PartnershipStatus
 import java.io.File
 
 
@@ -16,13 +14,13 @@ data class AddPartnerRequest(
     val linkedIn:String,
     val twitter:String,
     val startDate: String,
-    val endDate: String,
+    val endDate: String?=null,
     val ongoing:Boolean,
     val status: String,
-    val scope:String, // what is the scope of collaboration eg mentorship
+    val scope:String,
     val benefits:String,
     val eventsSupported:String,
     val resources:String,
     val achievements:String,
-    val targetAudience:String //ml,Android,computer studies, engineering(eg IEEE)
+    val targetAudience:String
 )

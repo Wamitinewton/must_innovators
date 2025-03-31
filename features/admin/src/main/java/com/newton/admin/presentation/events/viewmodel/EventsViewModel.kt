@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.time.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,6 +49,7 @@ class EventsViewModel @Inject constructor(
             is EventEvents.EditingEvent -> _eventListState.update { it.copy(isEditing = event.editing) }
             is EventEvents.GetEventsAttendees -> getEventsAttendees(event.eventId)
             is EventEvents.GetEventFeedbacks -> getEventsFeedbacks(event.eventId,event.isRefresh)
+            EventEvents.LoadEvents -> loadEvents()
         }
     }
 

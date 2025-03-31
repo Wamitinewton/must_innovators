@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.navigation.NavController
 import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.view.management.composables.attendees.AttendeesTab
 import com.newton.admin.presentation.events.view.management.composables.calendar.CalendarTab
@@ -24,9 +23,12 @@ import com.newton.admin.presentation.events.view.management.composables.overview
 import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTabShimmer
 import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.common_ui.composables.OopsError
+import com.newton.common_ui.ui.toLocalDate
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.CalendarDay
 import com.newton.core.domain.models.admin_models.EventsData
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -35,16 +37,16 @@ import java.time.LocalDateTime
 fun EventManagementScreen(
     onEvent: (EventEvents) -> Unit,
     viewModel: EventsViewModel,
-    onEventSelected:(EventsData)->Unit
+    onEventSelected: (EventsData) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val eventState by viewModel.eventList.collectAsState()
     val events = eventState.events
 
-    LaunchedEffect(key1 = events) {
+    LaunchedEffect(key1 = true) {
         val upcomingEvents = events.filter {
             it.isVirtual &&
-                    it.date.fromStringToLocalTime().minusDays(1).isBefore(LocalDateTime.now())
+                    it.date.toLocalDateTime().minusDays(1).isBefore(LocalDateTime.now())
         }
 
         if (upcomingEvents.isNotEmpty()) {
@@ -56,15 +58,21 @@ fun EventManagementScreen(
             )
         }
     }
-
-    // Calendar preparation
     val today = LocalDate.now()
     val calendarDays = remember {
         val days = mutableListOf<CalendarDay>()
+        println("Available events with dates:")
+        events.forEach {
+            Timber.d(
+                "Event: ${it.name}, Date string: ${it.date}, Parsed: ${
+                    it.date.toLocalDateTime().toLocalDate()
+                }"
+            )
+        }
         for (i in -30..60) {
             val date = today.plusDays(i.toLong())
             val dayEvents = events.filter {
-                it.date.fromStringToLocalTime().toLocalDate() == date
+                it.date.toLocalDate() == date
             }
             days.add(CalendarDay(date, dayEvents))
         }
@@ -73,7 +81,6 @@ fun EventManagementScreen(
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Overview", "Calendar", "Attendees", "Feedback")
     var selectedEvent by remember { mutableStateOf<EventsData?>(null) }
-    // Animation for the feedback card
     val listState = rememberLazyListState()
     val isScrolling by remember {
         derivedStateOf {
@@ -106,19 +113,27 @@ fun EventManagementScreen(
 
         when (selectedTab) {
             0 -> {
-                when (eventState.isLoading) {
-                    true -> OverviewTabShimmer()
-                    false -> OverviewTab(
-                        events,
-                        listState,
-                        isScrolling,
-//                        onEventSelected = {
-//                            onEvent.invoke(EventEvents.SelectedEvent(it))
-//                        }
-                        onEventSelected = onEventSelected
-                    )
-                }
+                when {
+                    eventState.isLoading -> {
+                        OverviewTabShimmer()
+                    }
 
+                    eventState.events.isNotEmpty() -> {
+                        OverviewTab(
+                            events,
+                            listState,
+                            isScrolling,
+                            onEventSelected = onEventSelected
+                        )
+                    }
+
+                    eventState.hasError != null -> {
+                        OopsError(
+                            errorMessage = eventState.hasError!!,
+                            showButton = true,
+                            onClick = { onEvent.invoke(EventEvents.LoadEvents) })
+                    }
+                }
             }
 
             1 -> CalendarTab(calendarDays, onEventSelected = { selectedEvent = it })
@@ -134,11 +149,6 @@ fun EventManagementScreen(
                 viewModel = viewModel
             )
         }
-//        if (eventState.selectedEvent != null) {
-//            navController.navigate(NavigationRoutes.ModifyEvent.routes) {
-//                popUpTo(NavigationRoutes.AdminEvents.routes)
-//            }
-//        }
     }
 }
 

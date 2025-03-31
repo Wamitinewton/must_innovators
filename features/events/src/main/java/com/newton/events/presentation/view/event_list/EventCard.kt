@@ -36,7 +36,9 @@ import androidx.paging.compose.LazyPagingItems
 import coil3.compose.AsyncImage
 import com.newton.common_ui.ui.PullToRefreshLazyColumn
 import com.newton.common_ui.ui.toFormatedDate
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.EventsData
+import java.time.LocalDateTime
 
 
 @Composable
@@ -69,21 +71,38 @@ fun EventCard(
                         .height(180.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
-
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(8.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.9f))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        text = "Upcoming",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                if (event.date.toLocalDateTime().isBefore(LocalDateTime.now())){
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.9f))
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = "Past",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }else{
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.9f))
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = "Upcoming",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 }
+
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -170,7 +189,8 @@ fun EventCard(
                 ),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 2.dp
-                )
+                ),
+                enabled = event.date.toLocalDateTime().isAfter(LocalDateTime.now())
             ) {
                 Text(
                     "RSVP NOW",

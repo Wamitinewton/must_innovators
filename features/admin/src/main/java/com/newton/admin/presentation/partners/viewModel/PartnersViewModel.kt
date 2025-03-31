@@ -1,15 +1,13 @@
 package com.newton.admin.presentation.partners.viewModel
 
-import android.text.format.DateFormat
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.admin.presentation.partners.events.AddPartnersEvent
 import com.newton.admin.presentation.partners.states.AddPartnersEffect
-import com.newton.core.domain.repositories.AdminRepository
 import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.common_ui.ui.toStringLocalTime
 import com.newton.core.domain.models.admin_models.AddPartnerRequest
+import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -132,6 +130,12 @@ class PartnersViewModel @Inject constructor(
         if (_addPartnersState.value.partnerName.isBlank()) {
             errors["name"] = "Partners name is required"
         }
+        if (_addPartnersState.value.partnerName.isBlank()) {
+            errors["twitter"] = "X social media is required"
+        }
+        if (_addPartnersState.value.partnerName.isBlank()) {
+            errors["linkedin"] = "LinkedIn social media is required"
+        }
         if (_addPartnersState.value.partnerType.isBlank()) {
             errors["partnerType"] = "Type of partnership is required"
         }
@@ -156,6 +160,20 @@ class PartnersViewModel @Inject constructor(
         if (_addPartnersState.value.keyBenefits.isBlank()) {
             errors["benefit"] = "It's required to explain 0ur benefits from the partnership"
         }
+        if (_addPartnersState.value.keyBenefits.isBlank()) {
+            errors["supported"] = "Event(s) supported by in the club is Required"
+        }
+        if (_addPartnersState.value.keyBenefits.isBlank()) {
+            errors["resources"] = "Resources offered is required"
+        }
+
+        if (_addPartnersState.value.keyBenefits.isBlank()) {
+            errors["achievements"] = "Achievements is required"
+        }
+
+        if (_addPartnersState.value.keyBenefits.isBlank()) {
+            errors["targetAudience"] = "Target audience of the Partner is required"
+        }
 
         if (!_addPartnersState.value.ongoingPartnership && _addPartnersState.value.partnershipEndDate == null) {
             errors["endDate"] = "End date of Partnership  is required"
@@ -177,7 +195,6 @@ class PartnersViewModel @Inject constructor(
 
     private fun addPartner() {
         if (validateAndSubmit()) {
-            Timber.d("Adding partner1")
             val partner = AddPartnerRequest(
                 name = _addPartnersState.value.partnerName,
                 type = _addPartnersState.value.partnerType,
@@ -189,7 +206,7 @@ class PartnersViewModel @Inject constructor(
                 linkedIn = _addPartnersState.value.socialLinkedIn,
                 twitter = _addPartnersState.value.socialTwitter,
                 startDate = _addPartnersState.value.partnershipStartDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                endDate = _addPartnersState.value.partnershipEndDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) ?: "null",
+                endDate = _addPartnersState.value.partnershipEndDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                 ongoing = _addPartnersState.value.ongoingPartnership,
                 status = _addPartnersState.value.status,
                 scope = _addPartnersState.value.collaborationScope,
@@ -200,7 +217,6 @@ class PartnersViewModel @Inject constructor(
                 targetAudience = _addPartnersState.value.targetAudience
             )
             viewModelScope.launch {
-                Timber.d("Adding partner2")
                 adminRepository.addPartner(partner).collectLatest { result ->
                     when (result) {
                         is Resource.Error -> {

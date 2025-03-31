@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.common_ui.composables.OopsError
-import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -49,7 +49,7 @@ fun AttendeesTab(
 ) {
     var selectedEvent by remember { mutableStateOf<EventsData?>(null) }
     val allEvents =
-        events.sortedByDescending { it.date.fromStringToLocalTime().isAfter(LocalDateTime.now()) }
+        events.sortedByDescending { it.date.toLocalDateTime().isAfter(LocalDateTime.now()) }
     var expanded by remember { mutableStateOf(false) }
     val attendeesState by viewModel.rsvpState.collectAsState()
 
@@ -121,7 +121,7 @@ fun AttendeesTab(
 
             Text(
                 text = "Date: ${
-                    selectedEvent!!.date.fromStringToLocalTime()
+                    selectedEvent!!.date.toLocalDateTime()
                         .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
                 }",
                 style = MaterialTheme.typography.bodyMedium,
