@@ -1,7 +1,7 @@
 package com.newton.home.presentation.states
 
 import com.newton.core.domain.models.home_models.PartnersData
-import com.newton.core.domain.models.home_models.TestimonialsData
+import com.newton.core.domain.models.testimonials.TestimonialsData
 
 sealed class PartnersUiState {
     data object Loading : PartnersUiState()

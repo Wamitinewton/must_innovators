@@ -18,8 +18,8 @@ import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocalActivity
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 
 sealed class Screens(
     var route: String,

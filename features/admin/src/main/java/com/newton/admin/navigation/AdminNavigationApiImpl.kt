@@ -32,8 +32,8 @@ import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewMod
 import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
 import com.newton.admin.presentation.events.viewmodel.AdminEventsSharedViewModel
 import com.newton.admin.presentation.events.viewmodel.UpdateEventsViewModel
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 
 class AdminNavigationApiImpl : AdminNavigationApi {
     override fun registerGraph(
@@ -126,7 +126,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                     onEvent = viewModel::handleEvents
                 )
             }
-            composable(route=NavigationRoutes.AdminCommunityList.routes) {
+            composable(route= NavigationRoutes.AdminCommunityList.routes) {
                 val parentEntry = remember(it) {
                     navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
                 }

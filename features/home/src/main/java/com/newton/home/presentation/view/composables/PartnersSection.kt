@@ -46,7 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.newton.common_ui.ui.EmptyStateCard
-import com.newton.common_ui.ui.ErrorBanner
+import com.newton.common_ui.ui.ErrorScreen
 import com.newton.common_ui.ui.LoadingIndicator
 import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.home.presentation.states.PartnersUiState
@@ -99,9 +99,10 @@ fun PartnersContent(
         }
 
         is PartnersUiState.Error -> {
-            ErrorBanner(
-                errorMessage = partnersState.message,
-                onRetryClick = {
+            ErrorScreen(
+                titleText = "Failed to load PARTNERS",
+                message = partnersState.message,
+                onRetry = {
                     onRetry()
                 }
             )

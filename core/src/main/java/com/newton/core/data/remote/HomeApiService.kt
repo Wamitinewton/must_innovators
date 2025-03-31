@@ -1,7 +1,7 @@
 package com.newton.core.data.remote
 
 import com.newton.core.domain.models.home_models.Partners
-import com.newton.core.domain.models.home_models.Testimonials
+import com.newton.core.domain.models.testimonials.Testimonials
 import retrofit2.http.GET
 
 interface HomeApiService {

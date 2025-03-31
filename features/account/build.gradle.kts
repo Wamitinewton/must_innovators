@@ -83,4 +83,5 @@ dependencies {
     implementation(project(":common_ui"))
     implementation(project(":features:auth"))
     implementation(project(":database"))
+    implementation(project(":navigation"))
 }

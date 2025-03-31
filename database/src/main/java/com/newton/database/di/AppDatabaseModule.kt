@@ -54,5 +54,9 @@ object AppDatabaseModule {
     @Singleton
     fun provideClubBioDao(db: AppDatabase) = db.clubBioDao
 
+    @Provides
+    @Singleton
+    fun provideTestimonialsDao(db: AppDatabase) = db.testimonialsDao
+
 }
 

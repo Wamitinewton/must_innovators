@@ -33,7 +33,6 @@ interface EventService {
 
     @GET(ApiEndpoints.GET_USER_TICKETS)
     suspend fun getUserTickets(
-        @Query("email") email: String
     ): UserTicketsResponse
 
 }

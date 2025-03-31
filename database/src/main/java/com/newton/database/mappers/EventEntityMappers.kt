@@ -56,7 +56,12 @@ fun TicketsEntity.toRegistrationResponse() = RegistrationResponse(
     phoneNumber = phoneNumber,
     registrationTimestamp = registrationTimestamp,
     ticketNumber = ticketNumber,
-    uid = uid
+    uid = uid,
+    eventName = eventName,
+    eventDescription = eventDescription,
+    eventLocation = eventLocation,
+    eventDate = eventDate,
+    isUsed = isUsed
 )
 
 fun RegistrationResponse.toTicketEntity() = TicketsEntity(
@@ -69,7 +74,12 @@ fun RegistrationResponse.toTicketEntity() = TicketsEntity(
     phoneNumber = phoneNumber,
     registrationTimestamp = registrationTimestamp,
     ticketNumber = ticketNumber,
-    uid = uid
+    uid = uid,
+    eventName = eventName,
+    eventDescription = eventDescription,
+    eventLocation = eventLocation,
+    eventDate = eventDate,
+    isUsed = isUsed
 )
 
 

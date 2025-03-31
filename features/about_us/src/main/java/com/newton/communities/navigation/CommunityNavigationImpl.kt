@@ -12,8 +12,8 @@ import com.newton.communities.presentation.view_model.AboutUsSharedViewModel
 import com.newton.communities.presentation.view_model.ClubBioViewModel
 import com.newton.communities.presentation.view_model.CommunitiesViewModel
 import com.newton.communities.presentation.view_model.ExecutiveViewModel
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 
 class CommunityNavigationImpl: CommunityNavigationApi {
     override fun registerGraph(

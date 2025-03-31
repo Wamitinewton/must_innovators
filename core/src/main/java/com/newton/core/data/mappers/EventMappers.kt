@@ -32,7 +32,11 @@ fun EventDto.toDomainEvent(): EventsData {
             phoneNumber = phone_number,
             registrationTimestamp = registration_timestamp,
             ticketNumber = ticket_number,
-            uid = uid
+            uid = uid,
+            eventName = eventName,
+            eventDescription = eventDescription,
+            eventLocation = eventLocation,
+            eventDate = eventDate,
         )
     }
 

@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
-import com.newton.core.navigation.NavigationRoutes
-import com.newton.core.navigation.NavigationSubGraphRoutes
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 import com.newton.events.presentation.view.event_details.EventDetailsScreen
 import com.newton.events.presentation.view.event_list.EventsScreen
 import com.newton.events.presentation.view.event_registration.EventRegistrationScreen
@@ -18,6 +18,7 @@ import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
 import com.newton.events.presentation.viewmodel.EventViewModel
 import com.newton.events.presentation.viewmodel.EventsSharedViewModel
 import com.newton.events.presentation.viewmodel.RsvpSharedViewModel
+import com.newton.events.presentation.viewmodel.UserTicketsViewModel
 
 class EventsNavigationApiImpl: EventsNavigationApi {
     override fun registerGraph(
@@ -86,11 +87,13 @@ class EventsNavigationApiImpl: EventsNavigationApi {
             }
 
             composable(route = NavigationRoutes.EventTicketsRoute.routes) {
+                val userTicketsViewModel = hiltViewModel<UserTicketsViewModel>()
                 RegisteredEventsScreen(
                     onBackPressed = {
                         navHostController.navigateUp()
                     },
-                    onTicketSelected = {}
+                    onTicketSelected = {},
+                    userTicketsViewModel = userTicketsViewModel
                 )
             }
 

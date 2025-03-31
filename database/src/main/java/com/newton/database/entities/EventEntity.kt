@@ -19,3 +19,11 @@ data class EventEntity(
     val timestamp: Long = System.currentTimeMillis(),
     val pageNumber: Int? = null,
 )
+
+@Entity(tableName = "events_pagination_metadata")
+data class EventPaginationMetadata(
+    @PrimaryKey
+    val pageNumber: Int,
+    val nextPageUrl: String?,
+    val timestamp: Long
+)

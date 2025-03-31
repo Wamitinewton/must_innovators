@@ -1,10 +1,5 @@
 package com.newton.home.presentation.view.composables
 
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,17 +23,17 @@ import androidx.compose.material.icons.filled.FormatQuote
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,7 +43,8 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.newton.common_ui.ui.EmptyStateCard
 import com.newton.common_ui.ui.ErrorScreen
-import com.newton.core.domain.models.home_models.TestimonialsData
+import com.newton.common_ui.ui.LoadingIndicator
+import com.newton.core.domain.models.testimonials.TestimonialsData
 import com.newton.core.utils.formatDateTime
 import com.newton.home.presentation.states.TestimonialsUiState
 import kotlinx.coroutines.delay
@@ -67,10 +63,12 @@ fun TestimonialsSection(
     ) {
         when (uiState) {
             is TestimonialsUiState.Loading -> {
-                TestimonialsLoadingPlaceholder()
+                LoadingIndicator(
+                    text = "Loading Testimonials"
+                )
             }
             is TestimonialsUiState.Success -> {
-                val testimonials = (uiState as TestimonialsUiState.Success).testimonials
+                val testimonials = uiState.testimonials
                 if (testimonials.isNotEmpty()) {
                     AutoScrollingTestimonials(testimonials = testimonials)
                 } else {
@@ -86,6 +84,7 @@ fun TestimonialsSection(
             is TestimonialsUiState.Error -> {
                 val errorMessage = uiState.message
                 ErrorScreen(
+                    titleText = "Failed to load TESTIMONIALS",
                     message = errorMessage,
                     onRetry = { onRetryClick() }
                 )
@@ -240,16 +239,26 @@ fun PagerIndicator(
     pagerState: PagerState,
     pageCount: Int,
 ) {
+    val MAX_TOTAL_INDICATORS = 4
+
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        repeat(pageCount) { iteration ->
+        repeat(minOf(pageCount, MAX_TOTAL_INDICATORS)) { iteration ->
             val color = if (pagerState.currentPage == iteration) {
                 MaterialTheme.colorScheme.primary
             } else {
                 MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+            }
+
+            val alpha = when {
+                iteration < 4 -> 1f
+                iteration < MAX_TOTAL_INDICATORS -> {
+                    maxOf(0f, 1f - (iteration - 3) * 0.3f)
+                }
+                else -> 0f
             }
 
             Box(
@@ -257,50 +266,8 @@ fun PagerIndicator(
                     .padding(4.dp)
                     .size(8.dp)
                     .clip(CircleShape)
-                    .background(color)
+                    .background(color.copy(alpha = alpha))
             )
-        }
-    }
-}
-
-@Composable
-fun TestimonialsLoadingPlaceholder() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val infiniteTransition = rememberInfiniteTransition(label = "loading animation")
-        val alpha by infiniteTransition.animateFloat(
-            initialValue = 0.2f,
-            targetValue = 0.7f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(durationMillis = 800),
-                repeatMode = RepeatMode.Reverse
-            ),
-            label = "alpha animation"
-        )
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = alpha)
-            )
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(36.dp)
-                )
-            }
         }
     }
 }

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.CustomCard
-import com.newton.core.navigation.NavigationRoutes
+import com.newton.navigation.NavigationRoutes
 
 
 val actionList: List<NavItem> = listOf(

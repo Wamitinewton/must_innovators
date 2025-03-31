@@ -30,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.MultilineInputField
 import com.newton.common_ui.ui.RatingBar
 import com.newton.common_ui.ui.SubmitButton
@@ -48,7 +49,7 @@ fun GeneralFeedbackScreen(
     val isSubmitSuccess by viewModel.isSubmitSuccess.collectAsState()
     val scrollState = rememberScrollState()
 
-    Scaffold(
+    DefaultScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("General Feedback") },
@@ -66,11 +67,10 @@ fun GeneralFeedbackScreen(
                 )
             )
         }
-    ) { padding ->
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
         ) {
             Column(
                 modifier = Modifier

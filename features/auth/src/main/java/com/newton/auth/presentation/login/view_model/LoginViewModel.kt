@@ -72,7 +72,6 @@ class LoginViewModel @Inject constructor(
                 accessToken = loginResultData.access,
                 refreshToken = loginResultData.refresh
             )
-
             stateHolder.setLoggedInStatus(true)
             stateHolder.clearLoginForm()
             _navigateToLoginSuccess.send(LoginNavigationEvent.NavigateToLoginSuccess)

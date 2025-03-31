@@ -58,4 +58,5 @@ dependencies {
     implementation(Dependencies.composeNavigation)
 
     implementation(project(":core"))
+    implementation(project(":navigation"))
 }
