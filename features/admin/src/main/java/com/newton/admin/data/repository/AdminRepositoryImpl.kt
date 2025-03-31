@@ -136,15 +136,15 @@ class AdminRepositoryImpl @Inject constructor(
         isRefresh: Boolean
     ): Flow<Resource<List<EventsFeedback>>> = safeApiCall {
 
-            val response = adminApi.getEventsFeedback(eventId)
+        val response = adminApi.getEventsFeedback(eventId)
 
-            if (response.status == "success" && response.data.results.isNotEmpty()) {
-                response.data.results
+        if (response.status == "success" && response.data.results.isNotEmpty()) {
+            response.data.results
 //                saveEventsFeedbacks(feedbacks)
 //                Resource.Success(data = feedbacks)
-            } else {
-                throw Exception("Failed to fetch feedbacks: ${response.message}")
-            }
+        } else {
+            throw Exception("Failed to fetch feedbacks: ${response.message}")
+        }
 
     }
 
@@ -239,7 +239,7 @@ class AdminRepositoryImpl @Inject constructor(
         emit(Resource.Loading(true))
         try {
             val events = adminApi.getAllEventsList()
-            if (events.message == "success") {
+            if (events.status == "success") {
                 emit(Resource.Success(events.data.results))
                 saveListOfEvents(events.data.results)
             } else {
@@ -258,7 +258,8 @@ class AdminRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> = flow {
+    override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> =
+        flow {
             emit(Resource.Loading(true))
             try {
                 val params = mapOf(
@@ -271,7 +272,6 @@ class AdminRepositoryImpl @Inject constructor(
                     "linked_in" to partners.linkedIn.toCustomRequestBody(),
                     "twitter" to partners.twitter.toCustomRequestBody(),
                     "start_date" to partners.startDate.toCustomRequestBody(),
-                    "end_date" to partners.endDate.toCustomRequestBody(),
                     "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
                     "status" to partners.status.toCustomRequestBody(),
                     "scope" to partners.scope.toCustomRequestBody(),
@@ -281,12 +281,25 @@ class AdminRepositoryImpl @Inject constructor(
                     "achievements" to partners.achievements.toCustomRequestBody(),
                     "target_audience" to partners.targetAudience.toCustomRequestBody()
                 )
+                val endDateRequestBody = partners.endDate?.toCustomRequestBody()
+                val filteredParams = if (endDateRequestBody != null) {
+                    params + ("end_date" to endDateRequestBody)
+                } else {
+                    params
+                }
+
                 val requestFile = partners.logo.asRequestBody("image/*".toMediaTypeOrNull())
+                val file = partners.logo
+                val fileName = if (file.name.contains(".")) {
+                    file.name
+                } else {
+                    "${file.name}.jpg"
+                }
                 val imagePart =
-                    MultipartBody.Part.createFormData("image", partners.logo.name, requestFile)
+                    MultipartBody.Part.createFormData("logo_field", fileName, requestFile)
 
 
-                val response = adminApi.addPartner(params, imagePart)
+                val response = adminApi.addPartner(filteredParams, imagePart)
                 if (response.status == "success") {
                     emit(Resource.Success(response.data))
                     partnersDao.insertPartner(response.data.toPartnerEntity())
@@ -310,23 +323,23 @@ class AdminRepositoryImpl @Inject constructor(
                     emit(Resource.Error("Failed to fetch users: ${response.message}"))
                 }
             } catch (e: Exception) {
-                emit(Resource.Error(e.message?:"Unknown error occurred"))
+                emit(Resource.Error(e.message ?: "Unknown error occurred"))
             } finally {
                 emit(Resource.Loading(false))
             }
         }
 
-    override suspend fun updateClub(clubRequest: Club): Flow<Resource<Club>> = flow{
+    override suspend fun updateClub(clubRequest: Club): Flow<Resource<Club>> = flow {
         try {
             val response = adminApi.updateClub(clubRequest)
-            if (response.status == "success"){
+            if (response.status == "success") {
                 response.data
-            }else{
+            } else {
                 emit(Resource.Error("Error occurred when updating club"))
                 throw Exception(response.message)
             }
         } catch (e: Exception) {
-            emit(Resource.Error(e.message ?:"Unknown error occurred"))
+            emit(Resource.Error(e.message ?: "Unknown error occurred"))
         } finally {
         }
     }

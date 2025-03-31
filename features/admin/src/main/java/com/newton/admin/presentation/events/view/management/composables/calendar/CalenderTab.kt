@@ -52,7 +52,6 @@ fun CalendarTab(
     var selectedDate by remember { mutableStateOf(today) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Month selector
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -144,8 +143,6 @@ fun CalendarTab(
                 }
             }
         }
-
-        // Events for selected day
         val selectedDayEvents = calendarDays.find { it.date == selectedDate }?.events ?: emptyList()
 
         HorizontalDivider()

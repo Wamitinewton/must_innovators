@@ -7,4 +7,5 @@ sealed class EventEvents {
     data class EditingEvent(val editing: Boolean):EventEvents()
     data class GetEventsAttendees(val eventId: Int):EventEvents()
     data class GetEventFeedbacks(val eventId: Int,val isRefresh:Boolean):EventEvents()
+    data object LoadEvents:EventEvents()
 }

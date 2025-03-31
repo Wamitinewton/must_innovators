@@ -13,7 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDateTime
 
@@ -24,8 +24,8 @@ fun OverviewTab(
     isScrolling: Boolean,
     onEventSelected: (EventsData) -> Unit
 ) {
-    val upcomingEvents = events.filter { it.date.fromStringToLocalTime().isAfter(LocalDateTime.now()) }
-    val pastEvents = events.filter { it.date.fromStringToLocalTime().isBefore(LocalDateTime.now()) }
+    val upcomingEvents = events.filter { it.date.toLocalDateTime().isAfter(LocalDateTime.now()) }
+    val pastEvents = events.filter { it.date.toLocalDateTime().isBefore(LocalDateTime.now()) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn(

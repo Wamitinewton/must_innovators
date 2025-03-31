@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.ui.CustomCard
-import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -50,7 +50,7 @@ fun EventCard(
     isScrolling: Boolean,
     onClick: () -> Unit
 ) {
-    val isPast = event.date.fromStringToLocalTime().isBefore(LocalDateTime.now())
+    val isPast = event.date.toLocalDateTime().isBefore(LocalDateTime.now())
     val density = LocalDensity.current
     val animatedOffset = remember { Animatable(0f) }
     val infiniteTransition = rememberInfiniteTransition()
@@ -113,14 +113,14 @@ fun EventCard(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("dd")),
+                        text = event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd")),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         else MaterialTheme.colorScheme.onPrimary
                     )
                     Text(
-                        text = event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("MMM")),
+                        text = event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("MMM")),
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         else MaterialTheme.colorScheme.onPrimary
@@ -147,8 +147,8 @@ fun EventCard(
                 )
 
                 Text(
-                    text = "${event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))} - " +
-                            event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = "${event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))} - " +
+                            event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.labelMedium
                 )
 

@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.fromStringToLocalTime
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.EventsData
 import java.time.format.DateTimeFormatter
 
@@ -41,7 +41,7 @@ fun EventCalendarItem(
                 )
 
                 Text(
-                    text = event.date.fromStringToLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.bodyMedium
                 )
 
