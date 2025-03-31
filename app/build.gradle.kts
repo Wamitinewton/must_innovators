@@ -109,7 +109,7 @@ android {
             manifestPlaceholders["appName"] = "M.U.S.I.C"
         }
         create("dev") {
-            applicationIdSuffix = ""
+            applicationIdSuffix = ".dev"
             dimension = "appStatus"
             manifestPlaceholders["appName"] = "[DEV] M.U.S.I.C"
         }
