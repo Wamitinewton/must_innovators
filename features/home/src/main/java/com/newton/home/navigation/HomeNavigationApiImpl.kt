@@ -1,11 +1,13 @@
 package com.newton.home.navigation
 
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.newton.core.utils.PackageHandlers
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubGraphRoutes
 import com.newton.home.presentation.view.HomeScreen
@@ -51,16 +53,19 @@ class HomeNavigationApiImpl: HomeNavigationApi {
                     navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
                 }
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
+                val context = LocalContext.current
                 PartnerDetailsScreen(
                     partnersSharedViewModel = partnersSharedViewModel,
                     onBackPressed = {
                         navHostController.navigateUp()
                     },
-                    onSharePartner = {},
-                    onNavigateToWebsite = {},
-                    onNavigateToLinkedIn = {},
-                    onNavigateToTwitter = {},
-                    onContactEmail = {}
+                    onSharePartner = { partner ->
+                        PackageHandlers.sharePartner(context, partner)
+                    },
+                    onNavigateToWebsite = { url -> PackageHandlers.navigateToWebsite(context, url) },
+                    onNavigateToLinkedIn = { linkedIn -> PackageHandlers.navigateToLinkedIn(context, linkedIn) },
+                    onNavigateToTwitter = { twitter -> PackageHandlers.navigateToTwitter(context, twitter) },
+                    onContactEmail = { email -> PackageHandlers.contactViaEmail(context, email) }
                 )
             }
         }

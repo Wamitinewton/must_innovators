@@ -193,7 +193,7 @@ dependencies {
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
-    implementation(project(":common_ui"))
+    implementation(project(":shared-ui"))
     implementation(project(":features:events"))
     implementation(project(":features:blogs"))
     implementation(project(":features:account"))

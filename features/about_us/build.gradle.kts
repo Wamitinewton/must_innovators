@@ -79,7 +79,7 @@ dependencies {
     implementation(Dependencies.timber)
 
     implementation(project(":core"))
-    implementation(project(":common_ui"))
+    implementation(project(":shared-ui"))
     implementation(project(":database"))
     implementation(project(":navigation"))
 }

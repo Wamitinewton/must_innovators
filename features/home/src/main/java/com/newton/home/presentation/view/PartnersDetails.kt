@@ -66,8 +66,7 @@ fun PartnerDetailsScreen(
         }
     }
 
-    DefaultScaffold(
-    ) {
+    DefaultScaffold {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
@@ -225,10 +224,10 @@ fun PartnerDetailsScreen(
                     if (partnerData != null) {
                         ContactInfoCard(
                             partnerData = partnerData,
-                            onContactEmail = onContactEmail,
-                            onNavigateToWebsite = onNavigateToWebsite,
-                            onNavigateToLinkedIn = onNavigateToLinkedIn,
-                            onNavigateToTwitter = onNavigateToTwitter
+                            onContactEmail = { email -> onContactEmail(email) },
+                            onNavigateToWebsite = { url -> onNavigateToWebsite(url) },
+                            onNavigateToLinkedIn = { linkedIn -> onNavigateToLinkedIn(linkedIn) },
+                            onNavigateToTwitter = { twitter -> onNavigateToTwitter(twitter) }
                         )
                     }
 
