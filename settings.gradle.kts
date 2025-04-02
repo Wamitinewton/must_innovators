@@ -22,7 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "meruinnovators"
 include(
     ":app",
-    ":common_ui",
+    ":shared-ui",
     ":core",
     ":database",
     ":features:events",
@@ -36,3 +36,5 @@ include(":features:about_us")
 include(":notifications")
 include(":features:feedback")
 include(":navigation")
+include(":sharedPrefs")
+include(":network")
