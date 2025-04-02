@@ -45,6 +45,15 @@ jobs:
           RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
           EOL
 
+      - name: Create keystore directory
+        run: mkdir -p keystore
+
+      - name: Decode and save keystore file
+        env:
+          ENCODED_KEYSTORE: ${{ secrets.ENCODED_KEYSTORE }}
+        run: |
+          echo "$ENCODED_KEYSTORE" | base64 -d > keystore/innovation_keystore.jks
+
       - name: Decode and save keystore file
         env:
           ENCODED_KEYSTORE: ${{ secrets.ENCODED_KEYSTORE }}
