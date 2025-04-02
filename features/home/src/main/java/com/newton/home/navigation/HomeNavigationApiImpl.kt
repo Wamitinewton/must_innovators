@@ -1,5 +1,6 @@
 package com.newton.home.navigation
 
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,6 +9,8 @@ import androidx.navigation.navigation
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubGraphRoutes
 import com.newton.home.presentation.view.HomeScreen
+import com.newton.home.presentation.view.PartnerDetailsScreen
+import com.newton.home.presentation.viewmodels.PartnersSharedViewModel
 import com.newton.home.presentation.viewmodels.PartnersViewModel
 import com.newton.home.presentation.viewmodels.TestimonialsViewModel
 
@@ -21,8 +24,12 @@ class HomeNavigationApiImpl: HomeNavigationApi {
             startDestination = NavigationRoutes.HomeRoute.routes
         ){
             composable(route = NavigationRoutes.HomeRoute.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
+                }
                 val partnersViewModel = hiltViewModel<PartnersViewModel>()
                 val testimonialsViewModel = hiltViewModel<TestimonialsViewModel>()
+                val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 HomeScreen(
                     partnersViewModel = partnersViewModel,
                     testimonialsViewModel = testimonialsViewModel,
@@ -31,7 +38,29 @@ class HomeNavigationApiImpl: HomeNavigationApi {
                     },
                     onNavigateToAboutUs = {
                         navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
+                    },
+                    onPartnerClick = { partner ->
+                        partnersSharedViewModel.updateSelectedPartner(partner)
+                        navHostController.navigate(NavigationRoutes.PartnersDetails.routes)
                     }
+                )
+            }
+
+            composable(route = NavigationRoutes.PartnersDetails.routes) {
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
+                }
+                val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
+                PartnerDetailsScreen(
+                    partnersSharedViewModel = partnersSharedViewModel,
+                    onBackPressed = {
+                        navHostController.navigateUp()
+                    },
+                    onSharePartner = {},
+                    onNavigateToWebsite = {},
+                    onNavigateToLinkedIn = {},
+                    onNavigateToTwitter = {},
+                    onContactEmail = {}
                 )
             }
         }

@@ -36,4 +36,5 @@ sealed class NavigationRoutes(val routes: String) {
     data object DeleteAccountSuccessRoute: NavigationRoutes("delete_account_success")
     data object CreateTestimonialsRoute: NavigationRoutes("create_testimonial")
     data object ClubUpdate: NavigationRoutes("club_update_screen")
+    data object PartnersDetails: NavigationRoutes("partners_details")
 }

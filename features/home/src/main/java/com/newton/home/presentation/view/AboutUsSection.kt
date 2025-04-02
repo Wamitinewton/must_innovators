@@ -1,4 +1,4 @@
-package com.newton.home.presentation.view.composables
+package com.newton.home.presentation.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

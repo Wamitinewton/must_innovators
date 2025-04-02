@@ -1,7 +1,11 @@
 package com.newton.home.presentation.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.core.domain.repositories.HomeRepository
 import com.newton.core.utils.Resource
 import com.newton.home.presentation.states.PartnersUiState
@@ -57,5 +61,22 @@ class PartnersViewModel @Inject constructor(
 
     fun refreshPartners() {
         loadPartners()
+    }
+}
+
+@HiltViewModel
+class PartnersSharedViewModel @Inject constructor(
+): ViewModel() {
+
+    var selectedPartner by mutableStateOf<PartnersData?>(null)
+        private set
+
+
+    fun updateSelectedPartner(partnersData: PartnersData) {
+        selectedPartner = partnersData
+    }
+
+    fun clearSelectedEvent() {
+        selectedPartner = null
     }
 }

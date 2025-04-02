@@ -1,7 +1,5 @@
-package com.newton.home.presentation.view.composables
+package com.newton.home.presentation.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material3.CardDefaults
@@ -32,10 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -91,7 +83,8 @@ fun SectionHeader(
 @Composable
 fun PartnersContent(
     partnersState: PartnersUiState,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onPartnerClick: (PartnersData) -> Unit
 ) {
     when (partnersState) {
         is PartnersUiState.Loading -> {
@@ -123,34 +116,13 @@ fun PartnersContent(
         is PartnersUiState.Success -> {
             PartnersSection(
                 partners = partnersState.partners,
-                onPartnerClick = { /* Handle partner click */ }
+                onPartnerClick = onPartnerClick
             )
         }
     }
 }
 
 
-
-@Composable
-fun PartnersSection(
-    partners: List<PartnersData>,
-    onPartnerClick: (PartnersData) -> Unit = {}
-) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-    ) {
-        items(partners.size) { index ->
-            val partner = partners[index]
-            PartnerCard(
-                partner = partner,
-                onClick = { onPartnerClick(partner) }
-            )
-        }
-    }
-}
 
 @Composable
 fun PartnerCard(
@@ -160,16 +132,22 @@ fun PartnerCard(
     ElevatedCard(
         modifier = Modifier
             .width(300.dp)
-            .animateContentSize()
+            .height(220.dp)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp,
             pressedElevation = 8.dp
+        ),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -177,9 +155,9 @@ fun PartnerCard(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(52.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer),
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
@@ -199,36 +177,55 @@ fun PartnerCard(
                     Text(
                         text = partner.name,
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Text(
                         text = "${partner.type} • ${partner.scope}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
 
                 StatusBadge(status = partner.status)
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = partner.description,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 2
+                maxLines = 2,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Key Achievements",
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Text(
+                text = partner.achievements,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant,
                 thickness = 0.5.dp
             )
-            Spacer(modifier = Modifier.height(8.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 CompactInfoItem(
                     icon = Icons.Filled.Person,
@@ -248,8 +245,6 @@ fun PartnerCard(
                     modifier = Modifier.weight(0.8f)
                 )
             }
-
-            ExpandableAchievementsSection(achievements = partner.achievements)
         }
     }
 }
@@ -280,39 +275,23 @@ fun CompactInfoItem(
     }
 }
 
+
 @Composable
-fun ExpandableAchievementsSection(achievements: String) {
-    var expanded by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(vertical = 4.dp)
-        ) {
-            Text(
-                text = "Achievements",
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                contentDescription = if (expanded) "Collapse" else "Expand",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(16.dp)
-            )
-        }
-
-        AnimatedVisibility(visible = expanded) {
-            Text(
-                text = achievements,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 4.dp)
+fun PartnersSection(
+    partners: List<PartnersData>,
+    onPartnerClick: (PartnersData) -> Unit = {}
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+        items(partners.size) { index ->
+            val partner = partners[index]
+            PartnerCard(
+                partner = partner,
+                onClick = { onPartnerClick(partner) }
             )
         }
     }
@@ -320,10 +299,14 @@ fun ExpandableAchievementsSection(achievements: String) {
 
 @Composable
 fun StatusBadge(status: String) {
-    val (backgroundColor, textColor) = when (status) {
+    val (backgroundColor, textColor) = when (status.uppercase()) {
         "ACTIVE" -> Pair(
             MaterialTheme.colorScheme.primaryContainer,
             MaterialTheme.colorScheme.primary
+        )
+        "PENDING" -> Pair(
+            MaterialTheme.colorScheme.tertiaryContainer,
+            MaterialTheme.colorScheme.tertiary
         )
         else -> Pair(
             MaterialTheme.colorScheme.errorContainer,
@@ -344,4 +327,5 @@ fun StatusBadge(status: String) {
         )
     }
 }
+
 
