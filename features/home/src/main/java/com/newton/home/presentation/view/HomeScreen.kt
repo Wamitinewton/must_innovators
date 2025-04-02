@@ -15,6 +15,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
@@ -22,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
 import com.newton.core.domain.models.home_models.PartnersData
+import com.newton.core.domain.models.testimonials.TestimonialsData
 import com.newton.home.presentation.viewmodels.PartnersViewModel
 import com.newton.home.presentation.viewmodels.TestimonialsViewModel
 
@@ -36,6 +40,15 @@ fun HomeScreen(
     val configuration = LocalConfiguration.current
     val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by testimonialsViewModel.uiState.collectAsState()
+
+    var selectedTestimonial by remember { mutableStateOf<TestimonialsData?>(null) }
+
+    selectedTestimonial?.let { testimonial ->
+        TestimonialDetailSheet(
+            testimonialsData = testimonial,
+            onDismiss = { selectedTestimonial = null }
+        )
+    }
 
     DefaultScaffold(
         showOrbitals = true,
@@ -91,7 +104,7 @@ fun HomeScreen(
                 SectionHeader(
                     title = "Testimonials",
                     showViewAll = true,
-                    onViewAllClick = {  }
+                    onViewAllClick = { }
                 )
             }
 
@@ -100,6 +113,9 @@ fun HomeScreen(
                     uiState = testimonialsUiState,
                     onRetryClick = {
                         testimonialsViewModel.retryLoadingTestimonials()
+                    },
+                    onTestimonialClick = { testimonial ->
+                        selectedTestimonial = testimonial
                     }
                 )
             }
