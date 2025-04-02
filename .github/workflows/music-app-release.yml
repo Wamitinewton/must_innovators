@@ -15,10 +15,10 @@ jobs:
         with:
           fetch-depth: 0 # Required for proper versioning and changelog
 
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'temurin'
           cache: gradle
 
@@ -52,29 +52,27 @@ jobs:
           mkdir -p keystore
           echo "$ENCODED_KEYSTORE" | base64 -d > ${{ secrets.RELEASE_STORE_FILE }}
 
-      - name: Update version in build.gradle
+      - name: Update version in build.gradle.kts
         run: |
           VERSION=${{ steps.get_version.outputs.VERSION }}
-          sed -i "s/versionCode = 1/versionCode = $VERSION/" app/build.gradle.kts
+          sed -i "s/versionCode = 1/versionCode = $(echo $VERSION | tr -cd '0-9')/" app/build.gradle.kts
           sed -i "s/versionName = \"1.0\"/versionName = \"$VERSION\"/" app/build.gradle.kts
+          cat app/build.gradle.kts
 
-      - name: Build production release APK
-        run: ./gradlew :app:assembleProductionRelease --stacktrace
+      - name: Build dev release APK
+        run: ./gradlew :app:assembleDevRelease --stacktrace
 
-      - name: Build staging release APK
-        run: ./gradlew :app:assembleStagingRelease --stacktrace
-
-      - name: Rename APK files with version
+      - name: Rename APK file with version
         run: |
           VERSION=${{ steps.get_version.outputs.VERSION }}
           mkdir -p releases
-          cp app/build/outputs/apk/production/release/app-production-release.apk releases/music-production-v$VERSION.apk
-          cp app/build/outputs/apk/staging/release/app-staging-release.apk releases/music-staging-v$VERSION.apk
+          cp app/build/outputs/apk/dev/release/app-dev-release.apk releases/music-dev-v$VERSION.apk
 
       - name: Generate changelog
         id: changelog
         run: |
-          CHANGELOG=$(git log --pretty=format:"- %s (%h)" $(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || git rev-list --max-parents=0 HEAD)..HEAD)
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)" $PREVIOUS_TAG..HEAD)
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -91,22 +89,19 @@ jobs:
             ${{ steps.changelog.outputs.CHANGELOG }}
             
             ## APK Files:
-            - `music-production-v${{ steps.get_version.outputs.VERSION }}.apk`: Production build
-            - `music-staging-v${{ steps.get_version.outputs.VERSION }}.apk`: Staging build
+            - `music-dev-v${{ steps.get_version.outputs.VERSION }}.apk`: Development build
             
             Build generated automatically by GitHub Actions.
           files: |
-            releases/music-production-v${{ steps.get_version.outputs.VERSION }}.apk
-            releases/music-staging-v${{ steps.get_version.outputs.VERSION }}.apk
+            releases/music-dev-v${{ steps.get_version.outputs.VERSION }}.apk
           draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload mapping files
+      - name: Upload mapping file
         uses: actions/upload-artifact@v4
         with:
           name: mapping-files-v${{ steps.get_version.outputs.VERSION }}
           path: |
-            app/build/outputs/mapping/productionRelease/mapping.txt
-            app/build/outputs/mapping/stagingRelease/mapping.txt
+            app/build/outputs/mapping/devRelease/mapping.txt
           retention-days: 90
