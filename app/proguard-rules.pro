@@ -3,6 +3,11 @@
 -keepclassmembers class com.newton.core.** { *; }
 -keepclasseswithmembers class com.newton.core.** { *; }
 
+-keep class com.newton.database.** { *; }
+-keepnames class com.newton.database.** { *; }
+-keepclassmembers class com.newton.database.** { *; }
+-keepclasseswithmembers class com.newton.database.** { *; }
+
 # Retrofit
 -keep class retrofit2.** { *; }
 -keepattributes Signature
