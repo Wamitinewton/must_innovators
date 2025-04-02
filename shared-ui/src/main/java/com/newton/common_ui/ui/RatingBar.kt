@@ -9,12 +9,14 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material.icons.outlined.StarRate
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,7 +26,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RatingBar(
+fun RatingBarInput(
     modifier: Modifier = Modifier,
     currentRating: Int,
     onRatingChanged: (Int) -> Unit
@@ -83,5 +85,40 @@ fun RatingBar(
                 )
             }
         }
+    }
+}
+
+@Composable
+ fun RatingBar(
+    rating: Int,
+    maxRating: Int = 5,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        repeat(maxRating) { index ->
+            Icon(
+                imageVector = if (index < rating) Icons.Filled.StarRate else Icons.Outlined.StarRate,
+                contentDescription = null,
+                tint = if (index < rating) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                },
+                modifier = Modifier
+                    .size(24.dp)
+                    .padding(end = 4.dp)
+            )
+        }
+
+        Text(
+            text = "$rating/$maxRating",
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 8.dp)
+        )
     }
 }
