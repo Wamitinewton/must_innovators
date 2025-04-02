@@ -42,8 +42,6 @@ class MeruInnovatorsApp : Application(), Configuration.Provider {
             FirebaseApp.initializeApp(this)
             notificationsManager.checkNotificationPermission()
 
-
-
         scheduleTokenRefreshWork(this)
     }
 

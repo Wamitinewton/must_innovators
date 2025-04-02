@@ -21,10 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.home.presentation.view.composables.AboutUsSection
-import com.newton.home.presentation.view.composables.PartnersContent
-import com.newton.home.presentation.view.composables.SectionHeader
-import com.newton.home.presentation.view.composables.TestimonialsSection
+import com.newton.core.domain.models.home_models.PartnersData
 import com.newton.home.presentation.viewmodels.PartnersViewModel
 import com.newton.home.presentation.viewmodels.TestimonialsViewModel
 
@@ -33,7 +30,8 @@ fun HomeScreen(
     partnersViewModel: PartnersViewModel,
     testimonialsViewModel: TestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
-    onNavigateToAboutUs: () -> Unit
+    onNavigateToAboutUs: () -> Unit,
+    onPartnerClick: (PartnersData) -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val partnersState by partnersViewModel.partnersState.collectAsState()
@@ -84,7 +82,8 @@ fun HomeScreen(
             item {
                 PartnersContent(
                     partnersState = partnersState,
-                    onRetry = { partnersViewModel.refreshPartners() }
+                    onRetry = { partnersViewModel.refreshPartners() },
+                    onPartnerClick = onPartnerClick
                 )
             }
 

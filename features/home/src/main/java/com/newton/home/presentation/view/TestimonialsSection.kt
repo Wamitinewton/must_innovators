@@ -1,4 +1,4 @@
-package com.newton.home.presentation.view.composables
+package com.newton.home.presentation.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,8 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -145,6 +143,7 @@ fun TestimonialCard(testimonialsData: TestimonialsData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
             .padding(horizontal = 4.dp, vertical = 8.dp)
             .shadow(
                 elevation = 4.dp,
@@ -239,7 +238,7 @@ fun PagerIndicator(
     pagerState: PagerState,
     pageCount: Int,
 ) {
-    val MAX_TOTAL_INDICATORS = 4
+     val MAX_TOTAL_INDICATORS = 4
 
     Row(
         horizontalArrangement = Arrangement.Center,

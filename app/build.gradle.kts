@@ -14,7 +14,6 @@ plugins {
 val properties = Properties()
 val store = rootProject.file("keys.properties")
 
-// Early loading of properties
 if (store.exists()) {
     properties.load(store.inputStream())
 } else {
@@ -108,6 +107,7 @@ android {
             dimension = "appStatus"
             manifestPlaceholders["appName"] = "M.U.S.I.C"
         }
+
         create("dev") {
             applicationIdSuffix = ".dev"
             dimension = "appStatus"
@@ -178,10 +178,12 @@ dependencies {
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
+    implementation(Dependencies.extendedIcons)
+
+
     // system ui
     implementation(Dependencies.systemUi)
 
-    implementation(Dependencies.extendedIcons)
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
