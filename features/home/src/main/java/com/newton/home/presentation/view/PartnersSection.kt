@@ -123,7 +123,6 @@ fun PartnersContent(
 }
 
 
-
 @Composable
 fun PartnerCard(
     partner: PartnersData,
@@ -133,6 +132,7 @@ fun PartnerCard(
         modifier = Modifier
             .width(300.dp)
             .height(220.dp)
+            .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(
@@ -304,10 +304,12 @@ fun StatusBadge(status: String) {
             MaterialTheme.colorScheme.primaryContainer,
             MaterialTheme.colorScheme.primary
         )
+
         "PENDING" -> Pair(
             MaterialTheme.colorScheme.tertiaryContainer,
             MaterialTheme.colorScheme.tertiary
         )
+
         else -> Pair(
             MaterialTheme.colorScheme.errorContainer,
             MaterialTheme.colorScheme.error

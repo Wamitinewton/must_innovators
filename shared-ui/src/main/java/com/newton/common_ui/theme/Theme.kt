@@ -3,12 +3,11 @@ package com.newton.meruinnovators.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import com.newton.common_ui.theme.blackColor
-import com.newton.common_ui.theme.lightGrayBackgroundColor
 
 object ThemeUtils {
     data class ThemeColorPair(
@@ -16,11 +15,15 @@ object ThemeUtils {
         val dark: Color
     )
 
-
     object AppColors {
+        val Primary = Color(0xFF53B175)
+        val PrimaryVariant = Color(0xFF429A5E)
+        val Secondary = Color(0xFF03DAC5)
+        val SecondaryVariant = Color(0xFF018786)
+
         val Background = ThemeColorPair(
-            light = lightGrayBackgroundColor,
-            dark = blackColor
+            light = Color(0xFFF8F8F8),
+            dark = Color(0xFF121212)
         )
 
         val Surface = ThemeColorPair(
@@ -28,47 +31,66 @@ object ThemeUtils {
             dark = Color(0xFF1E1E1E)
         )
 
-        val Text = ThemeColorPair(
-            light = Color(0xFF181725),
-            dark = Color.White
+        val ElevatedSurface = ThemeColorPair(
+            light = Color(0xFFFAFAFA),
+            dark = Color(0xFF2C2C2C)
         )
 
-        val InvertText = ThemeColorPair(
-            dark = Color(0xFF181725),
-            light = Color.White
+        val Text = ThemeColorPair(
+            light = Color(0xFF121212),
+            dark = Color(0xFFF1F1F1)
+        )
+
+        val InvertedText = ThemeColorPair(
+            dark = Color(0xFF121212),
+            light = Color(0xFFF1F1F1)
         )
 
         val SecondaryText = ThemeColorPair(
-            light = Color(0xFF7C7C7C),
-            dark = Color(0xFFB0B0B0)
+            light = Color(0xFF555555),
+            dark = Color(0xFFBBBBBB)
         )
 
         val Divider = ThemeColorPair(
-            light = Color(0xFFE2E2E2),
+            light = Color(0xFFE0E0E0),
             dark = Color(0xFF2A2A2A)
         )
 
-        val Primary = Color(0xff53B175)
-        val Purple700 = Color(0xFF3700B3)
-        val Teal200 = Color(0xFF03DAC5)
+        val Error = Color(0xFFB00020)
+        val Success = Color(0xFF43A047)
+
+        val Accent1 = Color(0xFF6200EE)
+        val Accent2 = Color(0xFFFF8F00)
     }
 
     private val DarkColorPalette = darkColorScheme(
         primary = AppColors.Primary,
-        secondary = AppColors.Teal200,
+        primaryContainer = AppColors.PrimaryVariant,
+        secondary = AppColors.Secondary,
+        secondaryContainer = AppColors.SecondaryVariant,
         background = AppColors.Background.dark,
         surface = AppColors.Surface.dark,
+        onPrimary = Color.White,
+        onSecondary = Color.Black,
         onBackground = AppColors.Text.dark,
-        onSurface = AppColors.Text.dark
+        onSurface = AppColors.Text.dark,
+        error = AppColors.Error,
+        onError = Color.White
     )
 
-    private val LightColorPalette = darkColorScheme(
+    private val LightColorPalette = lightColorScheme(
         primary = AppColors.Primary,
-        secondary = AppColors.Teal200,
+        primaryContainer = AppColors.PrimaryVariant,
+        secondary = AppColors.Secondary,
+        secondaryContainer = AppColors.SecondaryVariant,
         background = AppColors.Background.light,
         surface = AppColors.Surface.light,
+        onPrimary = Color.White,
+        onSecondary = Color.Black,
         onBackground = AppColors.Text.light,
-        onSurface = AppColors.Text.light
+        onSurface = AppColors.Text.light,
+        error = AppColors.Error,
+        onError = Color.White
     )
 
     private val LocalThemeMode = staticCompositionLocalOf { false }
@@ -89,13 +111,12 @@ object ThemeUtils {
             LightColorPalette
 
         CompositionLocalProvider(LocalThemeMode provides darkTheme) {
-
             MaterialTheme(
                 colorScheme = colorScheme,
                 typography = Typography,
                 content = content
             )
         }
-
     }
 }
+
