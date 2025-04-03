@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Required for proper versioning and changelog
 
-      - name: Set up JDK 11
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '21'
           distribution: 'temurin'
           cache: gradle
 
@@ -33,33 +33,18 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Create keys.properties file
+      - name: Create keys.properties
         run: |
-          cat > keys.properties << EOL
-          PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}
-          DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}
-          STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}
-          RELEASE_STORE_FILE=${{ secrets.RELEASE_STORE_FILE }}
-          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
-          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
-          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
-          EOL
+          echo "PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}" > keys.properties
+          echo "DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}" >> keys.properties
+          echo "STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}" >> keys.properties
+          echo "RELEASE_STORE_FILE=keystore.jks" >> keys.properties
+          echo "RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keys.properties
+          echo "RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}" >> keys.properties
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keys.properties
 
-      - name: Create keystore directory
-        run: mkdir -p keystore
-
-      - name: Decode and save keystore file
-        env:
-          ENCODED_KEYSTORE: ${{ secrets.ENCODED_KEYSTORE }}
-        run: |
-          echo "$ENCODED_KEYSTORE" | base64 -d > keystore/innovation_keystore.jks
-
-      - name: Decode and save keystore file
-        env:
-          ENCODED_KEYSTORE: ${{ secrets.ENCODED_KEYSTORE }}
-        run: |
-          mkdir -p keystore
-          echo "$ENCODED_KEYSTORE" | base64 -d > ${{ secrets.RELEASE_STORE_FILE }}
+      - name: Create keystore file
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
 
       - name: Update version in build.gradle.kts
         run: |

@@ -18,3 +18,4 @@ innovation_keystore.jks
 /.kotlin
 /.idea/
 /app/google-services.json
+keystore_base64.txt
