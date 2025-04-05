@@ -63,9 +63,6 @@ android {
             logger.warn("Warning: ${e.message}")
         }
 
-//        val backendUrl = properties.getProperty("BACKEND_URL")
-//            ?: throw GradleException("BACKEND_URL not found in keys.properties")
-
         applicationId = "com.newton.meruinnovators"
         minSdk = 28
         targetSdk = 35

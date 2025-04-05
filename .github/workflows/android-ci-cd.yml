@@ -24,18 +24,27 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      # Make sure to create the keys.properties in the project root
       - name: Create keys.properties
         run: |
-          echo "PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}" > keys.properties
-          echo "DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}" >> keys.properties
-          echo "STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}" >> keys.properties
-          echo "RELEASE_STORE_FILE=keystore.jks" >> keys.properties
-          echo "RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keys.properties
-          echo "RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}" >> keys.properties
-          echo "RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keys.properties
+          cat > ${GITHUB_WORKSPACE}/keys.properties << EOL
+          PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}
+          DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}
+          STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}
+          RELEASE_STORE_FILE=keystore.jks
+          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
+          EOL
 
       - name: Create keystore file
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+
+      - name: Debug - verify files
+        run: |
+          ls -la
+          echo "Keys.properties contents:"
+          cat keys.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -57,6 +66,19 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: gradle
+
+      # Make sure to create the keys.properties in the project root
+      - name: Create keys.properties
+        run: |
+          cat > ${GITHUB_WORKSPACE}/keys.properties << EOL
+          PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}
+          DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}
+          STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}
+          RELEASE_STORE_FILE=keystore.jks
+          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
+          EOL
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -86,15 +108,18 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      # Make sure to create the keys.properties in the project root
       - name: Create keys.properties
         run: |
-          echo "PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}" > keys.properties
-          echo "DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}" >> keys.properties
-          echo "STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}" >> keys.properties
-          echo "RELEASE_STORE_FILE=keystore.jks" >> keys.properties
-          echo "RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keys.properties
-          echo "RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}" >> keys.properties
-          echo "RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keys.properties
+          cat > ${GITHUB_WORKSPACE}/keys.properties << EOL
+          PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}
+          DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}
+          STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}
+          RELEASE_STORE_FILE=keystore.jks
+          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
+          EOL
 
       - name: Create keystore file
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
@@ -127,6 +152,19 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      # Make sure to create the keys.properties in the project root
+      - name: Create keys.properties
+        run: |
+          cat > ${GITHUB_WORKSPACE}/keys.properties << EOL
+          PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}
+          DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}
+          STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}
+          RELEASE_STORE_FILE=keystore.jks
+          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
+          EOL
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -155,18 +193,27 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      # Make sure to create the keys.properties in the project root
       - name: Create keys.properties
         run: |
-          echo "PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}" > keys.properties
-          echo "DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}" >> keys.properties
-          echo "STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}" >> keys.properties
-          echo "RELEASE_STORE_FILE=keystore.jks" >> keys.properties
-          echo "RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keys.properties
-          echo "RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}" >> keys.properties
-          echo "RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keys.properties
+          cat > ${GITHUB_WORKSPACE}/keys.properties << EOL
+          PROD_BACKEND_URL=${{ secrets.PROD_BACKEND_URL }}
+          DEV_BACKEND_URL=${{ secrets.DEV_BACKEND_URL }}
+          STAGING_BACKEND_URL=${{ secrets.STAGING_BACKEND_URL }}
+          RELEASE_STORE_FILE=keystore.jks
+          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
+          EOL
 
       - name: Create keystore file
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+
+      - name: Debug - verify files
+        run: |
+          ls -la
+          echo "Keys.properties contents:"
+          cat keys.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
