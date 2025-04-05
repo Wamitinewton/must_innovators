@@ -1,20 +1,14 @@
 package com.newton.admin.presentation.events.view.management.composables.calendar
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.toLocalDateTime
-import com.newton.core.domain.models.admin_models.EventsData
-import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import com.newton.commonUi.ui.*
+import com.newton.core.domain.models.adminModels.*
+import java.time.format.*
 
 @Composable
 fun EventCalendarItem(
@@ -23,12 +17,14 @@ fun EventCalendarItem(
 ) {
     Card(
         onClick = onClick,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -41,7 +37,8 @@ fun EventCalendarItem(
                 )
 
                 Text(
-                    text = event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = event.date.toLocalDateTime()
+                        .format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.bodyMedium
                 )
 

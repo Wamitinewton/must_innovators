@@ -1,34 +1,34 @@
 package com.newton.account.data.repository
 
-import com.newton.core.data.remote.TestimonialsService
-import com.newton.core.domain.models.testimonials.CreateTestimonial
-import com.newton.core.domain.models.testimonials.TestimonialsData
-import com.newton.core.domain.repositories.TestimonialsRepository
-import com.newton.core.utils.Resource
-import com.newton.core.utils.safeApiCall
-import com.newton.database.dao.TestimonialsDao
-import com.newton.database.entities.TestimonialsEntity
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import com.newton.core.data.remote.*
+import com.newton.core.domain.models.testimonials.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.utils.*
+import com.newton.database.dao.*
+import com.newton.database.entities.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
-class TestimonialRepositoryImpl @Inject constructor(
+class TestimonialRepositoryImpl
+@Inject
+constructor(
     private val testimonialsService: TestimonialsService,
     private val testimonialsDao: TestimonialsDao
 ) : TestimonialsRepository {
-
     override suspend fun createTestimonial(request: CreateTestimonial): Flow<Resource<TestimonialsData>> =
         safeApiCall {
             val response = testimonialsService.createTestimonial(request)
 
-            val testimonialEntity = TestimonialsEntity(
-                id = response.id,
-                content = response.content,
-                rating = response.rating,
-                status = response.status,
-                user = response.user,
-                userName = response.user_name,
-                createdAt = response.created_at
-            )
+            val testimonialEntity =
+                TestimonialsEntity(
+                    id = response.id,
+                    content = response.content,
+                    rating = response.rating,
+                    status = response.status,
+                    user = response.user,
+                    userName = response.user_name,
+                    createdAt = response.created_at
+                )
 
             testimonialsDao.insertTestimonial(testimonialEntity)
 

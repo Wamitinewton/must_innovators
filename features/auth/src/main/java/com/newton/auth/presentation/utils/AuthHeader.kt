@@ -1,23 +1,12 @@
 package com.newton.auth.presentation.utils
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
 
 @Composable
 fun AuthHeader(
@@ -25,7 +14,8 @@ fun AuthHeader(
     headerText: String
 ) {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(bottom = 24.dp, top = 30.dp),
         horizontalArrangement = Arrangement.Start,
@@ -44,9 +34,10 @@ fun AuthHeader(
         Spacer(modifier = Modifier.width(30.dp))
         Text(
             text = headerText,
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontSize = 18.sp,
-            ),
+            style =
+            MaterialTheme.typography.headlineMedium.copy(
+                fontSize = 18.sp
+            )
         )
     }
 }
@@ -54,19 +45,22 @@ fun AuthHeader(
 @Composable
 fun OrContinueWith() {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp, top = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         HorizontalDivider(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .weight(1f)
                 .padding(end = 8.dp)
         )
         Text("Or continue with email")
         HorizontalDivider(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .weight(1f)
                 .padding(start = 8.dp)
         )

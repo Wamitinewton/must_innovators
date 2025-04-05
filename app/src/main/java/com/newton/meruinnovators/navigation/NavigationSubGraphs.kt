@@ -1,13 +1,13 @@
 package com.newton.meruinnovators.navigation
 
-import com.newton.account.navigation.AccountNavigationApi
-import com.newton.admin.navigation.AdminNavigationApi
-import com.newton.auth.navigation.AuthNavigationApi
-import com.newton.blogs.navigation.BlogsNavigationApi
-import com.newton.communities.navigation.CommunityNavigationApi
-import com.newton.events.navigation.EventsNavigationApi
-import com.newton.feedback.navigation.FeedbackNavigationApi
-import com.newton.home.navigation.HomeNavigationApi
+import com.newton.account.navigation.*
+import com.newton.admin.navigation.*
+import com.newton.auth.navigation.*
+import com.newton.blogs.navigation.*
+import com.newton.communities.navigation.*
+import com.newton.events.navigation.*
+import com.newton.feedback.navigation.*
+import com.newton.home.navigation.*
 
 data class NavigationSubGraphs(
     val authNavigationApi: AuthNavigationApi,

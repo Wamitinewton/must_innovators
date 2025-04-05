@@ -1,23 +1,24 @@
 package com.newton.account.data.repository
 
-import com.newton.core.data.remote.AuthService
-import com.newton.core.data.response.auth.UpdateProfileResponse
-import com.newton.core.domain.models.auth_models.UpdateProfileRequest
-import com.newton.core.domain.models.auth_models.UserData
-import com.newton.core.domain.repositories.UpdateUserRepository
-import com.newton.core.utils.Resource
-import com.newton.core.utils.safeApiCall
-import com.newton.database.dao.UserDao
-import com.newton.database.mappers.toUserEntity
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import com.newton.core.data.remote.*
+import com.newton.core.data.response.auth.*
+import com.newton.core.domain.models.authModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.utils.*
+import com.newton.database.dao.*
+import com.newton.database.mappers.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
-class UpdateUserRepositoryImpl @Inject constructor(
+class UpdateUserRepositoryImpl
+@Inject
+constructor(
     private val userDao: UserDao,
     private val authService: AuthService
 ) : UpdateUserRepository {
-
-    override suspend fun updateUserProfile(updateProfileRequest: UpdateProfileRequest): Flow<Resource<UpdateProfileResponse>> =
+    override suspend fun updateUserProfile(
+        updateProfileRequest: UpdateProfileRequest
+    ): Flow<Resource<UpdateUserProfileResponse>> =
         safeApiCall {
             val response = authService.updateProfile(updateProfileRequest)
             updateLocalUserData(response.data)
@@ -35,5 +36,4 @@ class UpdateUserRepositoryImpl @Inject constructor(
 
         userDao.insertUser(updatedEntity)
     }
-
 }

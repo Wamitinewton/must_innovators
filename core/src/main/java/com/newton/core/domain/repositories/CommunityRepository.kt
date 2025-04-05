@@ -1,10 +1,8 @@
 package com.newton.core.domain.repositories
 
-import com.newton.core.domain.models.about_us.ClubBio
-import com.newton.core.domain.models.about_us.ClubBioData
-import com.newton.core.domain.models.about_us.Community
-import com.newton.core.utils.Resource
-import kotlinx.coroutines.flow.Flow
+import com.newton.core.domain.models.aboutUs.*
+import com.newton.core.utils.*
+import kotlinx.coroutines.flow.*
 
 interface CommunityRepository {
     fun getCommunities(isRefreshing: Boolean): Flow<Resource<List<Community>>>
@@ -12,5 +10,4 @@ interface CommunityRepository {
     suspend fun getCommunityById(communityId: Int): Resource<Community>
 
     suspend fun getClubBio(): Flow<Resource<ClubBioData>>
-
 }

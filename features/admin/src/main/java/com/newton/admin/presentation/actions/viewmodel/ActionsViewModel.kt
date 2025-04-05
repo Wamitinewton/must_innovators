@@ -1,4 +1,3 @@
 package com.newton.admin.presentation.actions.viewmodel
 
-class ActionsViewModel {
-}
+class ActionsViewModel

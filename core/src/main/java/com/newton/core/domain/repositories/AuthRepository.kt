@@ -1,20 +1,9 @@
 package com.newton.core.domain.repositories
 
-import com.newton.core.data.response.auth.OtpVerificationResponse
-import com.newton.core.data.response.auth.RequestOtpResponse
-import com.newton.core.domain.models.auth_models.DeleteAccount
-import com.newton.core.domain.models.auth_models.LoginRequest
-import com.newton.core.domain.models.auth_models.LoginResponse
-import com.newton.core.domain.models.auth_models.LoginResultData
-import com.newton.core.domain.models.auth_models.SignupRequest
-import com.newton.core.domain.models.auth_models.SignupResponse
-import com.newton.core.domain.models.auth_models.GetUserData
-import com.newton.core.domain.models.auth_models.OtpRequest
-import com.newton.core.domain.models.auth_models.ResetPasswordRequest
-import com.newton.core.domain.models.auth_models.UserData
-import com.newton.core.domain.models.auth_models.VerifyOtp
-import com.newton.core.utils.Resource
-import kotlinx.coroutines.flow.Flow
+import com.newton.core.data.response.auth.*
+import com.newton.core.domain.models.authModels.*
+import com.newton.core.utils.*
+import kotlinx.coroutines.flow.*
 
 interface AuthRepository {
     suspend fun createUserWithEmailAndPassword(signupRequest: SignupRequest): Flow<Resource<SignupResponse>>
@@ -23,9 +12,15 @@ interface AuthRepository {
 
     suspend fun refreshTokensFromServer(): LoginResponse?
 
-    suspend fun storeAuthTokens(accessToken: String, refreshToken: String)
+    suspend fun storeAuthTokens(
+        accessToken: String,
+        refreshToken: String
+    )
 
-    suspend fun updateAuthTokens(accessToken: String, refreshToken: String)
+    suspend fun updateAuthTokens(
+        accessToken: String,
+        refreshToken: String
+    )
 
     suspend fun getUserData(): Flow<Resource<GetUserData>>
 
@@ -50,5 +45,4 @@ interface AuthRepository {
     suspend fun logoutUser(): Flow<Resource<Unit>>
 
     fun observeLoggedInUser(): Flow<UserData?>
-
 }

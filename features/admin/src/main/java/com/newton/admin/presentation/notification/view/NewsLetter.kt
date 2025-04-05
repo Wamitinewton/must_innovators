@@ -1,74 +1,30 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.FormatListBulleted
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberTimePickerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.animation.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.foundation.text.*
+import androidx.compose.foundation.text.selection.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.newton.admin.presentation.notification.events.NotificationEvent
-import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.ui.CustomButton
-import com.newton.common_ui.ui.LoadingDialog
-import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import androidx.navigation.*
+import com.newton.admin.presentation.notification.events.*
+import com.newton.admin.presentation.notification.viewmodel.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import kotlinx.coroutines.*
+import java.time.*
+import java.time.format.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +45,8 @@ fun NewsletterAdminScreen(
         containerColor = MaterialTheme.colorScheme.surface
     ) { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp)
@@ -98,14 +55,16 @@ fun NewsletterAdminScreen(
         ) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
+                colors =
+                CardDefaults.cardColors(
                     MaterialTheme.colorScheme.surface
                 ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
@@ -123,7 +82,8 @@ fun NewsletterAdminScreen(
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = { Text("Enter newsletter subject") },
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(
+                        keyboardOptions =
+                        KeyboardOptions(
                             imeAction = ImeAction.Next
                         )
                     )
@@ -136,7 +96,8 @@ fun NewsletterAdminScreen(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
@@ -157,18 +118,20 @@ fun NewsletterAdminScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Link,
-                                    contentDescription = "Add Link",
+                                    contentDescription = "Add Link"
                                 )
                             }
 
                             IconButton(
                                 onClick = {
-                                    onEvent.invoke(NotificationEvent.MessageChange(message = newsState.message + "\n• "))
+                                    onEvent.invoke(
+                                        NotificationEvent.MessageChange(message = newsState.message + "\n• ")
+                                    )
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.FormatListBulleted,
-                                    contentDescription = "Add Bullet Point",
+                                    contentDescription = "Add Bullet Point"
                                 )
                             }
 
@@ -177,12 +140,16 @@ fun NewsletterAdminScreen(
                                     scope.launch {
                                         snackbarHostState.showSnackbar("Image placeholder added")
                                     }
-                                    onEvent.invoke(NotificationEvent.MessageChange(message = newsState.message + "\n[IMAGE PLACEHOLDER]\n"))
+                                    onEvent.invoke(
+                                        NotificationEvent.MessageChange(
+                                            message = newsState.message + "\n[IMAGE PLACEHOLDER]\n"
+                                        )
+                                    )
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Image,
-                                    contentDescription = "Add Image",
+                                    contentDescription = "Add Image"
 //                                    tint = accentColor
                                 )
                             }
@@ -196,7 +163,8 @@ fun NewsletterAdminScreen(
                         BasicTextField(
                             value = newsState.message,
                             onValueChange = { onEvent.invoke(NotificationEvent.MessageChange(it)) },
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 200.dp)
                                 .border(
@@ -205,8 +173,12 @@ fun NewsletterAdminScreen(
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .padding(12.dp),
-                            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
-                            keyboardOptions = KeyboardOptions(
+                            textStyle =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurface
+                            ),
+                            keyboardOptions =
+                            KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Default
                             ),
@@ -222,9 +194,8 @@ fun NewsletterAdminScreen(
                                     }
                                     innerTextField()
                                 }
-                            },
-
-                            )
+                            }
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -245,20 +216,21 @@ fun NewsletterAdminScreen(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         imageVector = Icons.Default.People,
-                        contentDescription = null,
+                        contentDescription = null
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        text = "Will be sent to 1,245 subscribers",
+                        text = "Will be sent to 1,245 subscribers"
                     )
                 }
             }
@@ -270,34 +242,34 @@ fun NewsletterAdminScreen(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         imageVector = Icons.Default.Schedule,
-                        contentDescription = null,
+                        contentDescription = null
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Column {
                         Text(
-                            text = "Schedule for later",
+                            text = "Schedule for later"
                         )
                         Text(
                             text = "Send your newsletter at the optimal time",
-                            fontSize = 12.sp,
+                            fontSize = 12.sp
                         )
                     }
 
                     Spacer(modifier = Modifier.weight(1f))
 
-
                     Switch(
                         checked = newsState.isScheduled,
-                        onCheckedChange = { onEvent.invoke(NotificationEvent.ScheduledChanged(it)) },
+                        onCheckedChange = { onEvent.invoke(NotificationEvent.ScheduledChanged(it)) }
                     )
                 }
             }
@@ -310,20 +282,22 @@ fun NewsletterAdminScreen(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(horizontal = 20.dp)
                             .fillMaxWidth()
                             .padding(top = 16.dp)
                     ) {
                         Text(
                             text = "Schedule Date and Time",
-                            fontWeight = FontWeight.Medium,
+                            fontWeight = FontWeight.Medium
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Box(
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(8.dp))
                                 .border(
@@ -333,7 +307,7 @@ fun NewsletterAdminScreen(
                                 )
                                 .background(MaterialTheme.colorScheme.surface)
                                 .clickable { onEvent.invoke(NotificationEvent.ShowDateDialog(true)) }
-                                .padding(16.dp),
+                                .padding(16.dp)
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -341,13 +315,14 @@ fun NewsletterAdminScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.CalendarToday,
-                                    contentDescription = "Select Date",
+                                    contentDescription = "Select Date"
                                 )
 
                                 Spacer(modifier = Modifier.width(12.dp))
 
                                 Text(
-                                    text = if (newsState.scheduledDateTime != null) {
+                                    text =
+                                    if (newsState.scheduledDateTime != null) {
                                         val formatter =
                                             DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' hh:mm a")
                                         newsState.scheduledDateTime!!.format(formatter)
@@ -385,7 +360,8 @@ fun NewsletterAdminScreen(
                         onEvent.invoke(NotificationEvent.SendNewsLetter)
                     }
                 },
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(12.dp)
@@ -402,12 +378,13 @@ fun NewsletterAdminScreen(
         LoadingDialog()
     }
     if (newsState.uploadSuccess) {
-       onEvent.invoke(NotificationEvent.ToDefault)
+        onEvent.invoke(NotificationEvent.ToDefault)
     }
     if (newsState.showDatePicker) {
-        val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = System.currentTimeMillis()
-        )
+        val datePickerState =
+            rememberDatePickerState(
+                initialSelectedDateMillis = System.currentTimeMillis()
+            )
 
         DatePickerDialog(
             onDismissRequest = { onEvent.invoke(NotificationEvent.ShowDateDialog(shown = false)) },
@@ -415,9 +392,10 @@ fun NewsletterAdminScreen(
                 TextButton(
                     onClick = {
                         datePickerState.selectedDateMillis?.let { dateMillis ->
-                            val date = java.time.Instant.ofEpochMilli(dateMillis)
-                                .atZone(java.time.ZoneId.systemDefault())
-                                .toLocalDateTime()
+                            val date =
+                                java.time.Instant.ofEpochMilli(dateMillis)
+                                    .atZone(java.time.ZoneId.systemDefault())
+                                    .toLocalDateTime()
                             onEvent.invoke(NotificationEvent.SelectedDateChange(date))
                             onEvent.invoke(NotificationEvent.ShowDateDialog(false))
                             onEvent.invoke(NotificationEvent.ShowTimeDialog(true))
@@ -440,10 +418,11 @@ fun NewsletterAdminScreen(
     }
 
     if (newsState.showTimePicker) {
-        val timePickerState = rememberTimePickerState(
-            initialHour = LocalDateTime.now().hour,
-            initialMinute = LocalDateTime.now().minute
-        )
+        val timePickerState =
+            rememberTimePickerState(
+                initialHour = LocalDateTime.now().hour,
+                initialMinute = LocalDateTime.now().minute
+            )
 
         AlertDialog(
             onDismissRequest = { onEvent.invoke(NotificationEvent.ShowTimeDialog(false)) },
@@ -460,9 +439,10 @@ fun NewsletterAdminScreen(
                 TextButton(
                     onClick = {
                         // Combine date and time
-                        val finalDateTime = newsState.selectedDate
-                            .withHour(timePickerState.hour)
-                            .withMinute(timePickerState.minute)
+                        val finalDateTime =
+                            newsState.selectedDate
+                                .withHour(timePickerState.hour)
+                                .withMinute(timePickerState.minute)
                         onEvent.invoke(NotificationEvent.ScheduledDateTimeChanged(finalDateTime))
                         onEvent.invoke(NotificationEvent.ShowTimeDialog(false))
                     }
@@ -512,7 +492,8 @@ fun NewsletterAdminScreen(
                         label = { Text("URL") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(
+                        keyboardOptions =
+                        KeyboardOptions(
                             keyboardType = KeyboardType.Uri
                         )
                     )
@@ -522,7 +503,11 @@ fun NewsletterAdminScreen(
                 TextButton(
                     onClick = {
                         if (newsState.linkTitle.isNotBlank() && newsState.linkUrl.isNotBlank()) {
-                            onEvent.invoke(NotificationEvent.MessageChange(message = newsState.message + "[${newsState.linkTitle}](${newsState.linkUrl})"))
+                            onEvent.invoke(
+                                NotificationEvent.MessageChange(
+                                    message = newsState.message + "[${newsState.linkTitle}](${newsState.linkUrl})"
+                                )
+                            )
                             onEvent.invoke(NotificationEvent.ShowLinkDialog(shown = false))
                         }
                     }

@@ -1,7 +1,7 @@
 package com.newton.events.presentation.states
 
-import com.newton.core.data.response.admin.RegistrationResponse
-import com.newton.core.enums.EventRegistrationFlow
+import com.newton.core.data.response.admin.*
+import com.newton.core.enums.*
 
 data class EventRegistrationState(
     val firstName: String = "",

@@ -1,42 +1,20 @@
 package com.newton.admin.presentation.partners.view.composables
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.EventBusy
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.SignalCellularAlt
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.newton.admin.presentation.partners.events.AddPartnersEvent
-import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.common_ui.ui.CustomCard
-import java.time.format.DateTimeFormatter
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.partners.events.*
+import com.newton.admin.presentation.partners.states.*
+import com.newton.commonUi.ui.*
+import java.time.format.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +28,8 @@ fun PartnershipDetails(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
@@ -68,7 +47,7 @@ fun PartnershipDetails(
             ) {
                 Icon(
                     imageVector = Icons.Default.CalendarToday,
-                    contentDescription = null,
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -85,11 +64,12 @@ fun PartnershipDetails(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = partnersState.partnershipStartDate.format(
+                        text =
+                        partnersState.partnershipStartDate.format(
                             DateTimeFormatter.ofPattern(
                                 "MMM d, yyyy"
                             )
-                        ),
+                        )
                     )
                 }
             }
@@ -103,7 +83,7 @@ fun PartnershipDetails(
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
-                    contentDescription = null,
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -122,19 +102,20 @@ fun PartnershipDetails(
                         if (it) {
                             onEvent.invoke(AddPartnersEvent.EndDateChange(null))
                         }
-                    },
+                    }
                 )
             }
             AnimatedVisibility(visible = !partnersState.ongoingPartnership) {
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(top = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         imageVector = Icons.Default.EventBusy,
-                        contentDescription = null,
+                        contentDescription = null
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -151,7 +132,8 @@ fun PartnershipDetails(
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(
-                            text = partnersState.partnershipEndDate?.format(
+                            text =
+                            partnersState.partnershipEndDate?.format(
                                 DateTimeFormatter.ofPattern("MMM d, yyyy")
                             ) ?: "Select End Date",
                             color = Color.DarkGray
@@ -182,13 +164,14 @@ fun PartnershipDetails(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.SignalCellularAlt,
-                            contentDescription = null,
+                            contentDescription = null
                         )
                     },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = partnersState.statusExpanded)
                     },
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .menuAnchor()
                         .fillMaxWidth()
                 )

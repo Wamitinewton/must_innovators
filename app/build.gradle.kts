@@ -1,4 +1,4 @@
-import java.util.Properties
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -20,19 +20,19 @@ if (store.exists()) {
     throw GradleException("keys.properties file not found")
 }
 
-
-val prodBackendUrl = properties.getProperty("PROD_BACKEND_URL")
-    ?: throw GradleException("PROD_BACKEND_URL not found in keys.properties")
-val devBackendUrl = properties.getProperty("DEV_BACKEND_URL")
-    ?: throw GradleException("DEV_BACKEND_URL not found in keys.properties")
-val stagingBackendUrl = properties.getProperty("STAGING_BACKEND_URL")
-    ?: throw GradleException("STAGING_BACKEND_URL not found in keys.properties")
-
+val prodBackendUrl =
+    properties.getProperty("PROD_BACKEND_URL")
+        ?: throw GradleException("PROD_BACKEND_URL not found in keys.properties")
+val devBackendUrl =
+    properties.getProperty("DEV_BACKEND_URL")
+        ?: throw GradleException("DEV_BACKEND_URL not found in keys.properties")
+val stagingBackendUrl =
+    properties.getProperty("STAGING_BACKEND_URL")
+        ?: throw GradleException("STAGING_BACKEND_URL not found in keys.properties")
 
 android {
     namespace = "com.newton.meruinnovators"
     compileSdk = 35
-
 
     defaultConfig {
         multiDexEnabled = true
@@ -57,20 +57,23 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     signingConfigs {
 
         create("release") {
-            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE")
-                ?: throw GradleException("store file not found in keys.properties")
-            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD")
-                ?: throw GradleException("store password not found in keys.properties")
-            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS")
-                ?: throw GradleException("key alias not found in keys.properties")
-            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD")
-                ?: throw GradleException("alias pwd not found in keys.properties")
+            val keystoreFile =
+                properties.getProperty("RELEASE_STORE_FILE")
+                    ?: throw GradleException("store file not found in keys.properties")
+            val keystorePassword =
+                properties.getProperty("RELEASE_STORE_PASSWORD")
+                    ?: throw GradleException("store password not found in keys.properties")
+            val keyalias =
+                properties.getProperty("RELEASE_KEY_ALIAS")
+                    ?: throw GradleException("key alias not found in keys.properties")
+            val keyaliasPassword =
+                properties.getProperty("RELEASE_KEY_PASSWORD")
+                    ?: throw GradleException("alias pwd not found in keys.properties")
 
             storeFile = file(keystoreFile)
             storePassword = keystorePassword
@@ -155,41 +158,38 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //hilt
+    // hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltNavigation)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
     implementation(Dependencies.okhttp_logger)
 
-    //worker
+    // worker
     implementation(Dependencies.work)
     implementation(Dependencies.hiltWorker)
 
-    //Timber
+    // Timber
     implementation(Dependencies.timber)
 
-    //coil
+    // coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
     implementation(Dependencies.extendedIcons)
 
-
     // system ui
     implementation(Dependencies.systemUi)
-
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-analytics")
-
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
@@ -200,10 +200,8 @@ dependencies {
     implementation(project(":features:home"))
     implementation(project(":features:admin"))
     implementation(project(":database"))
-    implementation(project(":features:about_us"))
+    implementation(project(":features:aboutUs"))
     implementation(project(":notifications"))
     implementation(project(":features:feedback"))
     implementation(project(":navigation"))
 }
-
-

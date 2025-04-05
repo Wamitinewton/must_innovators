@@ -1,40 +1,20 @@
 package com.newton.admin.presentation.club.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.club.event.ClubEvent
-import com.newton.admin.presentation.club.viewmodel.ClubViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.CustomButton
-import com.newton.core.domain.models.admin.Socials
-import timber.log.Timber
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.club.event.*
+import com.newton.admin.presentation.club.viewmodel.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import com.newton.core.domain.models.admin.*
+import timber.log.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,13 +35,14 @@ fun AddClubScreen(
     DefaultScaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Update Club") },
+                title = { Text("Update Club") }
             )
         },
         isLoading = clubState.isLoading
     ) {
         LazyColumn(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -74,7 +55,12 @@ fun AddClubScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     supportingText = {
-                        clubState.errors["name"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        clubState.errors["name"]?.let {
+                            Text(
+                                it,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
                     }
                 )
             }
@@ -86,7 +72,12 @@ fun AddClubScreen(
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 3,
                     supportingText = {
-                        clubState.errors["aboutus"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        clubState.errors["aboutus"]?.let {
+                            Text(
+                                it,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
                     }
                 )
             }
@@ -98,7 +89,12 @@ fun AddClubScreen(
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 2,
                     supportingText = {
-                        clubState.errors["vision"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        clubState.errors["vision"]?.let {
+                            Text(
+                                it,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
                     }
                 )
             }
@@ -110,7 +106,12 @@ fun AddClubScreen(
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 2,
                     supportingText = {
-                        clubState.errors["mission"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        clubState.errors["mission"]?.let {
+                            Text(
+                                it,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
                     }
                 )
             }
@@ -139,14 +140,13 @@ fun AddClubScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-
                     OutlinedTextField(
                         value = link.platform,
                         onValueChange = {
-                            socialMediaLinks = socialMediaLinks.toMutableList().apply {
-                                this[index] = link.copy(platform = it)
-                            }
-
+                            socialMediaLinks =
+                                socialMediaLinks.toMutableList().apply {
+                                    this[index] = link.copy(platform = it)
+                                }
                         },
                         label = { Text("Platform") },
                         modifier = Modifier.weight(.3f),
@@ -155,9 +155,10 @@ fun AddClubScreen(
                     OutlinedTextField(
                         value = link.url,
                         onValueChange = {
-                            socialMediaLinks = socialMediaLinks.toMutableList().apply {
-                                this[index] = link.copy(url = it)
-                            }
+                            socialMediaLinks =
+                                socialMediaLinks.toMutableList().apply {
+                                    this[index] = link.copy(url = it)
+                                }
                         },
                         label = { Text("URL") },
                         modifier = Modifier.weight(.6f),
@@ -183,14 +184,16 @@ fun AddClubScreen(
 
             item {
                 CustomButton(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp),
                     onClick = {
                         Timber.d(".......................Update clicked...................")
-                        val socials: List<Socials> = socialMediaLinks.map {
-                            Socials(it.platform, it.url)
-                        }
+                        val socials: List<Socials> =
+                            socialMediaLinks.map {
+                                Socials(it.platform, it.url)
+                            }
                         onEvent.invoke(
                             ClubEvent.SocialsChanged(socials)
                         )

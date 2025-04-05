@@ -1,46 +1,40 @@
 package com.newton.admin.presentation.events.viewmodel
 
-import android.util.Patterns
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.presentation.events.events.AddEventEvents
-import com.newton.admin.presentation.events.events.EventEvents
-import com.newton.admin.presentation.events.states.AddEventEffect
-import com.newton.admin.presentation.events.states.AddEventState
-import com.newton.common_ui.ui.toLocaltime
-import com.newton.core.domain.models.admin_models.AddEventRequest
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import android.util.*
+import androidx.lifecycle.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.states.*
+import com.newton.commonUi.ui.*
+import com.newton.core.domain.models.adminModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.utils.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
+import kotlin.collections.set
 
 @HiltViewModel
-class AddEventViewModel @Inject constructor(
+class AddEventViewModel
+@Inject
+constructor(
     private val repository: AdminRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddEventState())
     val state: StateFlow<AddEventState> = _state.asStateFlow()
 
-
     val uiSideEffect get() = _uiSideEffect.asSharedFlow()
     private val _uiSideEffect = MutableSharedFlow<AddEventEffect>()
 
-    val categories = listOf(
-        "WEB",
-        "CYBERSEC",
-        "ANDROID",
-        "AI",
-        "BLOCKCHAIN",
-        "IoT"
-    )
+    val categories =
+        listOf(
+            "WEB",
+            "CYBERSEC",
+            "ANDROID",
+            "AI",
+            "BLOCKCHAIN",
+            "IoT"
+        )
 
     fun handleEvent(event: AddEventEvents) {
         when (event) {
@@ -64,21 +58,21 @@ class AddEventViewModel @Inject constructor(
         }
     }
 
-
     private fun saveEvent() {
         if (validateAndSubmit()) {
-            val request = AddEventRequest(
-                name = _state.value.name,
-                category = _state.value.category,
-                description = _state.value.description,
-                image = _state.value.image!!,
-                date = _state.value.date.toLocaltime(),
-                location = _state.value.location,
-                organizer = _state.value.organizer,
-                contactEmail = _state.value.contactEmail,
-                title = _state.value.title,
-                isVirtual = _state.value.isVirtual
-            )
+            val request =
+                AddEventRequest(
+                    name = _state.value.name,
+                    category = _state.value.category,
+                    description = _state.value.description,
+                    image = _state.value.image!!,
+                    date = _state.value.date.toLocaltime(),
+                    location = _state.value.location,
+                    organizer = _state.value.organizer,
+                    contactEmail = _state.value.contactEmail,
+                    title = _state.value.title,
+                    isVirtual = _state.value.isVirtual
+                )
             viewModelScope.launch {
                 repository.addEvent(request).collectLatest { result ->
                     when (result) {
@@ -91,11 +85,12 @@ class AddEventViewModel @Inject constructor(
                         }
 
                         is Resource.Success -> {
-                            _state.value = _state.value.copy(
-                                uploadSuccess = true,
-                                isLoading = false,
-                                uploadError = null,
-                            )
+                            _state.value =
+                                _state.value.copy(
+                                    uploadSuccess = true,
+                                    isLoading = false,
+                                    uploadError = null
+                                )
                         }
                     }
                 }
@@ -103,9 +98,10 @@ class AddEventViewModel @Inject constructor(
         }
     }
 
-    private fun emit(effect: AddEventEffect) = viewModelScope.launch {
-        _uiSideEffect.emit(effect)
-    }
+    private fun emit(effect: AddEventEffect) =
+        viewModelScope.launch {
+            _uiSideEffect.emit(effect)
+        }
 
     private fun toDefaultState() {
         _state.value = AddEventState()
@@ -143,6 +139,4 @@ class AddEventViewModel @Inject constructor(
         _state.value = _state.value.copy(errors = errors)
         return errors.isEmpty()
     }
-
-
 }

@@ -1,8 +1,7 @@
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.testimonials.Testimonials
-import com.newton.core.domain.models.testimonials.TestimonialsData
-import com.newton.database.entities.TestimonialsEntity
+import com.newton.core.domain.models.testimonials.*
+import com.newton.database.entities.*
 
 fun TestimonialsData.toDomainTestimonials(): TestimonialsEntity {
     return TestimonialsEntity(

@@ -1,11 +1,12 @@
 package com.newton.database
 
-import com.newton.database.db.AppDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import com.newton.database.db.*
+import kotlinx.coroutines.*
+import javax.inject.*
 
-class DbCleaner @Inject constructor(
+class DbCleaner
+@Inject
+constructor(
     private val appDatabase: AppDatabase
 ) {
     suspend fun clearAllTables() {

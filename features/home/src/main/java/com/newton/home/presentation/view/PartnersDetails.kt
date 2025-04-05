@@ -1,40 +1,29 @@
 package com.newton.home.presentation.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.background
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.core.domain.models.home_models.PartnersData
-import com.newton.home.presentation.viewmodels.PartnersSharedViewModel
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import coil3.request.*
+import com.newton.commonUi.composables.*
+import com.newton.core.domain.models.homeModels.*
+import com.newton.home.presentation.viewmodels.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,18 +50,20 @@ fun PartnerDetailsScreen(
     DefaultScaffold {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
             ) {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .height(280.dp)
                 ) {
-
                     AsyncImage(
-                        model = ImageRequest.Builder(context)
+                        model =
+                        ImageRequest.Builder(context)
                             .data(partnerData?.logo)
                             .crossfade(true)
                             .build(),
@@ -82,11 +73,14 @@ fun PartnerDetailsScreen(
                     )
 
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
+                                brush =
+                                Brush.verticalGradient(
+                                    colors =
+                                    listOf(
                                         Color.Black.copy(alpha = 0.2f),
                                         Color.Black.copy(alpha = 0.7f)
                                     )
@@ -95,7 +89,8 @@ fun PartnerDetailsScreen(
                     )
 
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .padding(horizontal = 24.dp, vertical = 16.dp),
                         contentAlignment = Alignment.BottomStart
@@ -106,10 +101,12 @@ fun PartnerDetailsScreen(
                         ) {
                             Card(
                                 shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(
+                                colors =
+                                CardDefaults.cardColors(
                                     containerColor = MaterialTheme.colorScheme.surface
                                 ),
-                                elevation = CardDefaults.cardElevation(
+                                elevation =
+                                CardDefaults.cardElevation(
                                     defaultElevation = 8.dp
                                 ),
                                 modifier = Modifier.size(100.dp)
@@ -119,13 +116,15 @@ fun PartnerDetailsScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     AsyncImage(
-                                        model = ImageRequest.Builder(context)
+                                        model =
+                                        ImageRequest.Builder(context)
                                             .data(partnerData?.logo)
                                             .crossfade(true)
                                             .build(),
                                         contentDescription = "${partnerData?.name} logo",
                                         contentScale = ContentScale.Crop,
-                                        modifier = Modifier
+                                        modifier =
+                                        Modifier
                                             .fillMaxSize()
                                             .padding(8.dp)
                                     )
@@ -171,7 +170,8 @@ fun PartnerDetailsScreen(
 
                     IconButton(
                         onClick = onBackPressed,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(16.dp)
                             .size(40.dp)
                             .align(Alignment.TopStart)
@@ -191,7 +191,8 @@ fun PartnerDetailsScreen(
                                 onSharePartner(partnerData)
                             }
                         },
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(16.dp)
                             .size(40.dp)
                             .align(Alignment.TopEnd)
@@ -207,7 +208,8 @@ fun PartnerDetailsScreen(
                 }
 
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(24.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -284,13 +286,15 @@ fun PartnerDetailsScreen(
 
             AnimatedVisibility(
                 visible = showTopBar,
-                enter = fadeIn(animationSpec = tween(300)) +
-                        slideInVertically(
-                            animationSpec = tween(300),
-                            initialOffsetY = { with(density) { -50.dp.roundToPx() } }
-                        ),
+                enter =
+                fadeIn(animationSpec = tween(300)) +
+                    slideInVertically(
+                        animationSpec = tween(300),
+                        initialOffsetY = { with(density) { -50.dp.roundToPx() } }
+                    ),
                 exit = fadeOut(animationSpec = tween(300)),
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .align(Alignment.TopCenter)
             ) {
@@ -303,7 +307,8 @@ fun PartnerDetailsScreen(
                                 AsyncImage(
                                     model = partnerData.logo,
                                     contentDescription = null,
-                                    modifier = Modifier
+                                    modifier =
+                                    Modifier
                                         .size(36.dp)
                                         .clip(CircleShape)
                                         .background(MaterialTheme.colorScheme.surfaceVariant),
@@ -343,7 +348,8 @@ fun PartnerDetailsScreen(
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
+                    colors =
+                    TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
                     ),
                     scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -356,7 +362,8 @@ fun PartnerDetailsScreen(
                         onContactEmail(partnerData.contact_email)
                     }
                 },
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(Alignment.BottomEnd)
                     .padding(24.dp),
                 containerColor = MaterialTheme.colorScheme.primary,
@@ -368,7 +375,5 @@ fun PartnerDetailsScreen(
                 )
             }
         }
-
     }
-
 }

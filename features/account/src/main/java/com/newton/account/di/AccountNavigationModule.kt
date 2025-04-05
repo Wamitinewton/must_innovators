@@ -1,12 +1,10 @@
 package com.newton.account.di
 
-import com.newton.account.navigation.AccountNavigationApi
-import com.newton.account.navigation.AccountNavigationApiImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.account.navigation.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

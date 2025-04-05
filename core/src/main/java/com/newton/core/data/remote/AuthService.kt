@@ -1,24 +1,9 @@
 package com.newton.core.data.remote
 
-import com.newton.core.data.Authenticated
-import com.newton.core.data.response.auth.OtpVerificationResponse
-import com.newton.core.data.response.auth.RequestOtpResponse
-import com.newton.core.data.response.auth.UpdateProfileResponse
-import com.newton.core.domain.models.auth_models.DeleteAccount
-import com.newton.core.domain.models.auth_models.GetUserData
-import com.newton.core.domain.models.auth_models.LoginRequest
-import com.newton.core.domain.models.auth_models.LoginResponse
-import com.newton.core.domain.models.auth_models.OtpRequest
-import com.newton.core.domain.models.auth_models.ResetPasswordRequest
-import com.newton.core.domain.models.auth_models.SignupRequest
-import com.newton.core.domain.models.auth_models.SignupResponse
-import com.newton.core.domain.models.auth_models.UpdateProfileRequest
-import com.newton.core.domain.models.auth_models.VerifyOtp
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.POST
+import com.newton.core.data.*
+import com.newton.core.data.response.auth.*
+import com.newton.core.domain.models.authModels.*
+import retrofit2.http.*
 
 interface AuthService {
     @POST(ApiEndpoints.REGISTER)
@@ -32,25 +17,35 @@ interface AuthService {
     ): LoginResponse
 
     @POST(ApiEndpoints.REFRESH_TOKEN)
-    suspend fun refreshTokens(@Body refreshToken: String?): LoginResponse
+    suspend fun refreshTokens(
+        @Body refreshToken: String?
+    ): LoginResponse
 
-    @Authenticated
+    @AuthRunTime
     @GET(ApiEndpoints.GET_USER_DATA)
     suspend fun getUserData(): GetUserData
 
     @PATCH(ApiEndpoints.UPDATE_USER_DATA)
-    suspend fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): UpdateProfileResponse
+    suspend fun updateProfile(
+        @Body updateProfileRequest: UpdateProfileRequest
+    ): UpdateUserProfileResponse
 
     @POST(ApiEndpoints.REQUEST_OTP)
-    suspend fun requestOtp(@Body request: OtpRequest): RequestOtpResponse
+    suspend fun requestOtp(
+        @Body request: OtpRequest
+    ): RequestOtpResponse
 
     @POST(ApiEndpoints.VERIFY_OTP)
-    suspend fun verifyOtp(@Body request: VerifyOtp): OtpVerificationResponse
+    suspend fun verifyOtp(
+        @Body request: VerifyOtp
+    ): OtpVerificationResponse
 
     @POST(ApiEndpoints.RESET_PASSWORD)
-    suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): RequestOtpResponse
+    suspend fun resetPassword(
+        @Body resetPasswordRequest: ResetPasswordRequest
+    ): RequestOtpResponse
 
-    @Authenticated
+    @AuthRunTime
     @DELETE(ApiEndpoints.DELETE_ACCOUNT)
     suspend fun deleteAccount(): DeleteAccount
 }

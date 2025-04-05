@@ -1,24 +1,20 @@
 package com.newton.admin.presentation.home.view.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin.TooltipData
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.core.domain.models.admin.*
 
 @Composable
 fun TooltipBox(
-    tooltipData: TooltipData,
+    tooltipData: ToolTipData,
     onDismiss: () -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier =
+        Modifier
             .offset(
                 x = tooltipData.position.x.dp,
                 y = tooltipData.position.y.dp
@@ -27,7 +23,8 @@ fun TooltipBox(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(8.dp)
         ) {
             Text(

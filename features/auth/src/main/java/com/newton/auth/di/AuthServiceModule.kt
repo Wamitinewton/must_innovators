@@ -1,12 +1,11 @@
 package com.newton.auth.di
 
-import com.newton.core.data.remote.AuthService
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import javax.inject.Singleton
+import com.newton.core.data.remote.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import retrofit2.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -1,51 +1,43 @@
 package com.newton.admin.presentation.home.view.composables
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.unit.*
 
 @Composable
-fun AddChoiceCard(text: String, onclick: () -> Unit) {
+fun AddChoiceCard(
+    text: String,
+    onclick: () -> Unit
+) {
     Card(
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(50.dp),
-        colors = CardDefaults.cardColors( MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
         onClick = onclick
     ) {
         Box(modifier = Modifier.padding(top = 5.dp)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 20.dp)
             ) {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(40.dp)
                         .clip(CircleShape)
                         .background(color = Color.Cyan)
-
                 )
                 Spacer(Modifier.width(20.dp))
                 Text(text, style = MaterialTheme.typography.titleMedium)

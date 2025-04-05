@@ -1,19 +1,10 @@
 package com.newton.core.data.remote
 
-import com.newton.core.data.response.events.EventApiResponse
-import com.newton.core.data.response.events.EventDto
-import com.newton.core.data.response.events.EventRegistrationResponse
-import com.newton.core.data.response.events.EventResponse
-import com.newton.core.data.response.events.UserTicketsResponse
-import com.newton.core.domain.models.event_models.EventRegistrationRequest
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.newton.core.data.response.events.*
+import com.newton.core.domain.models.eventModels.*
+import retrofit2.http.*
 
 interface EventService {
-
     @POST(ApiEndpoints.RSVP_EVENT)
     suspend fun registerForEvent(
         @Path("id") eventId: Int,
@@ -32,7 +23,5 @@ interface EventService {
     ): EventApiResponse<List<EventDto>>
 
     @GET(ApiEndpoints.GET_USER_TICKETS)
-    suspend fun getUserTickets(
-    ): UserTicketsResponse
-
+    suspend fun getUserTickets(): UserTicketsResponse
 }

@@ -1,9 +1,11 @@
 package com.newton.events.presentation.states
 
-import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.core.domain.models.adminModels.*
 
 sealed class EventDetailsState {
     data object Initial : EventDetailsState()
+
     data class Success(val event: EventsData) : EventDetailsState()
+
     data class Error(val message: String) : EventDetailsState()
 }

@@ -2,11 +2,10 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.kotlin.compose)
-
 }
 
 android {
-    namespace = "com.newton.common_ui"
+    namespace = "com.newton.commonUi"
     compileSdk = 35
 
     defaultConfig {
@@ -57,15 +56,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Lottie loader
+    // Lottie loader
     implementation(Dependencies.lottieCompose)
 
-    //navigation
+    // navigation
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
     implementation(Dependencies.kotlinxDatetime)
-
 
     implementation(Dependencies.coilNetwork)
     implementation(Dependencies.coilCompose)

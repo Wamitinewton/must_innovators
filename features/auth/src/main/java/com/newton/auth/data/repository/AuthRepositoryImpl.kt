@@ -1,46 +1,30 @@
 package com.newton.auth.data.repository
 
-import coil3.network.HttpException
-import com.newton.auth.data.data_store.SessionManager
-import com.newton.auth.data.token_holder.AuthTokenHolder
-import com.newton.core.data.remote.AuthService
-import com.newton.core.data.response.auth.OtpVerificationResponse
-import com.newton.core.data.response.auth.RequestOtpResponse
-import com.newton.core.domain.models.auth_models.DeleteAccount
-import com.newton.core.domain.models.auth_models.GetUserData
-import com.newton.core.domain.models.auth_models.LoginRequest
-import com.newton.core.domain.models.auth_models.LoginResponse
-import com.newton.core.domain.models.auth_models.LoginResultData
-import com.newton.core.domain.models.auth_models.OtpRequest
-import com.newton.core.domain.models.auth_models.ResetPasswordRequest
-import com.newton.core.domain.models.auth_models.SignupRequest
-import com.newton.core.domain.models.auth_models.SignupResponse
-import com.newton.core.domain.models.auth_models.UserData
-import com.newton.core.domain.models.auth_models.VerifyOtp
-import com.newton.core.domain.repositories.AuthRepository
-import com.newton.core.utils.Resource
-import com.newton.core.utils.safeApiCall
-import com.newton.database.DbCleaner
-import com.newton.database.dao.UserDao
-import com.newton.database.mappers.toAuthedUser
-import com.newton.database.mappers.toUserEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import timber.log.Timber
-import java.io.IOException
-import javax.inject.Inject
+import coil3.network.*
+import com.newton.auth.data.dataStore.*
+import com.newton.auth.data.tokenHolder.*
+import com.newton.core.data.remote.*
+import com.newton.core.data.response.auth.*
+import com.newton.core.domain.models.authModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.utils.*
+import com.newton.database.*
+import com.newton.database.dao.*
+import com.newton.database.mappers.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import timber.log.*
+import java.io.*
+import javax.inject.*
 
-class AuthRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl
+@Inject
+constructor(
     private val authService: AuthService,
     private val sessionManager: SessionManager,
     private val userDao: UserDao,
     private val dbCleaner: DbCleaner
 ) : AuthRepository {
-
     init {
         try {
             AuthTokenHolder.initializeTokens(sessionManager)
@@ -49,7 +33,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createUserWithEmailAndPassword(signupRequest: SignupRequest): Flow<Resource<SignupResponse>> =
+    override suspend fun createUserWithEmailAndPassword(
+        signupRequest: SignupRequest
+    ): Flow<Resource<SignupResponse>> =
         safeApiCall {
             authService.signUp(signupRequest)
         }
@@ -81,7 +67,10 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun storeAuthTokens(accessToken: String, refreshToken: String) {
+    override suspend fun storeAuthTokens(
+        accessToken: String,
+        refreshToken: String
+    ) {
         try {
             AuthTokenHolder.accessToken = accessToken
             AuthTokenHolder.refreshToken = refreshToken
@@ -95,7 +84,10 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateAuthTokens(accessToken: String, refreshToken: String) {
+    override suspend fun updateAuthTokens(
+        accessToken: String,
+        refreshToken: String
+    ) {
         try {
             AuthTokenHolder.accessToken = accessToken
             AuthTokenHolder.refreshToken = refreshToken
@@ -116,6 +108,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getAccessToken(): String? = sessionManager.fetchAccessToken()
 
     override fun getRefreshToken(): String? = sessionManager.fetchRefreshToken()
+
     override suspend fun getLoggedInUser(): UserData? {
         return userDao.getUser()?.toAuthedUser()
     }
@@ -139,40 +132,41 @@ class AuthRepositoryImpl @Inject constructor(
             authService.resetPassword(passwordRequest)
         }
 
-    override suspend fun deleteAccount(): Flow<Resource<DeleteAccount>> = flow {
-        emit(Resource.Loading(true))
+    override suspend fun deleteAccount(): Flow<Resource<DeleteAccount>> =
+        flow {
+            emit(Resource.Loading(true))
 
-        try {
-            val response = authService.deleteAccount()
-            emit(Resource.Success(response))
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to delete account")
-            emit(Resource.Error(e.message ?: "Failed to delete account"))
-        } finally {
-            emit(Resource.Loading(false))
-        }
-    }.flowOn(Dispatchers.IO)
-
+            try {
+                val response = authService.deleteAccount()
+                emit(Resource.Success(response))
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to delete account")
+                emit(Resource.Error(e.message ?: "Failed to delete account"))
+            } finally {
+                emit(Resource.Loading(false))
+            }
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun clearUserData() {
         sessionManager.clearTokens()
         dbCleaner.clearAllTables()
     }
 
-    override suspend fun logoutUser(): Flow<Resource<Unit>> = flow {
-        emit(Resource.Loading(true))
+    override suspend fun logoutUser(): Flow<Resource<Unit>> =
+        flow {
+            emit(Resource.Loading(true))
 
-        AuthTokenHolder.accessToken = null
-        AuthTokenHolder.refreshToken = null
+            AuthTokenHolder.accessToken = null
+            AuthTokenHolder.refreshToken = null
 
-        sessionManager.clearTokens()
-        dbCleaner.clearAllTables()
+            sessionManager.clearTokens()
+            dbCleaner.clearAllTables()
 
-        emit(Resource.Success(Unit))
-    }.catch { e ->
-        Timber.e(e, "Failed to logout user")
-        emit(Resource.Error(e.message ?: "Failed to logout"))
-    }.flowOn(Dispatchers.IO)
+            emit(Resource.Success(Unit))
+        }.catch { e ->
+            Timber.e(e, "Failed to logout user")
+            emit(Resource.Error(e.message ?: "Failed to logout"))
+        }.flowOn(Dispatchers.IO)
 
     override fun observeLoggedInUser(): Flow<UserData?> =
         userDao.observeUser().map { userEntity ->
@@ -192,7 +186,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     private class TokenRefreshException(message: String) : Exception(message)
+
     private class TokenStorageException(message: String, cause: Throwable? = null) :
         Exception(message, cause)
-
 }

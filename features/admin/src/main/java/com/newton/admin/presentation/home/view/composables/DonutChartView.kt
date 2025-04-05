@@ -1,25 +1,14 @@
 package com.newton.admin.presentation.home.view.composables
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.newton.common_ui.composables.chart.AnimatedDonutChart
-import com.newton.common_ui.ui.ColumnWrapper
-import com.newton.common_ui.ui.CustomButton
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.unit.*
+import com.newton.commonUi.composables.chart.*
+import com.newton.commonUi.ui.*
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -27,11 +16,12 @@ internal fun DonutChartComponentView(
     amount: Double,
     proportions: List<Float>,
     colors: List<Long>,
-    categoriesName: List<String>,
+    categoriesName: List<String>
 ) {
     val formattedColors = colors.map { Color(it) }
     ColumnWrapper(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -77,20 +67,23 @@ private fun CustomSegmentedButtonView() {
             onClick = { },
             content = {
                 Text(text = "Donut Chart")
-            },
-        ) 
+            }
+        )
 
         CustomButton(
             onClick = { },
             content = {
                 Text(text = "Bar Chart", color = MaterialTheme.colorScheme.outline)
-            },
+            }
         )
     }
 }
 
 @Composable
-private fun ChartLegend(color: Color, title: String) {
+private fun ChartLegend(
+    color: Color,
+    title: String
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically

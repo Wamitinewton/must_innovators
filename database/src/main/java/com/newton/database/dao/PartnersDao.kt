@@ -1,17 +1,10 @@
 package com.newton.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Upsert
-import com.newton.database.entities.PartnersDataEntity
-import com.newton.database.entities.UserFeedbackEntity
-
+import androidx.room.*
+import com.newton.database.entities.*
 
 @Dao
 interface PartnersDao {
-
     @Upsert
     suspend fun insertPartners(partnersDataEntity: List<PartnersDataEntity>)
 

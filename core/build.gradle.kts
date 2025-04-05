@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -46,7 +45,7 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
@@ -59,6 +58,6 @@ dependencies {
     implementation(Dependencies.pagingCompose)
     implementation(Dependencies.pagingRuntime)
 
-    //timber
+    // timber
     implementation(Dependencies.timber)
 }

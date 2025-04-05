@@ -1,34 +1,26 @@
 package com.newton.events.navigation
 
-import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
-import com.newton.navigation.NavigationRoutes
-import com.newton.navigation.NavigationSubGraphRoutes
-import com.newton.events.presentation.view.event_details.EventDetailsScreen
-import com.newton.events.presentation.view.event_list.EventsScreen
-import com.newton.events.presentation.view.event_registration.EventRegistrationScreen
-import com.newton.events.presentation.view.event_registration.EventRegistrationSuccessScreen
-import com.newton.events.presentation.view.user_tickets.RegisteredEventsScreen
-import com.newton.events.presentation.viewmodel.EventRsvpViewmodel
-import com.newton.events.presentation.viewmodel.EventViewModel
-import com.newton.events.presentation.viewmodel.EventsSharedViewModel
-import com.newton.events.presentation.viewmodel.RsvpSharedViewModel
-import com.newton.events.presentation.viewmodel.UserTicketsViewModel
+import androidx.compose.runtime.*
+import androidx.hilt.navigation.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.auth.presentation.login.viewModel.*
+import com.newton.events.presentation.view.eventDetails.*
+import com.newton.events.presentation.view.eventList.*
+import com.newton.events.presentation.view.eventRegistration.*
+import com.newton.events.presentation.view.userTickets.*
+import com.newton.events.presentation.viewmodel.*
+import com.newton.navigation.*
 
-class EventsNavigationApiImpl: EventsNavigationApi {
+class EventsNavigationApiImpl : EventsNavigationApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController,
+        navHostController: NavHostController
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Event.route,
             startDestination = NavigationRoutes.EventsRoute.routes
-        ){
+        ) {
             /**
              * In this case, we are using parent entry for the Shared viewmodel
              * To ensure that we do not create multiple view model instances
@@ -36,9 +28,10 @@ class EventsNavigationApiImpl: EventsNavigationApi {
              */
 
             composable(route = NavigationRoutes.EventsRoute.routes) {
-                val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
-                }
+                val parentEntry =
+                    remember(it) {
+                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                    }
                 val eventViewModel = hiltViewModel<EventViewModel>()
                 val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
                 EventsScreen(
@@ -55,9 +48,10 @@ class EventsNavigationApiImpl: EventsNavigationApi {
             }
 
             composable(route = NavigationRoutes.EventDetailsRoute.routes) {
-                val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
-                }
+                val parentEntry =
+                    remember(it) {
+                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                    }
                 val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
                 EventDetailsScreen(
                     viewModel = sharedViewModel,
@@ -65,11 +59,11 @@ class EventsNavigationApiImpl: EventsNavigationApi {
                 )
             }
 
-
             composable(route = NavigationRoutes.EventRegistrationScreen.routes) {
-                val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
-                }
+                val parentEntry =
+                    remember(it) {
+                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                    }
                 val sharedViewModel = hiltViewModel<EventsSharedViewModel>(parentEntry)
                 val getUserDataViewModel = hiltViewModel<GetUserDataViewModel>()
                 val eventRsvpViewmodel = hiltViewModel<EventRsvpViewmodel>()

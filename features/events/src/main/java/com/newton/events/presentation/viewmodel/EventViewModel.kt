@@ -1,36 +1,32 @@
 package com.newton.events.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.repositories.EventRepository
-import com.newton.events.presentation.states.EventDetailsState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import androidx.paging.*
+import com.newton.core.domain.models.adminModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.events.presentation.states.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
-class EventViewModel @Inject constructor(
+class EventViewModel
+@Inject
+constructor(
     private val eventRepository: EventRepository
 ) : ViewModel() {
-
-    val pagedEvents: Flow<PagingData<EventsData>> = eventRepository
-        .getPagedEvents()
-        .distinctUntilChanged()
-        .cachedIn(viewModelScope)
-
+    val pagedEvents: Flow<PagingData<EventsData>> =
+        eventRepository
+            .getPagedEvents()
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
 }
 
-
 @HiltViewModel
-class EventsSharedViewModel @Inject constructor(): ViewModel() {
+class EventsSharedViewModel
+@Inject
+constructor() : ViewModel() {
     private val _selectedEvent = MutableStateFlow<EventsData?>(null)
     private val selectedEvent: StateFlow<EventsData?> = _selectedEvent.asStateFlow()
 
@@ -40,10 +36,11 @@ class EventsSharedViewModel @Inject constructor(): ViewModel() {
     init {
         viewModelScope.launch {
             selectedEvent.collect { event ->
-                _uiState.value = when (event) {
-                    null -> EventDetailsState.Initial
-                    else -> EventDetailsState.Success(event)
-                }
+                _uiState.value =
+                    when (event) {
+                        null -> EventDetailsState.Initial
+                        else -> EventDetailsState.Success(event)
+                    }
             }
         }
     }

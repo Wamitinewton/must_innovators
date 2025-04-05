@@ -2,47 +2,42 @@ package com.newton.admin.presentation.home.view.composables
 
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin_models.DashboardColors
-import com.newton.core.domain.models.admin.TooltipData
-import com.newton.admin.presentation.home.view.InteractionData
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.home.view.*
+import com.newton.core.domain.models.admin.*
+import com.newton.core.domain.models.adminModels.*
 
 @Composable
 fun InteractiveBarGraph(
     data: List<InteractionData>,
     isWeeklyView: Boolean,
-    onTooltipChanged: (TooltipData?) -> Unit
+    onTooltipChanged: (ToolTipData?) -> Unit
 ) {
     var hoveredBar by remember { mutableStateOf<Int?>(null) }
 
-    val groupedData = if (isWeeklyView) {
-        data.chunked(7).map { weekData ->
-            InteractionData(
-                day = "${weekData.first().day} - ${weekData.last().day}",
-                intensity = weekData.sumOf { it.intensity },
-            )
+    val groupedData =
+        if (isWeeklyView) {
+            data.chunked(7).map { weekData ->
+                InteractionData(
+                    day = "${weekData.first().day} - ${weekData.last().day}",
+                    intensity = weekData.sumOf { it.intensity }
+                )
+            }
+        } else {
+            data
         }
-    } else {
-        data
-    }
 
     Canvas(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(top = 16.dp)
             .pointerInput(Unit) {
@@ -54,7 +49,7 @@ fun InteractiveBarGraph(
                         if (barIndex in groupedData.indices) {
                             val interaction = groupedData[barIndex]
                             onTooltipChanged(
-                                TooltipData(
+                                ToolTipData(
                                     title = interaction.day,
                                     value = "${interaction.intensity} interactions",
                                     position = offset
@@ -87,11 +82,12 @@ fun InteractiveBarGraph(
 //            )
 
             // Bar color with hover effect
-            val barColor = if (index == hoveredBar) {
-                DashboardColors.accent
-            } else {
-                DashboardColors.primary
-            }
+            val barColor =
+                if (index == hoveredBar) {
+                    DashboardColors.accent
+                } else {
+                    DashboardColors.primary
+                }
 
             // Draw bar with rounded corners
             drawRoundRect(

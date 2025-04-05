@@ -1,7 +1,6 @@
 package com.newton.account.presentation.states
 
-import com.newton.core.domain.models.auth_models.Project
-import com.newton.core.domain.models.auth_models.UserData
+import com.newton.core.domain.models.authModels.*
 
 data class UpdateProfileState(
     val userData: UserData? = null,

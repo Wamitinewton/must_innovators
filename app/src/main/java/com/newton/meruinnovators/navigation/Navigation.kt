@@ -1,13 +1,11 @@
 package com.newton.meruinnovators.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import com.newton.auth.presentation.login.view_model.LoginViewModel
-import com.newton.navigation.NavigationSubGraphRoutes
+import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.auth.presentation.login.viewModel.*
+import com.newton.navigation.*
 
 @Composable
 fun MeruInnovatorsNavigation(
@@ -20,7 +18,8 @@ fun MeruInnovatorsNavigation(
     NavHost(
         navController = navHostController,
 //        startDestination = NavigationSubGraphRoutes.Home.route
-        startDestination = if (isUserLoggedIn) {
+        startDestination =
+        if (isUserLoggedIn) {
             NavigationSubGraphRoutes.Home.route
         } else {
             NavigationSubGraphRoutes.Auth.route
@@ -58,7 +57,5 @@ fun MeruInnovatorsNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
-
     }
-
 }

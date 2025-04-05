@@ -1,30 +1,26 @@
 package com.newton.account.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.account.presentation.events.TestimonialsNavigationEvent
-import com.newton.account.presentation.events.TestimonialsUiEvent
-import com.newton.account.presentation.states.TestimonialsUiState
-import com.newton.core.domain.models.testimonials.CreateTestimonial
-import com.newton.core.domain.repositories.TestimonialsRepository
-import com.newton.core.sharedBus.TestimonialsEventBus
-import com.newton.core.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.account.presentation.events.*
+import com.newton.account.presentation.states.*
+import com.newton.core.domain.models.testimonials.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.sharedBus.*
+import com.newton.core.utils.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.*
+import timber.log.*
+import javax.inject.*
 
 @HiltViewModel
-class TestimonialsViewModel @Inject constructor(
+class TestimonialsViewModel
+@Inject
+constructor(
     private val testimonialRepository: TestimonialsRepository,
     private val testimonialsEventBus: TestimonialsEventBus
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Idle)
     val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
 
@@ -36,7 +32,6 @@ class TestimonialsViewModel @Inject constructor(
 
     private val _rating = MutableStateFlow(0)
     val rating: StateFlow<Int> = _rating.asStateFlow()
-
 
     fun handleEvent(event: TestimonialsUiEvent) {
         when (event) {
@@ -58,10 +53,11 @@ class TestimonialsViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val createTestimonial = CreateTestimonial(
-                content = _content.value,
-                rating = _rating.value
-            )
+            val createTestimonial =
+                CreateTestimonial(
+                    content = _content.value,
+                    rating = _rating.value
+                )
 
             testimonialRepository.createTestimonial(createTestimonial).collect { result ->
                 when (result) {
@@ -77,7 +73,7 @@ class TestimonialsViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
-                       result.data?.let { handleTestimonialSuccess() }
+                        result.data?.let { handleTestimonialSuccess() }
                     }
                 }
             }
@@ -92,7 +88,8 @@ class TestimonialsViewModel @Inject constructor(
             Timber.d("NAVIGATING..............TO HOME SCREEN")
             testimonialsEventBus.notifyTestimonialUpdate()
         } catch (e: Exception) {
-            _uiState.value = TestimonialsUiState.Error("Failed to process testimonial: ${e.message}")
+            _uiState.value =
+                TestimonialsUiState.Error("Failed to process testimonial: ${e.message}")
         }
     }
 }

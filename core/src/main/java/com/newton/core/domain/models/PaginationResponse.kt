@@ -1,8 +1,6 @@
 package com.newton.core.domain.models
 
-
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class PaginationResponse<T>(

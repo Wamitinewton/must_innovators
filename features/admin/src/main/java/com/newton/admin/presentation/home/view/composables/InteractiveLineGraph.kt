@@ -1,33 +1,28 @@
 package com.newton.admin.presentation.home.view.composables
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin_models.DashboardColors
-import com.newton.core.domain.models.admin.TooltipData
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.unit.*
+import com.newton.core.domain.models.admin.*
+import com.newton.core.domain.models.adminModels.*
 
 @Composable
 fun InteractiveLineGraph(
     data: List<Pair<String, Int>>,
-    onTooltipChanged: (TooltipData?) -> Unit
+    onTooltipChanged: (ToolTipData?) -> Unit
 ) {
     var hoveredPoint by remember { mutableStateOf<Int?>(null) }
 
     Canvas(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(top = 16.dp)
             .pointerInput(Unit) {
@@ -39,7 +34,7 @@ fun InteractiveLineGraph(
                         if (pointIndex in data.indices) {
                             val (date, count) = data[pointIndex]
                             onTooltipChanged(
-                                TooltipData(
+                                ToolTipData(
                                     title = date,
                                     value = "$count active users",
                                     position = offset
@@ -75,9 +70,12 @@ fun InteractiveLineGraph(
                 // Bezier curve for smooth line
                 val controlX1 = prevX + (x - prevX) * 0.5f
                 path.cubicTo(
-                    controlX1, prevY,
-                    controlX1, y,
-                    x, y
+                    controlX1,
+                    prevY,
+                    controlX1,
+                    y,
+                    x,
+                    y
                 )
             }
 
@@ -101,7 +99,8 @@ fun InteractiveLineGraph(
         drawPath(
             path = path,
             color = DashboardColors.secondary,
-            style = Stroke(
+            style =
+            Stroke(
                 width = 3f,
                 pathEffect = PathEffect.cornerPathEffect(10f)
             ),

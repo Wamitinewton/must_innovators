@@ -1,28 +1,17 @@
 package com.newton.admin.presentation.community.view.composable
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import com.newton.admin.data.mappers.User
-import com.newton.common_ui.ui.CustomDynamicAsyncImage
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.data.mappers.*
+import com.newton.commonUi.ui.*
 
 @Composable
 fun UserListItem(
@@ -30,14 +19,16 @@ fun UserListItem(
     onClick: () -> Unit
 ) {
     Surface(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
             .padding(vertical = 4.dp),
         color = Color.Transparent
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -47,16 +38,20 @@ fun UserListItem(
                 CustomDynamicAsyncImage(
                     user.photo,
                     contentDescription = "Profile picture of ${user.name}",
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(48.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surface),
                     contentScale = ContentScale.Crop
                 )
             } else {
-                Box(modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)) {
+                Box(
+                    modifier =
+                    Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                ) {
                     Text(
                         user.name.take(1),
                         color = MaterialTheme.colorScheme.secondary,

@@ -1,24 +1,21 @@
 package com.newton.meruinnovators.activity
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.addCallback
-import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import com.newton.auth.data.work_manager.scheduleTokenRefreshWork
-import com.newton.meruinnovators.navigation.NavigationSubGraphs
-import com.newton.notifications.manager.NotificationsManager
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import android.*
+import android.content.*
+import android.content.pm.*
+import android.os.*
+import androidx.activity.*
+import androidx.activity.compose.*
+import androidx.activity.result.contract.*
+import androidx.core.content.*
+import com.newton.auth.data.workManager.*
+import com.newton.meruinnovators.navigation.*
+import com.newton.notifications.manager.*
+import dagger.hilt.android.*
+import javax.inject.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var navigationSubGraphs: NavigationSubGraphs
 
@@ -30,7 +27,6 @@ class MainActivity : ComponentActivity() {
             if (isGranted) {
                 notificationsManager.initialize()
             } else {
-
             }
 
             notificationsManager.checkNotificationPermission()
@@ -43,16 +39,12 @@ class MainActivity : ComponentActivity() {
 
         setupBackHandler()
 
-        // Request notification permission if needed
         requestNotificationPermission()
 
-        // Handle intent if coming from notification
         handleNotificationIntent(intent)
 
         setContent {
-
             RootScreen(navigationSubGraphs)
-
         }
     }
 
@@ -91,6 +83,7 @@ class MainActivity : ComponentActivity() {
                 PackageManager.PERMISSION_GRANTED -> {
                     notificationsManager.initialize()
                 }
+
                 else -> {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }

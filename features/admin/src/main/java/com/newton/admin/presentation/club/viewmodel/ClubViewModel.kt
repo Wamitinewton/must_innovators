@@ -1,29 +1,25 @@
 package com.newton.admin.presentation.club.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.presentation.club.event.ClubEvent
-import com.newton.admin.presentation.club.state.ClubState
-import com.newton.core.domain.models.admin_models.Club
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.admin.presentation.club.event.*
+import com.newton.admin.presentation.club.state.*
+import com.newton.core.domain.models.adminModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.utils.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
+import kotlin.collections.set
 
 @HiltViewModel
-class ClubViewModel @Inject constructor(
+class ClubViewModel
+@Inject
+constructor(
     private val adminRepo: AdminRepository
 ) : ViewModel() {
     private val _clubState = MutableStateFlow(ClubState())
     val clubState: StateFlow<ClubState> = _clubState.asStateFlow()
-
 
     fun handleEvent(event: ClubEvent) {
         when (event) {
@@ -35,7 +31,6 @@ class ClubViewModel @Inject constructor(
             is ClubEvent.VisionChanged -> _clubState.update { it.copy(vision = event.vision) }
         }
     }
-
 
     private fun toDefault() {
         _clubState.value = ClubState()
@@ -62,16 +57,16 @@ class ClubViewModel @Inject constructor(
         return errors.isEmpty()
     }
 
-
     private fun updateClub() {
-        if(validated()) {
-            val club = Club(
-                mission = _clubState.value.mission,
-                name = _clubState.value.name,
-                aboutUs = _clubState.value.clubDetails,
-                vision = _clubState.value.vision,
-                socialMedia = _clubState.value.socials
-            )
+        if (validated()) {
+            val club =
+                Club(
+                    mission = _clubState.value.mission,
+                    name = _clubState.value.name,
+                    aboutUs = _clubState.value.clubDetails,
+                    vision = _clubState.value.vision,
+                    socialMedia = _clubState.value.socials
+                )
             viewModelScope.launch {
                 adminRepo.updateClub(club).collectLatest { result ->
                     when (result) {
@@ -84,7 +79,7 @@ class ClubViewModel @Inject constructor(
                             _clubState.update {
                                 it.copy(
                                     errorMessage = null,
-                                    isLoading = false,
+                                    isLoading = false
                                 )
                             }
                             toDefault()

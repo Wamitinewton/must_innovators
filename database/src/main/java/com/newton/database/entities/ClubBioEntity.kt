@@ -1,7 +1,6 @@
 package com.newton.database.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "club_bio")
 data class ClubBioEntity(
@@ -18,4 +17,3 @@ data class ClubSocialMediaEntity(
     val platform: String,
     val url: String
 )
-

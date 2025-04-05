@@ -1,39 +1,22 @@
 package com.newton.admin.presentation.partners.view.composables
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.newton.admin.presentation.partners.events.AddPartnersEvent
-import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.common_ui.ui.CustomCard
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.foundation.text.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.input.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.partners.events.*
+import com.newton.admin.presentation.partners.states.*
+import com.newton.commonUi.ui.*
 
 @Composable
 fun ContactInfo(
@@ -41,12 +24,13 @@ fun ContactInfo(
     partnersState: AddPartnersState,
     onEvent: (AddPartnersEvent) -> Unit
 ) {
-    CustomCard (
+    CustomCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
@@ -66,14 +50,15 @@ fun ContactInfo(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Language,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 supportingText = {
                     partnersState.errors["webUrl"]?.let { Text(it) }
                 },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(
+                keyboardOptions =
+                KeyboardOptions(
                     keyboardType = KeyboardType.Uri,
                     imeAction = ImeAction.Next
                 )
@@ -89,14 +74,15 @@ fun ContactInfo(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Email,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 supportingText = {
                     partnersState.errors["email"]?.let { Text(it) }
                 },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(
+                keyboardOptions =
+                KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 )
@@ -112,12 +98,17 @@ fun ContactInfo(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 singleLine = true,
                 supportingText = {
-                    partnersState.errors["person"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    partnersState.errors["person"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             )
 
@@ -125,7 +116,7 @@ fun ContactInfo(
 
             Text(
                 text = "Social Media",
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Medium
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -137,7 +128,8 @@ fun ContactInfo(
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = {
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .size(24.dp)
                             .clip(CircleShape)
                             .background(Color(0xFF0077B5)),
@@ -148,7 +140,12 @@ fun ContactInfo(
                 },
                 singleLine = true,
                 supportingText = {
-                    partnersState.errors["linkedin"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    partnersState.errors["linkedin"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             )
 
@@ -161,7 +158,8 @@ fun ContactInfo(
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = {
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .size(24.dp)
                             .clip(CircleShape)
                             .background(Color(0xFF1DA1F2)),
@@ -172,7 +170,12 @@ fun ContactInfo(
                 },
                 singleLine = true,
                 supportingText = {
-                    partnersState.errors["twitter"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    partnersState.errors["twitter"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             )
         }

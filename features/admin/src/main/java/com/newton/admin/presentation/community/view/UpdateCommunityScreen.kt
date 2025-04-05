@@ -1,48 +1,14 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import com.newton.admin.presentation.community.events.UpdateCommunityEffect
-import com.newton.admin.presentation.community.events.UpdateCommunityEvent
-import com.newton.admin.presentation.community.view.composable.SessionDialog
-import com.newton.admin.presentation.community.view.composable.UpdateCommunityCard
-import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
-import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.OopsError
-import com.newton.common_ui.ui.LoadingDialog
-import com.newton.common_ui.ui.LoadingIndicator
-import com.newton.core.domain.models.admin_models.AddCommunityRequest
-import com.newton.core.domain.models.admin.Session
-import com.newton.core.domain.models.admin.Socials
-
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.text.font.*
+import com.newton.admin.presentation.community.events.*
+import com.newton.admin.presentation.community.view.composable.*
+import com.newton.admin.presentation.community.viewmodels.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,7 +57,7 @@ fun UpdateCommunityScreen(
 //                            Icon(Icons.Default.Save, "Save")
 //                        }
 //                    }
-                },
+                }
             )
         },
         floatingActionButton = {
@@ -116,14 +82,17 @@ fun UpdateCommunityScreen(
             is UpdateCommunityEffect.Error -> {
                 OopsError(errorMessage = (updateCommunityEffect as UpdateCommunityEffect.Error).message)
             }
+
             UpdateCommunityEffect.Initial -> {
                 LoadingDialog()
             }
+
             is UpdateCommunityEffect.Success -> {
                 val community =
                     (updateCommunityEffect as UpdateCommunityEffect.Success).community
                 UpdateCommunityCard(
-                    community, onEvent,
+                    community,
+                    onEvent,
                     isEditing = communityState.isEditing,
                     communityState = communityState
                 )
