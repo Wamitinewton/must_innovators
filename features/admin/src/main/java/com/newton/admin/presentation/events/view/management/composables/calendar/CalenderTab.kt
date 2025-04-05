@@ -31,17 +31,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.newton.common_ui.composables.OopsError
 import com.newton.core.domain.models.admin_models.CalendarDay
-import com.newton.core.domain.models.admin_models.EventsData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun CalendarTab(
     calendarDays: List<CalendarDay>,
-    onEventSelected: (EventsData) -> Unit
 ) {
     val today = LocalDate.now()
     val visibleMonths = remember {
@@ -78,8 +76,6 @@ fun CalendarTab(
                 }
             }
         }
-
-        // Calendar grid
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -156,15 +152,12 @@ fun CalendarTab(
         if (selectedDayEvents.isEmpty()) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(32.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "No events scheduled for this day",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                    textAlign = TextAlign.Center
+                OopsError(
+                    errorMessage = "No events scheduled for this day.",
                 )
             }
         } else {
@@ -175,7 +168,6 @@ fun CalendarTab(
                 items(selectedDayEvents) { event ->
                     EventCalendarItem(
                         event = event,
-                        onClick = { onEventSelected(event) }
                     )
                 }
             }

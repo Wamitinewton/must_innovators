@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -107,11 +106,13 @@ class PartnersViewModel @Inject constructor(
                     showStartDatePicker = event.shown
                 )
             }
+
             is AddPartnersEvent.OnGoingPartnership -> _addPartnersState.update {
                 it.copy(
                     ongoingPartnership = event.ongoing
                 )
             }
+
             AddPartnersEvent.AddPartners -> addPartner()
             AddPartnersEvent.PickImage -> emit(AddPartnersEffect.PickImage)
         }
@@ -166,20 +167,15 @@ class PartnersViewModel @Inject constructor(
         if (_addPartnersState.value.keyBenefits.isBlank()) {
             errors["resources"] = "Resources offered is required"
         }
-
         if (_addPartnersState.value.keyBenefits.isBlank()) {
             errors["achievements"] = "Achievements is required"
         }
-
         if (_addPartnersState.value.keyBenefits.isBlank()) {
             errors["targetAudience"] = "Target audience of the Partner is required"
         }
-
         if (!_addPartnersState.value.ongoingPartnership && _addPartnersState.value.partnershipEndDate == null) {
             errors["endDate"] = "End date of Partnership  is required"
         }
-
-
         if (_addPartnersState.value.contactEmail.isBlank()) {
             errors["email"] = "Contact email is required"
         } else if (!Patterns.EMAIL_ADDRESS.matcher(_addPartnersState.value.contactEmail)
@@ -187,8 +183,6 @@ class PartnersViewModel @Inject constructor(
         ) {
             errors["email"] = "Invalid email format"
         }
-
-
         _addPartnersState.value = _addPartnersState.value.copy(errors = errors)
         return errors.isEmpty()
     }
@@ -205,8 +199,16 @@ class PartnersViewModel @Inject constructor(
                 contactPerson = _addPartnersState.value.contactPerson,
                 linkedIn = _addPartnersState.value.socialLinkedIn,
                 twitter = _addPartnersState.value.socialTwitter,
-                startDate = _addPartnersState.value.partnershipStartDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                endDate = _addPartnersState.value.partnershipEndDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                startDate = _addPartnersState.value.partnershipStartDate.format(
+                    DateTimeFormatter.ofPattern(
+                        "yyyy-MM-dd"
+                    )
+                ),
+                endDate = _addPartnersState.value.partnershipEndDate?.format(
+                    DateTimeFormatter.ofPattern(
+                        "yyyy-MM-dd"
+                    )
+                ),
                 ongoing = _addPartnersState.value.ongoingPartnership,
                 status = _addPartnersState.value.status,
                 scope = _addPartnersState.value.collaborationScope,

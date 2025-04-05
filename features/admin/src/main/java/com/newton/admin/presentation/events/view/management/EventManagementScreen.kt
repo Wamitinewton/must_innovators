@@ -7,7 +7,6 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -25,12 +24,9 @@ import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.composables.OopsError
 import com.newton.common_ui.ui.toLocalDate
-import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.CalendarDay
 import com.newton.core.domain.models.admin_models.EventsData
-import timber.log.Timber
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,40 +35,18 @@ fun EventManagementScreen(
     viewModel: EventsViewModel,
     onEventSelected: (EventsData) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
     val eventState by viewModel.eventList.collectAsState()
     val events = eventState.events
-
-    LaunchedEffect(key1 = true) {
-        val upcomingEvents = events.filter {
-            it.isVirtual &&
-                    it.date.toLocalDateTime().minusDays(1).isBefore(LocalDateTime.now())
-        }
-
-        if (upcomingEvents.isNotEmpty()) {
-            val eventNames = upcomingEvents.joinToString(", ") { it.name }
-            scaffoldState.snackBarHostState.showSnackBar(
-                message = "Reminder: You have upcoming events: $eventNames",
-                actionLabel = "View",
-                duration = SnackBarDuration.Long
-            )
-        }
-    }
     val today = LocalDate.now()
-    val calendarDays = remember {
-        val days = mutableListOf<CalendarDay>()
-        println("Available events with dates:")
-        events.forEach {
-            Timber.d(
-                "Event: ${it.name}, Date string: ${it.date}, Parsed: ${
-                    it.date.toLocalDateTime().toLocalDate()
-                }"
-            )
-        }
+    val calendarDays = remember(eventState.events) {
+        val days:MutableList<CalendarDay> = mutableListOf()
         for (i in -30..60) {
             val date = today.plusDays(i.toLong())
-            val dayEvents = events.filter {
-                it.date.toLocalDate() == date
+            val dayEvents: MutableList<EventsData> = mutableListOf()
+            events.forEach {
+                if (it.date.toLocalDate() == date) {
+                    dayEvents.add(it)
+                }
             }
             days.add(CalendarDay(date, dayEvents))
         }
@@ -80,16 +54,12 @@ fun EventManagementScreen(
     }
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Overview", "Calendar", "Attendees", "Feedback")
-    var selectedEvent by remember { mutableStateOf<EventsData?>(null) }
     val listState = rememberLazyListState()
     val isScrolling by remember {
         derivedStateOf {
             listState.isScrollInProgress
         }
     }
-
-
-
     DefaultScaffold(
 
         topBar = {
@@ -136,7 +106,7 @@ fun EventManagementScreen(
                 }
             }
 
-            1 -> CalendarTab(calendarDays, onEventSelected = { selectedEvent = it })
+            1 -> CalendarTab(calendarDays)
             2 -> AttendeesTab(
                 events,
                 onEvent = onEvent,
@@ -151,28 +121,3 @@ fun EventManagementScreen(
         }
     }
 }
-
-@Composable
-fun rememberScaffoldState(): ScaffoldState {
-    val snackBarHostState = remember { SnackBarHostState() }
-    return remember { ScaffoldState(snackBarHostState = snackBarHostState) }
-}
-
-data class ScaffoldState(
-    val snackBarHostState: SnackBarHostState
-)
-
-enum class SnackBarDuration { Short, Long }
-
-data class SnackBarHostState(
-    val currentSnackBarData: Any? = null
-) {
-    fun showSnackBar(
-        message: String,
-        actionLabel: String? = null,
-        duration: SnackBarDuration = SnackBarDuration.Short
-    ): Boolean {
-        return true
-    }
-}
-
