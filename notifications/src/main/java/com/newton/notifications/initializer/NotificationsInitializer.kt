@@ -24,7 +24,5 @@ class NotificationsInitializer : Initializer<Unit> {
         notificationsManager.initialize()
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        return emptyList()
-    }
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

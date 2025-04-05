@@ -1,17 +1,18 @@
-package com.newton.meruinnovators.ui.theme
+package com.newton.commonUi.theme
 
 import androidx.compose.foundation.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.*
+import com.newton.meruinnovators.ui.theme.*
 
-object ThemeUtils {
+object Theme {
     data class ThemeColorPair(
         val light: Color,
         val dark: Color
     )
 
-    object AppColors {
+    object ThemeColors {
         val Primary = Color(0xFF53B175)
         val PrimaryVariant = Color(0xFF429A5E)
         val Secondary = Color(0xFF03DAC5)
@@ -68,42 +69,37 @@ object ThemeUtils {
 
     private val DarkColorPalette =
         darkColorScheme(
-            primary = AppColors.Primary,
-            primaryContainer = AppColors.PrimaryVariant,
-            secondary = AppColors.Secondary,
-            secondaryContainer = AppColors.SecondaryVariant,
-            background = AppColors.Background.dark,
-            surface = AppColors.Surface.dark,
+            primary = ThemeColors.Primary,
+            primaryContainer = ThemeColors.PrimaryVariant,
+            secondary = ThemeColors.Secondary,
+            secondaryContainer = ThemeColors.SecondaryVariant,
+            background = ThemeColors.Background.dark,
+            surface = ThemeColors.Surface.dark,
             onPrimary = Color.White,
             onSecondary = Color.Black,
-            onBackground = AppColors.Text.dark,
-            onSurface = AppColors.Text.dark,
-            error = AppColors.Error,
+            onBackground = ThemeColors.Text.dark,
+            onSurface = ThemeColors.Text.dark,
+            error = ThemeColors.Error,
             onError = Color.White
         )
 
     private val LightColorPalette =
         lightColorScheme(
-            primary = AppColors.Primary,
-            primaryContainer = AppColors.PrimaryVariant,
-            secondary = AppColors.Secondary,
-            secondaryContainer = AppColors.SecondaryVariant,
-            background = AppColors.Background.light,
-            surface = AppColors.Surface.light,
+            primary = ThemeColors.Primary,
+            primaryContainer = ThemeColors.PrimaryVariant,
+            secondary = ThemeColors.Secondary,
+            secondaryContainer = ThemeColors.SecondaryVariant,
+            background = ThemeColors.Background.light,
+            surface = ThemeColors.Surface.light,
             onPrimary = Color.White,
             onSecondary = Color.Black,
-            onBackground = AppColors.Text.light,
-            onSurface = AppColors.Text.light,
-            error = AppColors.Error,
+            onBackground = ThemeColors.Text.light,
+            onSurface = ThemeColors.Text.light,
+            error = ThemeColors.Error,
             onError = Color.White
         )
 
     private val LocalThemeMode = staticCompositionLocalOf { false }
-
-    @Composable
-    fun ThemeColorPair.themed(): Color {
-        return if (LocalThemeMode.current) dark else light
-    }
 
     @Composable
     fun MeruinnovatorsTheme(

@@ -16,14 +16,10 @@ class DataConverters {
     }
 
     @TypeConverter
-    fun fromList(list: List<ClubSocialMediaEntity>): String {
-        return gson.toJson(list)
-    }
+    fun fromList(list: List<ClubSocialMediaEntity>): String = gson.toJson(list)
 
     @TypeConverter
-    fun fromStringList(value: List<String>?): String? {
-        return value?.let { gson.toJson(it) }
-    }
+    fun fromStringList(value: List<String>?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
     fun toStringList(value: String?): List<String>? {
@@ -34,9 +30,7 @@ class DataConverters {
     }
 
     @TypeConverter
-    fun fromSocialMedia(value: SocialMedia?): String? {
-        return value?.let { gson.toJson(it) }
-    }
+    fun fromSocialMedia(value: SocialMedia?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
     fun toSocialMedia(value: String?): SocialMedia? {
@@ -46,9 +40,7 @@ class DataConverters {
     }
 
     @TypeConverter
-    fun fromProjectList(value: List<Project>?): String? {
-        return value?.let { gson.toJson(it) }
-    }
+    fun fromProjectList(value: List<Project>?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
     fun toProjectList(value: String?): List<Project>? {

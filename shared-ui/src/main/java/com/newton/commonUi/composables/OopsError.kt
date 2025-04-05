@@ -23,8 +23,7 @@ fun OopsError(
         "onClick must be provided when showButton is true"
     }
     Box(
-        modifier =
-        Modifier
+        modifier = Modifier
             .padding(12.dp)
             .then(modifier)
     ) {
@@ -37,19 +36,17 @@ fun OopsError(
                 color = MaterialTheme.colorScheme.error
             )
             Spacer(Modifier.height(12.dp))
-            if (showButton) {
-                if (onClick != null) {
-                    CustomElevatedButton(
-                        onClick = onClick,
-                        content = {
-                            Text(
-                                buttonText,
-                                style = MaterialTheme.typography.headlineMedium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    )
-                }
+            if (showButton && onClick != null) {
+                CustomElevatedButton(
+                    onClick = onClick,
+                    content = {
+                        Text(
+                            buttonText,
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                )
             }
         }
     }

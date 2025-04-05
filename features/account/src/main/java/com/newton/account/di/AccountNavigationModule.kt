@@ -11,7 +11,5 @@ import javax.inject.*
 object AccountNavigationModule {
     @Provides
     @Singleton
-    fun provideEventNavApi(): AccountNavigationApi {
-        return AccountNavigationApiImpl()
-    }
+    fun provideEventNavApi(): AccountNavigationApi = AccountNavigationApiImpl()
 }

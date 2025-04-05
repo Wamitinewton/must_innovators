@@ -11,7 +11,5 @@ import javax.inject.*
 object CommunityNavigationModule {
     @Provides
     @Singleton
-    fun provideCommunityApi(): CommunityNavigationApi {
-        return CommunityNavigationImpl()
-    }
+    fun provideCommunityApi(): CommunityNavigationApi = CommunityNavigationImpl()
 }

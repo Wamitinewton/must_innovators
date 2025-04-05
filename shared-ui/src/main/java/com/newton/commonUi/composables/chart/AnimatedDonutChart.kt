@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.*
 
-private const val DividerLengthInDegrees = 0f
+private const val DIVIDER_LENGTH_IN_DEGREES = 0f
 private const val DELAY_MILLIS = 600
 private const val DURATION_MILLIS = 1000
 
@@ -73,8 +73,8 @@ fun AnimatedDonutChart(
             val sweep = proportion * angleOffset
             drawArc(
                 color = colors[index],
-                startAngle = startAngle + DividerLengthInDegrees / 2,
-                sweepAngle = sweep - DividerLengthInDegrees,
+                startAngle = startAngle + DIVIDER_LENGTH_IN_DEGREES / 2,
+                sweepAngle = sweep - DIVIDER_LENGTH_IN_DEGREES,
                 topLeft = topLeft,
                 size = size,
                 useCenter = false,

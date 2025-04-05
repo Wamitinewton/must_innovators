@@ -93,6 +93,7 @@ constructor(
             try {
                 notify(notificationId, notificationBuilder.build())
             } catch (e: SecurityException) {
+                throw e
             }
         }
     }
