@@ -101,7 +101,7 @@ constructor(
             if (response.message == "success") {
                 response.data
             } else {
-                throw Exception(response.message)
+                throw Exception("Failed to fetch feedbacks")
             }
         }
 
@@ -119,10 +119,8 @@ constructor(
 
             if (response.status == "success" && response.data.results.isNotEmpty()) {
                 response.data.results
-//                saveEventsFeedbacks(feedbacks)
-//                Resource.Success(data = feedbacks)
             } else {
-                throw Exception("Failed to fetch feedbacks: ${response.message}")
+                throw Exception("Failed to fetch feedbacks")
             }
         }
 
@@ -174,7 +172,6 @@ constructor(
                     val response = adminApi.getAllUsers()
                     emit(Resource.Success(response.data))
                 } else {
-//                usersDao.getAllUsers()
                     val response = adminApi.getAllUsers()
                     emit(Resource.Success(response.data))
                 }
@@ -317,7 +314,6 @@ constructor(
                 }
             } catch (e: Exception) {
                 emit(Resource.Error(e.message ?: "Unknown error occurred"))
-            } finally {
             }
         }
 

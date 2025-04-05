@@ -12,7 +12,5 @@ import javax.inject.*
 object AboutUsApiModule {
     @Provides
     @Singleton
-    fun provideAboutUsApi(retrofit: Retrofit): AboutClubService {
-        return retrofit.create(AboutClubService::class.java)
-    }
+    fun provideAboutUsApi(retrofit: Retrofit): AboutClubService = retrofit.create(AboutClubService::class.java)
 }

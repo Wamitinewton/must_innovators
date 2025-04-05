@@ -12,7 +12,5 @@ import javax.inject.*
 object NotificationModule {
     @Provides
     @Singleton
-    fun provideNotificationApiService(retrofit: Retrofit): NotificationApiService {
-        return retrofit.create(NotificationApiService::class.java)
-    }
+    fun provideNotificationApiService(retrofit: Retrofit): NotificationApiService = retrofit.create(NotificationApiService::class.java)
 }

@@ -82,7 +82,5 @@ object AppModule {
     @Singleton
     fun provideContext(
         @ApplicationContext context: Context
-    ): Context {
-        return context
-    }
+    ): Context = context
 }

@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
                 notificationsManager.initialize()
-            } else {
             }
 
             notificationsManager.checkNotificationPermission()

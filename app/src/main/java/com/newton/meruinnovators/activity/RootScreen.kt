@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.*
 import androidx.navigation.compose.*
 import com.google.accompanist.systemuicontroller.*
 import com.newton.meruinnovators.navigation.*
-import com.newton.meruinnovators.ui.theme.ThemeUtils.MeruinnovatorsTheme
+import com.newton.commonUi.theme.Theme.MeruinnovatorsTheme
 import com.newton.navigation.*
 
 @Composable

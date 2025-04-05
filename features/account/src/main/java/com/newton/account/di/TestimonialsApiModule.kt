@@ -12,7 +12,5 @@ import javax.inject.*
 object TestimonialsApiModule {
     @Provides
     @Singleton
-    fun provideTestimonialApi(retrofit: Retrofit): TestimonialsService {
-        return retrofit.create(TestimonialsService::class.java)
-    }
+    fun provideTestimonialApi(retrofit: Retrofit): TestimonialsService = retrofit.create(TestimonialsService::class.java)
 }

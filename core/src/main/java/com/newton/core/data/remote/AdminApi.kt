@@ -75,7 +75,7 @@ interface AdminApi {
     @POST(AdminEndPoint.ADD_PARTNER)
     suspend fun addPartner(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part logo_field: MultipartBody.Part
+        @Part logoField: MultipartBody.Part
     ): ApiResponse<PartnersData>
 
     @PATCH(AdminEndPoint.UPDATE_CLUB)

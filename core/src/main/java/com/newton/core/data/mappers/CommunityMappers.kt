@@ -62,9 +62,7 @@ fun SessionResponse.toDomain(): Session {
     )
 }
 
-fun CommunitiesResponse.toDomainList(): List<Community> {
-    return results.map { it.toDomain() }
-}
+fun CommunitiesResponse.toDomainList(): List<Community> = results.map { it.toDomain() }
 
 private fun parseTechStack(techStack: Any): List<String> {
     return when (techStack) {
@@ -93,5 +91,3 @@ fun AdminSession.toAboutUs(): Session {
         location = location
     )
 }
-
-fun List<Session>.toAdminSessionList(): List<AdminSession> = map { it.toAdminSession() }

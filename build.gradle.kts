@@ -9,6 +9,8 @@ plugins {
     id("com.google.devtools.ksp") version "2.0.0-1.0.24" apply false
     id("com.google.gms.google-services") version "4.4.2" apply false
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.detekt)
 }
 
 allprojects {
@@ -19,6 +21,32 @@ allprojects {
         baseline.set(file("baseline.xml"))
         filter {
             exclude { element -> element.file.path.contains("generated/") }
+        }
+    }
+}
+
+subprojects {
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+    detekt {
+        config = files("${project.rootDir}/detekt.yml")
+        parallel = true
+        buildUponDefaultConfig = true
+    }
+    apply(plugin = "com.diffplug.spotless")
+    spotless {
+        kotlin {
+            target("**/*.kt")
+            targetExclude("${project.rootDir}/buildSrc/**/*.kt")
+            licenseHeaderFile(
+                rootProject.file("${project.rootDir}/spotless/copyright.kt"),
+                "^(package|object|import|interface)"
+            )
+        }
+
+        format("kts") {
+            target("**/*.kts")
+            targetExclude("**/build/**/*.kts")
+            licenseHeaderFile(rootProject.file("spotless/copyright.kts"), "(^(?![\\/ ]\\*).*$)")
         }
     }
 }
