@@ -20,7 +20,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -32,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.MultilineInputField
-import com.newton.common_ui.ui.RatingBar
+import com.newton.common_ui.ui.RatingBarInput
 import com.newton.common_ui.ui.SubmitButton
 import com.newton.feedback.presentation.view.composables.SuccessAnimation
 import com.newton.feedback.presentation.viewmodel.UserFeedbackViewModel
@@ -89,7 +88,7 @@ fun GeneralFeedbackScreen(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
 
-                    RatingBar(
+                    RatingBarInput(
                         currentRating = rating,
                         onRatingChanged = { viewModel.updateRating(it) }
                     )

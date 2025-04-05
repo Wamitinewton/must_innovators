@@ -56,6 +56,9 @@ class NotificationsManager @Inject constructor(
         }
     }
 
+    fun disableNotifications() {
+        notificationService.cancelAllNotifications()
+    }
     /**
      * Check if notification permission has been granted
      */

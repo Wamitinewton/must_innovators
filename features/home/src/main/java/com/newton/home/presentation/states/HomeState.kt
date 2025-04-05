@@ -10,6 +10,7 @@ sealed class PartnersUiState {
     data object Empty : PartnersUiState()
 }
 
+
 sealed class TestimonialsUiState {
     data object Loading : TestimonialsUiState()
     data class Success(val testimonials: List<TestimonialsData>) : TestimonialsUiState()

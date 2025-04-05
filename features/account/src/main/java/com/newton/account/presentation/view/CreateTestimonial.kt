@@ -21,7 +21,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,7 +36,7 @@ import com.newton.account.presentation.states.TestimonialsUiState
 import com.newton.account.presentation.viewmodel.TestimonialsViewModel
 import com.newton.common_ui.composables.DefaultScaffold
 import com.newton.common_ui.ui.MultilineInputField
-import com.newton.common_ui.ui.RatingBar
+import com.newton.common_ui.ui.RatingBarInput
 import com.newton.common_ui.ui.SubmitButton
 import kotlinx.coroutines.launch
 
@@ -107,10 +106,6 @@ fun CreateTestimonial(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                )
             )
         }
     ) {
@@ -134,7 +129,7 @@ fun CreateTestimonial(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
 
-                    RatingBar(
+                    RatingBarInput(
                         currentRating = rating,
                         onRatingChanged = { viewModel.handleEvent(TestimonialsUiEvent.RatingChanged(it)) }
                     )

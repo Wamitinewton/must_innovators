@@ -137,9 +137,6 @@ fun ProfileUpdateScreen(
                         Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.97f)
-                ),
                 actions = {
                     SaveButton(
                         isSaving = updateProfileState.isLoading,

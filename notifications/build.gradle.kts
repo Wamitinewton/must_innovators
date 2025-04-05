@@ -65,8 +65,8 @@ dependencies {
 
     //Initializer
     implementation(Dependencies.initializer)
+    implementation(project(":shared-ui"))
 
-    implementation(project(":common_ui"))
     implementation(project(":database"))
 
 }
