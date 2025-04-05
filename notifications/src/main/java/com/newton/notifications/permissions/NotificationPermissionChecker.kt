@@ -1,13 +1,12 @@
 package com.newton.notifications.permissions
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
+import android.content.*
+import android.content.pm.*
+import android.os.*
+import androidx.core.app.*
+import androidx.core.content.*
 
 object NotificationPermissionChecker {
-
     /**
      * Check if app has notification permission
      */

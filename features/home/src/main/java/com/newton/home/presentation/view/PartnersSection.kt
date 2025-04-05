@@ -1,48 +1,25 @@
 package com.newton.home.presentation.view
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Groups
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import com.newton.common_ui.ui.EmptyStateCard
-import com.newton.common_ui.ui.ErrorScreen
-import com.newton.common_ui.ui.LoadingIndicator
-import com.newton.core.domain.models.home_models.PartnersData
-import com.newton.home.presentation.states.PartnersUiState
-
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.vector.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import com.newton.commonUi.ui.*
+import com.newton.core.domain.models.homeModels.*
+import com.newton.home.presentation.states.*
 
 @Composable
 fun SectionHeader(
@@ -53,7 +30,8 @@ fun SectionHeader(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
@@ -64,7 +42,8 @@ fun SectionHeader(
         )
         if (showViewAll) {
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .clip(MaterialTheme.shapes.large)
                     .clickable(onClick = onViewAllClick)
                     .background(color = MaterialTheme.colorScheme.secondaryContainer)
@@ -122,29 +101,32 @@ fun PartnersContent(
     }
 }
 
-
 @Composable
 fun PartnerCard(
     partner: PartnersData,
     onClick: () -> Unit
 ) {
     ElevatedCard(
-        modifier = Modifier
+        modifier =
+        Modifier
             .width(300.dp)
             .height(220.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.elevatedCardElevation(
+        elevation =
+        CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp,
             pressedElevation = 8.dp
         ),
-        colors = CardDefaults.elevatedCardColors(
+        colors =
+        CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween
@@ -154,7 +136,8 @@ fun PartnerCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(52.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surfaceVariant),
@@ -164,7 +147,8 @@ fun PartnerCard(
                         model = partner.logo,
                         contentDescription = "${partner.name} logo",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .clip(CircleShape)
                     )
@@ -275,7 +259,6 @@ fun CompactInfoItem(
     }
 }
 
-
 @Composable
 fun PartnersSection(
     partners: List<PartnersData>,
@@ -283,7 +266,8 @@ fun PartnersSection(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
@@ -299,25 +283,30 @@ fun PartnersSection(
 
 @Composable
 fun StatusBadge(status: String) {
-    val (backgroundColor, textColor) = when (status.uppercase()) {
-        "ACTIVE" -> Pair(
-            MaterialTheme.colorScheme.primaryContainer,
-            MaterialTheme.colorScheme.primary
-        )
+    val (backgroundColor, textColor) =
+        when (status.uppercase()) {
+            "ACTIVE" ->
+                Pair(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.primary
+                )
 
-        "PENDING" -> Pair(
-            MaterialTheme.colorScheme.tertiaryContainer,
-            MaterialTheme.colorScheme.tertiary
-        )
+            "PENDING" ->
+                Pair(
+                    MaterialTheme.colorScheme.tertiaryContainer,
+                    MaterialTheme.colorScheme.tertiary
+                )
 
-        else -> Pair(
-            MaterialTheme.colorScheme.errorContainer,
-            MaterialTheme.colorScheme.error
-        )
-    }
+            else ->
+                Pair(
+                    MaterialTheme.colorScheme.errorContainer,
+                    MaterialTheme.colorScheme.error
+                )
+        }
 
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(RoundedCornerShape(16.dp))
             .background(backgroundColor)
             .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -329,5 +318,3 @@ fun StatusBadge(status: String) {
         )
     }
 }
-
-

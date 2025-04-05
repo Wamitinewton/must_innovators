@@ -1,12 +1,12 @@
 package com.newton.account.presentation.viewmodel
 
-import com.newton.core.domain.models.auth_models.Project
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.newton.core.domain.models.authModels.*
+import javax.inject.*
 
 @Singleton
-class ProfileFormValidator @Inject constructor() {
-
+class ProfileFormValidator
+@Inject
+constructor() {
     fun validateProject(project: Project): Boolean {
         return project.name.isNotBlank() && project.description.isNotBlank()
     }

@@ -1,33 +1,21 @@
 package com.newton.home.presentation.view
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AdminPanelSettings
-import androidx.compose.material.icons.filled.NotificationsActive
-import androidx.compose.material3.Icon
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.unit.dp
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.core.domain.models.home_models.PartnersData
-import com.newton.core.domain.models.testimonials.TestimonialsData
-import com.newton.home.presentation.viewmodels.PartnersViewModel
-import com.newton.home.presentation.viewmodels.TestimonialsViewModel
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.unit.*
+import com.newton.commonUi.composables.*
+import com.newton.core.domain.models.homeModels.*
+import com.newton.core.domain.models.testimonials.*
+import com.newton.home.presentation.viewmodels.*
 
 @Composable
 fun HomeScreen(
@@ -56,12 +44,14 @@ fun HomeScreen(
             MeruInnovatorsAppBar(
                 title = "MUST Innovators",
                 actions = {
-                    Box(modifier = Modifier
-                        .clip(CircleShape)
-                        .clickable {
-                            onNavigateToAdmin()
-                        }
-                        .padding(10.dp)
+                    Box(
+                        modifier =
+                        Modifier
+                            .clip(CircleShape)
+                            .clickable {
+                                onNavigateToAdmin()
+                            }
+                            .padding(10.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Filled.AdminPanelSettings,
@@ -69,11 +59,13 @@ fun HomeScreen(
                         )
                     }
 
-                    Box(modifier = Modifier
-                        .clip(CircleShape)
-                        .clickable {
-                        }
-                        .padding(10.dp)
+                    Box(
+                        modifier =
+                        Modifier
+                            .clip(CircleShape)
+                            .clickable {
+                            }
+                            .padding(10.dp)
                     ) {
                         Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
                     }
@@ -140,6 +132,3 @@ fun HomeScreen(
         }
     }
 }
-
-
-

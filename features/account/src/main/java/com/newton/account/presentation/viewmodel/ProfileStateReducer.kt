@@ -1,19 +1,14 @@
 package com.newton.account.presentation.viewmodel
 
-
-import com.newton.account.presentation.states.ProfileViewState
-import com.newton.account.presentation.states.UpdateProfileState
-import com.newton.core.domain.models.auth_models.UserData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.newton.account.presentation.states.*
+import com.newton.core.domain.models.authModels.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @Singleton
-class ProfileStateReducer @Inject constructor() {
-
+class ProfileStateReducer
+@Inject
+constructor() {
     private val _accountState = MutableStateFlow(ProfileViewState())
     val accountState: StateFlow<ProfileViewState> = _accountState.asStateFlow()
 
@@ -31,7 +26,10 @@ class ProfileStateReducer @Inject constructor() {
         }
     }
 
-    fun handleUpdateSuccess(userData: UserData, message: String) {
+    fun handleUpdateSuccess(
+        userData: UserData,
+        message: String
+    ) {
         _updateProfileState.update {
             it.copy(
                 userData = userData,

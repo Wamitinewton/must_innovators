@@ -1,36 +1,18 @@
 package com.newton.home.presentation.view
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FormatQuote
-import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.RatingBar
-import com.newton.core.domain.models.testimonials.TestimonialsData
-import com.newton.core.utils.formatDateTime
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import com.newton.commonUi.ui.*
+import com.newton.core.domain.models.testimonials.*
+import com.newton.core.utils.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,13 +30,14 @@ fun TestimonialDetailSheet(
         dragHandle = { BottomSheetDefaults.DragHandle(color = MaterialTheme.colorScheme.onSurfaceVariant) }
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 8.dp)
                 .navigationBarsPadding()
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -105,14 +88,14 @@ fun TestimonialDetailSheet(
     }
 }
 
-
 @Composable
 fun TestimonialStatusChip(status: String) {
-    val chipColor = when (status.lowercase()) {
-        "approved" -> MaterialTheme.colorScheme.primary
-        "pending" -> MaterialTheme.colorScheme.tertiary
-        else -> MaterialTheme.colorScheme.secondary
-    }
+    val chipColor =
+        when (status.lowercase()) {
+            "approved" -> MaterialTheme.colorScheme.primary
+            "pending" -> MaterialTheme.colorScheme.tertiary
+            else -> MaterialTheme.colorScheme.secondary
+        }
 
     Surface(
         shape = RoundedCornerShape(16.dp),
@@ -130,7 +113,8 @@ fun TestimonialStatusChip(status: String) {
 @Composable
 private fun TestimonialContent(content: String) {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
@@ -143,7 +127,8 @@ private fun TestimonialContent(content: String) {
                 imageVector = Icons.Filled.FormatQuote,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(end = 8.dp)
                     .size(24.dp)
             )
@@ -159,6 +144,3 @@ private fun TestimonialContent(content: String) {
         }
     }
 }
-
-
-

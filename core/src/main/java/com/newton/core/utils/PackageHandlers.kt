@@ -1,18 +1,18 @@
 package com.newton.core.utils
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import com.newton.core.domain.models.home_models.PartnersData
+import android.content.*
+import android.content.pm.*
+import android.net.*
+import com.newton.core.domain.models.homeModels.*
 
 object PackageHandlers {
-
     /**
      * Opens the website URL in a browser
      */
-    fun navigateToWebsite(context: Context, url: String) {
+    fun navigateToWebsite(
+        context: Context,
+        url: String
+    ) {
         try {
             val websiteIntent = Intent(Intent.ACTION_VIEW, Uri.parse(formatUrl(url)))
             websiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -25,7 +25,10 @@ object PackageHandlers {
     /**
      * Navigates to LinkedIn - tries app first, falls back to browser
      */
-    fun navigateToLinkedIn(context: Context, linkedInUrl: String) {
+    fun navigateToLinkedIn(
+        context: Context,
+        linkedInUrl: String
+    ) {
         try {
             val linkedInAppIntent = Intent(Intent.ACTION_VIEW)
             val formattedUrl = formatLinkedInUrl(linkedInUrl)
@@ -47,7 +50,10 @@ object PackageHandlers {
     /**
      * Navigates to Github - tries app first, falls back to browser
      */
-    fun navigateToGithub(context: Context, githubUrl: String) {
+    fun navigateToGithub(
+        context: Context,
+        githubUrl: String
+    ) {
         try {
             val githubAppIntent = Intent(Intent.ACTION_VIEW)
             val formattedUrl = formatGithubUrl(githubUrl)
@@ -69,7 +75,10 @@ object PackageHandlers {
     /**
      * Navigates to Twitter/X - tries app first, falls back to browser
      */
-    fun navigateToTwitter(context: Context, twitterUrl: String) {
+    fun navigateToTwitter(
+        context: Context,
+        twitterUrl: String
+    ) {
         try {
             val twitterAppIntent = Intent(Intent.ACTION_VIEW)
             val formattedUrl = formatTwitterUrl(twitterUrl)
@@ -91,11 +100,15 @@ object PackageHandlers {
     /**
      * Opens email app with pre-filled email
      */
-    fun contactViaEmail(context: Context, email: String) {
+    fun contactViaEmail(
+        context: Context,
+        email: String
+    ) {
         try {
-            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:$email")
-            }
+            val emailIntent =
+                Intent(Intent.ACTION_SENDTO).apply {
+                    data = Uri.parse("mailto:$email")
+                }
 
             if (isAppInstalled(context, "com.google.android.gm")) {
                 emailIntent.setPackage("com.google.android.gm")
@@ -110,15 +123,19 @@ object PackageHandlers {
     /**
      * Share partner information via any sharing-capable app
      */
-    fun sharePartner(context: Context, partner: PartnersData) {
+    fun sharePartner(
+        context: Context,
+        partner: PartnersData
+    ) {
         try {
             val shareText = createShareText(partner)
 
-            val shareIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, shareText)
-            }
+            val shareIntent =
+                Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, shareText)
+                }
 
             context.startActivity(Intent.createChooser(shareIntent, "Share Partner via..."))
         } catch (e: Exception) {
@@ -129,7 +146,10 @@ object PackageHandlers {
     /**
      * Helper function to check if an app is installed
      */
-    private fun isAppInstalled(context: Context, packageName: String): Boolean {
+    private fun isAppInstalled(
+        context: Context,
+        packageName: String
+    ): Boolean {
         return try {
             context.packageManager.getPackageInfo(packageName, 0)
             true
@@ -167,12 +187,13 @@ object PackageHandlers {
     private fun formatTwitterUrl(url: String): String {
         val formattedUrl = formatUrl(url)
         if (formattedUrl.contains("twitter.com/") || formattedUrl.contains("x.com/")) {
-            val username = formattedUrl
-                .replace("https://twitter.com/", "")
-                .replace("http://twitter.com/", "")
-                .replace("https://x.com/", "")
-                .replace("http://x.com/", "")
-                .substringBefore("/")
+            val username =
+                formattedUrl
+                    .replace("https://twitter.com/", "")
+                    .replace("http://twitter.com/", "")
+                    .replace("https://x.com/", "")
+                    .replace("http://x.com/", "")
+                    .substringBefore("/")
 
             return "twitter://user?screen_name=$username"
         }
@@ -186,7 +207,6 @@ object PackageHandlers {
             "https://github.com/$githubUrl"
         }
     }
-
 
     /**
      * Creates beautifully formatted text for sharing

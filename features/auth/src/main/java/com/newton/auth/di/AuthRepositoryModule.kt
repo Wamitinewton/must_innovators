@@ -1,16 +1,15 @@
 package com.newton.auth.di
 
-import com.newton.auth.data.data_store.SessionManager
-import com.newton.auth.data.repository.AuthRepositoryImpl
-import com.newton.core.data.remote.AuthService
-import com.newton.core.domain.repositories.AuthRepository
-import com.newton.database.DbCleaner
-import com.newton.database.dao.UserDao
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.auth.data.dataStore.*
+import com.newton.auth.data.repository.*
+import com.newton.core.data.remote.*
+import com.newton.core.domain.repositories.*
+import com.newton.database.*
+import com.newton.database.dao.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,6 +20,6 @@ object AuthRepositoryModule {
         authService: AuthService,
         sessionManager: SessionManager,
         dbCleaner: DbCleaner,
-        userDao: UserDao,
+        userDao: UserDao
     ): AuthRepository = AuthRepositoryImpl(authService, sessionManager, userDao, dbCleaner)
 }

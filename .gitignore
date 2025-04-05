@@ -19,3 +19,5 @@ innovation_keystore.jks
 /.idea/
 /app/google-services.json
 keystore_base64.txt
+/features/build
+ktlint

@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -54,11 +53,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
-    //navigation
+    // navigation
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 

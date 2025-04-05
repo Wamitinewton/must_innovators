@@ -1,5 +1,5 @@
 package com.newton.auth.navigation
 
-import com.newton.navigation.NavigationApi
+import com.newton.navigation.*
 
-interface AuthNavigationApi: NavigationApi
+interface AuthNavigationApi : NavigationApi

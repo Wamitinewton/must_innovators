@@ -1,19 +1,16 @@
 package com.newton.database.di
 
-import android.app.Application
-import androidx.room.Room
-import com.newton.database.db.AppDatabase
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import android.app.*
+import androidx.room.*
+import com.newton.database.db.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppDatabaseModule {
-
-
     @Provides
     @Singleton
     fun provideAppDatabase(app: Application): AppDatabase {
@@ -57,6 +54,4 @@ object AppDatabaseModule {
     @Provides
     @Singleton
     fun provideTestimonialsDao(db: AppDatabase) = db.testimonialsDao
-
 }
-

@@ -1,6 +1,6 @@
 package com.newton.core.data.response.events
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class EventApiResponse<T>(
@@ -29,6 +29,5 @@ data class EventDto(
     val location: String,
     val organizer: String,
     val contact_email: String,
-    val is_virtual: Boolean,
-
+    val is_virtual: Boolean
 )

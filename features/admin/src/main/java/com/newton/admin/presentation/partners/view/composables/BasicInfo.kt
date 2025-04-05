@@ -1,33 +1,18 @@
 package com.newton.admin.presentation.partners.view.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Business
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.newton.admin.presentation.partners.events.AddPartnersEvent
-import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.common_ui.ui.CustomCard
+import com.newton.admin.presentation.partners.events.*
+import com.newton.admin.presentation.partners.states.*
+import com.newton.commonUi.ui.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,15 +20,21 @@ fun BasicInfo(
     partnersState: AddPartnersState,
     onEvent: (AddPartnersEvent) -> Unit
 ) {
-    val partnerTypeOptions = listOf(
-        "TECH", "ACADEMIC", "COMMUNITY", "MEDIA", "CORPORATE"
-    )
+    val partnerTypeOptions =
+        listOf(
+            "TECH",
+            "ACADEMIC",
+            "COMMUNITY",
+            "MEDIA",
+            "CORPORATE"
+        )
     CustomCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
@@ -63,7 +54,7 @@ fun BasicInfo(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Business,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 singleLine = true,
@@ -94,15 +85,17 @@ fun BasicInfo(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Category,
-                            contentDescription = null,
+                            contentDescription = null
                         )
                     },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = partnersState.partnerTypeExpanded)
                     },
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .menuAnchor()
-                        .fillMaxWidth(), supportingText = {
+                        .fillMaxWidth(),
+                    supportingText = {
                         partnersState.errors["partnerType"]?.let {
                             Text(
                                 it,
@@ -136,7 +129,8 @@ fun BasicInfo(
                 onValueChange = { onEvent.invoke(AddPartnersEvent.DescriptionChange(it)) },
                 label = { Text("Description") },
                 placeholder = { Text("Describe the partner and their contributions") },
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .heightIn(min = 120.dp),
                 minLines = 3,

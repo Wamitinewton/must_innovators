@@ -1,12 +1,12 @@
 package com.newton.core.utils
 
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import java.time.*
+import java.time.format.*
 
 fun formatDateTime(dateString: String): String {
     val instant = Instant.parse(dateString)
-    val formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy 'at' h:mm a")
-        .withZone(ZoneId.systemDefault())
+    val formatter =
+        DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy 'at' h:mm a")
+            .withZone(ZoneId.systemDefault())
     return formatter.format(instant)
 }

@@ -1,6 +1,6 @@
 package com.newton.core.data.response.events
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class EventRegistrationResponse(

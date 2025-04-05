@@ -1,37 +1,13 @@
 package com.newton.core.data.remote
 
-import com.newton.core.data.response.events.EventApiResponse
-import com.newton.core.data.response.events.EventDto
-import com.newton.core.data.response.events.EventResponse
-import com.newton.core.domain.models.ApiResponse
-import com.newton.core.domain.models.PaginationResponse
-import com.newton.core.domain.models.admin.NewsLetter
-import com.newton.core.domain.models.admin.NewsLetterResponse
-import com.newton.core.domain.models.admin_models.AddCommunityRequest
-import com.newton.core.data.response.admin.AttendeeResponse
-import com.newton.core.domain.models.admin_models.Club
-import com.newton.core.domain.models.admin_models.CommunityData
-import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.models.admin_models.EventsFeedback
-import com.newton.core.domain.models.admin_models.ExecutiveRequest
-import com.newton.core.domain.models.admin_models.ExecutiveResponse
-import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
-import com.newton.core.domain.models.admin_models.UpdateEventRequest
-import com.newton.core.domain.models.admin_models.UserData
-import com.newton.core.domain.models.admin_models.UserFeedbackResponse
-import com.newton.core.domain.models.home_models.PartnersData
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.PartMap
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.newton.core.data.response.admin.*
+import com.newton.core.data.response.events.*
+import com.newton.core.domain.models.*
+import com.newton.core.domain.models.admin.*
+import com.newton.core.domain.models.adminModels.*
+import com.newton.core.domain.models.homeModels.*
+import okhttp3.*
+import retrofit2.http.*
 
 interface AdminApi {
     @PATCH(AdminEndPoint.UPDATE_EVENT)
@@ -59,8 +35,8 @@ interface AdminApi {
 
     @POST(AdminEndPoint.SEND_NEWSLETTER)
     suspend fun sendNewsLetter(
-        @Body request:NewsLetter
-    ):NewsLetterResponse
+        @Body request: NewsLetter
+    ): NewsLetterResponse
 
     @GET(AdminEndPoint.GET_RSVPS_DATA)
     suspend fun getAttendeeData(
@@ -78,7 +54,6 @@ interface AdminApi {
         @Body request: ExecutiveRequest
     ): ApiResponse<ExecutiveResponse>
 
-
     @GET(AdminEndPoint.GET_USERS_FEEDBACK)
     suspend fun getUserFeedbacks(
         @Query("category") category: String? = null,
@@ -88,7 +63,7 @@ interface AdminApi {
     ): PaginationResponse<UserFeedbackResponse>
 
     @GET(AdminEndPoint.GET_EVENTS_FEEDBACK)
-    suspend fun getEventsFeedback(eventId:Int): ApiResponse<PaginationResponse<EventsFeedback>>
+    suspend fun getEventsFeedback(eventId: Int): ApiResponse<PaginationResponse<EventsFeedback>>
 
     @GET(AdminEndPoint.GET_ALL_USERS_DATA)
     suspend fun getAllUsers(): ApiResponse<List<UserData>>
@@ -100,7 +75,7 @@ interface AdminApi {
     @POST(AdminEndPoint.ADD_PARTNER)
     suspend fun addPartner(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part  logo_field : MultipartBody.Part
+        @Part logo_field: MultipartBody.Part
     ): ApiResponse<PartnersData>
 
     @PATCH(AdminEndPoint.UPDATE_CLUB)

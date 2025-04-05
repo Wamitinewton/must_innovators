@@ -1,68 +1,25 @@
 package com.newton.admin.presentation.events.view.management
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import com.newton.admin.presentation.events.events.EventUpdateEvent
-import com.newton.admin.presentation.events.events.UpdateEvent
-import com.newton.admin.presentation.events.states.UpdateEventState
-import com.newton.admin.presentation.events.viewmodel.AdminEventsSharedViewModel
-import com.newton.admin.presentation.events.viewmodel.UpdateEventsViewModel
-import com.newton.admin.presentation.testyr.SuccessScreen
-import com.newton.common_ui.composables.OopsError
-import com.newton.common_ui.ui.CustomButton
-import com.newton.common_ui.ui.LoadingDialog
-import com.newton.common_ui.ui.toFormatedDate
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.viewmodel.*
+import com.newton.admin.presentation.testyr.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import java.time.*
+import java.time.format.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +30,6 @@ fun ModifyEvent(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val state by updateEventsViewModel.updateState.collectAsState()
-
 
     DisposableEffect(Unit) {
         onDispose {
@@ -117,7 +73,8 @@ fun ModifyEvent(
                 val event = (uiState as UpdateEvent.Success).event
                 if (isEditing) {
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
@@ -128,7 +85,8 @@ fun ModifyEvent(
                         AsyncImage(
                             model = event.imageUrl,
                             contentDescription = "Event Image",
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxWidth()
                                 .height(200.dp)
                                 .clip(RoundedCornerShape(8.dp)),
@@ -190,7 +148,7 @@ fun ModifyEvent(
 
                         OutlinedTextField(
                             value = event.organizer,
-                            onValueChange = {EventUpdateEvent.OrganizerChanged(it)  },
+                            onValueChange = { EventUpdateEvent.OrganizerChanged(it) },
                             label = { Text("Organizer") },
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -225,9 +183,9 @@ fun ModifyEvent(
                         }
                     }
                 } else {
-
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
@@ -238,7 +196,8 @@ fun ModifyEvent(
                         AsyncImage(
                             model = event.imageUrl,
                             contentDescription = "Event Image",
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxWidth()
                                 .height(200.dp)
                                 .clip(RoundedCornerShape(8.dp)),
@@ -330,7 +289,8 @@ fun ModifyEvent(
                                 modifier = Modifier.padding(top = 8.dp)
                             ) {
                                 Row(
-                                    modifier = Modifier.padding(
+                                    modifier =
+                                    Modifier.padding(
                                         horizontal = 12.dp,
                                         vertical = 8.dp
                                     ),
@@ -353,17 +313,16 @@ fun ModifyEvent(
                 }
             }
         }
-        if (state.isLoading){
+        if (state.isLoading) {
             LoadingDialog()
-        }else if (state.errorMessage!=null){
+        } else if (state.errorMessage != null) {
             OopsError(
                 errorMessage = state.errorMessage!!
             )
-        }else if (state.uploadSuccess){
+        } else if (state.uploadSuccess) {
             SuccessScreen()
         }
     }
-
 }
 
 private fun formatDateTime(dateString: String): String {

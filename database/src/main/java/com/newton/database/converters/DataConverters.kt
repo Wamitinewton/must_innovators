@@ -1,11 +1,10 @@
 package com.newton.database.converters
 
-import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.newton.core.domain.models.auth_models.Project
-import com.newton.core.domain.models.auth_models.SocialMedia
-import com.newton.database.entities.ClubSocialMediaEntity
+import androidx.room.*
+import com.google.gson.*
+import com.google.gson.reflect.*
+import com.newton.core.domain.models.authModels.*
+import com.newton.database.entities.*
 
 class DataConverters {
     private val gson = Gson()
@@ -20,7 +19,6 @@ class DataConverters {
     fun fromList(list: List<ClubSocialMediaEntity>): String {
         return gson.toJson(list)
     }
-
 
     @TypeConverter
     fun fromStringList(value: List<String>?): String? {
@@ -59,5 +57,4 @@ class DataConverters {
             gson.fromJson(it, type)
         }
     }
-
 }

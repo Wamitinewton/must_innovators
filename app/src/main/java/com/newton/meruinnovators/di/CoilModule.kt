@@ -1,20 +1,17 @@
 package com.newton.meruinnovators.di
 
-import android.content.Context
-import coil3.ImageLoader
-import coil3.disk.DiskCache
-import coil3.disk.directory
-import coil3.memory.MemoryCache
-import coil3.request.allowRgb565
-import coil3.request.crossfade
-import coil3.util.DebugLogger
-import com.newton.meruinnovators.BuildConfig
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import android.content.*
+import coil3.*
+import coil3.disk.*
+import coil3.memory.*
+import coil3.request.*
+import coil3.util.*
+import com.newton.meruinnovators.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.android.qualifiers.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -27,7 +24,7 @@ object CoilModule {
         return ImageLoader.Builder(context)
             .memoryCache {
                 MemoryCache.Builder()
-                    .maxSizePercent(context,0.25)
+                    .maxSizePercent(context, 0.25)
                     .build()
             }
             .diskCache {

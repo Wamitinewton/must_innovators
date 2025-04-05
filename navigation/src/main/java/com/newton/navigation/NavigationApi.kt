@@ -1,7 +1,6 @@
 package com.newton.navigation
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 
 interface NavigationApi {
     fun registerGraph(

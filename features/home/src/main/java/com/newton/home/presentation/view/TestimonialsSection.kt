@@ -1,59 +1,26 @@
 package com.newton.home.presentation.view
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FormatQuote
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import com.newton.common_ui.ui.EmptyStateCard
-import com.newton.common_ui.ui.ErrorScreen
-import com.newton.common_ui.ui.LoadingIndicator
-import com.newton.core.domain.models.testimonials.TestimonialsData
-import com.newton.core.utils.formatDateTime
-import com.newton.home.presentation.states.TestimonialsUiState
-import kotlinx.coroutines.delay
-import kotlin.math.min
-
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import com.newton.commonUi.ui.*
+import com.newton.core.domain.models.testimonials.*
+import com.newton.core.utils.*
+import com.newton.home.presentation.states.*
+import kotlinx.coroutines.*
+import kotlin.math.*
 
 @Composable
 fun TestimonialsSection(
@@ -61,9 +28,9 @@ fun TestimonialsSection(
     onRetryClick: () -> Unit,
     onTestimonialClick: (TestimonialsData) -> Unit = {}
 ) {
-
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
@@ -87,7 +54,7 @@ fun TestimonialsSection(
                         title = "Ooops",
                         message = "No testimonials found. Check back in later",
                         buttonText = "Retry",
-                        onActionClick = onRetryClick,
+                        onActionClick = onRetryClick
                     )
                 }
             }
@@ -106,7 +73,6 @@ fun TestimonialsSection(
         }
     }
 }
-
 
 @Composable
 fun AutoScrollingTestimonials(
@@ -127,13 +93,15 @@ fun AutoScrollingTestimonials(
     }
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) { page ->
@@ -155,14 +123,14 @@ fun AutoScrollingTestimonials(
     }
 }
 
-
 @Composable
 fun TestimonialCard(
     testimonialsData: TestimonialsData,
     onClick: (TestimonialsData) -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .height(200.dp)
             .clip(RoundedCornerShape(16.dp))
@@ -173,12 +141,14 @@ fun TestimonialCard(
             )
             .clickable { onClick(testimonialsData) },
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
@@ -193,7 +163,8 @@ fun TestimonialCard(
                 text = testimonialsData.content,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(vertical = 12.dp)
                     .weight(1f),
                 maxLines = 4,
@@ -250,10 +221,12 @@ fun TestimonialCard(
         }
     }
 }
+
 @Composable
 fun TestimonialAvatar(imageUrl: String?) {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .size(48.dp)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
@@ -271,19 +244,19 @@ fun TestimonialAvatar(imageUrl: String?) {
                 fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(Alignment.Center)
             )
         }
     }
 }
 
-
 @Composable
 fun PagerIndicator(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    pageCount: Int,
+    pageCount: Int
 ) {
     val MAX_TOTAL_INDICATORS = 4
 
@@ -293,23 +266,26 @@ fun PagerIndicator(
         modifier = modifier
     ) {
         repeat(minOf(pageCount, MAX_TOTAL_INDICATORS)) { iteration ->
-            val color = if (pagerState.currentPage == iteration) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-            }
-
-            val alpha = when {
-                iteration < 4 -> 1f
-                iteration < MAX_TOTAL_INDICATORS -> {
-                    maxOf(0f, 1f - (iteration - 3) * 0.3f)
+            val color =
+                if (pagerState.currentPage == iteration) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
                 }
 
-                else -> 0f
-            }
+            val alpha =
+                when {
+                    iteration < 4 -> 1f
+                    iteration < MAX_TOTAL_INDICATORS -> {
+                        maxOf(0f, 1f - (iteration - 3) * 0.3f)
+                    }
+
+                    else -> 0f
+                }
 
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(4.dp)
                     .size(8.dp)
                     .clip(CircleShape)

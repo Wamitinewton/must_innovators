@@ -1,10 +1,8 @@
 package com.newton.core.data.remote
 
-import com.newton.core.data.response.about_us.CommunitiesResponse
-import com.newton.core.data.response.about_us.CommunityApiResponse
-import com.newton.core.domain.models.about_us.ClubBio
-import com.newton.core.domain.models.about_us.ExecutiveData
-import retrofit2.http.GET
+import com.newton.core.data.response.aboutUs.*
+import com.newton.core.domain.models.aboutUs.*
+import retrofit2.http.*
 
 interface AboutClubService {
     @GET(ApiEndpoints.GET_COMMUNITIES)

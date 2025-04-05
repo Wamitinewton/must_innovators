@@ -1,14 +1,14 @@
 package com.newton.core.utils
 
-import com.newton.core.enums.ErrorType
+import com.newton.core.enums.*
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(val isLoading: Boolean = true) : Resource<T>(null)
+
     class Success<T>(data: T?) : Resource<T>(data)
+
     class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
 }
-
-
 
 /**
  * A sealed class representing different states of a network request.
@@ -26,7 +26,9 @@ sealed class ResourceMigration<T>(
     val httpCode: Int? = null
 ) {
     class Loading<T>(val isLoading: Boolean = true) : ResourceMigration<T>(null)
+
     class Success<T>(data: T?) : ResourceMigration<T>(data)
+
     class Error<T>(
         message: String,
         errorType: ErrorType = ErrorType.UNKNOWN,

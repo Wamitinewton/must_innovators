@@ -1,10 +1,9 @@
 package com.newton.admin.data.mappers
 
-import com.newton.core.domain.models.admin_models.Attendee
-import com.newton.core.data.response.admin.AttendeeResponse
+import com.newton.core.data.response.admin.*
+import com.newton.core.domain.models.adminModels.*
 
 object AttendeeMapper {
-
     fun AttendeeResponse.toAttendee(): Attendee {
         return Attendee(
             course,
@@ -20,5 +19,5 @@ object AttendeeMapper {
         )
     }
 
-    fun List<AttendeeResponse>.toAttendeeList():List<Attendee> = map{it.toAttendee()}
+    fun List<AttendeeResponse>.toAttendeeList(): List<Attendee> = map { it.toAttendee() }
 }

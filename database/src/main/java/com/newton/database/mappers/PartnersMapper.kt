@@ -1,7 +1,7 @@
 package com.newton.database.mappers
 
-import com.newton.core.data.response.admin.PartnersResponse
-import com.newton.database.entities.PartnerEntity
+import com.newton.core.data.response.admin.*
+import com.newton.database.entities.*
 
 fun PartnersResponse.toPartnersEntity(): PartnerEntity {
     return PartnerEntity(
@@ -24,6 +24,6 @@ fun PartnersResponse.toPartnersEntity(): PartnerEntity {
         events_supported,
         resources,
         achievements,
-        target_audience,
+        target_audience
     )
 }

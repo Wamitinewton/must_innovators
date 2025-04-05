@@ -1,6 +1,6 @@
 package com.newton.core.domain.models.testimonials
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class Testimonials(

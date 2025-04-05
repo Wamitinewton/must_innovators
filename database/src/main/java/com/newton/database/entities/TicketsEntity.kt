@@ -1,7 +1,6 @@
 package com.newton.database.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "eventTickets")
 data class TicketsEntity(

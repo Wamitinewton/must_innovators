@@ -1,9 +1,9 @@
 package com.newton.admin.data.mappers
 
-import com.newton.core.domain.models.admin_models.UserData
+import com.newton.core.domain.models.adminModels.*
 
 object UserDataMappers {
-    private fun UserData.toDomain():User{
+    private fun UserData.toDomain(): User {
         return User(
             id = id,
             name = "$first_name $last_name",
@@ -12,5 +12,5 @@ object UserDataMappers {
         )
     }
 
-    fun List<UserData>.toDomainList():List<User> = map { it.toDomain() }
+    fun List<UserData>.toDomainList(): List<User> = map { it.toDomain() }
 }

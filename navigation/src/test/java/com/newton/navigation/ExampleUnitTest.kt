@@ -1,8 +1,7 @@
 package com.newton.navigation
 
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.*
+import org.junit.Assert.assertEquals
 
 /**
  * Example local unit test, which will execute on the development machine (host).

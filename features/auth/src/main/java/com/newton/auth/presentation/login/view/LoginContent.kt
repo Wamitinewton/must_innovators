@@ -1,29 +1,15 @@
 package com.newton.auth.presentation.login.view
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.newton.auth.presentation.login.event.LoginEvent
-import com.newton.auth.presentation.login.state.LoginViewModelState
-import com.newton.auth.presentation.utils.AuthHeader
-import com.newton.auth.presentation.utils.OrContinueWith
-import com.newton.auth.presentation.utils.SocialAuthentication
-import com.newton.common_ui.ui.CustomButton
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.auth.presentation.login.event.*
+import com.newton.auth.presentation.login.state.*
+import com.newton.auth.presentation.utils.*
+import com.newton.commonUi.ui.*
 
 @Composable
 fun LoginContent(
@@ -34,7 +20,8 @@ fun LoginContent(
     onVerifyAccountClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 14.dp),
@@ -84,7 +71,8 @@ fun LoginContent(
         Spacer(modifier = Modifier.height(15.dp))
 
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 11.dp),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -92,7 +80,8 @@ fun LoginContent(
             Text(
                 text = "verify existing account",
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable(
+                modifier =
+                Modifier.clickable(
                     onClick = {
                         onVerifyAccountClick()
                     }
@@ -102,7 +91,8 @@ fun LoginContent(
             Text(
                 text = "Forgot password?",
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable(
+                modifier =
+                Modifier.clickable(
                     onClick = {
                         onForgotPasswordClick()
                     }

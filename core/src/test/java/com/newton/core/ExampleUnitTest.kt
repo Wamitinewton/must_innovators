@@ -1,8 +1,7 @@
 package com.newton.core
 
-import org.junit.Test
-
-import org.junit.Assert.*
+import junit.framework.TestCase.assertEquals
+import org.junit.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).

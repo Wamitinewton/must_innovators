@@ -1,12 +1,10 @@
 package com.newton.feedback.di
 
-import com.newton.feedback.navigation.FeedbackNavigationApi
-import com.newton.feedback.navigation.FeedbackNavigationImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.feedback.navigation.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

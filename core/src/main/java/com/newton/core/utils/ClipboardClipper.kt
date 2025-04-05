@@ -1,9 +1,7 @@
 package com.newton.core.utils
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.widget.Toast
+import android.content.*
+import android.widget.*
 
 /**
  * Copies text to clipboard
@@ -24,7 +22,8 @@ fun copyToClipboard(
     toastMessage: String = "Copied to clipboard"
 ): Boolean {
     return try {
-        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboardManager =
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText(label, text)
         clipboardManager.setPrimaryClip(clipData)
 

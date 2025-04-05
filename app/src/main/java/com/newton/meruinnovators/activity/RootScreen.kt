@@ -1,28 +1,18 @@
 package com.newton.meruinnovators.activity
 
-import android.app.Activity
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.newton.navigation.NavigationRoutes
-import com.newton.meruinnovators.navigation.AdminNavBar
-import com.newton.meruinnovators.navigation.BottomNavigationBar
-import com.newton.meruinnovators.navigation.MeruInnovatorsNavigation
-import com.newton.meruinnovators.navigation.NavigationSubGraphs
+import android.app.*
+import androidx.activity.compose.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.platform.*
+import androidx.navigation.compose.*
+import com.google.accompanist.systemuicontroller.*
+import com.newton.meruinnovators.navigation.*
 import com.newton.meruinnovators.ui.theme.ThemeUtils.MeruinnovatorsTheme
+import com.newton.navigation.*
 
 @Composable
 fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
@@ -31,19 +21,23 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
     val currentDestination = currentBackStackEntryAsState?.destination
     val context = LocalContext.current
 
-    val isShowBottomBar = when (currentDestination?.route) {
-        NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.BlogsRoute.routes,
-        NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
-        NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminActions.routes -> true
+    val isShowBottomBar =
+        when (currentDestination?.route) {
+            NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.BlogsRoute.routes,
+            NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
+            NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminActions.routes
+            -> true
 
-        else -> false
-    }
-    val isAdminNavBar = when (currentDestination?.route) {
-        NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
-        NavigationRoutes.AdminActions.routes -> true
+            else -> false
+        }
+    val isAdminNavBar =
+        when (currentDestination?.route) {
+            NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
+            NavigationRoutes.AdminActions.routes
+            -> true
 
-        else -> false
-    }
+            else -> false
+        }
     if (currentDestination?.route == NavigationRoutes.HomeRoute.routes) {
         BackHandler {
             (context as? Activity)?.finish()
@@ -56,14 +50,19 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
                 if (!isShowBottomBar) {
                     return@Scaffold
                 }
-                if (isAdminNavBar) AdminNavBar(
-                    navController,
-                    currentDestination
-                ) else BottomNavigationBar(navController, currentDestination)
+                if (isAdminNavBar) {
+                    AdminNavBar(
+                        navController,
+                        currentDestination
+                    )
+                } else {
+                    BottomNavigationBar(navController, currentDestination)
+                }
             }
         ) {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .padding(it)
             ) {
@@ -85,4 +84,3 @@ fun SetupSystemUi(
         systemUiController.setSystemBarsColor(color = systemBarColor)
     }
 }
-

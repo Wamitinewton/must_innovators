@@ -1,7 +1,6 @@
 package com.newton.core.domain.models
 
-
-import kotlinx.serialization.SerialName
+import kotlinx.serialization.*
 
 data class ApiResponse<T>(
     @SerialName("data")

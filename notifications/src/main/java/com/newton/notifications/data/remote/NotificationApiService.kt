@@ -1,11 +1,9 @@
 package com.newton.notifications.data.remote
 
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.*
+import retrofit2.http.*
 
 interface NotificationApiService {
-
     @POST("users/register-device")
     suspend fun registerDevice(
         @Body request: DeviceRegistrationRequest
@@ -15,7 +13,7 @@ interface NotificationApiService {
 data class DeviceRegistrationRequest(
     val userId: String,
     val deviceToken: String,
-    val platform: String = "android",
+    val platform: String = "android"
 )
 
 data class DeviceRegistrationResponse(

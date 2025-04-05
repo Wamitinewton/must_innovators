@@ -1,125 +1,155 @@
 package com.newton.admin.presentation.partners.viewModel
 
-import android.util.Patterns
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.presentation.partners.events.AddPartnersEvent
-import com.newton.admin.presentation.partners.states.AddPartnersEffect
-import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.core.domain.models.admin_models.AddPartnerRequest
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.time.format.DateTimeFormatter
-import javax.inject.Inject
+import android.util.*
+import androidx.lifecycle.*
+import com.newton.admin.presentation.partners.events.*
+import com.newton.admin.presentation.partners.states.*
+import com.newton.core.domain.models.adminModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.utils.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import java.time.format.*
+import javax.inject.*
+import kotlin.collections.set
 
 @HiltViewModel
-class PartnersViewModel @Inject constructor(
+class PartnersViewModel
+@Inject
+constructor(
     private val adminRepository: AdminRepository
 ) : ViewModel() {
-
     private val _addPartnersState = MutableStateFlow(AddPartnersState())
     val addPartnersState: StateFlow<AddPartnersState> = _addPartnersState.asStateFlow()
 
     private val _uiSideEffect = MutableSharedFlow<AddPartnersEffect>()
     val uiSideEffect get() = _uiSideEffect.asSharedFlow()
 
-
     fun handleEvent(event: AddPartnersEvent) {
         when (event) {
-            is AddPartnersEvent.AchievementsChange -> _addPartnersState.update {
-                it.copy(
-                    achievements = event.achievements
-                )
-            }
+            is AddPartnersEvent.AchievementsChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        achievements = event.achievements
+                    )
+                }
 
-            is AddPartnersEvent.AudienceTargetChange -> _addPartnersState.update {
-                it.copy(
-                    targetAudience = event.audience
-                )
-            }
+            is AddPartnersEvent.AudienceTargetChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        targetAudience = event.audience
+                    )
+                }
 
             is AddPartnersEvent.BenefitsChange -> _addPartnersState.update { it.copy(keyBenefits = event.benefit) }
-            is AddPartnersEvent.ContactEmailChange -> _addPartnersState.update {
-                it.copy(
-                    contactEmail = event.email
-                )
-            }
+            is AddPartnersEvent.ContactEmailChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        contactEmail = event.email
+                    )
+                }
 
-            is AddPartnersEvent.ContactPersonChange -> _addPartnersState.update {
-                it.copy(
-                    contactPerson = event.person
-                )
-            }
+            is AddPartnersEvent.ContactPersonChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        contactPerson = event.person
+                    )
+                }
 
-            is AddPartnersEvent.DescriptionChange -> _addPartnersState.update { it.copy(description = event.description) }
-            is AddPartnersEvent.EndDateChange -> _addPartnersState.update {
-                it.copy(
-                    partnershipEndDate = event.endDate
-                )
-            }
+            is AddPartnersEvent.DescriptionChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        description = event.description
+                    )
+                }
 
-            is AddPartnersEvent.LinkedInChange -> _addPartnersState.update { it.copy(socialLinkedIn = event.linkedIn) }
+            is AddPartnersEvent.EndDateChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        partnershipEndDate = event.endDate
+                    )
+                }
+
+            is AddPartnersEvent.LinkedInChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        socialLinkedIn = event.linkedIn
+                    )
+                }
+
             is AddPartnersEvent.LogoChange -> _addPartnersState.update { it.copy(partnershipLogo = event.logo) }
             is AddPartnersEvent.NameChange -> _addPartnersState.update { it.copy(partnerName = event.name) }
-            is AddPartnersEvent.ResourcesChange -> _addPartnersState.update {
-                it.copy(
-                    resourcesProvided = event.resources
-                )
-            }
+            is AddPartnersEvent.ResourcesChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        resourcesProvided = event.resources
+                    )
+                }
 
-            is AddPartnersEvent.ScopeChange -> _addPartnersState.update { it.copy(collaborationScope = event.scope) }
-            is AddPartnersEvent.StartDateChange -> _addPartnersState.update {
-                it.copy(
-                    partnershipStartDate = event.startDate
-                )
-            }
+            is AddPartnersEvent.ScopeChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        collaborationScope = event.scope
+                    )
+                }
+
+            is AddPartnersEvent.StartDateChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        partnershipStartDate = event.startDate
+                    )
+                }
 
             is AddPartnersEvent.StatusChange -> _addPartnersState.update { it.copy(status = event.status) }
-            is AddPartnersEvent.SupportChange -> _addPartnersState.update { it.copy(eventsSupported = event.support) }
+            is AddPartnersEvent.SupportChange ->
+                _addPartnersState.update {
+                    it.copy(
+                        eventsSupported = event.support
+                    )
+                }
+
             is AddPartnersEvent.TwitterChange -> _addPartnersState.update { it.copy(socialTwitter = event.twitter) }
             is AddPartnersEvent.TypeChange -> _addPartnersState.update { it.copy(partnerType = event.type) }
             is AddPartnersEvent.WebsiteChange -> _addPartnersState.update { it.copy(website = event.website) }
-            is AddPartnersEvent.IsPartnerTypeExpanded -> _addPartnersState.update {
-                it.copy(
-                    partnerTypeExpanded = event.expanded
-                )
-            }
+            is AddPartnersEvent.IsPartnerTypeExpanded ->
+                _addPartnersState.update {
+                    it.copy(
+                        partnerTypeExpanded = event.expanded
+                    )
+                }
 
-            is AddPartnersEvent.IsStatusExpanded -> _addPartnersState.update {
-                it.copy(
-                    statusExpanded = event.expanded
-                )
-            }
+            is AddPartnersEvent.IsStatusExpanded ->
+                _addPartnersState.update {
+                    it.copy(
+                        statusExpanded = event.expanded
+                    )
+                }
 
             is AddPartnersEvent.ShowEndDate -> _addPartnersState.update { it.copy(showEndDatePicker = event.shown) }
-            is AddPartnersEvent.ShowStartDate -> _addPartnersState.update {
-                it.copy(
-                    showStartDatePicker = event.shown
-                )
-            }
-            is AddPartnersEvent.OnGoingPartnership -> _addPartnersState.update {
-                it.copy(
-                    ongoingPartnership = event.ongoing
-                )
-            }
+            is AddPartnersEvent.ShowStartDate ->
+                _addPartnersState.update {
+                    it.copy(
+                        showStartDatePicker = event.shown
+                    )
+                }
+
+            is AddPartnersEvent.OnGoingPartnership ->
+                _addPartnersState.update {
+                    it.copy(
+                        ongoingPartnership = event.ongoing
+                    )
+                }
+
             AddPartnersEvent.AddPartners -> addPartner()
             AddPartnersEvent.PickImage -> emit(AddPartnersEffect.PickImage)
         }
     }
 
-    private fun emit(effect: AddPartnersEffect) = viewModelScope.launch {
-        _uiSideEffect.emit(effect)
-    }
+    private fun emit(effect: AddPartnersEffect) =
+        viewModelScope.launch {
+            _uiSideEffect.emit(effect)
+        }
 
     private fun toDefault() {
         _addPartnersState.value = AddPartnersState()
@@ -179,15 +209,13 @@ class PartnersViewModel @Inject constructor(
             errors["endDate"] = "End date of Partnership  is required"
         }
 
-
         if (_addPartnersState.value.contactEmail.isBlank()) {
             errors["email"] = "Contact email is required"
         } else if (!Patterns.EMAIL_ADDRESS.matcher(_addPartnersState.value.contactEmail)
-                .matches()
+            .matches()
         ) {
             errors["email"] = "Invalid email format"
         }
-
 
         _addPartnersState.value = _addPartnersState.value.copy(errors = errors)
         return errors.isEmpty()
@@ -195,27 +223,34 @@ class PartnersViewModel @Inject constructor(
 
     private fun addPartner() {
         if (validateAndSubmit()) {
-            val partner = AddPartnerRequest(
-                name = _addPartnersState.value.partnerName,
-                type = _addPartnersState.value.partnerType,
-                description = _addPartnersState.value.description,
-                logo = _addPartnersState.value.partnershipLogo!!,
-                webUrl = _addPartnersState.value.website,
-                contactEmail = _addPartnersState.value.contactEmail,
-                contactPerson = _addPartnersState.value.contactPerson,
-                linkedIn = _addPartnersState.value.socialLinkedIn,
-                twitter = _addPartnersState.value.socialTwitter,
-                startDate = _addPartnersState.value.partnershipStartDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                endDate = _addPartnersState.value.partnershipEndDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                ongoing = _addPartnersState.value.ongoingPartnership,
-                status = _addPartnersState.value.status,
-                scope = _addPartnersState.value.collaborationScope,
-                benefits = _addPartnersState.value.keyBenefits,
-                eventsSupported = _addPartnersState.value.eventsSupported,
-                resources = _addPartnersState.value.resourcesProvided,
-                achievements = _addPartnersState.value.achievements,
-                targetAudience = _addPartnersState.value.targetAudience
-            )
+            val partner =
+                AddPartnerRequest(
+                    name = _addPartnersState.value.partnerName,
+                    type = _addPartnersState.value.partnerType,
+                    description = _addPartnersState.value.description,
+                    logo = _addPartnersState.value.partnershipLogo!!,
+                    webUrl = _addPartnersState.value.website,
+                    contactEmail = _addPartnersState.value.contactEmail,
+                    contactPerson = _addPartnersState.value.contactPerson,
+                    linkedIn = _addPartnersState.value.socialLinkedIn,
+                    twitter = _addPartnersState.value.socialTwitter,
+                    startDate =
+                    _addPartnersState.value.partnershipStartDate.format(
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    ),
+                    endDate =
+                    _addPartnersState.value.partnershipEndDate?.format(
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    ),
+                    ongoing = _addPartnersState.value.ongoingPartnership,
+                    status = _addPartnersState.value.status,
+                    scope = _addPartnersState.value.collaborationScope,
+                    benefits = _addPartnersState.value.keyBenefits,
+                    eventsSupported = _addPartnersState.value.eventsSupported,
+                    resources = _addPartnersState.value.resourcesProvided,
+                    achievements = _addPartnersState.value.achievements,
+                    targetAudience = _addPartnersState.value.targetAudience
+                )
             viewModelScope.launch {
                 adminRepository.addPartner(partner).collectLatest { result ->
                     when (result) {
@@ -229,7 +264,7 @@ class PartnersViewModel @Inject constructor(
                                 it.copy(
                                     errorMessage = null,
                                     isLoading = false,
-                                    isSuccess = true,
+                                    isSuccess = true
                                 )
                             }
                             toDefault()
@@ -239,5 +274,4 @@ class PartnersViewModel @Inject constructor(
             }
         }
     }
-
 }

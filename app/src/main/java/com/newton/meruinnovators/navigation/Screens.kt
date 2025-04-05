@@ -1,25 +1,10 @@
 package com.newton.meruinnovators.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Collections
-import androidx.compose.material.icons.filled.DashboardCustomize
-import androidx.compose.material.icons.filled.Event
-import androidx.compose.material.icons.filled.EventSeat
-import androidx.compose.material.icons.filled.Feedback
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.LocalActivity
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Collections
-import androidx.compose.material.icons.outlined.DashboardCustomize
-import androidx.compose.material.icons.outlined.Event
-import androidx.compose.material.icons.outlined.EventSeat
-import androidx.compose.material.icons.outlined.Feedback
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.LocalActivity
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.newton.navigation.NavigationRoutes
-import com.newton.navigation.NavigationSubGraphRoutes
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.ui.graphics.vector.*
+import com.newton.navigation.*
 
 sealed class Screens(
     var route: String,
@@ -85,6 +70,7 @@ sealed class Screens(
         null,
         "Events"
     )
+
     data object Feedback : Screens(
         NavigationRoutes.AdminFeedbacks.routes,
         Icons.Filled.Feedback,
@@ -102,21 +88,20 @@ sealed class Screens(
         null,
         "Actions"
     )
-
-
-
 }
 
-var bottomNavigationDestinations = listOf(
-    Screens.Home,
-    Screens.Events,
+var bottomNavigationDestinations =
+    listOf(
+        Screens.Home,
+        Screens.Events,
 //    Screens.Blogs,
-    Screens.Account
-)
+        Screens.Account
+    )
 
-var adminNavDestinations = listOf(
-    Screens.Dashboard,
-    Screens.AdminEvents,
-    Screens.Feedback,
-    Screens.AdminSettings
-)
+var adminNavDestinations =
+    listOf(
+        Screens.Dashboard,
+        Screens.AdminEvents,
+        Screens.Feedback,
+        Screens.AdminSettings
+    )

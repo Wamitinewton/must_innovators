@@ -1,17 +1,13 @@
 package com.newton.admin.presentation.events.view.management.composables.feedback
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarBorder
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.unit.*
 
 @Composable
 fun RatingBar(
@@ -21,11 +17,12 @@ fun RatingBar(
 ) {
     Row(modifier = modifier) {
         repeat(maxRating) { index ->
-            val starFill = when {
-                index < rating.toInt() -> 1f
-                index == rating.toInt() && rating % 1 > 0 -> rating % 1
-                else -> 0f
-            }
+            val starFill =
+                when {
+                    index < rating.toInt() -> 1f
+                    index == rating.toInt() && rating % 1 > 0 -> rating % 1
+                    else -> 0f
+                }
 
             Box(modifier = Modifier.padding(horizontal = 2.dp)) {
                 Icon(

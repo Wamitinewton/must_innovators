@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<baseline>
+    <issue id="no-wildcard-imports" level="ignore" />
+    <issue id="no-line-breaks-before-assignment" level="ignore" />
+</baseline>

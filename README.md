@@ -7,7 +7,8 @@
 
 ## 🚀 About
 
-The MeruInnovators app is a platform for the Meru University Science Innovators club that facilitates:
+The MeruInnovators app is a platform for the Meru University Science Innovators club that
+facilitates:
 
 - **Event Management**: Browse, register, and get reminders for upcoming club events
 - **Project Showcasing**: Share and discover innovative projects developed by club members
@@ -70,11 +71,13 @@ Connect your device or use an emulator to build and run the app.
 ## 🔐 Configuring `keys.properties` Details
 
 ### Why `keys.properties`?
+
 - Keeps sensitive information (such as API keys and signing credentials) out of version control
 - Ensures that contributors can configure their own environment without affecting others
 - Prevents accidental exposure of security credentials in public repositories
 
 ### Explanation of Properties
+
 - `BACKEND_URL`: The base URL for the backend API
 - `RELEASE_STORE_FILE`: Path to the keystore file used for signing the application
 - `RELEASE_STORE_PASSWORD`: Password to unlock the keystore file
@@ -82,14 +85,18 @@ Connect your device or use an emulator to build and run the app.
 - `RELEASE_KEY_PASSWORD`: Password for the key alias
 
 ### Ensure the File is Ignored in Version Control
-To prevent accidental commits of sensitive information, make sure `keys.properties` is included in the `.gitignore` file:
+
+To prevent accidental commits of sensitive information, make sure `keys.properties` is included in
+the `.gitignore` file:
 
 ```gitignore
 keys.properties
 ```
 
 ### How the File is Used in `build.gradle.kts`
-The properties are loaded in the build script and used to configure the backend URL and signing configuration:
+
+The properties are loaded in the build script and used to configure the backend URL and signing
+configuration:
 
 ```kotlin
 val properties = Properties()
@@ -113,6 +120,7 @@ buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
 ```
 
 ### Troubleshooting
+
 - **Error: `keys.properties file not found`**  
   Ensure that `keys.properties` is present in the root directory.
 - **Error: `Property XYZ not found in keys.properties`**  

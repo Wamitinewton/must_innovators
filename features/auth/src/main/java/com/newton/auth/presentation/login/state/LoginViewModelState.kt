@@ -1,6 +1,6 @@
 package com.newton.auth.presentation.login.state
 
-import com.newton.core.domain.models.auth_models.LoginResultData
+import com.newton.core.domain.models.authModels.*
 
 data class LoginViewModelState(
     val isLoading: Boolean = false,
@@ -10,7 +10,5 @@ data class LoginViewModelState(
     val resultData: LoginResultData? = null,
     val showPassword: Boolean = false,
     val emailError: String? = null,
-    val passwordError: String? = null,
+    val passwordError: String? = null
 )
-
-

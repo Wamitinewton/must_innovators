@@ -8,4 +8,17 @@ plugins {
     alias(libs.plugins.android.library) apply false
     id("com.google.devtools.ksp") version "2.0.0-1.0.24" apply false
     id("com.google.gms.google-services") version "4.4.2" apply false
+    alias(libs.plugins.ktlint)
+}
+
+allprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    ktlint {
+        android.set(true)
+        verbose.set(true)
+        baseline.set(file("baseline.xml"))
+        filter {
+            exclude { element -> element.file.path.contains("generated/") }
+        }
+    }
 }

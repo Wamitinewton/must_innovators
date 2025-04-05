@@ -1,5 +1,5 @@
 package com.newton.feedback.navigation
 
-import com.newton.navigation.NavigationApi
+import com.newton.navigation.*
 
-interface FeedbackNavigationApi: NavigationApi
+interface FeedbackNavigationApi : NavigationApi

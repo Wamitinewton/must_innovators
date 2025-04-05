@@ -1,13 +1,7 @@
 package com.newton.database.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.newton.core.domain.models.auth_models.Project
-import com.newton.core.domain.models.auth_models.SocialMedia
+import androidx.room.*
+import com.newton.core.domain.models.authModels.*
 
 @Entity(tableName = "user")
 data class UserEntity(
@@ -28,4 +22,3 @@ data class UserEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 1
 )
-

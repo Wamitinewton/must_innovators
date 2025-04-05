@@ -1,56 +1,26 @@
 package com.newton.admin.presentation.events.view
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Today
-import androidx.compose.material.icons.outlined.Category
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.activity.compose.*
+import androidx.activity.result.*
+import androidx.activity.result.contract.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.newton.admin.presentation.events.events.AddEventEvents
-import com.newton.admin.presentation.events.events.EventEvents
-import com.newton.admin.presentation.events.states.AddEventEffect
-import com.newton.admin.presentation.events.view.composables.ImageReceiptView
-import com.newton.admin.presentation.events.view.composables.SelectCategoriesContentView
-import com.newton.admin.presentation.events.view.composables.SelectImageButton
-import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
-import com.newton.admin.presentation.events.viewmodel.EventsViewModel
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.ui.CustomDatePickerDialog
-import com.newton.common_ui.ui.ColumnWrapper
-import com.newton.common_ui.ui.CustomClickableOutlinedTextField
-import com.newton.common_ui.ui.LoadingDialog
-import com.newton.common_ui.ui.toFormattedDate
-import java.io.File
-import java.io.FileOutputStream
+import androidx.navigation.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.states.*
+import com.newton.admin.presentation.events.view.composables.*
+import com.newton.admin.presentation.events.viewmodel.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import java.io.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,26 +33,26 @@ fun AddEvents(
     val scrollState = rememberScrollState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val context = LocalContext.current
-    val imageLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri ->
-            val contentResolver = context.contentResolver
-            val file = File(context.cacheDir, "temp_file_${System.currentTimeMillis()}")
-            if (uri != null) {
-                try {
-                    contentResolver.openInputStream(uri)?.use { inputStream ->
-                        FileOutputStream(file).use { outputStream ->
-                            inputStream.copyTo(outputStream)
+    val imageLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri ->
+                val contentResolver = context.contentResolver
+                val file = File(context.cacheDir, "temp_file_${System.currentTimeMillis()}")
+                if (uri != null) {
+                    try {
+                        contentResolver.openInputStream(uri)?.use { inputStream ->
+                            FileOutputStream(file).use { outputStream ->
+                                inputStream.copyTo(outputStream)
+                            }
                         }
+                        onEvent.invoke(AddEventEvents.ChangedFile(file))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                    onEvent.invoke(AddEventEvents.ChangedFile(file))
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
             }
-
-        }
-    )
+        )
     val mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
     val mediaRequest = PickVisualMediaRequest(mediaType)
     LaunchedEffect(Unit) {
@@ -98,14 +68,14 @@ fun AddEvents(
 
     Scaffold(
         topBar = {
-
             MeruInnovatorsAppBar(
-                title = "Add Event",
+                title = "Add Event"
             )
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp)
@@ -170,8 +140,6 @@ fun AddEvents(
                     state.errors["date"]?.let { Text(it) }
                 }
             )
-
-
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -243,7 +211,7 @@ fun AddEvents(
                 Text("Virtual Event")
             }
 
-            if (state.isVirtual){
+            if (state.isVirtual) {
                 OutlinedTextField(
                     value = state.meetingLink,
                     onValueChange = {
@@ -274,7 +242,7 @@ fun AddEvents(
         if (state.isLoading) {
             LoadingDialog()
         }
-        if(state.uploadSuccess){
+        if (state.uploadSuccess) {
             onEvent.invoke(AddEventEvents.ToDefaultSate)
         }
         // Category Selection Bottom Sheet
@@ -287,7 +255,8 @@ fun AddEvents(
                     Text(
                         "Select Category",
                         style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(bottom = 16.dp)
                             .align(Alignment.CenterHorizontally)
                     )
@@ -310,7 +279,5 @@ fun AddEvents(
                 }
             )
         }
-
     }
-
 }

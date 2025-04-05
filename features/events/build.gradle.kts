@@ -51,7 +51,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
@@ -59,7 +59,7 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
@@ -73,20 +73,19 @@ dependencies {
     implementation(Dependencies.pagingCompose)
     implementation(Dependencies.pagingRuntime)
 
-            //room
+    // room
     implementation(Dependencies.roomKtx)
     ksp(Dependencies.roomCompiler)
     implementation(Dependencies.roomRuntime)
-    implementation("androidx.room:room-paging:2.6.1")
+    implementation(libs.androidx.room.paging)
 
-    //material icons
+    // material icons
     implementation(Dependencies.material_icons_core)
     implementation(Dependencies.material_icons_extended)
 
     implementation(Dependencies.zxing_qr)
 
     implementation(Dependencies.timber)
-
 
     implementation(project(":core"))
     implementation(project(":database"))

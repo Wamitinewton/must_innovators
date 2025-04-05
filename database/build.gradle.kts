@@ -43,13 +43,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
-
-
-    //room
+    // room
     implementation(Dependencies.roomKtx)
     ksp(Dependencies.roomCompiler)
     implementation(Dependencies.roomRuntime)

@@ -1,24 +1,20 @@
 package com.newton.meruinnovators.application
 
-import android.app.Application
-import android.os.Build
-import androidx.work.Configuration
-import coil3.ImageLoader
-import com.google.firebase.FirebaseApp
-import com.newton.auth.data.work_manager.TokenRefreshWorkerFactory
-import com.newton.auth.data.work_manager.scheduleTokenRefreshWork
-import com.newton.core.domain.repositories.AuthRepository
+import android.app.*
+import androidx.work.*
+import coil3.*
+import com.google.firebase.*
+import com.newton.auth.data.workManager.*
+import com.newton.core.domain.repositories.*
 import com.newton.meruinnovators.BuildConfig
-import com.newton.notifications.manager.NotificationsManager
-import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asExecutor
-import timber.log.Timber
-import javax.inject.Inject
+import com.newton.notifications.manager.*
+import dagger.hilt.android.*
+import kotlinx.coroutines.*
+import timber.log.*
+import javax.inject.*
 
 @HiltAndroidApp
 class MeruInnovatorsApp : Application(), Configuration.Provider {
-
     @Inject
     lateinit var workerFactory: TokenRefreshWorkerFactory
 
@@ -38,9 +34,8 @@ class MeruInnovatorsApp : Application(), Configuration.Provider {
             Timber.plant(Timber.DebugTree())
         }
 
-
-            FirebaseApp.initializeApp(this)
-            notificationsManager.checkNotificationPermission()
+        FirebaseApp.initializeApp(this)
+        notificationsManager.checkNotificationPermission()
 
         scheduleTokenRefreshWork(this)
     }

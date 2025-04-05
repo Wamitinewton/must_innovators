@@ -1,11 +1,10 @@
 package com.newton.core.data.remote
 
-import com.newton.core.domain.models.home_models.Partners
-import com.newton.core.domain.models.testimonials.Testimonials
-import retrofit2.http.GET
+import com.newton.core.domain.models.homeModels.*
+import com.newton.core.domain.models.testimonials.*
+import retrofit2.http.*
 
 interface HomeApiService {
-
     @GET(ApiEndpoints.GET_PARTNERS)
     suspend fun getPartners(): Partners
 

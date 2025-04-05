@@ -6,91 +6,70 @@ import com.newton.admin.data.mappers.EventMapper.toEventData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toDomain
 import com.newton.admin.data.mappers.UserFeedbackMapper.toFeedbackData
 import com.newton.admin.data.mappers.UserFeedbackMapper.toUserFeedbackListEntity
-import com.newton.common_ui.ui.toCustomRequestBody
-import com.newton.core.data.remote.AdminApi
-import com.newton.core.domain.models.ApiResponse
-import com.newton.core.domain.models.admin.NewsLetter
-import com.newton.core.domain.models.admin.NewsLetterResponse
-import com.newton.core.domain.models.admin_models.AddCommunityRequest
-import com.newton.core.domain.models.admin_models.AddEventRequest
-import com.newton.core.domain.models.admin_models.AddPartnerRequest
-import com.newton.core.domain.models.admin_models.Attendee
-import com.newton.core.domain.models.admin_models.Club
-import com.newton.core.domain.models.admin_models.CommunityData
-import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.models.admin_models.EventsFeedback
-import com.newton.core.domain.models.admin_models.ExecutiveRequest
-import com.newton.core.domain.models.admin_models.ExecutiveResponse
-import com.newton.core.domain.models.admin_models.FeedbackData
-import com.newton.core.domain.models.admin_models.UpdateCommunityRequest
-import com.newton.core.domain.models.admin_models.UpdateEventRequest
-import com.newton.core.domain.models.admin_models.UserData
-import com.newton.core.domain.models.home_models.PartnersData
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.enums.FeedbackStatus
-import com.newton.core.utils.Resource
-import com.newton.core.utils.safeApiCall
-import com.newton.database.dao.EventDao
-import com.newton.database.dao.EventsFeedbackDao
-import com.newton.database.dao.PartnersDao
-import com.newton.database.dao.UserDao
-import com.newton.database.dao.UserFeedbackDao
-import com.newton.database.mappers.toEventDataList
-import com.newton.database.mappers.toEventsEntity
-import com.newton.database.mappers.toEventsFeedbackList
-import com.newton.database.mappers.toPartnerEntity
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
+import com.newton.commonUi.ui.*
+import com.newton.core.data.remote.*
+import com.newton.core.domain.models.*
+import com.newton.core.domain.models.admin.*
+import com.newton.core.domain.models.adminModels.*
+import com.newton.core.domain.models.homeModels.*
+import com.newton.core.domain.repositories.*
+import com.newton.core.enums.*
+import com.newton.core.utils.*
+import com.newton.database.dao.*
+import com.newton.database.mappers.*
+import kotlinx.coroutines.flow.*
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.HttpException
-import timber.log.Timber
-import java.io.IOException
-import javax.inject.Inject
+import retrofit2.*
+import timber.log.*
+import java.io.*
+import javax.inject.*
 
-class AdminRepositoryImpl @Inject constructor(
+class AdminRepositoryImpl
+@Inject
+constructor(
     private val adminApi: AdminApi,
     private val eventDao: EventDao,
     private val userFeedbackDao: UserFeedbackDao,
     private val eventsFeedbackDao: EventsFeedbackDao,
-    private val partnersDao: PartnersDao,
+    private val partnersDao: PartnersDao
 ) : AdminRepository {
-    override suspend fun addEvent(event: AddEventRequest): Flow<Resource<EventsData>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            val requestFile = event.image.asRequestBody("image/*".toMediaTypeOrNull())
-            val imagePart =
-                MultipartBody.Part.createFormData("image", event.image.name, requestFile)
+    override suspend fun addEvent(event: AddEventRequest): Flow<Resource<EventsData>> =
+        flow {
+            emit(Resource.Loading(true))
+            try {
+                val requestFile = event.image.asRequestBody("image/*".toMediaTypeOrNull())
+                val imagePart =
+                    MultipartBody.Part.createFormData("image", event.image.name, requestFile)
 
+                val params =
+                    mapOf(
+                        "name" to event.name.toRequestBody(),
+                        "category" to event.category.toRequestBody(),
+                        "description" to event.description.toRequestBody(),
+                        "date" to event.date.toRequestBody(),
+                        "location" to event.location.toRequestBody(),
+                        "organizer" to event.organizer.toRequestBody(),
+                        "contact_email" to event.contactEmail.toRequestBody(),
+                        "title" to event.title.toRequestBody(),
+                        "is_virtual" to if (event.isVirtual) "True".toCustomRequestBody() else "False".toCustomRequestBody()
+                    )
 
-            val params = mapOf(
-                "name" to event.name.toRequestBody(),
-                "category" to event.category.toRequestBody(),
-                "description" to event.description.toRequestBody(),
-                "date" to event.date.toRequestBody(),
-                "location" to event.location.toRequestBody(),
-                "organizer" to event.organizer.toRequestBody(),
-                "contact_email" to event.contactEmail.toRequestBody(),
-                "title" to event.title.toRequestBody(),
-                "is_virtual" to if (event.isVirtual) "True".toCustomRequestBody() else "False".toCustomRequestBody()
-            )
-
-            val response = adminApi.createEvent(params, imagePart)
-            if (response.status == "success") {
-                emit(Resource.Success(data = response.data.toEventData()))
-                eventDao.insertEvent(response.data.toEventDaoEntity())
-            } else {
-                emit(Resource.Error(response.message))
+                val response = adminApi.createEvent(params, imagePart)
+                if (response.status == "success") {
+                    emit(Resource.Success(data = response.data.toEventData()))
+                    eventDao.insertEvent(response.data.toEventDaoEntity())
+                } else {
+                    emit(Resource.Error(response.message))
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message ?: "Unknown error when adding event"))
+            } finally {
+                emit(Resource.Loading(false))
             }
-        } catch (e: Exception) {
-            emit(Resource.Error(e.message ?: "Unknown error when adding event"))
-        } finally {
-            emit(Resource.Loading(false))
         }
-    }
 
     override suspend fun addCommunity(community: AddCommunityRequest): Flow<Resource<ApiResponse<CommunityData>>> =
         flow {
@@ -134,20 +113,18 @@ class AdminRepositoryImpl @Inject constructor(
     override suspend fun getEventFeedbackBYId(
         eventId: Int,
         isRefresh: Boolean
-    ): Flow<Resource<List<EventsFeedback>>> = safeApiCall {
+    ): Flow<Resource<List<EventsFeedback>>> =
+        safeApiCall {
+            val response = adminApi.getEventsFeedback(eventId)
 
-        val response = adminApi.getEventsFeedback(eventId)
-
-        if (response.status == "success" && response.data.results.isNotEmpty()) {
-            response.data.results
+            if (response.status == "success" && response.data.results.isNotEmpty()) {
+                response.data.results
 //                saveEventsFeedbacks(feedbacks)
 //                Resource.Success(data = feedbacks)
-        } else {
-            throw Exception("Failed to fetch feedbacks: ${response.message}")
+            } else {
+                throw Exception("Failed to fetch feedbacks: ${response.message}")
+            }
         }
-
-    }
-
 
     override suspend fun getAllFeedbacks(
         isRefresh: Boolean,
@@ -163,7 +140,6 @@ class AdminRepositoryImpl @Inject constructor(
                     getRemoteFeedbacks(category, ordering, status?.name, search)?.let {
                         emit(it)
                     }
-
                 } else {
                     val localFeedbacks = userFeedbackDao.getAllUserFeedbacks()
                     localFeedbacks.collectLatest { feedback ->
@@ -197,7 +173,6 @@ class AdminRepositoryImpl @Inject constructor(
                 if (isRefresh) {
                     val response = adminApi.getAllUsers()
                     emit(Resource.Success(response.data))
-
                 } else {
 //                usersDao.getAllUsers()
                     val response = adminApi.getAllUsers()
@@ -235,69 +210,71 @@ class AdminRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getListOfEvents(): Flow<Resource<List<EventsData>>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            val events = adminApi.getAllEventsList()
-            if (events.status == "success") {
-                emit(Resource.Success(events.data.results))
-                saveListOfEvents(events.data.results)
-            } else {
-                val localEvents = eventDao.getListOfEvents()
-                emit(Resource.Success(localEvents.toEventDataList()))
-            }
-        } catch (e: Exception) {
-            emit(
-                Resource.Error(
-                    e.message ?: "Unknown error occurred while getting local events data"
+    override suspend fun getListOfEvents(): Flow<Resource<List<EventsData>>> =
+        flow {
+            emit(Resource.Loading(true))
+            try {
+                val events = adminApi.getAllEventsList()
+                if (events.status == "success") {
+                    emit(Resource.Success(events.data.results))
+                    saveListOfEvents(events.data.results)
+                } else {
+                    val localEvents = eventDao.getListOfEvents()
+                    emit(Resource.Success(localEvents.toEventDataList()))
+                }
+            } catch (e: Exception) {
+                emit(
+                    Resource.Error(
+                        e.message ?: "Unknown error occurred while getting local events data"
+                    )
                 )
-            )
-        } finally {
-            emit(Resource.Loading(false))
+            } finally {
+                emit(Resource.Loading(false))
+            }
         }
-
-    }
 
     override suspend fun addPartner(partners: AddPartnerRequest): Flow<Resource<PartnersData>> =
         flow {
             emit(Resource.Loading(true))
             try {
-                val params = mapOf(
-                    "name" to partners.name.toCustomRequestBody(),
-                    "type" to partners.type.toCustomRequestBody(),
-                    "description" to partners.description.toCustomRequestBody(),
-                    "web_url" to partners.webUrl.toCustomRequestBody(),
-                    "contact_email" to partners.contactEmail.toCustomRequestBody(),
-                    "contact_person" to partners.contactPerson.toCustomRequestBody(),
-                    "linked_in" to partners.linkedIn.toCustomRequestBody(),
-                    "twitter" to partners.twitter.toCustomRequestBody(),
-                    "start_date" to partners.startDate.toCustomRequestBody(),
-                    "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
-                    "status" to partners.status.toCustomRequestBody(),
-                    "scope" to partners.scope.toCustomRequestBody(),
-                    "benefits" to partners.benefits.toCustomRequestBody(),
-                    "events_supported" to partners.eventsSupported.toCustomRequestBody(),
-                    "resources" to partners.resources.toCustomRequestBody(),
-                    "achievements" to partners.achievements.toCustomRequestBody(),
-                    "target_audience" to partners.targetAudience.toCustomRequestBody()
-                )
+                val params =
+                    mapOf(
+                        "name" to partners.name.toCustomRequestBody(),
+                        "type" to partners.type.toCustomRequestBody(),
+                        "description" to partners.description.toCustomRequestBody(),
+                        "web_url" to partners.webUrl.toCustomRequestBody(),
+                        "contact_email" to partners.contactEmail.toCustomRequestBody(),
+                        "contact_person" to partners.contactPerson.toCustomRequestBody(),
+                        "linked_in" to partners.linkedIn.toCustomRequestBody(),
+                        "twitter" to partners.twitter.toCustomRequestBody(),
+                        "start_date" to partners.startDate.toCustomRequestBody(),
+                        "ongoing" to partners.ongoing.toString().toCustomRequestBody(),
+                        "status" to partners.status.toCustomRequestBody(),
+                        "scope" to partners.scope.toCustomRequestBody(),
+                        "benefits" to partners.benefits.toCustomRequestBody(),
+                        "events_supported" to partners.eventsSupported.toCustomRequestBody(),
+                        "resources" to partners.resources.toCustomRequestBody(),
+                        "achievements" to partners.achievements.toCustomRequestBody(),
+                        "target_audience" to partners.targetAudience.toCustomRequestBody()
+                    )
                 val endDateRequestBody = partners.endDate?.toCustomRequestBody()
-                val filteredParams = if (endDateRequestBody != null) {
-                    params + ("end_date" to endDateRequestBody)
-                } else {
-                    params
-                }
+                val filteredParams =
+                    if (endDateRequestBody != null) {
+                        params + ("end_date" to endDateRequestBody)
+                    } else {
+                        params
+                    }
 
                 val requestFile = partners.logo.asRequestBody("image/*".toMediaTypeOrNull())
                 val file = partners.logo
-                val fileName = if (file.name.contains(".")) {
-                    file.name
-                } else {
-                    "${file.name}.jpg"
-                }
+                val fileName =
+                    if (file.name.contains(".")) {
+                        file.name
+                    } else {
+                        "${file.name}.jpg"
+                    }
                 val imagePart =
                     MultipartBody.Part.createFormData("logo_field", fileName, requestFile)
-
 
                 val response = adminApi.addPartner(filteredParams, imagePart)
                 if (response.status == "success") {
@@ -306,7 +283,6 @@ class AdminRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 emit(Resource.Error(e.message ?: "Unknown Error occurred"))
-
             } finally {
                 emit(Resource.Loading(false))
             }
@@ -329,21 +305,21 @@ class AdminRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun updateClub(clubRequest: Club): Flow<Resource<Club>> = flow {
-        try {
-            val response = adminApi.updateClub(clubRequest)
-            if (response.status == "success") {
-                response.data
-            } else {
-                emit(Resource.Error("Error occurred when updating club"))
-                throw Exception(response.message)
+    override suspend fun updateClub(clubRequest: Club): Flow<Resource<Club>> =
+        flow {
+            try {
+                val response = adminApi.updateClub(clubRequest)
+                if (response.status == "success") {
+                    response.data
+                } else {
+                    emit(Resource.Error("Error occurred when updating club"))
+                    throw Exception(response.message)
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message ?: "Unknown error occurred"))
+            } finally {
             }
-        } catch (e: Exception) {
-            emit(Resource.Error(e.message ?: "Unknown error occurred"))
-        } finally {
         }
-    }
-
 
     private suspend fun getRemoteFeedbacks(
         category: String?,

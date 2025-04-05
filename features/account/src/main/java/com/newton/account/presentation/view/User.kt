@@ -1,6 +1,6 @@
 package com.newton.account.presentation.view
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.*
 
 data class Community(
     val id: String,

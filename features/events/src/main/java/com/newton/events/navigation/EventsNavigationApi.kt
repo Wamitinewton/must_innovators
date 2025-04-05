@@ -1,5 +1,5 @@
 package com.newton.events.navigation
 
-import com.newton.navigation.NavigationApi
+import com.newton.navigation.*
 
-interface EventsNavigationApi: NavigationApi
+interface EventsNavigationApi : NavigationApi

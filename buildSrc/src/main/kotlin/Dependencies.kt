@@ -4,7 +4,8 @@ object Dependencies {
     const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     const val hiltAgp = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
-    const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
+    const val hiltNavigation =
+        "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNav}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.2.0"
     const val composeConstraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
@@ -25,8 +26,10 @@ object Dependencies {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val okhttp_logger = "com.squareup.okhttp3:logging-interceptor:4.12.0"
     const val gsonCoverter = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
-    const val retrofit2Converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofit2KotlinxSerializationConverter}"
-    const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialization}"
+    const val retrofit2Converter =
+        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofit2KotlinxSerializationConverter}"
+    const val kotlinxSerialization =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialization}"
     const val kotlinxDatetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.2"
     const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
     const val pager = "com.google.accompanist:accompanist-pager:0.24.10-beta"

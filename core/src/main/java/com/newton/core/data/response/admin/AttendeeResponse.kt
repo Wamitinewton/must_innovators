@@ -1,6 +1,5 @@
 package com.newton.core.data.response.admin
 
-
 /**
 {
 "uid": "df7a49c0-e7a2-434b-a6c4-a9686f60cecf",

@@ -1,33 +1,27 @@
 package com.newton.admin.presentation.home.view.composables
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin_models.DashboardColors
-import com.newton.core.domain.models.admin.TooltipData
-import com.newton.admin.presentation.home.view.CommunityGroup
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.home.view.*
+import com.newton.core.domain.models.admin.*
+import com.newton.core.domain.models.adminModels.*
 
 @Composable
 fun BarGraph(
     communityGroups: List<CommunityGroup>,
-    onTooltipChanged: (TooltipData?) -> Unit
+    onTooltipChanged: (ToolTipData?) -> Unit
 ) {
     var hoveredBar by remember { mutableStateOf<Int?>(null) }
 
-
     Canvas(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(top = 16.dp)
             .pointerInput(Unit) {
@@ -39,7 +33,7 @@ fun BarGraph(
                         if (barIndex in communityGroups.indices) {
                             val group = communityGroups[barIndex]
                             onTooltipChanged(
-                                TooltipData(
+                                ToolTipData(
                                     title = group.name,
                                     value = "${group.name} members",
                                     position = offset
@@ -69,12 +63,13 @@ fun BarGraph(
 //            )
 
             // Bar color with hover effect
-            val barColor = if (index == hoveredBar) {
-                DashboardColors.chartColors[index % DashboardColors.chartColors.size]
-                    .copy(alpha = 0.8f)
-            } else {
-                DashboardColors.chartColors[index % DashboardColors.chartColors.size]
-            }
+            val barColor =
+                if (index == hoveredBar) {
+                    DashboardColors.chartColors[index % DashboardColors.chartColors.size]
+                        .copy(alpha = 0.8f)
+                } else {
+                    DashboardColors.chartColors[index % DashboardColors.chartColors.size]
+                }
 
             drawRect(
                 color = barColor,

@@ -1,14 +1,13 @@
 package com.newton.core.data.response.auth
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class RequestOtpResponse(
     val message: String
 )
 
-
 @Serializable
 data class OtpVerificationResponse(
-    val message: String,
+    val message: String
 )

@@ -10,13 +10,16 @@ activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 appcompat = "1.6.1"
 material = "1.10.0"
+roomPaging = "2.6.1"
 uiAndroid = "1.7.6"
 storage = "1.5.0"
 uiTextAndroid = "1.7.2"
 uiGeometryAndroid = "1.7.2"
-
+klint = "11.6.1"
 [libraries]
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -42,4 +45,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "klint" }

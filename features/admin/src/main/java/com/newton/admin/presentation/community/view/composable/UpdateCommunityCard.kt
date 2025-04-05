@@ -1,59 +1,28 @@
 package com.newton.admin.presentation.community.view.composable
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Group
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.newton.admin.presentation.community.events.UpdateCommunityEvent
-import com.newton.admin.presentation.community.states.UpdateCommunityState
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.FlowRow
-import com.newton.core.data.mappers.toAboutUs
-import com.newton.core.data.mappers.toAdminSession
-import com.newton.core.domain.models.about_us.Community
-import com.newton.core.domain.models.about_us.Session
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.input.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.community.events.*
+import com.newton.admin.presentation.community.states.*
+import com.newton.commonUi.ui.FlowRow
+import com.newton.core.data.mappers.*
+import com.newton.core.domain.models.aboutUs.*
 
 @Composable
 fun UpdateCommunityCard(
@@ -75,7 +44,8 @@ fun UpdateCommunityCard(
     var recruiting by remember { mutableStateOf(communityData.isRecruiting) }
     var sessionToEdit by remember { mutableStateOf<Session?>(null) }
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
@@ -194,7 +164,8 @@ fun UpdateCommunityCard(
                 Text(
                     text = "No scheduled sessions",
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(vertical = 16.dp)
                         .fillMaxWidth(),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -347,12 +318,15 @@ fun UpdateCommunityCard(
         // Save button (visible only in edit mode)
         AnimatedVisibility(
             visible = isEditing,
-            enter = fadeIn() + expandVertically(
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessMedium
-                )
-            ),
+            enter =
+            fadeIn() +
+                expandVertically(
+                    animationSpec =
+                    spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                ),
             exit = fadeOut() + shrinkVertically()
         ) {
             Button(
@@ -360,11 +334,13 @@ fun UpdateCommunityCard(
                     onEvent.invoke(UpdateCommunityEvent.UpdateCommunity(communityData.id))
                     onEvent.invoke(UpdateCommunityEvent.IsEditingChange(false))
                 },
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(
+                colors =
+                ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
@@ -406,4 +382,3 @@ fun UpdateCommunityCard(
         )
     }
 }
-

@@ -1,48 +1,21 @@
 package com.newton.auth.presentation.login.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.newton.auth.presentation.login.event.GetUserDataEvent
-import com.newton.auth.presentation.login.state.GetUserDataViewModelState
-import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import com.newton.auth.presentation.login.event.*
+import com.newton.auth.presentation.login.state.*
+import com.newton.auth.presentation.login.viewModel.*
+import kotlinx.coroutines.*
 
 @Composable
 fun UserDataLoadingScreen(
@@ -73,13 +46,14 @@ fun UserDataLoadingScreen(
     }
 
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter)
         ) { data ->
             Snackbar(
                 modifier = Modifier.padding(16.dp),
@@ -101,7 +75,8 @@ fun UserDataLoadingScreen(
         }
 
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -117,15 +92,14 @@ fun UserDataLoadingScreen(
 }
 
 @Composable
-private fun LoadingAnimation(
-    isLoading: Boolean
-) {
+private fun LoadingAnimation(isLoading: Boolean) {
     val dots = 3
     val dotSize = 24.dp
     val delayUnit = 200
 
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(dotSize)
             .animateContentSize(),
         horizontalArrangement = Arrangement.Center,
@@ -155,7 +129,8 @@ private fun LoadingAnimation(
             }
 
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(horizontal = 4.dp)
                     .size(dotSize)
                     .scale(scale.value)
@@ -165,20 +140,23 @@ private fun LoadingAnimation(
         }
     }
 }
+
 @Composable
-fun AnimatedSuccessMessage(
-    state: GetUserDataViewModelState
-) {
+fun AnimatedSuccessMessage(state: GetUserDataViewModelState) {
     val density = LocalDensity.current
 
     AnimatedVisibility(
         visible = state.isLoading,
-        enter = fadeIn() + slideInVertically {
-            with(density) { -40.dp.roundToPx() }
-        },
-        exit = fadeOut() + slideOutVertically {
-            with(density) { 40.dp.roundToPx() }
-        }
+        enter =
+        fadeIn() +
+            slideInVertically {
+                with(density) { -40.dp.roundToPx() }
+            },
+        exit =
+        fadeOut() +
+            slideOutVertically {
+                with(density) { 40.dp.roundToPx() }
+            }
     ) {
         Text(
             text = "Loading your profile...",
@@ -190,13 +168,16 @@ fun AnimatedSuccessMessage(
 
     AnimatedVisibility(
         visible = state.userData != null,
-        enter = fadeIn() + slideInVertically {
-            with(density) { 40.dp.roundToPx() }
-        }
+        enter =
+        fadeIn() +
+            slideInVertically {
+                with(density) { 40.dp.roundToPx() }
+            }
     ) {
         Text(
             text = "Welcome back, ${state.userData?.username}!",
-            style = MaterialTheme.typography.headlineMedium.copy(
+            style =
+            MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold
             ),
             color = MaterialTheme.colorScheme.primary

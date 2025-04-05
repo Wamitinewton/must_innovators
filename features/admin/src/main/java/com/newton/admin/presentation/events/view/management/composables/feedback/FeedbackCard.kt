@@ -1,44 +1,20 @@
 package com.newton.admin.presentation.events.view.management.composables.feedback
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin_models.EventsFeedback
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import com.newton.core.domain.models.adminModels.*
+import kotlinx.coroutines.*
+import java.time.format.*
 
 @Composable
 fun FeedbackCard(
@@ -80,23 +56,27 @@ fun FeedbackCard(
     }
 
     Card(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .shadow(
                 elevation = with(density) { animatedElevation.value.dp },
                 shape = RoundedCornerShape(16.dp)
             )
-            .background(color =  MaterialTheme.colorScheme.surface)
+            .background(color = MaterialTheme.colorScheme.surface)
             .rotate(animatedRotation.value),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
+                    brush =
+                    Brush.verticalGradient(
+                        colors =
+                        listOf(
                             MaterialTheme.colorScheme.surface,
                             MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
                         )
@@ -162,7 +142,8 @@ fun FeedbackCard(
 
                 Surface(
                     shape = CircleShape,
-                    color = when (feedback.rating) {
+                    color =
+                    when (feedback.rating) {
                         5 -> Color(0xFF4CAF50)
                         4 -> Color(0xFF8BC34A)
                         3 -> Color(0xFFFFC107)
@@ -170,7 +151,6 @@ fun FeedbackCard(
                         else -> Color(0xFFF44336)
                     }
                 ) {
-
                     Text(
                         text = feedback.rating.toString(),
                         color = Color.White,
@@ -188,14 +168,16 @@ fun FeedbackCard(
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(12.dp)
                 ) {
                     Surface(
                         color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(2.dp),
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .width(4.dp)
                             .height(IntrinsicSize.Max)
                     ) {

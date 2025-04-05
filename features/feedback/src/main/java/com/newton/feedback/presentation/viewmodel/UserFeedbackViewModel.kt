@@ -1,18 +1,16 @@
 package com.newton.feedback.presentation.viewmodel
 
-import android.net.Uri
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import android.net.*
+import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
-class UserFeedbackViewModel @Inject constructor(): ViewModel() {
+class UserFeedbackViewModel
+@Inject
+constructor() : ViewModel() {
     private val _bugDescription = MutableStateFlow("")
     val bugDescription = _bugDescription.asStateFlow()
 
@@ -53,7 +51,10 @@ class UserFeedbackViewModel @Inject constructor(): ViewModel() {
         _rating.value = newRating
     }
 
-    fun reorderImages(fromIndex: Int, toIndex: Int) {
+    fun reorderImages(
+        fromIndex: Int,
+        toIndex: Int
+    ) {
         _bugImages.update { currentImages ->
             currentImages.toMutableList().apply {
                 val item = removeAt(fromIndex)

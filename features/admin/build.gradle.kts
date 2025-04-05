@@ -52,11 +52,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
-    //navigation
+    // navigation
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
@@ -65,7 +65,7 @@ dependencies {
 
     implementation(Dependencies.extendedIcons)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
@@ -77,7 +77,6 @@ dependencies {
 
     // timber
     implementation(Dependencies.timber)
-
 
     implementation(project(":core"))
     implementation(project(":database"))

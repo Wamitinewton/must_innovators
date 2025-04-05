@@ -1,16 +1,8 @@
 package com.newton.core.data.mappers
 
-import com.newton.core.data.response.about_us.CommunitiesResponse
-import com.newton.core.data.response.about_us.CommunityLeadsResponse
-import com.newton.core.data.response.about_us.CommunityResponse
-import com.newton.core.data.response.about_us.MemberResponse
-import com.newton.core.data.response.about_us.SessionResponse
-import com.newton.core.data.response.about_us.SocialMediaResponse
-import com.newton.core.domain.models.about_us.Community
-import com.newton.core.domain.models.about_us.CommunityLeads
-import com.newton.core.domain.models.about_us.Member
-import com.newton.core.domain.models.about_us.Session
-import com.newton.core.domain.models.about_us.SocialMedia
+import com.newton.core.data.response.aboutUs.*
+import com.newton.core.domain.models.aboutUs.*
+import com.newton.core.domain.models.aboutUs.Session
 import com.newton.core.domain.models.admin.Session as AdminSession
 
 fun CommunityResponse.toDomain(): Community {
@@ -39,7 +31,7 @@ fun CommunityLeadsResponse.toDomain(): CommunityLeads {
         name = name,
         email = email,
         position = position,
-        bio = bio,
+        bio = bio
     )
 }
 

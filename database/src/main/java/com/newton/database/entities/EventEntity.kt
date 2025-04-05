@@ -1,7 +1,6 @@
 package com.newton.database.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "events")
 data class EventEntity(
@@ -17,7 +16,7 @@ data class EventEntity(
     val contactEmail: String,
     val isVirtual: Boolean,
     val timestamp: Long = System.currentTimeMillis(),
-    val pageNumber: Int? = null,
+    val pageNumber: Int? = null
 )
 
 @Entity(tableName = "events_pagination_metadata")

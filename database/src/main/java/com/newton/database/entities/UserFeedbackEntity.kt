@@ -1,13 +1,10 @@
 package com.newton.database.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.newton.core.enums.FeedbackCategory
-import com.newton.core.enums.FeedbackPriority
-import com.newton.core.enums.FeedbackStatus
+import androidx.room.*
+import com.newton.core.enums.*
 
 @Entity(tableName = "user_feedbacks")
-data class UserFeedbackEntity (
+data class UserFeedbackEntity(
     @PrimaryKey
     val id: Int,
     val userId: Int,

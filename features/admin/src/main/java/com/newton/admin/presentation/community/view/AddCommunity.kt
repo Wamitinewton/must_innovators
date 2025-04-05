@@ -1,75 +1,28 @@
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Group
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.outlined.Contacts
-import androidx.compose.material.icons.outlined.Webhook
-import androidx.compose.material3.Button
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.community.events.CommunityEvent
-import com.newton.admin.presentation.community.view.composable.CommunitySection
-import com.newton.admin.presentation.community.view.composable.LeadershipSelectField
-import com.newton.admin.presentation.community.view.composable.SessionDialog
-import com.newton.admin.presentation.community.view.composable.SessionItem
-import com.newton.admin.presentation.community.view.composable.SocialDialog
-import com.newton.admin.presentation.community.view.composable.SocialItem
-import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
-import com.newton.admin.presentation.role_management.executives.view.composables.UsersListModalBottomSheet
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.ui.CustomButton
-import com.newton.common_ui.ui.CustomCard
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.newton.admin.presentation.community.events.*
+import com.newton.admin.presentation.community.view.composable.*
+import com.newton.admin.presentation.community.viewmodels.*
+import com.newton.admin.presentation.roleManagement.executives.view.composables.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import java.text.*
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCommunityScreen(
     onEvent: (CommunityEvent) -> Unit,
-    viewModel: CommunityViewModel,
+    viewModel: CommunityViewModel
 ) {
     val addCommunityState by viewModel.communityState.collectAsState()
     val usersState by viewModel.userState.collectAsState()
@@ -78,7 +31,7 @@ fun AddCommunityScreen(
     val sessions = addCommunityState.sessions
     val socials = addCommunityState.socials
 
-    LaunchedEffect(key1=usersState.isLoading) {
+    LaunchedEffect(key1 = usersState.isLoading) {
         if (usersState.users.isEmpty()) {
             onEvent.invoke(CommunityEvent.LoadUsers(true))
         }
@@ -91,17 +44,19 @@ fun AddCommunityScreen(
         isLoading = addCommunityState.isLoading
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(16.dp)
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CustomCard(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -124,7 +79,12 @@ fun AddCommunityScreen(
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                         singleLine = true,
                         supportingText = {
-                            addCommunityState.errors["name"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                            addCommunityState.errors["name"]?.let {
+                                Text(
+                                    it,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
                         }
                     )
                     OutlinedTextField(
@@ -149,7 +109,12 @@ fun AddCommunityScreen(
                         },
                         readOnly = true,
                         supportingText = {
-                            addCommunityState.errors["date"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                            addCommunityState.errors["date"]?.let {
+                                Text(
+                                    it,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
                         }
                     )
                     OutlinedTextField(
@@ -158,21 +123,28 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.DescriptionChanged(it))
                         },
                         label = { Text("Description") },
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .heightIn(min = 100.dp),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                         supportingText = {
-                            addCommunityState.errors["description"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                            addCommunityState.errors["description"]?.let {
+                                Text(
+                                    it,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
                         }
                     )
                 }
             }
             CustomCard(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -190,7 +162,12 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
                         }
                     )
-                    addCommunityState.errors["lead"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    addCommunityState.errors["lead"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                     LeadershipSelectField(
                         label = "Co-Lead",
                         value = addCommunityState.coLead,
@@ -199,15 +176,26 @@ fun AddCommunityScreen(
                             onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
                         }
                     )
-                    addCommunityState.errors["colead"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    addCommunityState.errors["colead"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                     LeadershipSelectField(
                         label = "Secretary",
                         value = addCommunityState.secretary,
                         onClick = {
                             onEvent.invoke(CommunityEvent.CurrentRoleSelectionChange("secretary"))
                             onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
-                        })
-                    addCommunityState.errors["secretary"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                        }
+                    )
+                    addCommunityState.errors["secretary"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             }
             // sessions
@@ -234,7 +222,8 @@ fun AddCommunityScreen(
                     Text(
                         text = "No scheduled sessions",
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(vertical = 16.dp)
                             .fillMaxWidth(),
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -259,12 +248,17 @@ fun AddCommunityScreen(
                         }
                     }
                 }
-                addCommunityState.errors["sessions"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                addCommunityState.errors["sessions"]?.let {
+                    Text(
+                        it,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
             }
 
             CommunitySection(
                 title = "Contact Information",
-                icon = Icons.Outlined.Contacts,
+                icon = Icons.Outlined.Contacts
             ) {
                 OutlinedTextField(
                     value = addCommunityState.email,
@@ -274,7 +268,8 @@ fun AddCommunityScreen(
                     label = { Text("Email") },
                     leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
                     modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(
+                    keyboardOptions =
+                    KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
                     ),
@@ -288,7 +283,8 @@ fun AddCommunityScreen(
                     label = { Text("Phone") },
                     leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null) },
                     modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(
+                    keyboardOptions =
+                    KeyboardOptions(
                         keyboardType = KeyboardType.Phone,
                         imeAction = ImeAction.Next
                     ),
@@ -319,7 +315,8 @@ fun AddCommunityScreen(
                     Text(
                         text = "There is No socials associated to this community",
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(vertical = 16.dp)
                             .fillMaxWidth(),
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -345,10 +342,11 @@ fun AddCommunityScreen(
                 }
             }
             CustomCard(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -380,9 +378,10 @@ fun AddCommunityScreen(
                 onClick = {
                     onEvent.invoke(CommunityEvent.AddCommunity)
                 },
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp)
             ) {
                 Text("Add Community")
             }
@@ -446,7 +445,6 @@ fun AddCommunityScreen(
                                 val formattedDate = format.format(date)
 
                                 onEvent.invoke(CommunityEvent.DateFoundedChanged(formattedDate))
-
                             }
                             onEvent.invoke(CommunityEvent.ShowDatePicker(false))
                         }
@@ -479,7 +477,6 @@ fun AddCommunityScreen(
                         "co-lead" -> {
                             onEvent.invoke(CommunityEvent.CoLeadChanged(user.name))
                             onEvent.invoke(CommunityEvent.CoLeadIdChanged(user.id))
-
                         }
 
                         "secretary" -> {

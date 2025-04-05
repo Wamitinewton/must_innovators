@@ -66,25 +66,24 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
-
 
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
-    //Workmanager
+    // Workmanager
     implementation(Dependencies.work)
     implementation(Dependencies.hiltWorker)
 
-    //coil
+    // coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 

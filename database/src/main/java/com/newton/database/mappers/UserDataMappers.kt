@@ -1,7 +1,7 @@
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.auth_models.UserData
-import com.newton.database.entities.UserEntity
+import com.newton.core.domain.models.authModels.*
+import com.newton.database.entities.*
 
 fun UserEntity.toAuthedUser(): UserData {
     return UserData(
@@ -42,4 +42,3 @@ fun UserData.toUserEntity(): UserEntity {
         skills = skills
     )
 }
-

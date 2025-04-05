@@ -1,12 +1,10 @@
 package com.newton.home.di
 
-import com.newton.blogs.navigation.BlogsNavigationApi
-import com.newton.blogs.navigation.BlogsNavigationApiImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.blogs.navigation.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

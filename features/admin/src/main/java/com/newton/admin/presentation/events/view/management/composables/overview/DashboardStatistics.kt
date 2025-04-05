@@ -1,22 +1,12 @@
 package com.newton.admin.presentation.events.view.management.composables.overview
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Event
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.Percent
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin_models.EventsData
-import java.util.Locale
-
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.core.domain.models.adminModels.*
 
 @Composable
 fun DashboardStats(events: List<EventsData>) {
@@ -37,7 +27,8 @@ fun DashboardStats(events: List<EventsData>) {
 //    }
 
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -62,7 +53,7 @@ fun DashboardStats(events: List<EventsData>) {
 
         StatCard(
             title = "Attendance Rate",
-            value ="12%",
+            value = "12%",
             icon = Icons.Default.Percent,
             modifier = Modifier.weight(1f)
         )

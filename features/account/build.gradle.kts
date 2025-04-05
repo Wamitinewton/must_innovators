@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android") // Add this line
@@ -14,7 +13,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        minSdk =  28
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -54,7 +53,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
@@ -62,22 +61,20 @@ dependencies {
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
-    //coil
+    // coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
     // Compose Icons
     implementation(Dependencies.extendedIcons)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
     implementation(Dependencies.timber)
-
-
 
     implementation(project(":core"))
     implementation(project(":shared-ui"))
