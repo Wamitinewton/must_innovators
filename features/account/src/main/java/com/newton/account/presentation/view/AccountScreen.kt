@@ -33,6 +33,7 @@ import com.newton.account.presentation.composables.account.*
 import com.newton.account.presentation.events.*
 import com.newton.account.presentation.viewmodel.*
 import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,6 +47,7 @@ fun AccountScreen(
     onCreateTestimonial: () -> Unit,
     onLogoutClicked: () -> Unit,
     accountViewModel: UpdateAccountViewModel,
+    onSettingsClicked: () -> Unit,
     accountManagementViewModel: AccountManagementViewModel
 ) {
     val accountUiState by accountViewModel.accountState.collectAsState()
@@ -64,7 +66,7 @@ fun AccountScreen(
     }
 
     if (logoutState.isLoading) {
-        com.newton.commonUi.ui.LoadingDialog()
+        LoadingDialog()
     }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -90,7 +92,8 @@ fun AccountScreen(
                 },
                 onLogoutClicked = {
                     accountManagementViewModel.onLogoutEvent(LogoutEvent.Logout)
-                }
+                },
+                onSettingsClicked = onSettingsClicked
             )
         }
     ) {

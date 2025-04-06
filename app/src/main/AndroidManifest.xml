@@ -24,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Meruinnovators"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.newton.notifications.initializer.NotificationsInitializer"
+            android:value="androidx.startup" />
+
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -53,13 +58,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove"></provider>
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.notifications-startup"

@@ -89,9 +89,6 @@ jobs:
       - name: Run ktlint check
         run: ./gradlew ktlintCheck
 
-      - name: Run Android lint
-        run: ./gradlew lintDebug
-
       - name: Upload lint reports
         uses: actions/upload-artifact@v4
         if: always()

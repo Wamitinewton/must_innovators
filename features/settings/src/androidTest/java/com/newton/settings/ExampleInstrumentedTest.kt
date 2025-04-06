@@ -14,18 +14,27 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.di
+package com.newton.settings
 
-import com.newton.home.navigation.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import javax.inject.*
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
 
-@Module
-@InstallIn(SingletonComponent::class)
-object HomeNavigationModule {
-    @Provides
-    @Singleton
-    fun provideEventNavApi(): HomeNavigationApi = HomeNavigationApiImpl()
+import org.junit.Test
+import org.junit.runner.RunWith
+
+import org.junit.Assert.*
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest {
+    @Test
+    fun useAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.newton.settings.test", appContext.packageName)
+    }
 }

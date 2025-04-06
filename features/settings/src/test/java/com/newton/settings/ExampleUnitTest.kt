@@ -14,18 +14,20 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.di
+package com.newton.settings
 
-import com.newton.home.navigation.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import javax.inject.*
+import org.junit.Test
 
-@Module
-@InstallIn(SingletonComponent::class)
-object HomeNavigationModule {
-    @Provides
-    @Singleton
-    fun provideEventNavApi(): HomeNavigationApi = HomeNavigationApiImpl()
+import org.junit.Assert.*
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
 }

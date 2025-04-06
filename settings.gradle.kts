@@ -40,3 +40,4 @@ include(
 include(":shared")
 include(":features:testimonials")
 include(":features:partners")
+include(":features:settings")
