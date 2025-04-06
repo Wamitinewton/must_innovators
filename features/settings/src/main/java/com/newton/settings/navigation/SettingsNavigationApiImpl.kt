@@ -35,7 +35,7 @@ class SettingsNavigationApiImpl : SettingNavigationApi {
                     onPrivacyPolicyClicked = {},
                     onTermsOfServiceClicked = {},
                     onAboutUsClicked = {},
-                    onHelpAndSupportClicked = {},
+                    onHelpAndSupportClicked = {}
                 )
             }
         }

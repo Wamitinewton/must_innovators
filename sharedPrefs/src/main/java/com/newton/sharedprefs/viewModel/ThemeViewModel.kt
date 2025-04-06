@@ -50,8 +50,6 @@ class ThemeViewModel @Inject constructor(
         }
     }
 
-
-
     /**
      * Handles theme-related events
      */
@@ -70,20 +68,6 @@ class ThemeViewModel @Inject constructor(
                 setThemeMode(event.themeMode)
             }
         }
-    }
-
-
-    private fun updateThemeState() {
-        val isDarkTheme = prefsRepository.isDarkThemeEnabled()
-        val isSystemTheme = prefsRepository.isSystemThemeEnabled()
-
-        val themeMode = when {
-            isSystemTheme -> ThemeMode.SYSTEM
-            isDarkTheme -> ThemeMode.DARK
-            else -> ThemeMode.LIGHT
-        }
-
-        _themeState.value = ThemeUiState(themeMode = themeMode)
     }
 
     /**
@@ -114,17 +98,12 @@ class ThemeViewModel @Inject constructor(
             }
         }
     }
-
-
 }
-
-
 
 sealed class ThemeEvent {
     data object ToggleTheme : ThemeEvent()
     data class SetThemeMode(val themeMode: ThemeMode) : ThemeEvent()
 }
-
 
 data class ThemeUiState(
     val themeMode: ThemeMode = ThemeMode.LIGHT
