@@ -22,6 +22,7 @@ import com.newton.auth.presentation.signUp.state.*
 import com.newton.core.enums.*
 import com.newton.network.*
 import com.newton.network.domain.repositories.*
+import com.newton.sharedprefs.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -33,9 +34,21 @@ class SignupViewModel
 @Inject
 constructor(
     private val stateHolder: SignupStateHolder,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val prefsRepository: PrefsRepository
 ) : ViewModel() {
     val authUiState: StateFlow<SignupViewmodelState> = stateHolder.signUpState
+
+    init {
+        if (prefsRepository.isVerificationPending()) {
+            val savedEmail = prefsRepository.getUserEmail()
+            if (savedEmail.isNotEmpty()) {
+                stateHolder.updateState(SignupUiEvent.EmailChanged(savedEmail))
+
+                stateHolder.setSuccess("Please verify your email", AuthFlow.OTP_INPUT)
+            }
+        }
+    }
 
     fun onEvent(event: SignupUiEvent) {
         stateHolder.updateState(event)
@@ -55,6 +68,10 @@ constructor(
         viewModelScope.launch {
             try {
                 stateHolder.setLoading(true)
+
+                val signupRequest = stateHolder.getSignupRequest()
+                prefsRepository.setUserEmail(signupRequest.email)
+                prefsRepository.setVerificationPending(true)
 
                 authRepository.createUserWithEmailAndPassword(stateHolder.getSignupRequest())
                     .onEach { result ->
@@ -101,6 +118,8 @@ constructor(
                         is Resource.Success -> {
                             stateHolder.setSuccess(result.message, AuthFlow.SUCCESS)
                             Timber.d("OTP verified successfully")
+
+                            prefsRepository.setVerificationPending(false)
                         }
                     }
                 }.launchIn(this)

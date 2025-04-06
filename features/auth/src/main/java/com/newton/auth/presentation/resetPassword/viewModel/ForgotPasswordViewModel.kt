@@ -70,10 +70,6 @@ constructor(
                 stateHolder.resetPassword()
             }
 
-            is ForgotPasswordEvent.NavigateBack -> {
-                stateHolder.navigateBack()
-            }
-
             is ForgotPasswordEvent.DismissError -> {
                 stateHolder.dismissError()
             }

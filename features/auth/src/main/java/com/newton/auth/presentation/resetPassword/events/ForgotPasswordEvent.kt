@@ -31,8 +31,6 @@ sealed class ForgotPasswordEvent {
 
     data object ResetPassword : ForgotPasswordEvent()
 
-    data object NavigateBack : ForgotPasswordEvent()
-
     data object DismissError : ForgotPasswordEvent()
 
     data object DismissSuccess : ForgotPasswordEvent()

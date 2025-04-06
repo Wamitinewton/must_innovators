@@ -21,6 +21,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import com.newton.auth.presentation.login.event.*
 import com.newton.auth.presentation.login.state.*
@@ -84,35 +87,51 @@ fun LoginContent(
                 )
             }
         )
-        Spacer(modifier = Modifier.height(15.dp))
 
-        Row(
-            modifier =
-            Modifier
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Box(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 11.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(bottom = 16.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+                    shape = MaterialTheme.shapes.small
+                )
+                .border(
+                    width = 1.dp,
+                    brush = Brush.horizontalGradient(
+                        listOf(
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.tertiary
+                        )
+                    ),
+                    shape = MaterialTheme.shapes.small
+                )
+                .clickable(onClick = onVerifyAccountClick)
+                .padding(vertical = 12.dp, horizontal = 16.dp),
+            contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "verify existing account",
-                color = MaterialTheme.colorScheme.primary,
-                modifier =
-                Modifier.clickable(
-                    onClick = {
-                        onVerifyAccountClick()
-                    }
-                )
+                text = "Complete your registration! Verify your account now",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                ),
+                color = MaterialTheme.colorScheme.primary
             )
+        }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 11.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
             Text(
                 text = "Forgot password?",
                 color = MaterialTheme.colorScheme.primary,
-                modifier =
-                Modifier.clickable(
-                    onClick = {
-                        onForgotPasswordClick()
-                    }
-                )
+                modifier = Modifier.clickable(onClick = onForgotPasswordClick)
             )
         }
     }

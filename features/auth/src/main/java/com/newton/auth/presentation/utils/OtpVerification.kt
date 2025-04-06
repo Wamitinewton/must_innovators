@@ -278,7 +278,6 @@ fun OtpVerificationScreen(
         }
     }
 
-    // Focus on first box when screen appears
     DisposableEffect(Unit) {
         coroutineScope.launch {
             delay(300)
