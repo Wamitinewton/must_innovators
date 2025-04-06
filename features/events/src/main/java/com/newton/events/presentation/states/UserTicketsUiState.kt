@@ -16,7 +16,7 @@
  */
 package com.newton.events.presentation.states
 
-import com.newton.core.data.response.admin.*
+import com.newton.network.data.response.admin.*
 
 sealed class UserTicketsUiState {
     data object Initial : UserTicketsUiState()

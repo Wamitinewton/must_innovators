@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.events.events
 
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 
 sealed class EventEvents {
     data class SelectedEvent(val event: EventsData?) : EventEvents()

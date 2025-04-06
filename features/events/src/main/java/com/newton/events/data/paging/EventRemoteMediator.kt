@@ -18,12 +18,12 @@ package com.newton.events.data.paging
 
 import androidx.paging.*
 import androidx.room.*
-import com.newton.core.data.mappers.*
-import com.newton.core.data.remote.*
 import com.newton.database.dao.*
 import com.newton.database.db.*
 import com.newton.database.entities.*
 import com.newton.database.mappers.*
+import com.newton.network.data.mappers.*
+import com.newton.network.data.remote.*
 import retrofit2.*
 import java.io.*
 import javax.inject.*

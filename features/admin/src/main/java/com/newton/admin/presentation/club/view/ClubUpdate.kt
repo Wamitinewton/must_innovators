@@ -29,7 +29,7 @@ import com.newton.admin.presentation.club.event.*
 import com.newton.admin.presentation.club.viewmodel.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.admin.*
+import com.newton.network.domain.models.admin.*
 import timber.log.*
 
 @OptIn(ExperimentalMaterial3Api::class)

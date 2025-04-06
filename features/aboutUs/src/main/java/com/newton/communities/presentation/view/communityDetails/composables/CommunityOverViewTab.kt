@@ -39,7 +39,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.FlowRow
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 
 @Composable
 fun OverviewTab(community: Community) {

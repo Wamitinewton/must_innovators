@@ -30,7 +30,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 
 @Composable
 fun ProjectsSection(projects: List<Project>?) {

@@ -23,8 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.adminModels.*
 import com.newton.core.enums.*
+import com.newton.network.domain.models.adminModels.*
 
 @Composable
 fun FeedbackList(

@@ -26,8 +26,8 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.admin.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.admin.*
+import com.newton.network.domain.models.adminModels.*
 
 @Composable
 fun InteractiveLineGraph(

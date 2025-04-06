@@ -16,7 +16,7 @@
  */
 package com.newton.events.presentation.states
 
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 
 sealed class EventDetailsState {
     data object Initial : EventDetailsState()

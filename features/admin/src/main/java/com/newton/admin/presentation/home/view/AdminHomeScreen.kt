@@ -27,7 +27,7 @@ import com.newton.admin.presentation.home.events.*
 import com.newton.admin.presentation.home.view.composables.*
 import com.newton.admin.presentation.home.viewModel.*
 import com.newton.commonUi.composables.*
-import com.newton.core.domain.models.admin.*
+import com.newton.network.domain.models.admin.*
 import java.time.*
 import java.time.format.*
 

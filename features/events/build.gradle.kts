@@ -105,7 +105,9 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":database"))
-    implementation(project(":shared-ui"))
+    implementation(project(":commonUi"))
     implementation(project(":features:auth"))
     implementation(project(":navigation"))
+    implementation(project(":network"))
+    implementation(project(":shared"))
 }

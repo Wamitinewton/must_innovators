@@ -25,7 +25,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.admin.*
+import com.newton.network.domain.models.admin.*
 
 @Composable
 fun SessionItem(

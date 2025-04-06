@@ -19,7 +19,7 @@ package com.newton.database.mappers
 import com.newton.core.domain.models.testimonials.*
 import com.newton.database.entities.*
 
-fun TestimonialsData.toDomainTestimonials(): TestimonialsEntity {
+fun com.newton.network.domain.models.testimonials.TestimonialsData.toDomainTestimonials(): TestimonialsEntity {
     return TestimonialsEntity(
         id = id,
         content = content,
@@ -31,8 +31,8 @@ fun TestimonialsData.toDomainTestimonials(): TestimonialsEntity {
     )
 }
 
-fun TestimonialsEntity.toTestimonialsEntity(): TestimonialsData {
-    return TestimonialsData(
+fun TestimonialsEntity.toTestimonialsEntity(): com.newton.network.domain.models.testimonials.TestimonialsData {
+    return com.newton.network.domain.models.testimonials.TestimonialsData(
         id = id,
         content = content,
         created_at = createdAt,

@@ -16,8 +16,8 @@
  */
 package com.newton.home.presentation.states
 
-import com.newton.core.domain.models.homeModels.*
-import com.newton.core.domain.models.testimonials.*
+import com.newton.network.domain.models.homeModels.*
+import com.newton.network.domain.models.testimonials.*
 
 sealed class PartnersUiState {
     data object Loading : PartnersUiState()

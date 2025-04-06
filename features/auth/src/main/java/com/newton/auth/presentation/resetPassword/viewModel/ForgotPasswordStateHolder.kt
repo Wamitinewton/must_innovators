@@ -17,10 +17,10 @@
 package com.newton.auth.presentation.resetPassword.viewModel
 
 import com.newton.auth.presentation.resetPassword.states.*
-import com.newton.core.domain.models.authModels.*
-import com.newton.core.domain.repositories.*
 import com.newton.core.enums.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.authModels.*
+import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import timber.log.*

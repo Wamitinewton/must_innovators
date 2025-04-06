@@ -18,9 +18,9 @@ package com.newton.account.presentation.viewmodel
 
 import androidx.lifecycle.*
 import com.newton.account.presentation.states.*
-import com.newton.core.domain.models.authModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.authModels.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

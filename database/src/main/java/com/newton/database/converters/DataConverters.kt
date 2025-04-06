@@ -46,22 +46,22 @@ class DataConverters {
     }
 
     @TypeConverter
-    fun fromSocialMedia(value: SocialMedia?): String? = value?.let { gson.toJson(it) }
+    fun fromSocialMedia(value: com.newton.network.domain.models.authModels.SocialMedia?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
-    fun toSocialMedia(value: String?): SocialMedia? {
+    fun toSocialMedia(value: String?): com.newton.network.domain.models.authModels.SocialMedia? {
         return value?.let {
-            gson.fromJson(it, SocialMedia::class.java)
+            gson.fromJson(it, com.newton.network.domain.models.authModels.SocialMedia::class.java)
         }
     }
 
     @TypeConverter
-    fun fromProjectList(value: List<Project>?): String? = value?.let { gson.toJson(it) }
+    fun fromProjectList(value: List<com.newton.network.domain.models.authModels.Project>?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
-    fun toProjectList(value: String?): List<Project>? {
+    fun toProjectList(value: String?): List<com.newton.network.domain.models.authModels.Project>? {
         return value?.let {
-            val type = object : TypeToken<List<Project>>() {}.type
+            val type = object : TypeToken<List<com.newton.network.domain.models.authModels.Project>>() {}.type
             gson.fromJson(it, type)
         }
     }

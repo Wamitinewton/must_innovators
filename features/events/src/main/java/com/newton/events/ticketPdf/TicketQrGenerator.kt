@@ -20,8 +20,8 @@ import android.graphics.*
 import com.google.zxing.*
 import com.google.zxing.qrcode.*
 import com.google.zxing.qrcode.decoder.*
-import com.newton.core.data.response.admin.*
 import com.newton.core.utils.*
+import com.newton.network.data.response.admin.*
 
 class TicketQrGenerator {
     fun generateQrCode(

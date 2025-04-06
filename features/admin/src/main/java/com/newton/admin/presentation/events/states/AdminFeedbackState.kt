@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.events.states
 
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 
 data class AdminFeedbackState(
     val isLoading: Boolean = false,

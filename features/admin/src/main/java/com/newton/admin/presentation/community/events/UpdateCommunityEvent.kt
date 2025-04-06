@@ -16,9 +16,9 @@
  */
 package com.newton.admin.presentation.community.events
 
-import com.newton.core.domain.models.aboutUs.*
-import com.newton.core.domain.models.admin.*
-import com.newton.core.domain.models.admin.Session
+import com.newton.network.domain.models.aboutUs.*
+import com.newton.network.domain.models.admin.*
+import com.newton.network.domain.models.admin.Session
 
 sealed class UpdateCommunityEvent {
     data class SessionsChanged(val session: List<Session>) : UpdateCommunityEvent()

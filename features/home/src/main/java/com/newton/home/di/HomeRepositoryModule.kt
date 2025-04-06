@@ -16,9 +16,9 @@
  */
 package com.newton.home.di
 
-import com.newton.core.data.remote.*
-import com.newton.core.domain.repositories.*
 import com.newton.home.data.*
+import com.newton.network.data.remote.*
+import com.newton.network.domain.repositories.*
 import dagger.*
 import dagger.hilt.*
 import dagger.hilt.components.*

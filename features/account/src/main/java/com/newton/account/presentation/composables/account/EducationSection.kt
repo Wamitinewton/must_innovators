@@ -24,7 +24,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 
 @Composable
 fun EducationSection(user: UserData) {

@@ -23,7 +23,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.admin.*
+import com.newton.network.domain.models.admin.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

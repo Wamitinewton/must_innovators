@@ -29,11 +29,11 @@ data class UserEntity(
     val registrationNo: String? = null,
     val bio: String? = null,
     val techStacks: List<String>? = null,
-    val socialMedia: SocialMedia? = null,
+    val socialMedia: com.newton.network.domain.models.authModels.SocialMedia? = null,
     val photo: String? = null,
     val yearOfStudy: Int? = null,
     val graduationYear: Int? = null,
-    val projects: List<Project>? = null,
+    val projects: List<com.newton.network.domain.models.authModels.Project>? = null,
     val skills: List<String>? = null,
     @PrimaryKey(autoGenerate = false)
     val id: Int = 1

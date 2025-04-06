@@ -41,7 +41,7 @@ class MeruInnovatorsApp : Application(), Configuration.Provider {
     lateinit var notificationsManager: NotificationsManager
 
     @Inject
-    lateinit var authRepository: AuthRepository
+    lateinit var authRepository: com.newton.network.domain.repositories.AuthRepository
 
     override fun onCreate() {
         super.onCreate()

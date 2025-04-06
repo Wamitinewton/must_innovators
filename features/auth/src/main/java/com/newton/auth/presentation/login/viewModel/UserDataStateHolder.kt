@@ -17,9 +17,9 @@
 package com.newton.auth.presentation.login.viewModel
 
 import com.newton.auth.presentation.login.state.*
-import com.newton.core.domain.models.authModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.authModels.*
+import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import timber.log.*

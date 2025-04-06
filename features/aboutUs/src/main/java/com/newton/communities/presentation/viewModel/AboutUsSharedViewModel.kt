@@ -18,7 +18,7 @@ package com.newton.communities.presentation.viewModel
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 import dagger.hilt.android.lifecycle.*
 import javax.inject.*
 

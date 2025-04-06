@@ -16,7 +16,7 @@
  */
 package com.newton.account.presentation.states
 
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 
 data class ProfileViewState(
     val errorMessage: String? = null,

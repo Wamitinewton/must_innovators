@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.homeModels.*
+import com.newton.network.domain.models.homeModels.*
 
 @Composable
 fun StatusChip(status: String) {

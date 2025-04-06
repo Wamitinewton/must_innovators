@@ -24,9 +24,9 @@ import androidx.compose.ui.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
 import com.newton.events.presentation.events.*
 import com.newton.events.presentation.states.*
+import com.newton.network.domain.models.adminModels.*
 
 @Composable
 fun EventRegistrationContent(

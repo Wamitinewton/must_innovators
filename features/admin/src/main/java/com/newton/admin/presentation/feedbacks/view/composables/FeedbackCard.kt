@@ -36,8 +36,8 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import coil3.compose.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
 import com.newton.core.enums.*
+import com.newton.network.domain.models.adminModels.*
 import kotlinx.coroutines.*
 import java.text.*
 import java.util.*

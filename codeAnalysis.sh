@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./gradlew ktlintFormat && ./gradlew ktlintCheck
+./gradlew ktlintFormat && ./gradlew ktlintCheck && ./gradlew detekt && ./gradlew spotlessApply
 
 # Before use it, in the first time, you must guarantee some running permissions:
 # chmod +x codeAnalysis.sh

@@ -16,7 +16,7 @@
  */
 package com.newton.account.presentation.viewmodel
 
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import javax.inject.*
 
 @Singleton

@@ -21,7 +21,7 @@ dependencyResolutionManagement {
 
 include(
     ":app",
-    ":shared-ui",
+    ":commonUi",
     ":core",
     ":database",
     ":features:events",
@@ -37,3 +37,4 @@ include(
     ":sharedPrefs",
     ":network"
 )
+include(":shared")

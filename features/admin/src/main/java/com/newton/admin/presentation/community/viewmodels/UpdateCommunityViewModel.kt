@@ -19,9 +19,9 @@ package com.newton.admin.presentation.community.viewmodels
 import androidx.lifecycle.*
 import com.newton.admin.presentation.community.events.*
 import com.newton.admin.presentation.community.states.*
-import com.newton.core.domain.models.adminModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

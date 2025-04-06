@@ -16,9 +16,9 @@
  */
 package com.newton.admin.presentation.community.states
 
-import com.newton.core.domain.models.aboutUs.*
-import com.newton.core.domain.models.admin.*
-import com.newton.core.domain.models.admin.Session
+import com.newton.network.domain.models.aboutUs.*
+import com.newton.network.domain.models.admin.*
+import com.newton.network.domain.models.admin.Session
 
 data class UpdateCommunityState(
     val sessions: List<Session>? = null,

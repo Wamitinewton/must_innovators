@@ -32,9 +32,9 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import coil3.compose.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.testimonials.*
 import com.newton.core.utils.*
 import com.newton.home.presentation.states.*
+import com.newton.network.domain.models.testimonials.*
 import kotlinx.coroutines.*
 import kotlin.math.*
 

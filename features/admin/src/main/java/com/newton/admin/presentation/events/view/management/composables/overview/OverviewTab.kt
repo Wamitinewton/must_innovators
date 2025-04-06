@@ -23,7 +23,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 import java.time.*
 
 @Composable

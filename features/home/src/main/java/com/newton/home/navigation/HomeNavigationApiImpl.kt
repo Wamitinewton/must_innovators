@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.newton.core.utils.*
+import com.newton.home.data.*
 import com.newton.home.presentation.view.*
 import com.newton.home.presentation.viewmodels.*
 import com.newton.navigation.*
@@ -36,13 +37,13 @@ class HomeNavigationApiImpl : HomeNavigationApi {
             startDestination = NavigationRoutes.HomeRoute.routes
         ) {
             composable(route = NavigationRoutes.HomeRoute.routes) {
-                val parentEntry =
-                    remember(it) {
-                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
-                    }
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
+                }
                 val partnersViewModel = hiltViewModel<PartnersViewModel>()
                 val testimonialsViewModel = hiltViewModel<TestimonialsViewModel>()
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
+
                 HomeScreen(
                     partnersViewModel = partnersViewModel,
                     testimonialsViewModel = testimonialsViewModel,
@@ -60,39 +61,32 @@ class HomeNavigationApiImpl : HomeNavigationApi {
             }
 
             composable(route = NavigationRoutes.PartnersDetails.routes) {
-                val parentEntry =
-                    remember(it) {
-                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
-                    }
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
+                }
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 val context = LocalContext.current
+
                 PartnerDetailsScreen(
                     partnersSharedViewModel = partnersSharedViewModel,
                     onBackPressed = {
                         navHostController.navigateUp()
                     },
                     onSharePartner = { partner ->
-                        PackageHandlers.sharePartner(context, partner)
+                        PartnerContentUtils.sharePartner(context, partner)
                     },
                     onNavigateToWebsite = { url ->
-                        PackageHandlers.navigateToWebsite(
-                            context,
-                            url
-                        )
+                        PackageHandlers.navigateToWebsite(context, url)
                     },
                     onNavigateToLinkedIn = { linkedIn ->
-                        PackageHandlers.navigateToLinkedIn(
-                            context,
-                            linkedIn
-                        )
+                        PackageHandlers.navigateToLinkedIn(context, linkedIn)
                     },
                     onNavigateToTwitter = { twitter ->
-                        PackageHandlers.navigateToTwitter(
-                            context,
-                            twitter
-                        )
+                        PackageHandlers.navigateToTwitter(context, twitter)
                     },
-                    onContactEmail = { email -> PackageHandlers.contactViaEmail(context, email) }
+                    onContactEmail = { email ->
+                        PackageHandlers.contactViaEmail(context, email)
+                    }
                 )
             }
         }

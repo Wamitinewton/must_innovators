@@ -33,7 +33,7 @@ import androidx.paging.*
 import androidx.paging.compose.*
 import coil3.compose.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 import java.time.*
 
 @Composable

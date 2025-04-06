@@ -19,7 +19,7 @@ package com.newton.database.mappers
 import com.newton.core.data.response.admin.*
 import com.newton.database.entities.*
 
-fun PartnersResponse.toPartnersEntity(): PartnerEntity {
+fun com.newton.network.data.response.admin.PartnersResponse.toPartnersEntity(): PartnerEntity {
     return PartnerEntity(
         id,
         name,

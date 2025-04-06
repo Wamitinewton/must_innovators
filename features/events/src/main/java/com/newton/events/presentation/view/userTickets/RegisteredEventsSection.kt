@@ -27,8 +27,8 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
-import com.newton.core.data.response.admin.*
 import com.newton.events.presentation.states.*
+import com.newton.network.data.response.admin.*
 
 @Composable
 fun RegisteredEventsSection(

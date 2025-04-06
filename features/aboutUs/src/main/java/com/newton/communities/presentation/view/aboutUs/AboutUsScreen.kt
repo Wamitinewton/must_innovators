@@ -30,7 +30,7 @@ import com.newton.commonUi.composables.*
 import com.newton.communities.presentation.events.*
 import com.newton.communities.presentation.view.aboutUs.composables.*
 import com.newton.communities.presentation.viewModel.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 import kotlinx.coroutines.flow.*
 
 @OptIn(ExperimentalMaterial3Api::class)

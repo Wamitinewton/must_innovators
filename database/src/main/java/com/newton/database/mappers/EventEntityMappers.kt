@@ -21,7 +21,7 @@ import com.newton.core.domain.models.adminModels.*
 import com.newton.database.entities.*
 
 fun EventEntity.toDomainEvent() =
-    EventsData(
+    com.newton.network.domain.models.adminModels.EventsData(
         id = id,
         imageUrl = imageUrl,
         name = name,
@@ -34,7 +34,7 @@ fun EventEntity.toDomainEvent() =
         isVirtual = isVirtual
     )
 
-fun EventsData.toEntity(pageNumber: Int) =
+fun com.newton.network.domain.models.adminModels.EventsData.toEntity(pageNumber: Int) =
     EventEntity(
         id = id,
         imageUrl = imageUrl,
@@ -49,7 +49,7 @@ fun EventsData.toEntity(pageNumber: Int) =
         pageNumber = pageNumber
     )
 
-fun EventsData.toEventEntity() =
+fun com.newton.network.domain.models.adminModels.EventsData.toEventEntity() =
     EventEntity(
         id = id,
         imageUrl = imageUrl,
@@ -64,7 +64,7 @@ fun EventsData.toEventEntity() =
     )
 
 fun TicketsEntity.toRegistrationResponse() =
-    RegistrationResponse(
+    com.newton.network.data.response.admin.RegistrationResponse(
         course = course,
         educationalLevel = educationalLevel,
         email = email,
@@ -82,7 +82,7 @@ fun TicketsEntity.toRegistrationResponse() =
         isUsed = isUsed
     )
 
-fun RegistrationResponse.toTicketEntity() =
+fun com.newton.network.data.response.admin.RegistrationResponse.toTicketEntity() =
     TicketsEntity(
         course = course,
         educationalLevel = educationalLevel,
@@ -101,9 +101,9 @@ fun RegistrationResponse.toTicketEntity() =
         isUsed = isUsed
     )
 
-fun List<EventsData>.toEventsEntity(): List<EventEntity> = map { it.toEventEntity() }
+fun List<com.newton.network.domain.models.adminModels.EventsData>.toEventsEntity(): List<EventEntity> = map { it.toEventEntity() }
 
-fun List<RegistrationResponse>.toUserTicketsEntity(): List<TicketsEntity> =
+fun List<com.newton.network.data.response.admin.RegistrationResponse>.toUserTicketsEntity(): List<TicketsEntity> =
     map { it.toTicketEntity() }
 
-fun List<EventEntity>.toEventDataList(): List<EventsData> = map { it.toDomainEvent() }
+fun List<EventEntity>.toEventDataList(): List<com.newton.network.domain.models.adminModels.EventsData> = map { it.toDomainEvent() }

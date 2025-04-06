@@ -21,9 +21,9 @@ import com.newton.admin.data.mappers.*
 import com.newton.admin.data.mappers.UserDataMappers.toDomainList
 import com.newton.admin.presentation.roleManagement.executives.events.*
 import com.newton.admin.presentation.roleManagement.executives.states.*
-import com.newton.core.domain.models.adminModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

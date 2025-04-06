@@ -16,9 +16,9 @@
  */
 package com.newton.admin.data.mappers
 
-import com.newton.core.domain.models.adminModels.*
 import com.newton.core.enums.*
 import com.newton.database.entities.*
+import com.newton.network.domain.models.adminModels.*
 
 object UserFeedbackMapper {
     fun FeedbackData.toUserFeedbackEntity(): UserFeedbackEntity {
