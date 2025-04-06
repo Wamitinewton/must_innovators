@@ -219,4 +219,6 @@ dependencies {
     implementation(project(":features:settings"))
     implementation(project(":navigation"))
     implementation(project(":network"))
+    implementation(project(":shared"))
+    implementation(project(":sharedPrefs"))
 }

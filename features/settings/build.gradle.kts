@@ -80,4 +80,6 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":commonUi"))
     implementation(project(":navigation"))
+    implementation(project(":sharedPrefs"))
+    implementation(project(":shared"))
 }

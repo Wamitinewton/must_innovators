@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
 
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {

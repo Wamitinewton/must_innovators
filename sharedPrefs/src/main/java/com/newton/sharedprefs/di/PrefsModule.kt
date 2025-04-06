@@ -14,9 +14,12 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.sharedprefs
+package com.newton.sharedprefs.di
 
 import android.content.Context
+import com.newton.sharedprefs.prefsManager.*
+import com.newton.sharedprefs.data.*
+import com.newton.sharedprefs.domain.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +29,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PreferenceModule {
+object PrefsModule {
 
     @Provides
     @Singleton

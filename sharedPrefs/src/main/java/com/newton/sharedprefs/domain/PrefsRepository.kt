@@ -14,7 +14,9 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.sharedprefs
+package com.newton.sharedprefs.domain
+
+import kotlinx.coroutines.flow.*
 
 interface PrefsRepository {
     fun getUserOnboardingStatus(): Boolean
@@ -24,6 +26,9 @@ interface PrefsRepository {
 
     fun isDarkThemeEnabled(): Boolean
     fun setDarkThemeEnabled(enabled: Boolean)
+    fun observeThemeMode(): Flow<ThemePreferences>
+    fun isSystemThemeEnabled(): Boolean
+    fun setSystemThemeEnabled(enabled: Boolean)
 
     fun isVerificationPending(): Boolean
     fun setVerificationPending(pending: Boolean)

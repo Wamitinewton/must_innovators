@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.sharedprefs
+package com.newton.sharedprefs.prefsManager
 
 object PrefsConstants {
     const val PREFS_NAME = "meru_innovators_prefs"
@@ -22,6 +22,7 @@ object PrefsConstants {
     const val KEY_USER_ONBOARDED = "user_onboarded"
     const val KEY_PREFERENCES_COMPLETED = "preferences_completed"
     const val KEY_THEME_MODE = "theme_mode"
+    const val KEY_SYSTEM_THEME = "system_theme"
     const val KEY_USER_EMAIL = "user_email"
     const val KEY_VERIFICATION_PENDING = "verification_pending"
 }

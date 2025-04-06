@@ -22,7 +22,7 @@ import com.newton.auth.presentation.signUp.state.*
 import com.newton.core.enums.*
 import com.newton.network.*
 import com.newton.network.domain.repositories.*
-import com.newton.sharedprefs.*
+import com.newton.sharedprefs.domain.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

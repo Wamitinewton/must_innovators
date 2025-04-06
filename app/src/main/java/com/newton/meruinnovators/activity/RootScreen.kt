@@ -26,8 +26,8 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.platform.*
 import androidx.navigation.compose.*
 import com.google.accompanist.systemuicontroller.*
-import com.newton.meruinnovators.navigation.*
 import com.newton.commonUi.theme.Theme.MeruinnovatorsTheme
+import com.newton.meruinnovators.navigation.*
 import com.newton.navigation.*
 
 @Composable
@@ -59,36 +59,37 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
             (context as? Activity)?.finish()
         }
     }
-    MeruinnovatorsTheme {
-        SetupSystemUi(rememberSystemUiController(), MaterialTheme.colorScheme.background)
-        Scaffold(
-            bottomBar = {
-                if (!isShowBottomBar) {
-                    return@Scaffold
+    MeruinnovatorsTheme(
+        content = {
+            SetupSystemUi(rememberSystemUiController(), MaterialTheme.colorScheme.background)
+            Scaffold(
+                bottomBar = {
+                    if (!isShowBottomBar) {
+                        return@Scaffold
+                    }
+                    if (isAdminNavBar) {
+                        AdminNavBar(
+                            navController,
+                            currentDestination
+                        )
+                    } else {
+                        BottomNavigationBar(navController, currentDestination)
+                    }
                 }
-                if (isAdminNavBar) {
-                    AdminNavBar(
-                        navController,
-                        currentDestination
-                    )
-                } else {
-                    BottomNavigationBar(navController, currentDestination)
-                }
-            }
-        ) {
-            Column(
-                modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(it)
             ) {
-                MeruInnovatorsNavigation(
-                    navigationSubGraphs = navigationSubGraphs,
-                    navHostController = navController
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    MeruInnovatorsNavigation(
+                        navigationSubGraphs = navigationSubGraphs,
+                        navHostController = navController
+                    )
+                }
             }
         }
-    }
+    )
 }
 
 @Composable

@@ -29,8 +29,10 @@ import androidx.compose.ui.hapticfeedback.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
+import androidx.hilt.navigation.compose.*
 import com.newton.commonUi.composables.*
 import com.newton.core.enums.*
+import com.newton.sharedprefs.viewModel.*
 import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,8 +40,7 @@ import kotlinx.coroutines.*
 fun SettingsScreen(
     onBackPressed: () -> Unit,
     appVersion: String = "1.0.0",
-    initialThemeMode: ThemeMode = ThemeMode.SYSTEM,
-    onThemeChanged: (ThemeMode) -> Unit,
+    viewModel: ThemeViewModel = hiltViewModel(),
     onClearCache: () -> Unit,
     onNotificationSettingsChanged: (Boolean) -> Unit,
     onPrivacyPolicyClicked: () -> Unit,
@@ -51,7 +52,8 @@ fun SettingsScreen(
     val hapticFeedback = LocalHapticFeedback.current
     val coroutineScope = rememberCoroutineScope()
 
-    var themeMode by remember { mutableStateOf(initialThemeMode) }
+    val themeState by viewModel.themeState.collectAsState()
+
     var notificationsEnabled by remember { mutableStateOf(true) }
     var showThemeDialog by remember { mutableStateOf(false) }
     var showClearCacheDialog by remember { mutableStateOf(false) }
@@ -98,7 +100,7 @@ fun SettingsScreen(
                 SettingsItem(
                     icon = Icons.Outlined.DarkMode,
                     title = "Theme",
-                    subtitle = when (themeMode) {
+                    subtitle = when (themeState.themeMode) {
                         ThemeMode.LIGHT -> "Light"
                         ThemeMode.DARK -> "Dark"
                         ThemeMode.SYSTEM -> "System default"
@@ -209,10 +211,9 @@ fun SettingsScreen(
 
     if (showThemeDialog) {
         ThemeSelectionDialog(
-            currentTheme = themeMode,
+            currentTheme = themeState.themeMode,
             onThemeSelected = { selectedTheme ->
-                themeMode = selectedTheme
-                onThemeChanged(selectedTheme)
+                viewModel.handleEvent(ThemeEvent.SetThemeMode(selectedTheme))
                 showThemeDialog = false
             },
             onDismiss = { showThemeDialog = false }
