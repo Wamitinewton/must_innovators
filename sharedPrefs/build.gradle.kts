@@ -79,4 +79,6 @@ dependencies {
     // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
+
+    implementation(project(":core"))
 }

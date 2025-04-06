@@ -14,8 +14,11 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.sharedprefs
+package com.newton.sharedprefs.data
 
+import com.newton.sharedprefs.domain.*
+import com.newton.sharedprefs.prefsManager.*
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,6 +49,23 @@ class PrefsRepositoryImpl @Inject constructor(
 
     override fun setDarkThemeEnabled(enabled: Boolean) {
         preferenceManager.putBoolean(PrefsConstants.KEY_THEME_MODE, enabled)
+    }
+
+    override fun observeThemeMode(): Flow<ThemePreferences> {
+        val themeModeFlow = preferenceManager.observeBooleanPreference(PrefsConstants.KEY_THEME_MODE)
+        val systemThemeFlow = preferenceManager.observeBooleanPreference(PrefsConstants.KEY_SYSTEM_THEME)
+
+        return combine(themeModeFlow, systemThemeFlow) { dark, system ->
+            ThemePreferences(darkThemeEnabled = dark, systemThemeEnabled = system)
+        }
+    }
+
+    override fun isSystemThemeEnabled(): Boolean {
+        return preferenceManager.getBoolean(PrefsConstants.KEY_SYSTEM_THEME, false)
+    }
+
+    override fun setSystemThemeEnabled(enabled: Boolean) {
+        preferenceManager.putBoolean(PrefsConstants.KEY_SYSTEM_THEME, enabled)
     }
 
     override fun isVerificationPending(): Boolean {

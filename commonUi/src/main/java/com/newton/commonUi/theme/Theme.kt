@@ -20,6 +20,8 @@ import androidx.compose.foundation.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.*
+import androidx.hilt.navigation.compose.*
+import com.newton.core.enums.*
 import com.newton.meruinnovators.ui.theme.*
 
 object Theme {
@@ -119,15 +121,20 @@ object Theme {
 
     @Composable
     fun MeruinnovatorsTheme(
-        darkTheme: Boolean = isSystemInDarkTheme(),
-        content: @Composable () -> Unit
+        content: @Composable () -> Unit,
+        themeViewModel: com.newton.sharedprefs.viewModel.ThemeViewModel = hiltViewModel()
     ) {
-        val colorScheme =
-            if (darkTheme) {
-                DarkColorPalette
-            } else {
-                LightColorPalette
-            }
+        val themeState by themeViewModel.themeState.collectAsState()
+        val systemInDarkTheme = isSystemInDarkTheme()
+
+        val darkTheme = when (themeState.themeMode) {
+            ThemeMode.LIGHT -> false
+            ThemeMode.DARK -> true
+            ThemeMode.SYSTEM -> systemInDarkTheme
+        }
+        val colorScheme = remember(darkTheme) {
+            if (darkTheme) DarkColorPalette else LightColorPalette
+        }
 
         CompositionLocalProvider(LocalThemeMode provides darkTheme) {
             MaterialTheme(

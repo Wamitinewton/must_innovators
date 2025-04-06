@@ -75,4 +75,6 @@ dependencies {
 
     // timber
     implementation(Dependencies.timber)
+
+    implementation(project(":core"))
 }

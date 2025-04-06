@@ -88,4 +88,6 @@ dependencies {
     implementation(Dependencies.extendedIcons)
 
     implementation(project(":core"))
+    implementation(project(":shared"))
+    implementation(project(":sharedPrefs"))
 }

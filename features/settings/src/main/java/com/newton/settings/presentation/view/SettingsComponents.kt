@@ -26,7 +26,6 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.unit.*
 import com.newton.core.enums.*
-import java.util.*
 
 @Composable
 fun SettingsSectionHeader(title: String) {
@@ -195,38 +194,6 @@ fun ThemeSelectionDialog(
                         },
                         selected = theme == currentTheme,
                         onClick = { onThemeSelected(theme) }
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        }
-    )
-}
-
-@Composable
-fun LanguageSelectionDialog(
-    languages: List<Locale>,
-    currentLanguage: Locale,
-    onLanguageSelected: (Locale) -> Unit,
-    onDismiss: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Choose Language") },
-        text = {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                languages.forEach { locale ->
-                    RadioTextItem(
-                        text = locale.displayLanguage,
-                        selected = locale.language == currentLanguage.language,
-                        onClick = { onLanguageSelected(locale) }
                     )
                 }
             }

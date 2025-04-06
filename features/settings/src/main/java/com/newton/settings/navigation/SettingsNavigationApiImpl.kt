@@ -30,13 +30,12 @@ class SettingsNavigationApiImpl : SettingNavigationApi {
             composable(route = NavigationRoutes.SettingsRoute.routes) {
                 SettingsScreen(
                     onBackPressed = {},
-                    onThemeChanged = {},
                     onClearCache = {},
                     onNotificationSettingsChanged = {},
                     onPrivacyPolicyClicked = {},
                     onTermsOfServiceClicked = {},
                     onAboutUsClicked = {},
-                    onHelpAndSupportClicked = {}
+                    onHelpAndSupportClicked = {},
                 )
             }
         }
