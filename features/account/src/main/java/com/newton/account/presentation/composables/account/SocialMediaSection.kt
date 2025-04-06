@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 
 @Composable
 fun SocialMediaSection(socialMedia: SocialMedia?) {

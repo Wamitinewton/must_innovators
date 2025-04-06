@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import com.newton.admin.presentation.events.events.*
 import com.newton.admin.presentation.events.viewmodel.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 
 @Composable
 fun FeedbackTab(

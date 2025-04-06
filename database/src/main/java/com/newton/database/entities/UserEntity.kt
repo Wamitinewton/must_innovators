@@ -17,7 +17,7 @@
 package com.newton.database.entities
 
 import androidx.room.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 
 @Entity(tableName = "user")
 data class UserEntity(

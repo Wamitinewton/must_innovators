@@ -27,7 +27,7 @@ import com.newton.admin.presentation.events.view.management.composables.overview
 import com.newton.admin.presentation.events.viewmodel.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 import timber.log.*
 import java.time.*
 

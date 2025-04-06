@@ -18,7 +18,7 @@ package com.newton.admin.presentation.events.viewmodel
 
 import androidx.lifecycle.*
 import com.newton.admin.presentation.events.events.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 

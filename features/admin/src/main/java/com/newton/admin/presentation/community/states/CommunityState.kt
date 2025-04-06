@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.community.states
 
-import com.newton.core.domain.models.admin.*
+import com.newton.network.domain.models.admin.*
 
 data class CommunityState(
     val sessions: List<Session> = emptyList(),

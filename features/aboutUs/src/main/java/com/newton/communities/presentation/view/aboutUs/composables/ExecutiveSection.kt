@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.composables.animation.customAnimations.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 
 @Composable
 fun ExecutiveCard(

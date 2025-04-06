@@ -16,7 +16,7 @@
  */
 package com.newton.auth.di
 
-import com.newton.core.data.remote.*
+import com.newton.network.data.remote.*
 import dagger.*
 import dagger.hilt.*
 import dagger.hilt.components.*

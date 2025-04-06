@@ -17,10 +17,10 @@
 package com.newton.home.presentation.viewmodels
 
 import androidx.lifecycle.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.sharedBus.*
-import com.newton.core.utils.*
 import com.newton.home.presentation.states.*
+import com.newton.network.*
+import com.newton.network.domain.repositories.*
+import com.newton.shared.sharedBus.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -31,7 +31,7 @@ class TestimonialsViewModel
 @Inject
 constructor(
     private val homeRepository: HomeRepository,
-    private val testimonialsEventBus: TestimonialsEventBus
+    private val eventBus: EventBus
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Initial)
     val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
@@ -40,7 +40,7 @@ constructor(
         loadTestimonials()
 
         viewModelScope.launch {
-            testimonialsEventBus.testimonialUpdate.collect {
+            eventBus.testimonialUpdate.collect {
                 loadTestimonials()
             }
         }

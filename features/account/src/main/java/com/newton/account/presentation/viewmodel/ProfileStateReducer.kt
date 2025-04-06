@@ -17,7 +17,7 @@
 package com.newton.account.presentation.viewmodel
 
 import com.newton.account.presentation.states.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 

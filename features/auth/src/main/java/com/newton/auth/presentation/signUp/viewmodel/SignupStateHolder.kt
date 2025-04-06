@@ -18,8 +18,8 @@ package com.newton.auth.presentation.signUp.viewmodel
 
 import com.newton.auth.presentation.signUp.event.*
 import com.newton.auth.presentation.signUp.state.*
-import com.newton.core.domain.models.authModels.*
 import com.newton.core.enums.*
+import com.newton.network.domain.models.authModels.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 

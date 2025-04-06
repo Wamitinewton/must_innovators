@@ -20,7 +20,7 @@ import android.content.*
 import androidx.hilt.work.*
 import androidx.work.*
 import coil3.network.*
-import com.newton.core.domain.repositories.*
+import com.newton.network.domain.repositories.*
 import dagger.assisted.*
 import timber.log.*
 

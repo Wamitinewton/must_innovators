@@ -16,7 +16,7 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 import com.newton.database.entities.*
 
 fun ClubBioEntity.toDomain(): ClubBioData {
@@ -28,7 +28,7 @@ fun ClubBioEntity.toDomain(): ClubBioData {
         vision = vision,
         social_media =
         socialMedia.map {
-            SocialMediaX(
+            com.newton.network.domain.models.aboutUs.SocialMediaX(
                 platform = it.platform,
                 url = it.url
             )

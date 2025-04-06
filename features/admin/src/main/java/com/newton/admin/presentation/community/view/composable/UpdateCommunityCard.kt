@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.*
 import com.newton.admin.presentation.community.events.*
 import com.newton.admin.presentation.community.states.*
 import com.newton.commonUi.ui.FlowRow
-import com.newton.core.data.mappers.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.data.mappers.*
+import com.newton.network.domain.models.aboutUs.*
 
 @Composable
 fun UpdateCommunityCard(

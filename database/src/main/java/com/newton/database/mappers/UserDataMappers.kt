@@ -16,7 +16,7 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import com.newton.database.entities.*
 
 fun UserEntity.toAuthedUser(): UserData {

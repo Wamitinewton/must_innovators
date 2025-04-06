@@ -86,7 +86,9 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":features:events"))
-    implementation(project(":shared-ui"))
+    implementation(project(":commonUi"))
     implementation(project(":database"))
     implementation(project(":navigation"))
+    implementation(project(":network"))
+    implementation(project(":shared"))
 }

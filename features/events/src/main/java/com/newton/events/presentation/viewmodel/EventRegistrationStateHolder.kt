@@ -16,11 +16,11 @@
  */
 package com.newton.events.presentation.viewmodel
 
-import com.newton.core.data.response.admin.*
-import com.newton.core.domain.models.eventModels.*
 import com.newton.core.enums.*
 import com.newton.events.presentation.events.*
 import com.newton.events.presentation.states.*
+import com.newton.network.data.response.admin.*
+import com.newton.network.domain.models.eventModels.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 

@@ -16,10 +16,10 @@
  */
 package com.newton.communities.data.repository
 
-import com.newton.core.data.remote.*
-import com.newton.core.domain.models.aboutUs.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.data.remote.*
+import com.newton.network.domain.models.aboutUs.*
+import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 

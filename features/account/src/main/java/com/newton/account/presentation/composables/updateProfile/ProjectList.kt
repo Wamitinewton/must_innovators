@@ -40,7 +40,7 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.FlowRow
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 
 @Composable
 fun ProjectsList(

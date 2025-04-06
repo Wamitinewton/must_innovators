@@ -16,7 +16,7 @@
  */
 package com.newton.admin.data.mappers
 
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 
 object UserDataMappers {
     private fun UserData.toDomain(): User {

@@ -14,9 +14,28 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
+
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -56,4 +75,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Retrofit
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.retrofit2Converter)
+    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.kotlinxSerialization)
+
+    implementation(Dependencies.work)
+    implementation(Dependencies.hiltWorker)
+
+    // paging
+    implementation(Dependencies.pagingCompose)
+    implementation(Dependencies.pagingRuntime)
+
+    // timber
+    implementation(Dependencies.timber)
+
+    implementation(project(":core"))
 }

@@ -18,7 +18,7 @@ package com.newton.auth.presentation.login.viewModel
 
 import com.newton.auth.presentation.login.event.*
 import com.newton.auth.presentation.login.state.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 

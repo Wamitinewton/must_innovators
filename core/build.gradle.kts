@@ -66,14 +66,4 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
-
-    implementation(Dependencies.work)
-    implementation(Dependencies.hiltWorker)
-
-    // paging
-    implementation(Dependencies.pagingCompose)
-    implementation(Dependencies.pagingRuntime)
-
-    // timber
-    implementation(Dependencies.timber)
 }

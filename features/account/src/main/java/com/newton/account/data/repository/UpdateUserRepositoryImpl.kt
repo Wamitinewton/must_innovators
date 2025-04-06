@@ -16,13 +16,13 @@
  */
 package com.newton.account.data.repository
 
-import com.newton.core.data.remote.*
-import com.newton.core.data.response.auth.*
-import com.newton.core.domain.models.authModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
 import com.newton.database.dao.*
 import com.newton.database.mappers.*
+import com.newton.network.*
+import com.newton.network.data.remote.*
+import com.newton.network.data.response.auth.*
+import com.newton.network.domain.models.authModels.*
+import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 

@@ -19,9 +19,9 @@ package com.newton.auth.presentation.signUp.viewmodel
 import androidx.lifecycle.*
 import com.newton.auth.presentation.signUp.event.*
 import com.newton.auth.presentation.signUp.state.*
-import com.newton.core.domain.repositories.*
 import com.newton.core.enums.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

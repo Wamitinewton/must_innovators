@@ -16,8 +16,8 @@
  */
 package com.newton.admin.presentation.feedbacks.events
 
-import com.newton.core.domain.models.adminModels.*
 import com.newton.core.enums.*
+import com.newton.network.domain.models.adminModels.*
 
 sealed class FeedbackEvent {
     data class IsLoadingChange(val isLoading: Boolean) : FeedbackEvent()

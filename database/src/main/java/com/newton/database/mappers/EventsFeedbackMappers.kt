@@ -16,7 +16,7 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 import com.newton.database.entities.*
 
 fun EventsFeedback.toEventFeedbackEntity(): EventsFeedbackEntity {

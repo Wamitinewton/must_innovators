@@ -19,8 +19,10 @@ package com.newton.core.utils
 import android.content.*
 import android.content.pm.*
 import android.net.*
-import com.newton.core.domain.models.homeModels.*
 
+/**
+ * Generic utility for handling external app navigation and sharing
+ */
 object PackageHandlers {
     /**
      * Opens the website URL in a browser
@@ -121,10 +123,9 @@ object PackageHandlers {
         email: String
     ) {
         try {
-            val emailIntent =
-                Intent(Intent.ACTION_SENDTO).apply {
-                    data = Uri.parse("mailto:$email")
-                }
+            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:$email")
+            }
 
             if (isAppInstalled(context, "com.google.android.gm")) {
                 emailIntent.setPackage("com.google.android.gm")
@@ -137,23 +138,25 @@ object PackageHandlers {
     }
 
     /**
-     * Share partner information via any sharing-capable app
+     * Generic share function to share content via any sharing-capable app
+     *
+     * @param context The Android context
+     * @param shareText The text content to share
+     * @param shareTitle Optional title for the share dialog
      */
-    fun sharePartner(
+    fun shareContent(
         context: Context,
-        partner: PartnersData
+        shareText: String,
+        shareTitle: String = "Share via..."
     ) {
         try {
-            val shareText = createShareText(partner)
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+            }
 
-            val shareIntent =
-                Intent().apply {
-                    action = Intent.ACTION_SEND
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_TEXT, shareText)
-                }
-
-            context.startActivity(Intent.createChooser(shareIntent, "Share Partner via..."))
+            context.startActivity(Intent.createChooser(shareIntent, shareTitle))
         } catch (e: Exception) {
             throw e
         }
@@ -203,13 +206,12 @@ object PackageHandlers {
     private fun formatTwitterUrl(url: String): String {
         val formattedUrl = formatUrl(url)
         if (formattedUrl.contains("twitter.com/") || formattedUrl.contains("x.com/")) {
-            val username =
-                formattedUrl
-                    .replace("https://twitter.com/", "")
-                    .replace("http://twitter.com/", "")
-                    .replace("https://x.com/", "")
-                    .replace("http://x.com/", "")
-                    .substringBefore("/")
+            val username = formattedUrl
+                .replace("https://twitter.com/", "")
+                .replace("http://twitter.com/", "")
+                .replace("https://x.com/", "")
+                .replace("http://x.com/", "")
+                .substringBefore("/")
 
             return "twitter://user?screen_name=$username"
         }
@@ -222,34 +224,5 @@ object PackageHandlers {
         } else {
             "https://github.com/$githubUrl"
         }
-    }
-
-    /**
-     * Creates beautifully formatted text for sharing
-     */
-    private fun createShareText(partner: PartnersData): String {
-        val divider = "\n" + "✨".repeat(15) + "\n"
-
-        return """
-            |🌟 Amazing Partnership Opportunity! 🌟
-            |
-            |I'd like to share this wonderful partner with you:
-            |
-            |🏢 ${partner.name} 
-            |${if (partner.status.isNotEmpty()) "📊 Status: ${partner.status}\n" else ""}${if (partner.type.isNotEmpty()) "🔍 Type: ${partner.type}\n" else ""}
-            |$divider
-            |📝 About:
-            |${partner.description.take(150)}${if (partner.description.length > 150) "..." else ""}
-            |
-            |🌐 Website: ${partner.web_url}
-            |${if (partner.linked_in.isNotEmpty()) "📱 LinkedIn: ${partner.linked_in}\n" else ""}${if (partner.twitter.isNotEmpty()) "🐦 Twitter: ${partner.twitter}\n" else ""}
-            |
-            |✉️ Contact: ${partner.contact_email}
-            |$divider
-            |
-            |This partnership has been ${if (partner.ongoing) "ongoing since ${partner.start_date}" else "active from ${partner.start_date} to ${partner.end_date ?: "present"}"}
-            |
-            |Learn more about this partnership opportunity in our app!
-        """.trimMargin()
     }
 }

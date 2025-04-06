@@ -16,7 +16,7 @@
  */
 package com.newton.account.di
 
-import com.newton.core.data.remote.*
+import com.newton.network.data.remote.*
 import dagger.*
 import dagger.hilt.*
 import dagger.hilt.components.*
@@ -28,5 +28,7 @@ import javax.inject.*
 object TestimonialsApiModule {
     @Provides
     @Singleton
-    fun provideTestimonialApi(retrofit: Retrofit): TestimonialsService = retrofit.create(TestimonialsService::class.java)
+    fun provideTestimonialApi(retrofit: Retrofit): TestimonialsService = retrofit.create(
+        TestimonialsService::class.java
+    )
 }

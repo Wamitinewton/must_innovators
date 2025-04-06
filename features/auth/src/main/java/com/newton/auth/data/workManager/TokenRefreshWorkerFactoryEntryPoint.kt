@@ -18,7 +18,7 @@ package com.newton.auth.data.workManager
 
 import android.content.*
 import androidx.work.*
-import com.newton.core.domain.repositories.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.*
 import dagger.hilt.components.*
 import javax.inject.*

@@ -26,8 +26,8 @@ import androidx.paging.*
 import androidx.paging.compose.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
 import com.newton.events.presentation.viewmodel.*
+import com.newton.network.domain.models.adminModels.*
 
 @Composable
 fun EventsScreen(

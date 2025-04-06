@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.club.state
 
-import com.newton.core.domain.models.admin.*
+import com.newton.network.domain.models.admin.*
 
 data class ClubState(
     val name: String = "",

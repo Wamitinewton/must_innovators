@@ -20,8 +20,8 @@ import android.content.*
 import android.graphics.*
 import android.graphics.pdf.*
 import android.graphics.pdf.PdfDocument.PageInfo
-import com.newton.core.data.response.admin.*
 import com.newton.core.utils.*
+import com.newton.network.data.response.admin.*
 import java.io.*
 
 /**

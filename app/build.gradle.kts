@@ -206,7 +206,7 @@ dependencies {
 
     implementation(project(":features:auth"))
     implementation(project(":core"))
-    implementation(project(":shared-ui"))
+    implementation(project(":commonUi"))
     implementation(project(":features:events"))
     implementation(project(":features:blogs"))
     implementation(project(":features:account"))
@@ -217,4 +217,5 @@ dependencies {
     implementation(project(":notifications"))
     implementation(project(":features:feedback"))
     implementation(project(":navigation"))
+    implementation(project(":network"))
 }

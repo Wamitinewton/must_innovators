@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
 import com.newton.commonUi.composables.*
-import com.newton.core.domain.models.homeModels.*
 import com.newton.home.presentation.viewmodels.*
+import com.newton.network.domain.models.homeModels.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

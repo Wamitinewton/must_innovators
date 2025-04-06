@@ -30,7 +30,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 
 @Composable
 fun SessionsTab(sessions: List<Session>) {

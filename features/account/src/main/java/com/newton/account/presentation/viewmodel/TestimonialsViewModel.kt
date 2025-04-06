@@ -19,10 +19,10 @@ package com.newton.account.presentation.viewmodel
 import androidx.lifecycle.*
 import com.newton.account.presentation.events.*
 import com.newton.account.presentation.states.*
-import com.newton.core.domain.models.testimonials.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.sharedBus.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.testimonials.*
+import com.newton.network.domain.repositories.*
+import com.newton.shared.sharedBus.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
@@ -35,7 +35,7 @@ class TestimonialsViewModel
 @Inject
 constructor(
     private val testimonialRepository: TestimonialsRepository,
-    private val testimonialsEventBus: TestimonialsEventBus
+    private val eventBus: EventBus
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Idle)
     val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
@@ -102,7 +102,7 @@ constructor(
 
             _navigateToHome.send(TestimonialsNavigationEvent.NavigateToHome)
             Timber.d("NAVIGATING..............TO HOME SCREEN")
-            testimonialsEventBus.notifyTestimonialUpdate()
+            eventBus.notifyTestimonialUpdate()
         } catch (e: Exception) {
             _uiState.value =
                 TestimonialsUiState.Error("Failed to process testimonial: ${e.message}")

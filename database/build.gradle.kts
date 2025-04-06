@@ -72,4 +72,5 @@ dependencies {
     implementation(Dependencies.gsonCoverter)
 
     implementation(project(":core"))
+    implementation(project(":network"))
 }

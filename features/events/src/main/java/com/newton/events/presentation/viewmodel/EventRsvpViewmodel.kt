@@ -17,12 +17,12 @@
 package com.newton.events.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.newton.core.data.response.admin.*
-import com.newton.core.domain.repositories.*
 import com.newton.core.enums.*
-import com.newton.core.utils.*
 import com.newton.events.presentation.events.*
 import com.newton.events.presentation.states.*
+import com.newton.network.*
+import com.newton.network.data.response.admin.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import dagger.hilt.android.scopes.*
 import kotlinx.coroutines.*

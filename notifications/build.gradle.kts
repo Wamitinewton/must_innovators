@@ -80,7 +80,7 @@ dependencies {
 
     // Initializer
     implementation(Dependencies.initializer)
-    implementation(project(":shared-ui"))
+    implementation(project(":commonUi"))
 
     implementation(project(":database"))
 }

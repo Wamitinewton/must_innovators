@@ -19,7 +19,7 @@ package com.newton.database.converters
 import androidx.room.*
 import com.google.gson.*
 import com.google.gson.reflect.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import com.newton.database.entities.*
 
 class DataConverters {

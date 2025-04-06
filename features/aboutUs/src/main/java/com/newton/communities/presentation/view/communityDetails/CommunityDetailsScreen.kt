@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.*
 import com.newton.commonUi.composables.*
 import com.newton.communities.presentation.view.communityDetails.composables.*
 import com.newton.communities.presentation.viewModel.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -16,8 +16,8 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.homeModels.*
 import com.newton.database.entities.*
+import com.newton.network.domain.models.homeModels.*
 
 fun PartnersData.toPartnerEntity(): PartnersDataEntity {
     return PartnersDataEntity(

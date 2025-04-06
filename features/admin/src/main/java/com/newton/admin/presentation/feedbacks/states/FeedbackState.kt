@@ -16,8 +16,8 @@
  */
 package com.newton.admin.presentation.feedbacks.states
 
-import com.newton.core.domain.models.adminModels.*
 import com.newton.core.enums.*
+import com.newton.network.domain.models.adminModels.*
 
 data class FeedbackState(
     val isLoading: Boolean = false,

@@ -18,8 +18,8 @@ package com.newton.communities.presentation.viewModel
 
 import androidx.lifecycle.*
 import com.newton.communities.presentation.state.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

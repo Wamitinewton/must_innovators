@@ -17,18 +17,18 @@
 package com.newton.events.data.repository
 
 import androidx.paging.*
-import com.newton.core.data.mappers.*
-import com.newton.core.data.remote.*
-import com.newton.core.data.response.admin.*
-import com.newton.core.domain.models.adminModels.*
-import com.newton.core.domain.models.eventModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
 import com.newton.database.dao.*
 import com.newton.database.db.*
 import com.newton.database.mappers.*
 import com.newton.events.data.paging.*
 import com.newton.events.data.paging.PagingConstants.NETWORK_PAGE_SIZE
+import com.newton.network.*
+import com.newton.network.data.mappers.*
+import com.newton.network.data.remote.*
+import com.newton.network.data.response.admin.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.models.eventModels.*
+import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*

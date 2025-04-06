@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
 import com.newton.communities.presentation.state.*
 import com.newton.communities.presentation.view.aboutUs.composables.*
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 
 @Composable
 fun ExecutivesSection(uiState: ExecutiveUiState) {

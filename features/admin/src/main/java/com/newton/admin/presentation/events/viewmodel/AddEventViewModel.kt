@@ -21,9 +21,9 @@ import androidx.lifecycle.*
 import com.newton.admin.presentation.events.events.*
 import com.newton.admin.presentation.events.states.*
 import com.newton.commonUi.ui.*
-import com.newton.core.domain.models.adminModels.*
-import com.newton.core.domain.repositories.*
-import com.newton.core.utils.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
