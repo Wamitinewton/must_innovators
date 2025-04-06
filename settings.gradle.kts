@@ -38,3 +38,5 @@ include(
     ":network"
 )
 include(":shared")
+include(":features:testimonials")
+include(":features:partners")
