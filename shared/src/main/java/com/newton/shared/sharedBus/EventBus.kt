@@ -22,7 +22,7 @@ import timber.log.*
 import javax.inject.*
 
 @Singleton
-class TestimonialsEventBus
+class EventBus
 @Inject
 constructor() {
     private val _testimonialsUpdate =

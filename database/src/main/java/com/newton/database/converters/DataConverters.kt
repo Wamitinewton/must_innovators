@@ -19,7 +19,7 @@ package com.newton.database.converters
 import androidx.room.*
 import com.google.gson.*
 import com.google.gson.reflect.*
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import com.newton.database.entities.*
 
 class DataConverters {
@@ -46,22 +46,22 @@ class DataConverters {
     }
 
     @TypeConverter
-    fun fromSocialMedia(value: com.newton.network.domain.models.authModels.SocialMedia?): String? = value?.let { gson.toJson(it) }
+    fun fromSocialMedia(value: SocialMedia?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
-    fun toSocialMedia(value: String?): com.newton.network.domain.models.authModels.SocialMedia? {
+    fun toSocialMedia(value: String?): SocialMedia? {
         return value?.let {
-            gson.fromJson(it, com.newton.network.domain.models.authModels.SocialMedia::class.java)
+            gson.fromJson(it, SocialMedia::class.java)
         }
     }
 
     @TypeConverter
-    fun fromProjectList(value: List<com.newton.network.domain.models.authModels.Project>?): String? = value?.let { gson.toJson(it) }
+    fun fromProjectList(value: List<Project>?): String? = value?.let { gson.toJson(it) }
 
     @TypeConverter
-    fun toProjectList(value: String?): List<com.newton.network.domain.models.authModels.Project>? {
+    fun toProjectList(value: String?): List<Project>? {
         return value?.let {
-            val type = object : TypeToken<List<com.newton.network.domain.models.authModels.Project>>() {}.type
+            val type = object : TypeToken<List<Project>>() {}.type
             gson.fromJson(it, type)
         }
     }

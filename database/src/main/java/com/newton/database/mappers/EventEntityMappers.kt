@@ -16,12 +16,12 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.data.response.admin.*
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.data.response.admin.*
+import com.newton.network.domain.models.adminModels.*
 import com.newton.database.entities.*
 
 fun EventEntity.toDomainEvent() =
-    com.newton.network.domain.models.adminModels.EventsData(
+    EventsData(
         id = id,
         imageUrl = imageUrl,
         name = name,
@@ -34,7 +34,7 @@ fun EventEntity.toDomainEvent() =
         isVirtual = isVirtual
     )
 
-fun com.newton.network.domain.models.adminModels.EventsData.toEntity(pageNumber: Int) =
+fun EventsData.toEntity(pageNumber: Int) =
     EventEntity(
         id = id,
         imageUrl = imageUrl,
@@ -49,7 +49,7 @@ fun com.newton.network.domain.models.adminModels.EventsData.toEntity(pageNumber:
         pageNumber = pageNumber
     )
 
-fun com.newton.network.domain.models.adminModels.EventsData.toEventEntity() =
+fun EventsData.toEventEntity() =
     EventEntity(
         id = id,
         imageUrl = imageUrl,
@@ -64,7 +64,7 @@ fun com.newton.network.domain.models.adminModels.EventsData.toEventEntity() =
     )
 
 fun TicketsEntity.toRegistrationResponse() =
-    com.newton.network.data.response.admin.RegistrationResponse(
+    RegistrationResponse(
         course = course,
         educationalLevel = educationalLevel,
         email = email,
@@ -82,7 +82,7 @@ fun TicketsEntity.toRegistrationResponse() =
         isUsed = isUsed
     )
 
-fun com.newton.network.data.response.admin.RegistrationResponse.toTicketEntity() =
+fun RegistrationResponse.toTicketEntity() =
     TicketsEntity(
         course = course,
         educationalLevel = educationalLevel,
@@ -101,9 +101,9 @@ fun com.newton.network.data.response.admin.RegistrationResponse.toTicketEntity()
         isUsed = isUsed
     )
 
-fun List<com.newton.network.domain.models.adminModels.EventsData>.toEventsEntity(): List<EventEntity> = map { it.toEventEntity() }
+fun List<EventsData>.toEventsEntity(): List<EventEntity> = map { it.toEventEntity() }
 
-fun List<com.newton.network.data.response.admin.RegistrationResponse>.toUserTicketsEntity(): List<TicketsEntity> =
+fun List<RegistrationResponse>.toUserTicketsEntity(): List<TicketsEntity> =
     map { it.toTicketEntity() }
 
-fun List<EventEntity>.toEventDataList(): List<com.newton.network.domain.models.adminModels.EventsData> = map { it.toDomainEvent() }
+fun List<EventEntity>.toEventDataList(): List<EventsData> = map { it.toDomainEvent() }

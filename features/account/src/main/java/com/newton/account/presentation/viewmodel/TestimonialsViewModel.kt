@@ -35,7 +35,7 @@ class TestimonialsViewModel
 @Inject
 constructor(
     private val testimonialRepository: TestimonialsRepository,
-    private val testimonialsEventBus: TestimonialsEventBus
+    private val eventBus: EventBus
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Idle)
     val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
@@ -102,7 +102,7 @@ constructor(
 
             _navigateToHome.send(TestimonialsNavigationEvent.NavigateToHome)
             Timber.d("NAVIGATING..............TO HOME SCREEN")
-            testimonialsEventBus.notifyTestimonialUpdate()
+            eventBus.notifyTestimonialUpdate()
         } catch (e: Exception) {
             _uiState.value =
                 TestimonialsUiState.Error("Failed to process testimonial: ${e.message}")

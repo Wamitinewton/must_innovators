@@ -16,10 +16,10 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.testimonials.*
+import com.newton.network.domain.models.testimonials.*
 import com.newton.database.entities.*
 
-fun com.newton.network.domain.models.testimonials.TestimonialsData.toDomainTestimonials(): TestimonialsEntity {
+fun TestimonialsData.toDomainTestimonials(): TestimonialsEntity {
     return TestimonialsEntity(
         id = id,
         content = content,
@@ -31,8 +31,8 @@ fun com.newton.network.domain.models.testimonials.TestimonialsData.toDomainTesti
     )
 }
 
-fun TestimonialsEntity.toTestimonialsEntity(): com.newton.network.domain.models.testimonials.TestimonialsData {
-    return com.newton.network.domain.models.testimonials.TestimonialsData(
+fun TestimonialsEntity.toTestimonialsEntity(): TestimonialsData {
+    return TestimonialsData(
         id = id,
         content = content,
         created_at = createdAt,

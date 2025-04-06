@@ -217,4 +217,5 @@ dependencies {
     implementation(project(":notifications"))
     implementation(project(":features:feedback"))
     implementation(project(":navigation"))
+    implementation(project(":network"))
 }

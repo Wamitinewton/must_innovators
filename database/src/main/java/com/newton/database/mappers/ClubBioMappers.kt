@@ -16,11 +16,11 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.aboutUs.*
+import com.newton.network.domain.models.aboutUs.*
 import com.newton.database.entities.*
 
-fun ClubBioEntity.toDomain(): com.newton.network.domain.models.aboutUs.ClubBioData {
-    return com.newton.network.domain.models.aboutUs.ClubBioData(
+fun ClubBioEntity.toDomain(): ClubBioData {
+    return ClubBioData(
         id = id,
         name = name,
         about_us = aboutUs,
@@ -36,7 +36,7 @@ fun ClubBioEntity.toDomain(): com.newton.network.domain.models.aboutUs.ClubBioDa
     )
 }
 
-fun com.newton.network.domain.models.aboutUs.ClubBioData.toEntity(): ClubBioEntity {
+fun ClubBioData.toEntity(): ClubBioEntity {
     return ClubBioEntity(
         id = id,
         name = name,

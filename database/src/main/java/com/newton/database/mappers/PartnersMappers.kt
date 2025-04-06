@@ -16,10 +16,10 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.homeModels.*
 import com.newton.database.entities.*
+import com.newton.network.domain.models.homeModels.*
 
-fun com.newton.network.domain.models.homeModels.PartnersData.toPartnerEntity(): PartnersDataEntity {
+fun PartnersData.toPartnerEntity(): PartnersDataEntity {
     return PartnersDataEntity(
         id = id,
         achievements = achievements,
@@ -44,8 +44,8 @@ fun com.newton.network.domain.models.homeModels.PartnersData.toPartnerEntity(): 
     )
 }
 
-fun PartnersDataEntity.toDomainPartners(): com.newton.network.domain.models.homeModels.PartnersData {
-    return com.newton.network.domain.models.homeModels.PartnersData(
+fun PartnersDataEntity.toDomainPartners(): PartnersData {
+    return PartnersData(
         id = id,
         achievements = achievements,
         benefits = benefits,

@@ -17,7 +17,6 @@
 package com.newton.events.data.repository
 
 import androidx.paging.*
-import com.newton.core.data.response.admin.*
 import com.newton.database.dao.*
 import com.newton.database.db.*
 import com.newton.database.mappers.*

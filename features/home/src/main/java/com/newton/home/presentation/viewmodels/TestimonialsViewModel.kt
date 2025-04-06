@@ -31,7 +31,7 @@ class TestimonialsViewModel
 @Inject
 constructor(
     private val homeRepository: HomeRepository,
-    private val testimonialsEventBus: TestimonialsEventBus
+    private val eventBus: EventBus
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Initial)
     val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
@@ -40,7 +40,7 @@ constructor(
         loadTestimonials()
 
         viewModelScope.launch {
-            testimonialsEventBus.testimonialUpdate.collect {
+            eventBus.testimonialUpdate.collect {
                 loadTestimonials()
             }
         }

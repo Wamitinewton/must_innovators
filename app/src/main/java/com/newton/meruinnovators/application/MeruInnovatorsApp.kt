@@ -21,7 +21,7 @@ import androidx.work.*
 import coil3.*
 import com.google.firebase.*
 import com.newton.auth.data.workManager.*
-import com.newton.core.domain.repositories.*
+import com.newton.network.domain.repositories.*
 import com.newton.meruinnovators.BuildConfig
 import com.newton.notifications.manager.*
 import dagger.hilt.android.*
@@ -41,7 +41,7 @@ class MeruInnovatorsApp : Application(), Configuration.Provider {
     lateinit var notificationsManager: NotificationsManager
 
     @Inject
-    lateinit var authRepository: com.newton.network.domain.repositories.AuthRepository
+    lateinit var authRepository: AuthRepository
 
     override fun onCreate() {
         super.onCreate()

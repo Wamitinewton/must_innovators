@@ -16,11 +16,11 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.authModels.*
+import com.newton.network.domain.models.authModels.*
 import com.newton.database.entities.*
 
-fun UserEntity.toAuthedUser(): com.newton.network.domain.models.authModels.UserData {
-    return com.newton.network.domain.models.authModels.UserData(
+fun UserEntity.toAuthedUser(): UserData {
+    return UserData(
         id = id,
         username = userName,
         email = email,
@@ -39,7 +39,7 @@ fun UserEntity.toAuthedUser(): com.newton.network.domain.models.authModels.UserD
     )
 }
 
-fun com.newton.network.domain.models.authModels.UserData.toUserEntity(): UserEntity {
+fun UserData.toUserEntity(): UserEntity {
     return UserEntity(
         id = id ?: 1,
         userName = username,

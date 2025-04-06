@@ -16,10 +16,10 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.domain.models.adminModels.*
+import com.newton.network.domain.models.adminModels.*
 import com.newton.database.entities.*
 
-fun com.newton.network.domain.models.adminModels.EventsFeedback.toEventFeedbackEntity(): EventsFeedbackEntity {
+fun EventsFeedback.toEventFeedbackEntity(): EventsFeedbackEntity {
     return EventsFeedbackEntity(
         id = id,
         attendeeId = attendeeId,
@@ -30,8 +30,8 @@ fun com.newton.network.domain.models.adminModels.EventsFeedback.toEventFeedbackE
     )
 }
 
-fun EventsFeedbackEntity.toDomain(): com.newton.network.domain.models.adminModels.EventsFeedback {
-    return com.newton.network.domain.models.adminModels.EventsFeedback(
+fun EventsFeedbackEntity.toDomain(): EventsFeedback {
+    return EventsFeedback(
         id,
         attendeeId,
         rating,
@@ -41,5 +41,5 @@ fun EventsFeedbackEntity.toDomain(): com.newton.network.domain.models.adminModel
     )
 }
 
-fun List<com.newton.network.domain.models.adminModels.EventsFeedback>.toEventsFeedbackList(): List<EventsFeedbackEntity> =
+fun List<EventsFeedback>.toEventsFeedbackList(): List<EventsFeedbackEntity> =
     map { it.toEventFeedbackEntity() }

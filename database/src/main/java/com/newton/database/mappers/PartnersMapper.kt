@@ -16,10 +16,10 @@
  */
 package com.newton.database.mappers
 
-import com.newton.core.data.response.admin.*
+import com.newton.network.data.response.admin.*
 import com.newton.database.entities.*
 
-fun com.newton.network.data.response.admin.PartnersResponse.toPartnersEntity(): PartnerEntity {
+fun PartnersResponse.toPartnersEntity(): PartnerEntity {
     return PartnerEntity(
         id,
         name,
