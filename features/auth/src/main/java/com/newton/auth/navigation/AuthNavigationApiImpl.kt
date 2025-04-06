@@ -26,7 +26,7 @@ import com.newton.auth.presentation.resetPassword.viewModel.*
 import com.newton.auth.presentation.signUp.view.*
 import com.newton.auth.presentation.signUp.viewmodel.*
 import com.newton.navigation.*
-import com.newton.onBoarding.view.*
+import com.newton.onBoarding.presentation.view.*
 
 class AuthNavigationApiImpl : AuthNavigationApi {
     override fun registerGraph(

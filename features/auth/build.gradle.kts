@@ -54,9 +54,6 @@ android {
     buildFeatures {
         compose = true
     }
-//    composeOptions {
-//        kotlinCompilerExtensionVersion = "1.5.9"
-//    }
 
     kotlinOptions {
         jvmTarget = "11"
@@ -115,4 +112,5 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":network"))
     implementation(project(":shared"))
+    implementation(project(":sharedPrefs"))
 }

@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.onBoarding.view
+package com.newton.onBoarding.presentation.view
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -319,7 +319,6 @@ fun OnboardingScreen(
                             )
                         }
                     }
-
                     Spacer(modifier = Modifier.height(24.dp))
                 }
             }

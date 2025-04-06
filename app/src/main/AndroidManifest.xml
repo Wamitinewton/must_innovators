@@ -25,10 +25,6 @@
         android:theme="@style/Theme.Meruinnovators"
         tools:targetApi="31">
 
-        <meta-data
-            android:name="com.newton.notifications.initializer.NotificationsInitializer"
-            android:value="androidx.startup" />
-
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -60,8 +56,10 @@
         </service>
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.notifications-startup"
+            android:authorities="com.newton.meruinnovators.dev.notifications-startup"
             android:exported="false"
+            tools:replace="android:authorities"
+            android:initOrder="101"
             tools:node="merge">
             <meta-data
                 android:name="com.newton.notifications.initializer.NotificationsInitializer"
@@ -75,6 +73,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
+
+            <meta-data
+                android:name="com.newton.notifications.initializer.NotificationsInitializer"
+                android:value="androidx.startup" />
         </provider>
     </application>
 

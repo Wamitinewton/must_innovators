@@ -16,7 +16,6 @@
  */
 package com.newton.auth.presentation.resetPassword.view
 
-import androidx.activity.compose.*
 import androidx.compose.runtime.*
 import com.newton.auth.presentation.resetPassword.events.*
 import com.newton.auth.presentation.resetPassword.viewModel.*
@@ -76,7 +75,7 @@ fun ForgotPasswordRoute(
                             )
                         },
                         onVerifyOtp = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.VerifyOtp) },
-                        onBackPressed = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.NavigateBack) },
+                        onBackPressed = { },
                         resendOtpError = state.otpServerError,
                         onResendOtp = { forgotPasswordViewModel.onEvent(ForgotPasswordEvent.RequestOtp) }
                     )
@@ -110,9 +109,5 @@ fun ForgotPasswordRoute(
 
                 else -> {}
             }
-    }
-
-    BackHandler(enabled = state.passwordRecoveryFlow != AuthFlow.EMAIL_INPUT) {
-        forgotPasswordViewModel.onEvent(ForgotPasswordEvent.NavigateBack)
     }
 }

@@ -209,29 +209,4 @@ class ForgotPasswordStateHolder(
             }
         }
     }
-
-    fun navigateBack() {
-        _state.update { state ->
-            when (state.passwordRecoveryFlow) {
-                AuthFlow.EMAIL_INPUT -> state
-                AuthFlow.OTP_INPUT ->
-                    state.copy(
-                        passwordRecoveryFlow = AuthFlow.EMAIL_INPUT,
-                        otp = "",
-                        otpError = null
-                    )
-
-                AuthFlow.PASSWORD_RESET ->
-                    state.copy(
-                        passwordRecoveryFlow = AuthFlow.OTP_INPUT,
-                        password = "",
-                        confirmPassword = "",
-                        passwordError = null,
-                        confirmPasswordError = null
-                    )
-
-                else -> state
-            }
-        }
-    }
 }
