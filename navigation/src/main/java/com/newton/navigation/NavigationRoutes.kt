@@ -88,4 +88,5 @@ sealed class NavigationRoutes(val routes: String) {
     data object ClubUpdate : NavigationRoutes("club_update_screen")
 
     data object PartnersDetails : NavigationRoutes("partners_details")
+    data object SettingsRoute : NavigationRoutes("settings_screen")
 }

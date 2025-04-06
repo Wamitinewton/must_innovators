@@ -32,4 +32,5 @@ sealed class NavigationSubGraphRoutes(val route: String) {
     data object AboutUs : NavigationSubGraphRoutes(route = "/communities_")
 
     data object UserFeedback : NavigationSubGraphRoutes(route = "/user-feedback_")
+    data object Settings : NavigationSubGraphRoutes(route = "/settings")
 }

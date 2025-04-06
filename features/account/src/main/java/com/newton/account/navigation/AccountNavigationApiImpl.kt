@@ -61,6 +61,9 @@ class AccountNavigationApiImpl : AccountNavigationApi {
                     accountManagementViewModel = accountManagementViewModel,
                     onCreateTestimonial = {
                         navHostController.navigate(NavigationRoutes.CreateTestimonialsRoute.routes)
+                    },
+                    onSettingsClicked = {
+                        navHostController.navigate(NavigationRoutes.SettingsRoute.routes)
                     }
                 )
             }

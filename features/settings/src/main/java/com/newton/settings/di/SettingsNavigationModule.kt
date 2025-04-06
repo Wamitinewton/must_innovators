@@ -14,18 +14,19 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.di
+package com.newton.settings.di
 
-import com.newton.home.navigation.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import javax.inject.*
+import com.newton.settings.navigation.*
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object HomeNavigationModule {
+object SettingsNavigationModule {
     @Provides
     @Singleton
-    fun provideEventNavApi(): HomeNavigationApi = HomeNavigationApiImpl()
+    fun provideSettingsNavigationApi(): SettingNavigationApi = SettingsNavigationApiImpl()
 }

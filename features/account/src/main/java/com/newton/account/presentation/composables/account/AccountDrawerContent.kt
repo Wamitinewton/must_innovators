@@ -36,6 +36,7 @@ fun AccountDrawerContent(
     onMyEventsClick: () -> Unit,
     onFeedbackClicked: () -> Unit = {},
     onDeleteAccountClicked: () -> Unit,
+    onSettingsClicked: () -> Unit,
     onLogoutClicked: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -82,7 +83,6 @@ fun AccountDrawerContent(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            // My Events Item
             NavigationDrawerItem(
                 icon = {
                     Icon(
@@ -127,7 +127,7 @@ fun AccountDrawerContent(
                     )
                 },
                 selected = false,
-                onClick = {}
+                onClick = onSettingsClicked
             )
 
             // Logout Item
