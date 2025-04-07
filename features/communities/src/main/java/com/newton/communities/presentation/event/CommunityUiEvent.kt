@@ -23,7 +23,4 @@ sealed class CommunityUiEvent {
         data object DismissError : Action()
     }
 
-    sealed class Effect {
-        data class ShowSnackbar(val message: String) : Effect()
-    }
 }
