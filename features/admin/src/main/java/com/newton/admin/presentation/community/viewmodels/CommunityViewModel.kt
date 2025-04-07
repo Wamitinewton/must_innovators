@@ -16,26 +16,30 @@
  */
 package com.newton.admin.presentation.community.viewmodels
 
-import androidx.lifecycle.*
-import com.newton.admin.data.mappers.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.newton.admin.data.mappers.User
 import com.newton.admin.data.mappers.UserDataMappers.toDomainList
-import com.newton.admin.presentation.community.events.*
-import com.newton.admin.presentation.community.states.*
-import com.newton.network.*
-import com.newton.network.domain.models.adminModels.*
-import com.newton.network.domain.repositories.*
-import dagger.hilt.android.lifecycle.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import javax.inject.*
-import kotlin.collections.set
+import com.newton.admin.presentation.community.events.CommunityEvent
+import com.newton.admin.presentation.community.states.CommunityState
+import com.newton.admin.presentation.community.states.UsersState
+import com.newton.network.Resource
+import com.newton.network.domain.models.adminModels.AddCommunityRequest
+import com.newton.network.domain.repositories.AdminRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class CommunityViewModel
-@Inject
-constructor(
+class CommunityViewModel @Inject constructor(
     private val repository: AdminRepository
 ) : ViewModel() {
+
     private val _communityState = MutableStateFlow(CommunityState())
     val communityState: StateFlow<CommunityState> = _communityState.asStateFlow()
 
@@ -46,21 +50,9 @@ constructor(
         when (event) {
             is CommunityEvent.CoLeadChanged -> _communityState.update { it.copy(coLead = event.coLead) }
             is CommunityEvent.DateFoundedChanged -> _communityState.update { it.copy(dateFounded = event.date) }
-            is CommunityEvent.DescriptionChanged ->
-                _communityState.update {
-                    it.copy(
-                        description = event.description
-                    )
-                }
-
+            is CommunityEvent.DescriptionChanged -> _communityState.update { it.copy(description = event.description) }
             is CommunityEvent.EmailCHanged -> _communityState.update { it.copy(email = event.email) }
-            is CommunityEvent.IsRecruitingChanged ->
-                _communityState.update {
-                    it.copy(
-                        isRecruiting = event.recruiting
-                    )
-                }
-
+            is CommunityEvent.IsRecruitingChanged -> _communityState.update { it.copy(isRecruiting = event.recruiting) }
             is CommunityEvent.LeadChanged -> _communityState.update { it.copy(lead = event.lead) }
             is CommunityEvent.NameChanged -> _communityState.update { it.copy(name = event.name) }
             is CommunityEvent.PhoneChanged -> _communityState.update { it.copy(phone = event.phone) }
@@ -68,36 +60,27 @@ constructor(
             is CommunityEvent.SessionsChanged -> _communityState.update { it.copy(sessions = event.session) }
             is CommunityEvent.SocialsChanged -> _communityState.update { it.copy(socials = event.socials) }
             is CommunityEvent.ToolsChanged -> _communityState.update { it.copy(toolsText = event.tools) }
-            is CommunityEvent.CurrentRoleSelectionChange ->
-                _communityState.update {
-                    it.copy(
-                        currentRoleSelection = event.currentRole
-                    )
-                }
+            is CommunityEvent.CurrentRoleSelectionChange -> _communityState.update {
+                it.copy(
+                    currentRoleSelection = event.currentRole
+                )
+            }
 
-            is CommunityEvent.DateForFieldChange ->
-                _communityState.update {
-                    it.copy(
-                        dateFounded = event.dateForField
-                    )
-                }
-
+            is CommunityEvent.DateForFieldChange -> _communityState.update { it.copy(dateFounded = event.dateForField) }
             is CommunityEvent.DateFounded -> _communityState.update { it.copy(dateFounded = event.date) }
             is CommunityEvent.SessionDate -> _communityState.update { it.copy(sessionDate = event.date) }
             is CommunityEvent.SessionToEdit -> _communityState.update { it.copy(sessionToEdit = event.session) }
-            is CommunityEvent.ShowAddSession ->
-                _communityState.update {
-                    it.copy(
-                        showAddSessionDialog = event.shown
-                    )
-                }
+            is CommunityEvent.ShowAddSession -> _communityState.update {
+                it.copy(
+                    showAddSessionDialog = event.shown
+                )
+            }
 
-            is CommunityEvent.ShowAddSocialDialog ->
-                _communityState.update {
-                    it.copy(
-                        showAddSocialDialog = event.shown
-                    )
-                }
+            is CommunityEvent.ShowAddSocialDialog -> _communityState.update {
+                it.copy(
+                    showAddSocialDialog = event.shown
+                )
+            }
 
             is CommunityEvent.ShowBottomSheet -> _communityState.update { it.copy(showBottomSheet = event.shown) }
             is CommunityEvent.ShowDatePicker -> _communityState.update { it.copy(showDatePicker = event.shown) }
@@ -106,14 +89,9 @@ constructor(
             is CommunityEvent.LoadUsers -> getAllUsers(event.isRefresh)
             is CommunityEvent.CoLeadIdChanged -> _communityState.update { it.copy(coLeadId = event.coLeadId) }
             is CommunityEvent.LeadIdChanged -> _communityState.update { it.copy(leadId = event.leadId) }
-            is CommunityEvent.SecretaryIdChanged ->
-                _communityState.update {
-                    it.copy(
-                        secretaryId = event.secretaryId
-                    )
-                }
-
+            is CommunityEvent.SecretaryIdChanged -> _communityState.update { it.copy(secretaryId = event.secretaryId) }
             is CommunityEvent.SearchQuery -> _usersState.update { it.copy(searchQuery = event.query) }
+            CommunityEvent.ToDefault -> toDefault()
         }
     }
 
@@ -152,7 +130,6 @@ constructor(
             }
         }
     }
-
     private fun validate(): Boolean {
         val errors = mutableMapOf<String, String>()
         if (_communityState.value.name.isBlank()) {
@@ -184,34 +161,32 @@ constructor(
         return errors.isEmpty()
     }
 
+
+
     private fun addCommunity() {
         if (validate()) {
-            val community =
-                AddCommunityRequest(
-                    name = _communityState.value.name,
-                    community_lead = _communityState.value.leadId!!,
-                    co_lead = _communityState.value.coLeadId!!,
-                    secretary = _communityState.value.secretaryId!!,
-                    email = _communityState.value.email,
-                    phone_number = _communityState.value.phone,
-                    is_recruiting = _communityState.value.isRecruiting,
-                    description = _communityState.value.description,
-                    founding_date = _communityState.value.dateFounded,
-                    tech_stack =
-                    _communityState.value.toolsText.split(",").map { it.trim() }
-                        .filter { it.isNotEmpty() },
-                    sessions = _communityState.value.sessions,
-                    social_media = _communityState.value.socials
-                )
+            val community = AddCommunityRequest(
+                name = _communityState.value.name,
+                community_lead = _communityState.value.leadId!!,
+                co_lead = _communityState.value.coLeadId!!,
+                secretary = _communityState.value.secretaryId!!,
+                email = _communityState.value.email,
+                phone_number = _communityState.value.phone,
+                is_recruiting = _communityState.value.isRecruiting,
+                description = _communityState.value.description,
+                founding_date = _communityState.value.dateFounded,
+                tech_stack = _communityState.value.toolsText.split(",").map { it.trim() }
+                    .filter { it.isNotEmpty() },
+                sessions = _communityState.value.sessions,
+                social_media = _communityState.value.socials
+            )
             viewModelScope.launch {
                 repository.addCommunity(community).collectLatest { result ->
                     when (result) {
                         is Resource.Error -> {
-                            _communityState.value =
-                                _communityState.value.copy(
-                                    uploadError = result.message
-                                        ?: "Unknown error when adding community"
-                                )
+                            _communityState.value = _communityState.value.copy(
+                                uploadError = result.message ?: "Unknown error when adding community"
+                            )
                         }
 
                         is Resource.Loading -> {
@@ -220,12 +195,11 @@ constructor(
                         }
 
                         is Resource.Success -> {
-                            _communityState.value =
-                                _communityState.value.copy(
-                                    isLoading = false,
-                                    uploadError = null
-                                )
-                            toDefault()
+                            _communityState.value = _communityState.value.copy(
+                                isLoading = false,
+                                uploadError = null,
+                                isSuccess = true
+                            )
                         }
                     }
                 }
@@ -235,23 +209,21 @@ constructor(
 
     private fun updateCommunity() {
         if (validate()) {
-            val community =
-                AddCommunityRequest(
-                    name = _communityState.value.name,
-                    community_lead = _communityState.value.leadId!!,
-                    co_lead = _communityState.value.coLeadId!!,
-                    secretary = _communityState.value.secretaryId!!,
-                    email = _communityState.value.email,
-                    phone_number = _communityState.value.phone,
-                    is_recruiting = _communityState.value.isRecruiting,
-                    description = _communityState.value.description,
-                    founding_date = _communityState.value.dateFounded,
-                    tech_stack =
-                    _communityState.value.toolsText.split(",").map { it.trim() }
-                        .filter { it.isNotEmpty() },
-                    sessions = _communityState.value.sessions,
-                    social_media = _communityState.value.socials
-                )
+            val community = AddCommunityRequest(
+                name = _communityState.value.name,
+                community_lead = _communityState.value.leadId!!,
+                co_lead = _communityState.value.coLeadId!!,
+                secretary = _communityState.value.secretaryId!!,
+                email = _communityState.value.email,
+                phone_number = _communityState.value.phone,
+                is_recruiting = _communityState.value.isRecruiting,
+                description = _communityState.value.description,
+                founding_date = _communityState.value.dateFounded,
+                tech_stack = _communityState.value.toolsText.split(",").map { it.trim() }
+                    .filter { it.isNotEmpty() },
+                sessions = _communityState.value.sessions,
+                social_media = _communityState.value.socials
+            )
             viewModelScope.launch {
                 repository.addCommunity(community).collectLatest { result ->
                     when (result) {
@@ -266,11 +238,10 @@ constructor(
                         }
 
                         is Resource.Success -> {
-                            _communityState.value =
-                                _communityState.value.copy(
-                                    isLoading = false,
-                                    uploadError = null
-                                )
+                            _communityState.value = _communityState.value.copy(
+                                isLoading = false,
+                                uploadError = null
+                            )
                         }
                     }
                 }
@@ -281,10 +252,9 @@ constructor(
     fun getSearchedUser(): List<User> {
         val query = _usersState.value.searchQuery.lowercase()
         return _usersState.value.users.filter { user ->
-            val matchesSearch =
-                query.isEmpty() ||
-                    user.name.lowercase().contains(query) ||
-                    user.email.lowercase().contains(query)
+            val matchesSearch = query.isEmpty() ||
+                user.name.lowercase().contains(query) ||
+                user.email.lowercase().contains(query)
             matchesSearch
         }
     }

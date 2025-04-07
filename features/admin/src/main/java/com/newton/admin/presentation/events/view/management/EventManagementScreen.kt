@@ -16,20 +16,32 @@
  */
 package com.newton.admin.presentation.events.view.management
 
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import com.newton.admin.presentation.events.events.*
-import com.newton.admin.presentation.events.view.management.composables.attendees.*
-import com.newton.admin.presentation.events.view.management.composables.calendar.*
-import com.newton.admin.presentation.events.view.management.composables.feedback.*
-import com.newton.admin.presentation.events.view.management.composables.overview.*
-import com.newton.admin.presentation.events.viewmodel.*
-import com.newton.commonUi.composables.*
-import com.newton.commonUi.ui.*
-import com.newton.network.domain.models.adminModels.*
-import timber.log.*
-import java.time.*
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.newton.admin.presentation.events.events.EventEvents
+import com.newton.admin.presentation.events.view.management.composables.attendees.AttendeesTab
+import com.newton.admin.presentation.events.view.management.composables.calendar.CalendarTab
+import com.newton.admin.presentation.events.view.management.composables.feedback.FeedbackTab
+import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTab
+import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTabShimmer
+import com.newton.admin.presentation.events.viewmodel.EventsViewModel
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.composables.OopsError
+import com.newton.commonUi.ui.toLocalDate
+import com.newton.network.domain.models.adminModels.CalendarDay
+import com.newton.network.domain.models.adminModels.EventsData
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,59 +50,33 @@ fun EventManagementScreen(
     viewModel: EventsViewModel,
     onEventSelected: (EventsData) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
     val eventState by viewModel.eventList.collectAsState()
     val events = eventState.events
-
-    LaunchedEffect(key1 = true) {
-        val upcomingEvents =
-            events.filter {
-                it.isVirtual &&
-                    it.date.toLocalDateTime().minusDays(1).isBefore(LocalDateTime.now())
-            }
-
-        if (upcomingEvents.isNotEmpty()) {
-            val eventNames = upcomingEvents.joinToString(", ") { it.name }
-            scaffoldState.snackBarHostState.showSnackBar(
-                message = "Reminder: You have upcoming events: $eventNames",
-                actionLabel = "View",
-                duration = SnackBarDuration.Long
-            )
-        }
-    }
     val today = LocalDate.now()
-    val calendarDays =
-        remember {
-            val days = mutableListOf<CalendarDay>()
-            println("Available events with dates:")
+    val calendarDays = remember(eventState.events) {
+        val days: MutableList<CalendarDay> = mutableListOf()
+        for (i in -30..60) {
+            val date = today.plusDays(i.toLong())
+            val dayEvents: MutableList<EventsData> = mutableListOf()
             events.forEach {
-                Timber.d(
-                    "Event: ${it.name}, Date string: ${it.date}, Parsed: ${
-                    it.date.toLocalDateTime().toLocalDate()
-                    }"
-                )
+                if (it.date.toLocalDate() == date) {
+                    dayEvents.add(it)
+                }
             }
-            for (i in -30..60) {
-                val date = today.plusDays(i.toLong())
-                val dayEvents =
-                    events.filter {
-                        it.date.toLocalDate() == date
-                    }
-                days.add(CalendarDay(date, dayEvents))
-            }
-            days
+            days.add(CalendarDay(date, dayEvents))
         }
+        days
+    }
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Overview", "Calendar", "Attendees", "Feedback")
-    var selectedEvent by remember { mutableStateOf<EventsData?>(null) }
     val listState = rememberLazyListState()
     val isScrolling by remember {
         derivedStateOf {
             listState.isScrollInProgress
         }
     }
-
     DefaultScaffold(
+
         topBar = {
             TopAppBar(
                 title = { Text("Events Management") }
@@ -107,6 +93,7 @@ fun EventManagementScreen(
                 }
             }
         }
+
     ) {
         when (selectedTab) {
             0 -> {
@@ -134,46 +121,20 @@ fun EventManagementScreen(
                 }
             }
 
-            1 -> CalendarTab(calendarDays, onEventSelected = { selectedEvent = it })
-            2 ->
-                AttendeesTab(
-                    events,
-                    onEvent = onEvent,
-                    viewModel = viewModel
-                )
+            1 -> CalendarTab(calendarDays)
+            2 -> AttendeesTab(
+                events,
+                onEvent = onEvent,
+                viewModel = viewModel
+            )
 
-            3 ->
-                FeedbackTab(
-                    events,
-                    listState,
-                    isScrolling,
-                    onEvent = onEvent,
-                    viewModel = viewModel
-                )
+            3 -> FeedbackTab(
+                events,
+                listState,
+                isScrolling,
+                onEvent = onEvent,
+                viewModel = viewModel
+            )
         }
-    }
-}
-
-@Composable
-fun rememberScaffoldState(): ScaffoldState {
-    val snackBarHostState = remember { SnackBarHostState() }
-    return remember { ScaffoldState(snackBarHostState = snackBarHostState) }
-}
-
-data class ScaffoldState(
-    val snackBarHostState: SnackBarHostState
-)
-
-enum class SnackBarDuration { Short, Long }
-
-data class SnackBarHostState(
-    val currentSnackBarData: Any? = null
-) {
-    fun showSnackBar(
-        message: String,
-        actionLabel: String? = null,
-        duration: SnackBarDuration = SnackBarDuration.Short
-    ): Boolean {
-        return true
     }
 }

@@ -29,7 +29,7 @@ import com.newton.commonUi.composables.animation.customAnimations.*
 import com.newton.commonUi.ui.*
 
 @Composable
-fun AttendeesShimmer(modifier: Modifier = Modifier) {
+fun AttendeesShimmer() {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             item {
@@ -47,7 +47,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                             modifier =
                             Modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f))
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                     ShimmerWithFade(
@@ -60,7 +60,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                             modifier =
                             Modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f))
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                     ShimmerWithFade(
@@ -73,7 +73,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                             modifier =
                             Modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f))
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                     ShimmerWithFade(
@@ -86,7 +86,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                             modifier =
                             Modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f))
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                 }
@@ -118,7 +118,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                                 Modifier
                                     .fillMaxSize()
                                     .background(
-                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
                                         shape = CircleShape
                                     )
                             )
@@ -139,7 +139,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                                     Modifier
                                         .fillMaxSize()
                                         .background(
-                                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = .3f)
+                                            color = MaterialTheme.colorScheme.surface.copy(alpha = .3f)
                                         )
                                 )
                             }
@@ -158,7 +158,7 @@ fun AttendeesShimmer(modifier: Modifier = Modifier) {
                                     Modifier
                                         .fillMaxSize()
                                         .background(
-                                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = .3f)
+                                            color = MaterialTheme.colorScheme.surface.copy(alpha = .3f)
                                         )
                                 )
                             }

@@ -38,5 +38,7 @@ sealed class ExecutiveEvents {
 
     data object LoadUsers : ExecutiveEvents()
 
+    data object ToDefault : ExecutiveEvents()
+
     data object AddExecutive : ExecutiveEvents()
 }

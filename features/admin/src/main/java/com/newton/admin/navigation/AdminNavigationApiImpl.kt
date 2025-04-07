@@ -16,31 +16,40 @@
  */
 package com.newton.admin.navigation
 
-import AddCommunityScreen
 import NewsletterAdminScreen
 import UpdateCommunityScreen
-import androidx.compose.runtime.*
-import androidx.hilt.navigation.compose.*
-import androidx.navigation.*
-import androidx.navigation.compose.*
-import com.newton.admin.presentation.actions.view.*
-import com.newton.admin.presentation.club.view.*
-import com.newton.admin.presentation.club.viewmodel.*
-import com.newton.admin.presentation.community.view.*
-import com.newton.admin.presentation.community.viewmodels.*
-import com.newton.admin.presentation.events.view.*
-import com.newton.admin.presentation.events.view.management.*
-import com.newton.admin.presentation.events.viewmodel.*
-import com.newton.admin.presentation.feedbacks.view.*
-import com.newton.admin.presentation.feedbacks.viewmodel.*
-import com.newton.admin.presentation.home.view.*
-import com.newton.admin.presentation.home.viewModel.*
-import com.newton.admin.presentation.notification.viewmodel.*
-import com.newton.admin.presentation.partners.view.*
-import com.newton.admin.presentation.partners.viewModel.*
-import com.newton.admin.presentation.roleManagement.executives.view.*
-import com.newton.admin.presentation.roleManagement.executives.viewModel.*
-import com.newton.navigation.*
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
+import androidx.navigation.navigation
+import com.newton.admin.presentation.actions.view.ActionsScreen
+import com.newton.admin.presentation.club.view.AddClubScreen
+import com.newton.admin.presentation.club.viewmodel.ClubViewModel
+import com.newton.admin.presentation.community.view.AddCommunityScreen
+import com.newton.admin.presentation.community.view.AdminCommunityList
+import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
+import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
+import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
+import com.newton.admin.presentation.events.view.AddEvents
+import com.newton.admin.presentation.events.view.management.EventManagementScreen
+import com.newton.admin.presentation.events.view.management.ModifyEvent
+import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
+import com.newton.admin.presentation.events.viewmodel.AdminEventsSharedViewModel
+import com.newton.admin.presentation.events.viewmodel.EventsViewModel
+import com.newton.admin.presentation.events.viewmodel.UpdateEventsViewModel
+import com.newton.admin.presentation.feedbacks.view.FeedbackScreen
+import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
+import com.newton.admin.presentation.home.view.AdminHome
+import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
+import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
+import com.newton.admin.presentation.partners.view.AddPartnerScreen
+import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
+import com.newton.admin.presentation.roleManagement.executives.view.UpdateExecutiveScreen
+import com.newton.admin.presentation.roleManagement.executives.viewModel.ExecutiveViewModel
+import com.newton.navigation.NavigationRoutes
+import com.newton.navigation.NavigationSubGraphRoutes
 
 class AdminNavigationApiImpl : AdminNavigationApi {
     override fun registerGraph(
@@ -56,12 +65,11 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 AdminHome(viewModel, viewModel::handleEvents, navHostController)
             }
             composable(route = NavigationRoutes.AdminEvents.routes) {
-                val parentEntry =
-                    remember(it) {
-                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Admin.route)
-                    }
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Admin.route)
+                }
                 val viewModel = hiltViewModel<EventsViewModel>()
-                val sharedViewModel = hiltViewModel<AdminEventsSharedViewModel>(parentEntry)
+                val sharedViewModel = hiltViewModel<AdminEventsSharedViewModel> (parentEntry)
                 EventManagementScreen(
                     onEvent = viewModel::handleEvent,
                     viewModel = viewModel,
@@ -80,13 +88,12 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             }
             composable(route = NavigationRoutes.AddEvent.routes) {
                 val viewModel = hiltViewModel<AddEventViewModel>()
-                AddEvents(viewModel, viewModel::handleEvent, navHostController)
+                AddEvents(viewModel, viewModel::handleEvent)
             }
             composable(route = NavigationRoutes.ModifyEvent.routes) {
-                val parentEntry =
-                    remember(it) {
-                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Admin.route)
-                    }
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Admin.route)
+                }
                 val viewModel = hiltViewModel<AdminEventsSharedViewModel>(parentEntry)
                 val updateViewModel = hiltViewModel<UpdateEventsViewModel>()
                 ModifyEvent(
@@ -110,15 +117,13 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val viewModel = hiltViewModel<NotificationsViewModel>()
                 NewsletterAdminScreen(
                     viewModel = viewModel,
-                    onEvent = viewModel::handleEvents,
-                    navController = navHostController
+                    onEvent = viewModel::handleEvents
                 )
             }
             composable(route = NavigationRoutes.UpdateCommunity.routes) {
-                val parentEntry =
-                    remember(it) {
-                        navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
-                    }
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
+                }
                 val viewModel = hiltViewModel<UpdateCommunityViewModel>()
                 val sharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 UpdateCommunityScreen(
@@ -130,17 +135,14 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             composable(route = NavigationRoutes.UpdateExecutive.routes) {
                 val viewModel = hiltViewModel<ExecutiveViewModel>()
                 UpdateExecutiveScreen(
-                    navController = navHostController,
                     viewModel = viewModel,
-                    executiveId = null,
                     onEvent = viewModel::handleEvents
                 )
             }
             composable(route = NavigationRoutes.AdminCommunityList.routes) {
-                val parentEntry =
-                    remember(it) {
-                        navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
-                    }
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
+                }
                 val viewModel = hiltViewModel<UpdateCommunityViewModel>()
                 val sharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 AdminCommunityList(

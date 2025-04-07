@@ -65,7 +65,6 @@ fun UpdateCommunityCard(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        // Community header with name and recruitment status
         CommunityHeader(
             communityName = name,
             isRecruiting = recruiting,
@@ -79,8 +78,6 @@ fun UpdateCommunityCard(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-
-        // Community description
         CommunitySection(
             title = "About",
             icon = Icons.Default.Description
@@ -105,8 +102,6 @@ fun UpdateCommunityCard(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Leadership section
         CommunitySection(
             title = "Leadership",
             icon = Icons.Default.Group
@@ -140,8 +135,6 @@ fun UpdateCommunityCard(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Contact information
         CommunitySection(
             title = "Contact Information",
             icon = Icons.Default.Call
@@ -170,8 +163,6 @@ fun UpdateCommunityCard(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Sessions section - NEW
         CommunitySection(
             title = "Meeting Sessions",
             icon = Icons.Default.Schedule
@@ -210,8 +201,6 @@ fun UpdateCommunityCard(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Tech stack
         CommunitySection(
             title = "Tech Stack",
             icon = Icons.Default.Settings
@@ -241,17 +230,10 @@ fun UpdateCommunityCard(
                         }
                     }
                 }
-//                    Text(
-//                        text = communityData.techStack.toString(),
-//                        style = MaterialTheme.typography.bodyMedium,
-//                        modifier = Modifier.padding(top = 8.dp)
-//                    )
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Community details
         CommunitySection(
             title = "Community Details",
             icon = Icons.Default.LocationOn

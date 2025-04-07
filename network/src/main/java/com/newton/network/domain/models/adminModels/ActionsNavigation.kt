@@ -14,20 +14,14 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.admin.presentation.club.state
+package com.newton.network.domain.models.adminModels
 
-import com.newton.network.domain.models.aboutUs.ClubBioData
-import com.newton.network.domain.models.admin.Socials
+data class NavItem(
+    val name: String,
+    val route: String
+)
 
-data class ClubState(
-    val name: String = "",
-    val clubDetails: String = "",
-    val vision: String = "",
-    val mission: String = "",
-    val socials: List<Socials> = emptyList(),
-    val clubData: ClubBioData? = null,
-    val isLoading: Boolean = false,
-    val isUpdatedSuccess: Boolean = false,
-    val errorMessage: String? = null,
-    val errors: Map<String, String> = emptyMap()
+data class NotificationItem(
+    val name: String,
+    val route: String
 )

@@ -33,6 +33,8 @@ import androidx.paging.*
 import androidx.paging.compose.*
 import coil3.compose.*
 import com.newton.commonUi.ui.*
+import com.newton.common_ui.ui.toFormatedDate
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.network.domain.models.adminModels.*
 import java.time.*
 

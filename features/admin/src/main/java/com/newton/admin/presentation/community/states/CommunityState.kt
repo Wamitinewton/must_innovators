@@ -38,6 +38,7 @@ data class CommunityState(
     val isRecruiting: Boolean = false,
     val uploadError: String? = null,
     val isLoading: Boolean = false,
+    val isSuccess: Boolean = false,
     val showDatePicker: Boolean = false,
     val showBottomSheet: Boolean = false,
     val showAddSocialDialog: Boolean = false,

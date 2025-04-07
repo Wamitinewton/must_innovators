@@ -16,41 +16,46 @@
  */
 package com.newton.admin.presentation.events.viewmodel
 
-import android.util.*
-import androidx.lifecycle.*
-import com.newton.admin.presentation.events.events.*
-import com.newton.admin.presentation.events.states.*
-import com.newton.commonUi.ui.*
-import com.newton.network.*
-import com.newton.network.domain.models.adminModels.*
-import com.newton.network.domain.repositories.*
-import dagger.hilt.android.lifecycle.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import javax.inject.*
-import kotlin.collections.set
+import android.util.Patterns
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.newton.admin.presentation.events.events.AddEventEvents
+import com.newton.admin.presentation.events.states.AddEventEffect
+import com.newton.admin.presentation.events.states.AddEventState
+import com.newton.commonUi.ui.toLocalDateTime
+import com.newton.network.Resource
+import com.newton.network.domain.models.adminModels.AddEventRequest
+import com.newton.network.domain.repositories.AdminRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class AddEventViewModel
-@Inject
-constructor(
+class AddEventViewModel @Inject constructor(
     private val repository: AdminRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddEventState())
     val state: StateFlow<AddEventState> = _state.asStateFlow()
 
+
     val uiSideEffect get() = _uiSideEffect.asSharedFlow()
     private val _uiSideEffect = MutableSharedFlow<AddEventEffect>()
 
-    val categories =
-        listOf(
-            "WEB",
-            "CYBERSEC",
-            "ANDROID",
-            "AI",
-            "BLOCKCHAIN",
-            "IoT"
-        )
+    val categories = listOf(
+        "WEB",
+        "CYBERSEC",
+        "ANDROID",
+        "AI",
+        "BLOCKCHAIN",
+        "IoT"
+    )
 
     fun handleEvent(event: AddEventEvents) {
         when (event) {
@@ -58,7 +63,6 @@ constructor(
             is AddEventEvents.ChangeDate -> _state.update { it.copy(date = event.date) }
             is AddEventEvents.ChangedLocation -> _state.update { it.copy(location = event.location) }
             is AddEventEvents.ChangedOrganizer -> _state.update { it.copy(organizer = event.organizer) }
-            is AddEventEvents.Dialog -> _state.update { it.copy(isShowDialog = event.shown) }
             is AddEventEvents.Sheet -> _state.update { it.copy(showCategorySheet = event.shown) }
             is AddEventEvents.ChangedFile -> _state.update { it.copy(image = event.file) }
             is AddEventEvents.ChangedMeetingLink -> _state.update { it.copy(meetingLink = event.link) }
@@ -67,6 +71,10 @@ constructor(
             is AddEventEvents.ChangedName -> _state.update { it.copy(name = event.name) }
             is AddEventEvents.ChangedTitle -> _state.update { it.copy(title = event.title) }
             is AddEventEvents.ChangedVirtual -> _state.update { it.copy(isVirtual = event.isVirtual) }
+            is AddEventEvents.ScheduledDateTimeChanged -> _state.update { it.copy(scheduledDateTime = event.date) }
+            is AddEventEvents.SelectedDateChange -> _state.update { it.copy(selectedDate = event.date) }
+            is AddEventEvents.ShowDateDialog -> _state.update { it.copy(showDatePicker = event.shown) }
+            is AddEventEvents.ShowTimeDialog -> _state.update { it.copy(showTimePicker = event.shown) }
             AddEventEvents.ToDefaultSate -> toDefaultState()
             AddEventEvents.AddEvent -> saveEvent()
             AddEventEvents.PickImage -> emit(AddEventEffect.PickImage)
@@ -74,21 +82,21 @@ constructor(
         }
     }
 
+
     private fun saveEvent() {
         if (validateAndSubmit()) {
-            val request =
-                AddEventRequest(
-                    name = _state.value.name,
-                    category = _state.value.category,
-                    description = _state.value.description,
-                    image = _state.value.image!!,
-                    date = _state.value.date.toLocaltime(),
-                    location = _state.value.location,
-                    organizer = _state.value.organizer,
-                    contactEmail = _state.value.contactEmail,
-                    title = _state.value.title,
-                    isVirtual = _state.value.isVirtual
-                )
+            val request = AddEventRequest(
+                name = _state.value.name,
+                category = _state.value.category,
+                description = _state.value.description,
+                image = _state.value.image!!,
+                date = _state.value.selectedDate.toLocalDateTime(),
+                location = _state.value.location,
+                organizer = _state.value.organizer,
+                contactEmail = _state.value.contactEmail,
+                title = _state.value.title,
+                isVirtual = _state.value.isVirtual
+            )
             viewModelScope.launch {
                 repository.addEvent(request).collectLatest { result ->
                     when (result) {
@@ -101,12 +109,11 @@ constructor(
                         }
 
                         is Resource.Success -> {
-                            _state.value =
-                                _state.value.copy(
-                                    uploadSuccess = true,
-                                    isLoading = false,
-                                    uploadError = null
-                                )
+                            _state.value = _state.value.copy(
+                                uploadSuccess = true,
+                                isLoading = false,
+                                uploadError = null
+                            )
                         }
                     }
                 }
@@ -114,10 +121,9 @@ constructor(
         }
     }
 
-    private fun emit(effect: AddEventEffect) =
-        viewModelScope.launch {
-            _uiSideEffect.emit(effect)
-        }
+    private fun emit(effect: AddEventEffect) = viewModelScope.launch {
+        _uiSideEffect.emit(effect)
+    }
 
     private fun toDefaultState() {
         _state.value = AddEventState()

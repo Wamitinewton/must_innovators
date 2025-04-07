@@ -16,30 +16,34 @@
  */
 package com.newton.admin.presentation.roleManagement.executives.viewModel
 
-import androidx.lifecycle.*
-import com.newton.admin.data.mappers.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.newton.admin.data.mappers.User
 import com.newton.admin.data.mappers.UserDataMappers.toDomainList
-import com.newton.admin.presentation.roleManagement.executives.events.*
-import com.newton.admin.presentation.roleManagement.executives.states.*
-import com.newton.network.*
-import com.newton.network.domain.models.adminModels.*
-import com.newton.network.domain.repositories.*
-import dagger.hilt.android.lifecycle.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import javax.inject.*
-import kotlin.collections.set
+import com.newton.admin.presentation.roleManagement.executives.events.ExecutiveEvents
+import com.newton.admin.presentation.roleManagement.executives.states.ExecutiveState
+import com.newton.admin.presentation.roleManagement.executives.states.ExecutiveUsersState
+import com.newton.network.Resource
+import com.newton.network.domain.models.adminModels.ExecutiveRequest
+import com.newton.network.domain.repositories.AdminRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class ExecutiveViewModel
-@Inject
-constructor(
+class ExecutiveViewModel @Inject constructor(
     private val repository: AdminRepository
 ) : ViewModel() {
     private val _execState = MutableStateFlow(ExecutiveState())
     val execState: StateFlow<ExecutiveState> = _execState.asStateFlow()
     private val _userState = MutableStateFlow(ExecutiveUsersState())
     val userState: StateFlow<ExecutiveUsersState> = _userState.asStateFlow()
+
 
     fun handleEvents(event: ExecutiveEvents) {
         when (event) {
@@ -50,11 +54,13 @@ constructor(
             is ExecutiveEvents.SelectedUserChange -> _execState.update { it.copy(selectedUser = event.user) }
             is ExecutiveEvents.ShowBottomSheet -> _execState.update { it.copy(showBottomSheet = event.shown) }
             is ExecutiveEvents.ShowPositionDropdown -> _execState.update { it.copy(showPosition = event.shown) }
-            ExecutiveEvents.AddExecutive -> addExecutive()
             is ExecutiveEvents.Expanded -> _execState.update { it.copy(expanded = event.expanded) }
             is ExecutiveEvents.SearchQuery -> _userState.update { it.copy(searchQuery = event.query) }
+            ExecutiveEvents.AddExecutive -> addExecutive()
+            ExecutiveEvents.ToDefault -> toDefault()
         }
     }
+
 
     private fun loadUsers() {
         viewModelScope.launch {
@@ -109,12 +115,11 @@ constructor(
 
     private fun addExecutive() {
         if (validate()) {
-            val executive =
-                ExecutiveRequest(
-                    userId = _execState.value.selectedUser!!.id,
-                    position = _execState.value.position!!,
-                    bio = _execState.value.bio
-                )
+            val executive = ExecutiveRequest(
+                userId = _execState.value.selectedUser!!.id,
+                position = _execState.value.position!!,
+                bio = _execState.value.bio
+            )
             viewModelScope.launch {
                 repository.updateExecutive(executive).collectLatest { result ->
                     when (result) {
@@ -129,7 +134,13 @@ constructor(
                         }
 
                         is Resource.Success -> {
-                            toDefault()
+                            result.data?.let { user ->
+                                _execState.update {
+                                    it.copy(
+                                        successMessage = "Added ${user.name} as an Executive successfully"
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -140,10 +151,9 @@ constructor(
     fun getSearchedUser(): List<User> {
         val query = _userState.value.searchQuery.lowercase()
         return _userState.value.users.filter { user ->
-            val matchesSearch =
-                query.isEmpty() ||
-                    user.name.lowercase().contains(query) ||
-                    user.email.lowercase().contains(query)
+            val matchesSearch = query.isEmpty() ||
+                user.name.lowercase().contains(query) ||
+                user.email.lowercase().contains(query)
             matchesSearch
         }
     }
