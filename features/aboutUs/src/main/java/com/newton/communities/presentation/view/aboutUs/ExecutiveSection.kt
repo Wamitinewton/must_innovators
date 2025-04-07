@@ -26,7 +26,6 @@ import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
 import com.newton.communities.presentation.state.*
-import com.newton.communities.presentation.view.aboutUs.composables.*
 import com.newton.network.domain.models.aboutUs.*
 
 @Composable
@@ -64,7 +63,7 @@ fun ExecutivesSection(uiState: ExecutiveUiState) {
 fun ExecutiveListSection(executives: List<Executive>) {
     var visibleItems by remember { mutableStateOf(false) }
 
-    androidx.compose.runtime.LaunchedEffect(executives) {
+    LaunchedEffect(executives) {
         visibleItems = true
     }
     LazyRow(

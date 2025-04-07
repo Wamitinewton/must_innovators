@@ -91,4 +91,5 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":network"))
     implementation(project(":shared"))
+    implementation(project(":features:communities"))
 }

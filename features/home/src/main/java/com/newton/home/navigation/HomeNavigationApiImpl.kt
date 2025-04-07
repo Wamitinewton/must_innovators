@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.*
 import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
+import com.newton.communities.presentation.viewModel.*
 import com.newton.core.utils.*
 import com.newton.home.data.*
 import com.newton.home.presentation.view.*
@@ -43,20 +44,23 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                 val partnersViewModel = hiltViewModel<PartnersViewModel>()
                 val testimonialsViewModel = hiltViewModel<TestimonialsViewModel>()
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
-
+                val communitiesViewModel = hiltViewModel<CommunitiesViewModel>()
+                val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>()
                 HomeScreen(
                     partnersViewModel = partnersViewModel,
                     testimonialsViewModel = testimonialsViewModel,
                     onNavigateToAdmin = {
                         navHostController.navigate(NavigationRoutes.AdminDashboard.routes)
                     },
-                    onNavigateToAboutUs = {
-                        navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
+                    onNavigateToCommunityDetails = { community ->
+                        communitySharedViewModel.selectCommunity(community)
+                        navHostController.navigate(NavigationRoutes.CommunitiesDetailsRoute.routes)
                     },
                     onPartnerClick = { partner ->
                         partnersSharedViewModel.updateSelectedPartner(partner)
                         navHostController.navigate(NavigationRoutes.PartnersDetails.routes)
-                    }
+                    },
+                    communitiesViewModel = communitiesViewModel
                 )
             }
 

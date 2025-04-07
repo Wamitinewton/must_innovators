@@ -98,5 +98,4 @@ dependencies {
     implementation(project(":database"))
     implementation(project(":navigation"))
     implementation(project(":network"))
-    implementation(project(":shared"))
 }

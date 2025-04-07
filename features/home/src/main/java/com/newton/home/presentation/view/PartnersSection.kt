@@ -123,48 +123,45 @@ fun PartnerCard(
     onClick: () -> Unit
 ) {
     ElevatedCard(
-        modifier =
-        Modifier
-            .width(300.dp)
-            .height(220.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick),
+        onClick = onClick,
+        modifier = Modifier
+            .width(320.dp)
+            .height(240.dp),
         shape = RoundedCornerShape(16.dp),
-        elevation =
-        CardDefaults.elevatedCardElevation(
+        elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp,
-            pressedElevation = 8.dp
+            pressedElevation = 8.dp,
+            focusedElevation = 6.dp,
+            hoveredElevation = 6.dp
         ),
-        colors =
-        CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
         )
     ) {
         Column(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Box(
-                    modifier =
-                    Modifier
-                        .size(52.dp)
+                    modifier = Modifier
+                        .size(56.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
                         model = partner.logo,
                         contentDescription = "${partner.name} logo",
                         contentScale = ContentScale.Crop,
-                        modifier =
-                        Modifier
+                        modifier = Modifier
                             .fillMaxSize()
                             .clip(CircleShape)
                     )
@@ -194,37 +191,58 @@ fun PartnerCard(
                 StatusBadge(status = partner.status)
             }
 
-            Text(
-                text = partner.description,
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = partner.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
 
-            Text(
-                text = "Key Achievements",
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        RoundedCornerShape(8.dp)
+                    )
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Key Achievements",
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.primary
+                )
 
-            Text(
-                text = partner.achievements,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
+                Text(
+                    text = partner.achievements,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
 
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant,
-                thickness = 0.5.dp
+                thickness = 0.5.dp,
+                modifier = Modifier.padding(vertical = 4.dp)
             )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CompactInfoItem(
@@ -243,6 +261,35 @@ fun PartnerCard(
                     icon = Icons.Filled.CalendarMonth,
                     text = partner.start_date,
                     modifier = Modifier.weight(0.8f)
+                )
+            }
+        }
+    }
+}
+
+
+
+@Composable
+fun PartnersSection(
+    partners: List<PartnersData>,
+    onPartnerClick: (PartnersData) -> Unit = {}
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp)
+    ) {
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            items(partners.size) { index ->
+                val partner = partners[index]
+                PartnerCard(
+                    partner = partner,
+                    onClick = { onPartnerClick(partner) }
                 )
             }
         }
@@ -275,27 +322,6 @@ fun CompactInfoItem(
     }
 }
 
-@Composable
-fun PartnersSection(
-    partners: List<PartnersData>,
-    onPartnerClick: (PartnersData) -> Unit = {}
-) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-    ) {
-        items(partners.size) { index ->
-            val partner = partners[index]
-            PartnerCard(
-                partner = partner,
-                onClick = { onPartnerClick(partner) }
-            )
-        }
-    }
-}
 
 @Composable
 fun StatusBadge(status: String) {

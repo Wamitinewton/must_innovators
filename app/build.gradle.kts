@@ -217,6 +217,7 @@ dependencies {
     implementation(project(":notifications"))
     implementation(project(":features:feedback"))
     implementation(project(":features:settings"))
+    implementation(project(":features:communities"))
     implementation(project(":navigation"))
     implementation(project(":network"))
     implementation(project(":shared"))

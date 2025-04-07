@@ -176,7 +176,7 @@ constructor(
 
     private fun loadCommunities() {
         viewModelScope.launch {
-            communityRepo.getCommunities(false).collectLatest { result ->
+            communityRepo.getCommunities().collectLatest { result ->
                 when (result) {
                     is Resource.Error -> _updateCommunityState.update { it.copy(errorMessage = result.message) }
                     is Resource.Loading -> _updateCommunityState.update { it.copy(isLoading = result.isLoading) }
