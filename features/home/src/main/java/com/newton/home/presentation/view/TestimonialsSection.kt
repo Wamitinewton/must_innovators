@@ -67,7 +67,7 @@ fun TestimonialsSection(
                 } else {
                     EmptyStateCard(
                         icon = Icons.Default.Refresh,
-                        title = "Ooops",
+                        title = "OOOOPS",
                         message = "No testimonials found. Check back in later",
                         buttonText = "Retry",
                         onActionClick = onRetryClick
@@ -96,7 +96,6 @@ fun AutoScrollingTestimonials(
     onTestimonialClick: (TestimonialsData) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { testimonials.size })
-    var showDetailSheet by remember { mutableStateOf<TestimonialsData?>(null) }
 
     LaunchedEffect(testimonials) {
         while (true) {

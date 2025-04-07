@@ -26,10 +26,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
-import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.composables.*
+import com.newton.communities.presentation.view.*
+import com.newton.communities.presentation.viewModel.*
 import com.newton.home.presentation.viewmodels.*
+import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.models.testimonials.*
 
@@ -38,12 +40,13 @@ fun HomeScreen(
     partnersViewModel: PartnersViewModel,
     testimonialsViewModel: TestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
-    onNavigateToAboutUs: () -> Unit,
-    onPartnerClick: (PartnersData) -> Unit
+    onNavigateToCommunityDetails: (Community) -> Unit,
+    onPartnerClick: (PartnersData) -> Unit,
+    communitiesViewModel: CommunitiesViewModel
 ) {
-    val configuration = LocalConfiguration.current
     val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by testimonialsViewModel.uiState.collectAsState()
+    val communitiesState by communitiesViewModel.uiState.collectAsState()
 
     var selectedTestimonial by remember { mutableStateOf<TestimonialsData?>(null) }
 
@@ -127,18 +130,27 @@ fun HomeScreen(
                     }
                 )
             }
+            item {
+                SectionHeader(
+                    title = "Communities",
+                    showViewAll = true,
+                    onViewAllClick = { }
+                )
+            }
+
+
+            item {
+                CommunityContent(
+                    uiState = communitiesState,
+                    onCommunityDetailsClick = onNavigateToCommunityDetails,
+                    communitiesViewModel = communitiesViewModel
+                )
+            }
 
             item {
                 SectionHeader(
                     title = "About Us",
                     showViewAll = false
-                )
-            }
-
-            item {
-                AboutUsSection(
-                    configuration = configuration,
-                    onClick = { onNavigateToAboutUs() }
                 )
             }
 

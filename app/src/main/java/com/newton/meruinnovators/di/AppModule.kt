@@ -56,9 +56,10 @@ object AppModule {
         blogsNavigationApi: BlogsNavigationApi,
         accountNavigationApi: AccountNavigationApi,
         adminNavigationApi: AdminNavigationApi,
-        communityNavigationApi: CommunityNavigationApi,
+        aboutUsNavigationApi: AboutUsNavigationApi,
         feedbackNavigationApi: FeedbackNavigationApi,
-        settingNavigationApi: SettingNavigationApi
+        settingNavigationApi: SettingNavigationApi,
+        communityNavigationApi: CommunityNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -67,9 +68,10 @@ object AppModule {
             blogsNavigationApi,
             accountNavigationApi,
             adminNavigationApi,
-            communityNavigationApi,
+            aboutUsNavigationApi,
             feedbackNavigationApi,
-            settingNavigationApi
+            settingNavigationApi,
+            communityNavigationApi
         )
     }
 

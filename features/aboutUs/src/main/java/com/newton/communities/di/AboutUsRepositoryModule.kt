@@ -17,7 +17,6 @@
 package com.newton.communities.di
 
 import com.newton.communities.data.repository.*
-import com.newton.database.dao.*
 import com.newton.network.data.remote.*
 import com.newton.network.domain.repositories.*
 import dagger.*
@@ -28,12 +27,6 @@ import javax.inject.*
 @Module
 @InstallIn(SingletonComponent::class)
 object AboutUsRepositoryModule {
-    @Provides
-    @Singleton
-    fun provideAboutUsRepository(
-        aboutUsApi: AboutClubService,
-        clubBioDao: ClubBioDao
-    ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi, clubBioDao)
 
     @Provides
     @Singleton

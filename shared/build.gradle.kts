@@ -20,6 +20,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -60,6 +62,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Hilt
+    implementation(Dependencies.hiltAndroid)
+    ksp(Dependencies.hiltCompiler)
+
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
@@ -77,4 +83,5 @@ dependencies {
     implementation(Dependencies.timber)
 
     implementation(project(":core"))
+    implementation(project(":network"))
 }

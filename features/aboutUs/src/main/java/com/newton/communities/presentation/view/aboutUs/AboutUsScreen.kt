@@ -25,47 +25,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
-import androidx.lifecycle.compose.*
 import com.newton.commonUi.composables.*
-import com.newton.communities.presentation.events.*
-import com.newton.communities.presentation.view.aboutUs.composables.*
 import com.newton.communities.presentation.viewModel.*
-import com.newton.network.domain.models.aboutUs.*
-import kotlinx.coroutines.flow.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutUsScreen(
-    onCommunityDetailsClick: (Community) -> Unit,
-    communitiesViewModel: CommunitiesViewModel,
     executiveViewModel: ExecutiveViewModel,
     clubBioViewModel: ClubBioViewModel
 ) {
-    val uiState by communitiesViewModel.uiState.collectAsStateWithLifecycle()
     val clubBioUiState by clubBioViewModel.uiState.collectAsState()
     val executiveUiState by executiveViewModel.uiState.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
     val communityName = "Meru Science Innovators Club"
     var isAboutExpanded by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = true) {
-        communitiesViewModel.uiEvents.collectLatest { event ->
-            when (event) {
-                is CommunityUiEvent.Effect.ShowSnackbar -> {
-                    val result =
-                        snackBarHostState.showSnackbar(
-                            message = event.message,
-                            actionLabel = "Retry",
-                            duration = SnackbarDuration.Long
-                        )
-
-                    if (result == SnackbarResult.ActionPerformed) {
-                        communitiesViewModel.onEvent(CommunityUiEvent.Action.RefreshCommunities)
-                    }
-                }
-            }
-        }
-    }
 
     DefaultScaffold(
         snackbarHostState = snackBarHostState,
@@ -101,14 +75,6 @@ fun AboutUsScreen(
                 SectionHeading(
                     title = "Our Communities",
                     icon = Icons.Filled.Groups
-                )
-            }
-
-            item {
-                CommunityContent(
-                    uiState = uiState,
-                    onCommunityDetailsClick = onCommunityDetailsClick,
-                    communitiesViewModel = communitiesViewModel
                 )
             }
 

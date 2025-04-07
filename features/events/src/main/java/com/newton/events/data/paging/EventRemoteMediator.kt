@@ -104,7 +104,7 @@ constructor(
 
             MediatorResult.Success(endOfPaginationReached = response.data.next == null)
         } catch (e: IOException) {
-            return MediatorResult.Error(Exception("Network error: ${e.message}"))
+            return MediatorResult.Error(Exception("Could not reach server. Try Again later"))
         } catch (e: HttpException) {
             MediatorResult.Error(Exception("Server error occurred. Error code: ${e.code()}"))
         } catch (e: Exception) {

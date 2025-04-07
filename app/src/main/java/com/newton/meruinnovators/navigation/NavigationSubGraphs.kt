@@ -33,7 +33,8 @@ data class NavigationSubGraphs(
     val blogsNavigationApi: BlogsNavigationApi,
     val accountNavigationApi: AccountNavigationApi,
     val adminNavigationApi: AdminNavigationApi,
-    val communityNavigationApi: CommunityNavigationApi,
+    val aboutUsNavigationApi: AboutUsNavigationApi,
     val feedbackNavigationApi: FeedbackNavigationApi,
-    val settingNavigationApi: SettingNavigationApi
+    val settingNavigationApi: SettingNavigationApi,
+    val communityNavigationApi: CommunityNavigationApi
 )

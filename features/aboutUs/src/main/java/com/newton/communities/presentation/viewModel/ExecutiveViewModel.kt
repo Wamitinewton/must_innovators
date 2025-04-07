@@ -64,7 +64,7 @@ constructor(
                         }
                     }
                 }
-            }.launchIn(viewModelScope)
+            }.launchIn(this)
         }
     }
 
