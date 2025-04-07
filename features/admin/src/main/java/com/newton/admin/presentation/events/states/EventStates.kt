@@ -16,7 +16,8 @@
  */
 package com.newton.admin.presentation.events.states
 
-import java.io.*
+import java.io.File
+import java.time.LocalDateTime
 
 data class AddEventState(
     val name: String = "",
@@ -32,6 +33,9 @@ data class AddEventState(
     val isVirtual: Boolean = false,
     val showCategorySheet: Boolean = false,
     val showDatePicker: Boolean = false,
+    val showTimePicker: Boolean = false,
+    val scheduledDateTime: LocalDateTime = LocalDateTime.now(),
+    val selectedDate: LocalDateTime = LocalDateTime.now(),
     val errors: Map<String, String> = emptyMap(),
     val isShowDialog: Boolean = false,
     val uploadError: String? = null,
@@ -40,11 +44,5 @@ data class AddEventState(
 )
 
 sealed class AddEventEffect {
-    data object NavigateBack : AddEventEffect()
-
-    data class ShowError(val message: String) : AddEventEffect()
-
-    data class SaveImageFile(val file: String) : AddEventEffect()
-
     data object PickImage : AddEventEffect()
 }

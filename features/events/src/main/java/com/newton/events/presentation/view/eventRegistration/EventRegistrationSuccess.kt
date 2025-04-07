@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import androidx.lifecycle.compose.*
 import com.newton.commonUi.ui.*
+import com.newton.common_ui.ui.toFormatedDate
 import com.newton.events.presentation.viewmodel.*
 
 @Composable
