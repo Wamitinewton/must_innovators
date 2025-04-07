@@ -16,8 +16,8 @@
  */
 package com.newton.database.mappers
 
-import com.newton.network.domain.models.aboutUs.*
 import com.newton.database.entities.*
+import com.newton.network.domain.models.aboutUs.*
 
 fun ClubBioEntity.toDomain(): ClubBioData {
     return ClubBioData(

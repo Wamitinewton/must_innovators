@@ -16,8 +16,6 @@
  */
 package com.newton.network
 
-import com.newton.core.enums.*
-
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(val isLoading: Boolean = true) : Resource<T>(null)
 
