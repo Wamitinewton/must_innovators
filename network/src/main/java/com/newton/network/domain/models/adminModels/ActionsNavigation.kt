@@ -1,4 +1,4 @@
-package com.newton.core.domain.models.admin
+package com.newton.network.domain.models.adminModels
 
 data class NavItem(
     val name: String,

@@ -31,8 +31,8 @@ import androidx.navigation.NavController
 import com.newton.admin.presentation.actions.view.composables.ActionItem
 import com.newton.admin.presentation.actions.view.composables.SectionTitle
 import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.core.domain.models.admin.NavItem
-import com.newton.core.domain.models.admin.NotificationItem
+import com.newton.network.domain.models.adminModels.NavItem
+import com.newton.network.domain.models.adminModels.NotificationItem
 import com.newton.navigation.NavigationRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
