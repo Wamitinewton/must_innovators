@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android") // Add this line
@@ -38,9 +54,6 @@ android {
     buildFeatures {
         compose = true
     }
-//    composeOptions {
-//        kotlinCompilerExtensionVersion = "1.5.9"
-//    }
 
     kotlinOptions {
         jvmTarget = "11"
@@ -66,25 +79,24 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Hilt
+    // Hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
-
 
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
 
-    //Workmanager
+    // Workmanager
     implementation(Dependencies.work)
     implementation(Dependencies.hiltWorker)
 
-    //coil
+    // coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
@@ -96,6 +108,9 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":database"))
-    implementation(project(":shared-ui"))
+    implementation(project(":commonUi"))
     implementation(project(":navigation"))
+    implementation(project(":network"))
+    implementation(project(":shared"))
+    implementation(project(":sharedPrefs"))
 }

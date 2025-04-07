@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.events.view.management.composables.overview
 
 import androidx.compose.animation.core.Animatable
@@ -28,7 +44,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,11 +54,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.CustomCard
+import com.newton.commonUi.ui.CustomCard
 import com.newton.common_ui.ui.toLocalDateTime
-import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.network.domain.models.adminModels.EventsData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 @Composable
 fun EventCard(
@@ -52,7 +69,7 @@ fun EventCard(
 ) {
     val isPast = event.date.toLocalDateTime().isBefore(LocalDateTime.now())
     val density = LocalDensity.current
-    val animatedOffset = remember { Animatable(0f) }
+    val animatedOffset = remember  { Animatable(0f) }
     val infiniteTransition = rememberInfiniteTransition()
 
     LaunchedEffect(isScrolling) {
@@ -69,61 +86,79 @@ fun EventCard(
     }
 
     // Pulse animation for upcoming events with reminders
-    val pulseScale = if (!isPast && event.isVirtual) {
-        infiniteTransition.animateFloat(
-            initialValue = 1f,
-            targetValue = 1.02f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(800, easing = FastOutSlowInEasing),
-                repeatMode = RepeatMode.Reverse
+    val pulseScale =
+        if (!isPast && event.isVirtual) {
+            infiniteTransition.animateFloat(
+                initialValue = 1f,
+                targetValue = 1.02f,
+                animationSpec =
+                infiniteRepeatable(
+                    animation = tween(800, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                )
             )
-        )
-    } else {
-        remember { mutableStateOf(1f) }
-    }
+        } else {
+            remember { mutableFloatStateOf(1f) }
+        }
 
     CustomCard(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .offset {
-                IntOffset(y = with(density) { animatedOffset.value.toDp().roundToPx() },  x = 0,)
+                IntOffset(y = with(density) { animatedOffset.value.toDp().roundToPx() }, x = 0)
             }
             .clickable {
                 onClick()
             }
-            .scale(pulseScale.value),
+            .scale(pulseScale.value)
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Event date circle
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .size(56.dp)
                     .background(
-                        color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-                        else MaterialTheme.colorScheme.primary,
+                        color =
+                        if (isPast) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                        } else {
+                            MaterialTheme.colorScheme.primary
+                        },
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd")),
+                        text = event.date.toLocalDateTime()
+                            .format(DateTimeFormatter.ofPattern("dd")),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                        else MaterialTheme.colorScheme.onPrimary
+                        color =
+                        if (isPast) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        } else {
+                            MaterialTheme.colorScheme.onPrimary
+                        }
                     )
                     Text(
-                        text = event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("MMM")),
+                        text = event.date.toLocalDateTime()
+                            .format(DateTimeFormatter.ofPattern("MMM")),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = if (isPast) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                        else MaterialTheme.colorScheme.onPrimary
+                        color =
+                        if (isPast) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        } else {
+                            MaterialTheme.colorScheme.onPrimary
+                        }
                     )
                 }
             }
@@ -147,8 +182,11 @@ fun EventCard(
                 )
 
                 Text(
-                    text = "${event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))} - " +
-                            event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text =
+                    "${
+                    event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                    } - " +
+                        event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.labelMedium
                 )
 

@@ -1,13 +1,29 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.club.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.admin.presentation.club.event.ClubEvent
 import com.newton.admin.presentation.club.state.ClubState
-import com.newton.core.domain.models.admin_models.Club
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.domain.repositories.CommunityRepository
-import com.newton.core.utils.Resource
+import com.newton.network.Resource
+import com.newton.network.domain.models.adminModels.Club
+import com.newton.network.domain.repositories.AdminRepository
+import com.newton.network.domain.repositories.CommunityRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -76,7 +92,7 @@ class ClubViewModel @Inject constructor(
             adminRepo.updateClub(club).collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {
-                        _clubState.update { it.copy(errorMessage = result.message) }
+                        _clubState.update { it.copy(errorMessage = result.message ,isLoading = false,) }
                     }
 
                     is Resource.Loading -> _clubState.update { it.copy(isLoading = result.isLoading) }

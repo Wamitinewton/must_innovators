@@ -1,10 +1,25 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.events.view.management.composables.calendar
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,23 +40,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.newton.common_ui.ui.CustomCard
-import com.newton.common_ui.ui.CustomDynamicAsyncImage
+import com.newton.commonUi.ui.CustomCard
+import com.newton.commonUi.ui.CustomDynamicAsyncImage
 import com.newton.common_ui.ui.toFormatedDate
-import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.network.domain.models.adminModels.EventsData
 
 @Composable
 fun EventCalendarItem(
-        event: EventsData,
+    event: EventsData,
 ) {
     CustomCard(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
             CustomDynamicAsyncImage(
                 imageUrl = event.imageUrl,
                 contentDescription = "Event Image",
@@ -55,7 +67,7 @@ fun EventCalendarItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .align(Alignment.BottomCenter)
+//                    .align(Alignment.BottomCenter)
                     .padding(12.dp)
             ) {
                 Column {
@@ -111,6 +123,6 @@ fun EventCalendarItem(
                     }
                 }
             }
-        }
+
     }
 }

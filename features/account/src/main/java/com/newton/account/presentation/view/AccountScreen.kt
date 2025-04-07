@@ -1,56 +1,40 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.account.presentation.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.NoteAdd
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberTopAppBarState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import com.newton.account.presentation.composables.account.AccountDrawerContent
-import com.newton.account.presentation.composables.account.EducationSection
-import com.newton.account.presentation.composables.account.FeedbackSelectionBottomSheet
-import com.newton.account.presentation.composables.account.ProfileSection
-import com.newton.account.presentation.composables.account.ProjectsSection
-import com.newton.account.presentation.composables.account.SkillsSection
-import com.newton.account.presentation.composables.account.SocialMediaSection
-import com.newton.account.presentation.composables.account.TechStacksSection
-import com.newton.account.presentation.composables.account.UserInfoSection
-import com.newton.account.presentation.events.LogoutEvent
-import com.newton.account.presentation.events.LogoutNavigationEvent
-import com.newton.account.presentation.viewmodel.AccountManagementViewModel
-import com.newton.account.presentation.viewmodel.UpdateAccountViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.outlined.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.input.nestedscroll.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import com.newton.account.presentation.composables.account.*
+import com.newton.account.presentation.events.*
+import com.newton.account.presentation.viewmodel.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +47,7 @@ fun AccountScreen(
     onCreateTestimonial: () -> Unit,
     onLogoutClicked: () -> Unit,
     accountViewModel: UpdateAccountViewModel,
+    onSettingsClicked: () -> Unit,
     accountManagementViewModel: AccountManagementViewModel
 ) {
     val accountUiState by accountViewModel.accountState.collectAsState()
@@ -81,11 +66,12 @@ fun AccountScreen(
     }
 
     if (logoutState.isLoading) {
-        com.newton.common_ui.ui.LoadingDialog()
+        LoadingDialog()
     }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scrollBehaviour = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val scrollBehaviour =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val coroutine = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -106,12 +92,14 @@ fun AccountScreen(
                 },
                 onLogoutClicked = {
                     accountManagementViewModel.onLogoutEvent(LogoutEvent.Logout)
-                }
+                },
+                onSettingsClicked = onSettingsClicked
             )
         }
     ) {
         DefaultScaffold(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .nestedScroll(scrollBehaviour.nestedScrollConnection),
             topBar = {
@@ -157,7 +145,8 @@ fun AccountScreen(
             }
         ) {
             LazyColumn(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {

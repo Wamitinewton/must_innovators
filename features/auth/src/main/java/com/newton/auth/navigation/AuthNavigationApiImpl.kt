@@ -1,27 +1,37 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.auth.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.newton.auth.presentation.login.view.LoginScreen
-import com.newton.auth.presentation.login.view.UserDataLoadingScreen
-import com.newton.auth.presentation.login.view_model.GetUserDataViewModel
-import com.newton.auth.presentation.login.view_model.LoginViewModel
-import com.newton.auth.presentation.reset_password.view.ForgotPasswordRoute
-import com.newton.auth.presentation.reset_password.view_model.ForgotPasswordViewModel
-import com.newton.auth.presentation.sign_up.view.SignupRoute
-import com.newton.auth.presentation.sign_up.view.SignupSuccessScreen
-import com.newton.auth.presentation.sign_up.viewmodel.SignupViewModel
-import com.newton.navigation.NavigationRoutes
-import com.newton.navigation.NavigationSubGraphRoutes
-import com.newton.on_boarding.view.OnboardingScreen
+import androidx.hilt.navigation.compose.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import com.newton.auth.presentation.login.view.*
+import com.newton.auth.presentation.login.viewModel.*
+import com.newton.auth.presentation.resetPassword.view.*
+import com.newton.auth.presentation.resetPassword.viewModel.*
+import com.newton.auth.presentation.signUp.view.*
+import com.newton.auth.presentation.signUp.viewmodel.*
+import com.newton.navigation.*
+import com.newton.onBoarding.presentation.view.*
 
 class AuthNavigationApiImpl : AuthNavigationApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController,
+        navHostController: NavHostController
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Auth.route,

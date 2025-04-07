@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.events.view.management
 
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,7 +27,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.newton.admin.presentation.events.events.EventEvents
@@ -21,11 +36,11 @@ import com.newton.admin.presentation.events.view.management.composables.feedback
 import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTab
 import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTabShimmer
 import com.newton.admin.presentation.events.viewmodel.EventsViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.OopsError
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.composables.OopsError
 import com.newton.common_ui.ui.toLocalDate
-import com.newton.core.domain.models.admin_models.CalendarDay
-import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.network.domain.models.adminModels.CalendarDay
+import com.newton.network.domain.models.adminModels.EventsData
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)

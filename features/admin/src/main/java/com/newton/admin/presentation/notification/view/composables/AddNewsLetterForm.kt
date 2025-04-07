@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.admin.presentation.notification.events.NotificationEvent
 import com.newton.admin.presentation.notification.state.NotificationState
-import com.newton.common_ui.ui.CustomButton
+import com.newton.commonUi.ui.CustomButton
 import java.time.format.DateTimeFormatter
 
 @Composable

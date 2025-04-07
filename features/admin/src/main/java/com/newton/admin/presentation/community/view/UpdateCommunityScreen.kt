@@ -20,9 +20,9 @@ import com.newton.admin.presentation.community.events.UpdateCommunityEvent
 import com.newton.admin.presentation.community.view.composable.UpdateCommunityCard
 import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
 import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.OopsError
-import com.newton.common_ui.ui.LoadingDialog
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.composables.OopsError
+import com.newton.commonUi.ui.LoadingDialog
 
 
 @OptIn(ExperimentalMaterial3Api::class)

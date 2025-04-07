@@ -1,4 +1,20 @@
-import java.util.Properties
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -20,19 +36,19 @@ if (store.exists()) {
     throw GradleException("keys.properties file not found")
 }
 
-
-val prodBackendUrl = properties.getProperty("PROD_BACKEND_URL")
-    ?: throw GradleException("PROD_BACKEND_URL not found in keys.properties")
-val devBackendUrl = properties.getProperty("DEV_BACKEND_URL")
-    ?: throw GradleException("DEV_BACKEND_URL not found in keys.properties")
-val stagingBackendUrl = properties.getProperty("STAGING_BACKEND_URL")
-    ?: throw GradleException("STAGING_BACKEND_URL not found in keys.properties")
-
+val prodBackendUrl =
+    properties.getProperty("PROD_BACKEND_URL")
+        ?: throw GradleException("PROD_BACKEND_URL not found in keys.properties")
+val devBackendUrl =
+    properties.getProperty("DEV_BACKEND_URL")
+        ?: throw GradleException("DEV_BACKEND_URL not found in keys.properties")
+val stagingBackendUrl =
+    properties.getProperty("STAGING_BACKEND_URL")
+        ?: throw GradleException("STAGING_BACKEND_URL not found in keys.properties")
 
 android {
     namespace = "com.newton.meruinnovators"
     compileSdk = 35
-
 
     defaultConfig {
         multiDexEnabled = true
@@ -47,9 +63,6 @@ android {
             logger.warn("Warning: ${e.message}")
         }
 
-//        val backendUrl = properties.getProperty("BACKEND_URL")
-//            ?: throw GradleException("BACKEND_URL not found in keys.properties")
-
         applicationId = "com.newton.meruinnovators"
         minSdk = 28
         targetSdk = 35
@@ -57,20 +70,23 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     signingConfigs {
 
         create("release") {
-            val keystoreFile = properties.getProperty("RELEASE_STORE_FILE")
-                ?: throw GradleException("store file not found in keys.properties")
-            val keystorePassword = properties.getProperty("RELEASE_STORE_PASSWORD")
-                ?: throw GradleException("store password not found in keys.properties")
-            val keyalias = properties.getProperty("RELEASE_KEY_ALIAS")
-                ?: throw GradleException("key alias not found in keys.properties")
-            val keyaliasPassword = properties.getProperty("RELEASE_KEY_PASSWORD")
-                ?: throw GradleException("alias pwd not found in keys.properties")
+            val keystoreFile =
+                properties.getProperty("RELEASE_STORE_FILE")
+                    ?: throw GradleException("store file not found in keys.properties")
+            val keystorePassword =
+                properties.getProperty("RELEASE_STORE_PASSWORD")
+                    ?: throw GradleException("store password not found in keys.properties")
+            val keyalias =
+                properties.getProperty("RELEASE_KEY_ALIAS")
+                    ?: throw GradleException("key alias not found in keys.properties")
+            val keyaliasPassword =
+                properties.getProperty("RELEASE_KEY_PASSWORD")
+                    ?: throw GradleException("alias pwd not found in keys.properties")
 
             storeFile = file(keystoreFile)
             storePassword = keystorePassword
@@ -155,55 +171,54 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //hilt
+    // hilt
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
     implementation(Dependencies.hiltNavigation)
 
-    //Retrofit
+    // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
     implementation(Dependencies.okhttp_logger)
 
-    //worker
+    // worker
     implementation(Dependencies.work)
     implementation(Dependencies.hiltWorker)
 
-    //Timber
+    // Timber
     implementation(Dependencies.timber)
 
-    //coil
+    // coil
     implementation(Dependencies.coilCompose)
     implementation(Dependencies.coilNetwork)
 
     implementation(Dependencies.extendedIcons)
 
-
     // system ui
     implementation(Dependencies.systemUi)
-
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-analytics")
 
-
     implementation(project(":features:auth"))
     implementation(project(":core"))
-    implementation(project(":shared-ui"))
+    implementation(project(":commonUi"))
     implementation(project(":features:events"))
     implementation(project(":features:blogs"))
     implementation(project(":features:account"))
     implementation(project(":features:home"))
     implementation(project(":features:admin"))
     implementation(project(":database"))
-    implementation(project(":features:about_us"))
+    implementation(project(":features:aboutUs"))
     implementation(project(":notifications"))
     implementation(project(":features:feedback"))
+    implementation(project(":features:settings"))
     implementation(project(":navigation"))
+    implementation(project(":network"))
+    implementation(project(":shared"))
+    implementation(project(":sharedPrefs"))
 }
-
-

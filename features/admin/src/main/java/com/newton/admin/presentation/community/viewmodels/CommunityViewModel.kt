@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.community.viewmodels
 
 import androidx.lifecycle.ViewModel
@@ -7,9 +23,9 @@ import com.newton.admin.data.mappers.UserDataMappers.toDomainList
 import com.newton.admin.presentation.community.events.CommunityEvent
 import com.newton.admin.presentation.community.states.CommunityState
 import com.newton.admin.presentation.community.states.UsersState
-import com.newton.core.domain.models.admin_models.AddCommunityRequest
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.utils.Resource
+import com.newton.network.Resource
+import com.newton.network.domain.models.adminModels.AddCommunityRequest
+import com.newton.network.domain.repositories.AdminRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

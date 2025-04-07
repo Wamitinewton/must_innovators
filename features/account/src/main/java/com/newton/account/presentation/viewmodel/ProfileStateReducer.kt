@@ -1,19 +1,30 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.account.presentation.viewmodel
 
-
-import com.newton.account.presentation.states.ProfileViewState
-import com.newton.account.presentation.states.UpdateProfileState
-import com.newton.core.domain.models.auth_models.UserData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.newton.account.presentation.states.*
+import com.newton.network.domain.models.authModels.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @Singleton
-class ProfileStateReducer @Inject constructor() {
-
+class ProfileStateReducer
+@Inject
+constructor() {
     private val _accountState = MutableStateFlow(ProfileViewState())
     val accountState: StateFlow<ProfileViewState> = _accountState.asStateFlow()
 
@@ -31,7 +42,10 @@ class ProfileStateReducer @Inject constructor() {
         }
     }
 
-    fun handleUpdateSuccess(userData: UserData, message: String) {
+    fun handleUpdateSuccess(
+        userData: UserData,
+        message: String
+    ) {
         _updateProfileState.update {
             it.copy(
                 userData = userData,

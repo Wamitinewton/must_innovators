@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
 
@@ -20,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Meruinnovators"
-        tools:targetApi="tiramisu">
+        tools:targetApi="31">
+
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -33,9 +37,13 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="app" android:host="event_tickets" />
+
+                <data
+                    android:scheme="app"
+                    android:host="event_tickets" />
             </intent-filter>
         </activity>
 
@@ -46,18 +54,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove">
-        </provider>
-
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.notifications-startup"
+            android:authorities="com.newton.meruinnovators.dev.notifications-startup"
             android:exported="false"
+            tools:replace="android:authorities"
+            android:initOrder="101"
             tools:node="merge">
             <meta-data
                 android:name="com.newton.notifications.initializer.NotificationsInitializer"
@@ -71,6 +73,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
+
+            <meta-data
+                android:name="com.newton.notifications.initializer.NotificationsInitializer"
+                android:value="androidx.startup" />
         </provider>
     </application>
 

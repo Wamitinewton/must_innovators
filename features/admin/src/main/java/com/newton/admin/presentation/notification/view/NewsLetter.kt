@@ -25,8 +25,8 @@ import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
 import com.newton.admin.presentation.notification.events.NotificationEvent
 import com.newton.admin.presentation.notification.view.composables.AddNewsLetterForm
 import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.composables.MeruInnovatorsAppBar
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)

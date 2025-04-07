@@ -1,45 +1,35 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.feedbacks.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.feedbacks.events.FeedbackEvent
-import com.newton.admin.presentation.feedbacks.view.composables.EmptyState
-import com.newton.admin.presentation.feedbacks.view.composables.ErrorState
-import com.newton.admin.presentation.feedbacks.view.composables.FeedbackCardShimmer
-import com.newton.admin.presentation.feedbacks.view.composables.FeedbackList
-import com.newton.admin.presentation.feedbacks.view.composables.FilterSection
-import com.newton.admin.presentation.feedbacks.view.composables.StatsSummary
-import com.newton.admin.presentation.feedbacks.view.composables.StatsSummaryShimmer
-import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.feedbacks.events.*
+import com.newton.admin.presentation.feedbacks.view.composables.*
+import com.newton.admin.presentation.feedbacks.viewmodel.*
+import com.newton.commonUi.composables.*
 
 @Composable
 fun FeedbackScreen(
@@ -64,11 +54,12 @@ fun FeedbackScreen(
                         TextField(
                             value = uiState.searchQuery,
                             onValueChange = { onEvent.invoke(FeedbackEvent.SearchQueryChange(it)) },
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxWidth()
                                 .padding(end = 40.dp),
                             placeholder = { Text("Search feedback...") },
-                            singleLine = true,
+                            singleLine = true
                         )
                     }
 
@@ -93,10 +84,11 @@ fun FeedbackScreen(
                     }
                 }
             )
-        },
+        }
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
         ) {
             // Filter Chips
@@ -114,7 +106,8 @@ fun FeedbackScreen(
             }
             // Feedback List
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) {
@@ -124,10 +117,12 @@ fun FeedbackScreen(
                     val filteredFeedbacks = viewModel.getFilteredFeedbacks()
                     if (filteredFeedbacks.isEmpty()) {
                         EmptyState(
-                            message = if (uiState.searchQuery.isNotEmpty())
+                            message =
+                            if (uiState.searchQuery.isNotEmpty()) {
                                 "No results found for \"${uiState.searchQuery}\""
-                            else
+                            } else {
                                 "No feedback items available"
+                            }
                         )
                     } else {
                         FeedbackList(

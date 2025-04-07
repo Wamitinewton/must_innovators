@@ -1,34 +1,29 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.community.view.composable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.VideoCall
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.admin.Session
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.network.domain.models.admin.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,7 +56,8 @@ fun SessionDialog(
         title = { Text(if (isEditing) "Edit Session" else "Add New Session") },
         text = {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
@@ -77,7 +73,8 @@ fun SessionDialog(
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         label = { Text("Day") },
                         leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = "Day") },
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .menuAnchor()
                     )
@@ -105,7 +102,12 @@ fun SessionDialog(
                     value = startTime,
                     onValueChange = { startTime = it },
                     label = { Text("Start Time") },
-                    leadingIcon = { Icon(Icons.Default.Schedule, contentDescription = "Start Time") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Default.Schedule,
+                            contentDescription = "Start Time"
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     readOnly = true,
                     trailingIcon = {
@@ -145,8 +147,14 @@ fun SessionDialog(
                         readOnly = true,
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = meetingTypeExpanded) },
                         label = { Text("Meeting Type") },
-                        leadingIcon = { Icon(Icons.Default.VideoCall, contentDescription = "Meeting Type") },
-                        modifier = Modifier
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.VideoCall,
+                                contentDescription = "Meeting Type"
+                            )
+                        },
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .menuAnchor()
                     )
@@ -174,7 +182,12 @@ fun SessionDialog(
                     value = location,
                     onValueChange = { location = it },
                     label = { Text("Location") },
-                    leadingIcon = { Icon(Icons.Default.LocationOn, contentDescription = "Location") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Default.LocationOn,
+                            contentDescription = "Location"
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -188,7 +201,7 @@ fun SessionDialog(
                             start_time = startTime,
                             end_time = endTime,
                             meeting_type = meetingType,
-                            location = location,
+                            location = location
                         )
                     )
                 }

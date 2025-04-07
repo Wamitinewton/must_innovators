@@ -1,37 +1,35 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.events.viewmodel
 
-import android.util.Patterns
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.newton.admin.presentation.events.events.EventEvents
-import com.newton.admin.presentation.events.states.AddEventEffect
-import com.newton.admin.presentation.events.states.AdminFeedbackState
-import com.newton.admin.presentation.events.states.EventListState
-import com.newton.admin.presentation.events.states.AddEventState
-import com.newton.admin.presentation.events.states.RsvpsState
-import com.newton.common_ui.ui.toLocaltime
-import com.newton.core.domain.models.admin_models.AddEventRequest
-import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.repositories.AdminRepository
-import com.newton.core.domain.repositories.EventRepository
-import com.newton.core.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.time.delay
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.states.*
+import com.newton.network.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
-class EventsViewModel @Inject constructor(
+class EventsViewModel
+@Inject
+constructor(
     private val repository: AdminRepository,
     private val eventsRepository: EventRepository
 ) : ViewModel() {
@@ -43,24 +41,24 @@ class EventsViewModel @Inject constructor(
 
     private val _feedbacksState = MutableStateFlow(AdminFeedbackState())
     val feedbacksState: StateFlow<AdminFeedbackState> = _feedbacksState.asStateFlow()
+
     fun handleEvent(event: EventEvents) {
         when (event) {
             is EventEvents.SelectedEvent -> _eventListState.update { it.copy(selectedEvent = event.event) }
             is EventEvents.EditingEvent -> _eventListState.update { it.copy(isEditing = event.editing) }
             is EventEvents.GetEventsAttendees -> getEventsAttendees(event.eventId)
-            is EventEvents.GetEventFeedbacks -> getEventsFeedbacks(event.eventId,event.isRefresh)
+            is EventEvents.GetEventFeedbacks -> getEventsFeedbacks(event.eventId, event.isRefresh)
             EventEvents.LoadEvents -> loadEvents()
         }
     }
-
 
     init {
         loadEvents()
     }
 
-    private fun loadEvents(){
+    private fun loadEvents() {
         viewModelScope.launch {
-            repository.getListOfEvents().collectLatest { result->
+            repository.getListOfEvents().collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {
                         _eventListState.update { it.copy(hasError = result.message) }
@@ -81,13 +79,12 @@ class EventsViewModel @Inject constructor(
                                 )
                             }
                         }
-
                     }
                 }
             }
         }
     }
-    
+
     private fun getEventsAttendees(eventId: Int) {
         viewModelScope.launch {
             repository.getRegistrationList(eventId).collectLatest { result ->
@@ -101,7 +98,7 @@ class EventsViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
-                        result.data?.let {attendee->
+                        result.data?.let { attendee ->
                             _rsvps.update {
                                 it.copy(
                                     isSuccess = true,
@@ -109,17 +106,18 @@ class EventsViewModel @Inject constructor(
                                     hasError = null,
                                     attendees = attendee
                                 )
+                            }
                         }
-
-                        }
-
                     }
                 }
             }
         }
     }
 
-    private fun getEventsFeedbacks(eventId: Int,isRefresh:Boolean) {
+    private fun getEventsFeedbacks(
+        eventId: Int,
+        isRefresh: Boolean
+    ) {
         viewModelScope.launch {
             repository.getEventFeedbackBYId(eventId, isRefresh).collectLatest { result ->
                 when (result) {
@@ -142,11 +140,9 @@ class EventsViewModel @Inject constructor(
                                 )
                             }
                         }
-
                     }
                 }
             }
         }
     }
-
 }

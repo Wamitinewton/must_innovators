@@ -1,36 +1,52 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.meruinnovators.di
 
-import android.content.Context
-import com.newton.account.navigation.AccountNavigationApi
-import com.newton.admin.navigation.AdminNavigationApi
-import com.newton.auth.authInterceptor.AuthInterceptor
-import com.newton.auth.navigation.AuthNavigationApi
-import com.newton.blogs.navigation.BlogsNavigationApi
-import com.newton.communities.navigation.CommunityNavigationApi
-import com.newton.events.navigation.EventsNavigationApi
-import com.newton.feedback.navigation.FeedbackNavigationApi
-import com.newton.home.navigation.HomeNavigationApi
-import com.newton.meruinnovators.BuildConfig
-import com.newton.meruinnovators.navigation.NavigationSubGraphs
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
+import android.content.*
+import com.newton.account.navigation.*
+import com.newton.admin.navigation.*
+import com.newton.auth.authInterceptor.*
+import com.newton.auth.navigation.*
+import com.newton.blogs.navigation.*
+import com.newton.communities.navigation.*
+import com.newton.events.navigation.*
+import com.newton.feedback.navigation.*
+import com.newton.home.navigation.*
+import com.newton.meruinnovators.*
+import com.newton.meruinnovators.navigation.*
+import com.newton.settings.navigation.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.android.qualifiers.*
+import dagger.hilt.components.*
+import okhttp3.*
+import okhttp3.logging.*
+import retrofit2.*
+import retrofit2.converter.gson.*
+import java.util.concurrent.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
+    private val loggingInterceptor =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
     @Provides
     fun provideNavigationSubGraphs(
@@ -41,7 +57,8 @@ object AppModule {
         accountNavigationApi: AccountNavigationApi,
         adminNavigationApi: AdminNavigationApi,
         communityNavigationApi: CommunityNavigationApi,
-        feedbackNavigationApi: FeedbackNavigationApi
+        feedbackNavigationApi: FeedbackNavigationApi,
+        settingNavigationApi: SettingNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -51,7 +68,8 @@ object AppModule {
             accountNavigationApi,
             adminNavigationApi,
             communityNavigationApi,
-            feedbackNavigationApi
+            feedbackNavigationApi,
+            settingNavigationApi
         )
     }
 
@@ -69,7 +87,6 @@ object AppModule {
             .readTimeout(15, TimeUnit.SECONDS)
             .build()
 
-
     @Provides
     @Singleton
     fun provideMeruInnovatorsApi(okHttpClient: OkHttpClient): Retrofit {
@@ -82,7 +99,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContext(@ApplicationContext context: Context): Context {
-        return context
-    }
+    fun provideContext(
+        @ApplicationContext context: Context
+    ): Context = context
 }

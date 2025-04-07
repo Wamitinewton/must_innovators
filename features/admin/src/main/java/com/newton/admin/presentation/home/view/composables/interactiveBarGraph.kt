@@ -25,9 +25,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.newton.admin.presentation.home.view.InteractionData
-import com.newton.common_ui.ui.CustomCard
-import com.newton.core.domain.models.admin.TooltipData
-import com.newton.core.domain.models.admin_models.DashboardColors
+import com.newton.commonUi.ui.CustomCard
+import com.newton.network.domain.models.admin.ToolTipData
+import com.newton.network.domain.models.adminModels.DashboardColors
 
 
 @Composable
@@ -36,7 +36,7 @@ fun InteractiveBarGraph(
 ) {
     var hoveredBar by remember { mutableStateOf<Int?>(null) }
     var tooltipPosition by remember { mutableStateOf<Offset?>(null) }
-    var tooltipData by remember { mutableStateOf<TooltipData?>(null) }
+    var tooltipData by remember { mutableStateOf<ToolTipData?>(null) }
 
 
 
@@ -55,7 +55,7 @@ fun InteractiveBarGraph(
 
                             if (barIndex in data.indices) {
                                 val interaction = data[barIndex]
-                                val tooltipInfo = TooltipData(
+                                val tooltipInfo = ToolTipData(
                                     title = interaction.day,
                                     value = "${interaction.intensity} interactions",
                                     position = offset
@@ -114,7 +114,7 @@ fun InteractiveBarGraph(
 
 @Composable
 fun TooltipComposable(
-    tooltipData: TooltipData,
+    tooltipData: ToolTipData,
     modifier: Modifier = Modifier
 ) {
     CustomCard(

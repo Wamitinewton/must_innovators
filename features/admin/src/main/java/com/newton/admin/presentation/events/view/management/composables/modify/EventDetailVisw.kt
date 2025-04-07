@@ -33,9 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.newton.admin.presentation.events.events.EventUpdateEvent
 import com.newton.common_ui.ui.toFormatedDate
-import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.network.domain.models.adminModels.EventsData
 
 @Composable
 fun EventDetailView(event: EventsData) {

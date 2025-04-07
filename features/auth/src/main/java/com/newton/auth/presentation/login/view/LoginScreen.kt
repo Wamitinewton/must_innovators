@@ -1,29 +1,39 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.auth.presentation.login.view
 
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import com.newton.auth.presentation.login.event.LoginEvent
-import com.newton.auth.presentation.login.event.LoginNavigationEvent
-import com.newton.auth.presentation.login.view_model.LoginViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.NetworkMonitor
-import com.newton.navigation.NavigationRoutes
-import com.newton.core.network.NetworkConfiguration
-import kotlinx.coroutines.launch
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.*
+import androidx.lifecycle.compose.*
+import androidx.navigation.*
+import com.newton.auth.presentation.login.event.*
+import com.newton.auth.presentation.login.viewModel.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import com.newton.core.network.*
+import com.newton.navigation.*
+import kotlinx.coroutines.*
 
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel,
     navHostController: NavHostController,
-    onForgotPasswordClick: () -> Unit,
+    onForgotPasswordClick: () -> Unit
 ) {
     val uiState by loginViewModel.loginUiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -38,7 +48,7 @@ fun LoginScreen(
 
     LaunchedEffect(Unit) {
         loginViewModel.navigateToLoginSuccess.collect { event ->
-            when(event) {
+            when (event) {
                 LoginNavigationEvent.NavigateToLoginSuccess -> {
                     navHostController.navigate(NavigationRoutes.UserDataLoadingRoute.routes)
                 }
@@ -58,17 +68,17 @@ fun LoginScreen(
         }
     }
 
-  DefaultScaffold(
-      snackbarHostState = snackbarHostState,
-      isLoading = uiState.isLoading,
-      showOrbitals = true
-  ){
-      LoginContent(
-          uiState = uiState,
-          onEvent = loginViewModel::onEvent,
-          onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
-          onForgotPasswordClick = onForgotPasswordClick,
-          onVerifyAccountClick = {}
-      )
-  }
+    DefaultScaffold(
+        snackbarHostState = snackbarHostState,
+        isLoading = uiState.isLoading,
+        showOrbitals = true
+    ) {
+        LoginContent(
+            uiState = uiState,
+            onEvent = loginViewModel::onEvent,
+            onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
+            onForgotPasswordClick = onForgotPasswordClick,
+            onVerifyAccountClick = {}
+        )
+    }
 }

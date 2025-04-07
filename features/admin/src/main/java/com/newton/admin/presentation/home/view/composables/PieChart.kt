@@ -1,33 +1,40 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.home.view.composables
 
 import android.graphics.Paint
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.home.view.SampleEvent
-import com.newton.core.domain.models.admin_models.DashboardColors
-import com.newton.core.domain.models.admin.TooltipData
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.home.view.*
+import com.newton.network.domain.models.admin.*
+import com.newton.network.domain.models.adminModels.*
+import kotlin.math.*
 
 @Composable
 fun EventsPieChart(
     events: List<SampleEvent>,
-    onTooltipChanged: (TooltipData?) -> Unit,
+    onTooltipChanged: (ToolTipData?) -> Unit
 ) {
     var selectedSegment by remember { mutableStateOf<Int?>(null) }
     var rotationAngle by remember { mutableStateOf(0f) }
@@ -38,7 +45,8 @@ fun EventsPieChart(
     }
 
     Canvas(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(16.dp)
             .pointerInput(Unit) {
@@ -116,7 +124,7 @@ fun EventsPieChart(
                 startAngle = startAngle,
                 sweepAngle = sweepAngle,
                 useCenter = true,
-                size = Size(size.minDimension, size.minDimension),
+                size = Size(size.minDimension, size.minDimension)
 //                topLeft = Offset(
 //                    center.x - (size.minDimension*2),
 //                    center.y - (size.minDimension*2)
@@ -124,7 +132,7 @@ fun EventsPieChart(
             )
 
             // Draw percentage label
-            if (sweepAngle > 30) {  // Only draw label if segment is large enough
+            if (sweepAngle > 30) { // Only draw label if segment is large enough
                 val labelRadius = size.minDimension * 0.4f
                 val labelAngle = startAngle + sweepAngle / 2
                 val labelX = center.x + cos(labelAngle * PI / 180f).toFloat() * labelRadius

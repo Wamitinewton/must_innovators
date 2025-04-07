@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.home.view
 
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,9 +36,9 @@ import com.newton.admin.presentation.home.view.composables.EventsPieChart
 import com.newton.admin.presentation.home.view.composables.InteractiveBarGraph
 import com.newton.admin.presentation.home.view.composables.InteractiveLineGraph
 import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.core.domain.models.admin.TooltipData
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.composables.MeruInnovatorsAppBar
+import com.newton.network.domain.models.admin.ToolTipData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -95,7 +111,7 @@ fun AdminHome(
             MeruInnovatorsAppBar(title = "Admin Dashboard")
         },
     ) {
-        var tooltipData by remember { mutableStateOf<TooltipData?>(null) }
+        var tooltipData by remember { mutableStateOf<ToolTipData?>(null) }
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {

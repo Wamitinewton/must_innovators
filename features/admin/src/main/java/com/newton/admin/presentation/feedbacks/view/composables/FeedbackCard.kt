@@ -1,67 +1,47 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.feedbacks.view.composables
 
-import androidx.compose.animation.core.EaseOutBack
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Reply
-import androidx.compose.material.icons.automirrored.outlined.HelpOutline
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Spellcheck
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.BugReport
-import androidx.compose.material.icons.outlined.Lightbulb
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Speed
-import androidx.compose.material.icons.outlined.Spellcheck
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.automirrored.outlined.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import com.newton.commonUi.ui.*
 import com.newton.common_ui.ui.toFormatedDate
-import com.newton.core.domain.models.admin_models.FeedbackData
-import com.newton.core.enums.AdminAction
-import com.newton.core.enums.FeedbackCategory
-import com.newton.core.enums.FeedbackPriority
-import com.newton.core.enums.FeedbackStatus
-import kotlinx.coroutines.delay
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.newton.core.enums.*
+import com.newton.network.domain.models.adminModels.*
+import kotlinx.coroutines.*
+import java.text.*
+import java.util.*
 
 @Composable
 fun FeedbackCard(
@@ -81,7 +61,8 @@ fun FeedbackCard(
 
     val cardScale by animateFloatAsState(
         targetValue = if (cardVisible) 1f else 0.8f,
-        animationSpec = tween(
+        animationSpec =
+        tween(
             durationMillis = 300,
             easing = EaseOutBack
         )
@@ -92,30 +73,34 @@ fun FeedbackCard(
         animationSpec = tween(durationMillis = 300)
     )
 
-    val priorityColor = when (feedback.priority) {
-        FeedbackPriority.LOW -> MaterialTheme.colorScheme.tertiary
-        FeedbackPriority.MEDIUM -> MaterialTheme.colorScheme.secondary
-        FeedbackPriority.HIGH -> Color(0xFFF57F17) // Amber
-        FeedbackPriority.CRITICAL -> Color(0xFFD50000) // Red
-    }
+    val priorityColor =
+        when (feedback.priority) {
+            FeedbackPriority.LOW -> MaterialTheme.colorScheme.tertiary
+            FeedbackPriority.MEDIUM -> MaterialTheme.colorScheme.secondary
+            FeedbackPriority.HIGH -> Color(0xFFF57F17) // Amber
+            FeedbackPriority.CRITICAL -> Color(0xFFD50000) // Red
+        }
 
-    val categoryIcon = when (feedback.category) {
-        FeedbackCategory.BUG_REPORT -> Icons.Outlined.BugReport
-        FeedbackCategory.FEATURE_REQUEST -> Icons.Outlined.Lightbulb
-        FeedbackCategory.GENERAL_INQUIRY -> Icons.AutoMirrored.Outlined.HelpOutline
-        FeedbackCategory.ACCOUNT_ISSUE -> Icons.Outlined.AccountCircle
+    val categoryIcon =
+        when (feedback.category) {
+            FeedbackCategory.BUG_REPORT -> Icons.Outlined.BugReport
+            FeedbackCategory.FEATURE_REQUEST -> Icons.Outlined.Lightbulb
+            FeedbackCategory.GENERAL_INQUIRY -> Icons.AutoMirrored.Outlined.HelpOutline
+            FeedbackCategory.ACCOUNT_ISSUE -> Icons.Outlined.AccountCircle
 //        FeedbackCategory.PAYMENT_PROBLEM -> Icons.Outlined.CreditCard
-        FeedbackCategory.PERFORMANCE_ISSUE -> Icons.Outlined.Speed
-    }
+            FeedbackCategory.PERFORMANCE_ISSUE -> Icons.Outlined.Speed
+        }
 
     val dateFormat = remember { SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()) }
-    val formattedDate = remember(feedback.submittedAt) {
-       feedback.submittedAt.toFormatedDate()
-    }
+    val formattedDate =
+        remember(feedback.submittedAt) {
+            feedback.submittedAt.toFormatedDate()
+        }
 
     Card(
         onClick = onCardClick,
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .scale(cardScale)
             .alpha(cardAlpha)
@@ -125,12 +110,15 @@ fun FeedbackCard(
                 spotColor = priorityColor.copy(alpha = 0.1f)
             ),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        border = BorderStroke(
+        border =
+        BorderStroke(
             width = 1.dp,
-            color = when (feedback.status) {
+            color =
+            when (feedback.status) {
                 FeedbackStatus.PENDING -> MaterialTheme.colorScheme.surfaceVariant
                 FeedbackStatus.IN_PROGRESS -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
                 FeedbackStatus.RESOLVED -> MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
@@ -138,17 +126,19 @@ fun FeedbackCard(
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Row (
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Priority indicator
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(12.dp)
                         .clip(CircleShape)
                         .background(priorityColor)
@@ -175,7 +165,8 @@ fun FeedbackCard(
                         Spacer(modifier = Modifier.width(4.dp))
 
                         Text(
-                            text = feedback.category.name.replace("_", " ").lowercase()
+                            text =
+                            feedback.category.name.replace("_", " ").lowercase()
                                 .split(" ")
                                 .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } },
                             style = MaterialTheme.typography.labelSmall,
@@ -217,7 +208,8 @@ fun FeedbackCard(
                 AsyncImage(
                     model = feedback.userProfilePic,
                     contentDescription = "Profile picture of ${feedback.userName}",
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(40.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surfaceVariant),
@@ -243,17 +235,19 @@ fun FeedbackCard(
                 Spacer(modifier = Modifier.weight(1f))
 
                 // Status indicator
-                val statusColor = when (feedback.status) {
-                    FeedbackStatus.PENDING -> MaterialTheme.colorScheme.tertiary
-                    FeedbackStatus.IN_PROGRESS -> MaterialTheme.colorScheme.secondary
-                    FeedbackStatus.RESOLVED -> MaterialTheme.colorScheme.primary
-                }
+                val statusColor =
+                    when (feedback.status) {
+                        FeedbackStatus.PENDING -> MaterialTheme.colorScheme.tertiary
+                        FeedbackStatus.IN_PROGRESS -> MaterialTheme.colorScheme.secondary
+                        FeedbackStatus.RESOLVED -> MaterialTheme.colorScheme.primary
+                    }
 
-                val statusText = when (feedback.status) {
-                    FeedbackStatus.PENDING -> "Pending"
-                    FeedbackStatus.IN_PROGRESS -> "In Progress"
-                    FeedbackStatus.RESOLVED -> "Completed"
-                }
+                val statusText =
+                    when (feedback.status) {
+                        FeedbackStatus.PENDING -> "Pending"
+                        FeedbackStatus.IN_PROGRESS -> "In Progress"
+                        FeedbackStatus.RESOLVED -> "Completed"
+                    }
 
                 Surface(
                     shape = RoundedCornerShape(16.dp),
@@ -273,16 +267,19 @@ fun FeedbackCard(
             // Feedback content
             Surface(
                 shape = RoundedCornerShape(8.dp),
-                color = if (feedback.hasGrammarIssues)
+                color =
+                if (feedback.hasGrammarIssues) {
                     MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.2f)
-                else
+                } else {
                     MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                }
             ) {
                 Text(
                     text = feedback.content,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
                     maxLines = 4,

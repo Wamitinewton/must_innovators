@@ -1,13 +1,24 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.database.dao
 
-import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Upsert
-import com.newton.database.entities.EventEntity
-import com.newton.database.entities.EventPaginationMetadata
+import androidx.paging.*
+import androidx.room.*
+import com.newton.database.entities.*
 
 @Dao
 interface EventDao {
@@ -15,8 +26,7 @@ interface EventDao {
     suspend fun insertEvents(events: List<EventEntity>)
 
     @Query("SELECT * FROM events")
-    suspend fun getListOfEvents():List<EventEntity>
-
+    suspend fun getListOfEvents(): List<EventEntity>
 
     @Upsert
     suspend fun insertEvent(user: EventEntity)
@@ -33,19 +43,24 @@ interface EventDao {
     @Query("DELETE FROM events")
     suspend fun clearEvents()
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM events 
         WHERE LOWER(name) LIKE LOWER(:query) 
         OR LOWER(description) LIKE LOWER(:query) 
         OR LOWER(location) LIKE LOWER(:query)
-    """)
+    """
+    )
     suspend fun searchEvents(query: String): List<EventEntity>
 
     @Query("SELECT MAX(timestamp) FROM events WHERE pageNumber = :pageNumber")
     suspend fun getPageTimeStamp(pageNumber: Int): Long?
 
     @Query("UPDATE events SET timestamp = :timestamp WHERE pageNumber = :pageNumber")
-    suspend fun updatePageTimestamp(pageNumber: Int, timestamp: Long)
+    suspend fun updatePageTimestamp(
+        pageNumber: Int,
+        timestamp: Long
+    )
 
     @Query("SELECT COUNT(*) FROM events")
     suspend fun getEventCount(): Int

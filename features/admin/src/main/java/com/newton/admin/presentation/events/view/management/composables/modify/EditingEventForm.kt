@@ -28,12 +28,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.newton.admin.presentation.events.events.EventUpdateEvent
-import com.newton.common_ui.ui.CustomButton
+import com.newton.commonUi.ui.CustomButton
 import com.newton.common_ui.ui.toFormatedDate
-import com.newton.core.domain.models.admin_models.EventsData
+import com.newton.network.domain.models.adminModels.EventsData
 
 @Composable
-fun EditingEventForm(event:EventsData,onEvent:(EventUpdateEvent)->Unit) {
+fun EditingEventForm(event: EventsData, onEvent:(EventUpdateEvent)->Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()

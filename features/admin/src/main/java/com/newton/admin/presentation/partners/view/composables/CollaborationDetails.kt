@@ -1,32 +1,34 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.partners.view.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Assignment
-import androidx.compose.material.icons.filled.EmojiEvents
-import androidx.compose.material.icons.filled.Event
-import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Inventory
-import androidx.compose.material.icons.filled.Stars
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.newton.admin.presentation.partners.events.AddPartnersEvent
-import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.common_ui.ui.CustomCard
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.partners.events.*
+import com.newton.admin.presentation.partners.states.*
+import com.newton.commonUi.ui.*
 
 @Composable
 fun CollaborationDetails(
@@ -39,7 +41,8 @@ fun CollaborationDetails(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
@@ -61,7 +64,7 @@ fun CollaborationDetails(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Assignment,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 minLines = 2,
@@ -88,7 +91,7 @@ fun CollaborationDetails(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Stars,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 minLines = 2,
@@ -115,7 +118,7 @@ fun CollaborationDetails(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Event,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 minLines = 2,
@@ -140,7 +143,7 @@ fun CollaborationDetails(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Inventory,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 minLines = 2,
@@ -165,7 +168,7 @@ fun CollaborationDetails(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.EmojiEvents,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 minLines = 2,
@@ -190,7 +193,7 @@ fun CollaborationDetails(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Groups,
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 },
                 minLines = 1,

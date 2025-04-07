@@ -1,51 +1,49 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.feedback.presentation.view.composables
 
-import android.net.Uri
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import android.net.*
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import com.newton.common_ui.ui.AddItemButton
-import kotlin.math.roundToInt
-
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.unit.*
+import coil3.compose.*
+import coil3.request.*
+import com.newton.commonUi.ui.*
+import kotlin.math.*
 
 @Composable
 fun ReorderableImageRow(
@@ -55,7 +53,6 @@ fun ReorderableImageRow(
     isAddEnabled: Boolean,
     onAdd: () -> Unit
 ) {
-
     val lazyListState = rememberLazyListState()
 
     var draggedItemIndex by remember { mutableStateOf<Int?>(null) }
@@ -68,10 +65,12 @@ fun ReorderableImageRow(
     LazyRow(
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(itemSpacing),
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .animateContentSize(
-                animationSpec = spring(
+                animationSpec =
+                spring(
                     dampingRatio = Spring.DampingRatioMediumBouncy,
                     stiffness = Spring.StiffnessLow
                 )
@@ -80,12 +79,13 @@ fun ReorderableImageRow(
         itemsIndexed(
             items = images,
             key = { index, uri -> "$uri-$index" }
-        ){ index, uri ->
+        ) { index, uri ->
             val isDragged = index == draggedItemIndex
             val offsetX = if (isDragged) dragOffset.x.roundToInt() else 0
 
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .size(100.dp)
                     .graphicsLayer {
                         if (isDragged) {
@@ -109,8 +109,10 @@ fun ReorderableImageRow(
                                 dragOffset += dragAmount
                                 // Calculate which item we're hovering over
                                 val totalDragX = dragOffset.x
-                                val estimatedPosition = (totalDragX / (itemWidth.toPx() + itemSpacing.toPx())).roundToInt()
-                                val targetIndex = (index + estimatedPosition).coerceIn(0, images.lastIndex)
+                                val estimatedPosition =
+                                    (totalDragX / (itemWidth.toPx() + itemSpacing.toPx())).roundToInt()
+                                val targetIndex =
+                                    (index + estimatedPosition).coerceIn(0, images.lastIndex)
 
                                 if (targetIndex != currentHoveredIndex) {
                                     currentHoveredIndex = targetIndex
@@ -144,19 +146,15 @@ fun ReorderableImageRow(
         }
 
         if (isAddEnabled) {
-            item { 
-              AddItemButton(
-                  text = "Add Image",
-                  onClick = onAdd
-              )
+            item {
+                AddItemButton(
+                    text = "Add Image",
+                    onClick = onAdd
+                )
             }
         }
     }
-
 }
-
-
-
 
 @Composable
 fun ImagePreviewItem(
@@ -166,18 +164,21 @@ fun ImagePreviewItem(
     isDragging: Boolean = false
 ) {
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .size(100.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(
-                if (isDragging)
-                MaterialTheme.colorScheme.primaryContainer
-                else
-                MaterialTheme.colorScheme.surfaceVariant
+                if (isDragging) {
+                    MaterialTheme.colorScheme.primaryContainer
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant
+                }
             )
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
+            model =
+            ImageRequest.Builder(LocalContext.current)
                 .data(uri)
                 .build(),
             contentDescription = "Image Preview",
@@ -187,7 +188,8 @@ fun ImagePreviewItem(
 
         IconButton(
             onClick = onRemove,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .align(Alignment.TopEnd)
                 .size(24.dp)
                 .background(

@@ -1,18 +1,36 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.core.utils
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import com.newton.core.domain.models.home_models.PartnersData
+import android.content.*
+import android.content.pm.*
+import android.net.*
 
+/**
+ * Generic utility for handling external app navigation and sharing
+ */
 object PackageHandlers {
-
     /**
      * Opens the website URL in a browser
      */
-    fun navigateToWebsite(context: Context, url: String) {
+    fun navigateToWebsite(
+        context: Context,
+        url: String
+    ) {
         try {
             val websiteIntent = Intent(Intent.ACTION_VIEW, Uri.parse(formatUrl(url)))
             websiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -25,7 +43,10 @@ object PackageHandlers {
     /**
      * Navigates to LinkedIn - tries app first, falls back to browser
      */
-    fun navigateToLinkedIn(context: Context, linkedInUrl: String) {
+    fun navigateToLinkedIn(
+        context: Context,
+        linkedInUrl: String
+    ) {
         try {
             val linkedInAppIntent = Intent(Intent.ACTION_VIEW)
             val formattedUrl = formatLinkedInUrl(linkedInUrl)
@@ -47,7 +68,10 @@ object PackageHandlers {
     /**
      * Navigates to Github - tries app first, falls back to browser
      */
-    fun navigateToGithub(context: Context, githubUrl: String) {
+    fun navigateToGithub(
+        context: Context,
+        githubUrl: String
+    ) {
         try {
             val githubAppIntent = Intent(Intent.ACTION_VIEW)
             val formattedUrl = formatGithubUrl(githubUrl)
@@ -69,7 +93,10 @@ object PackageHandlers {
     /**
      * Navigates to Twitter/X - tries app first, falls back to browser
      */
-    fun navigateToTwitter(context: Context, twitterUrl: String) {
+    fun navigateToTwitter(
+        context: Context,
+        twitterUrl: String
+    ) {
         try {
             val twitterAppIntent = Intent(Intent.ACTION_VIEW)
             val formattedUrl = formatTwitterUrl(twitterUrl)
@@ -91,7 +118,10 @@ object PackageHandlers {
     /**
      * Opens email app with pre-filled email
      */
-    fun contactViaEmail(context: Context, email: String) {
+    fun contactViaEmail(
+        context: Context,
+        email: String
+    ) {
         try {
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:$email")
@@ -108,19 +138,25 @@ object PackageHandlers {
     }
 
     /**
-     * Share partner information via any sharing-capable app
+     * Generic share function to share content via any sharing-capable app
+     *
+     * @param context The Android context
+     * @param shareText The text content to share
+     * @param shareTitle Optional title for the share dialog
      */
-    fun sharePartner(context: Context, partner: PartnersData) {
+    fun shareContent(
+        context: Context,
+        shareText: String,
+        shareTitle: String = "Share via..."
+    ) {
         try {
-            val shareText = createShareText(partner)
-
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, shareText)
             }
 
-            context.startActivity(Intent.createChooser(shareIntent, "Share Partner via..."))
+            context.startActivity(Intent.createChooser(shareIntent, shareTitle))
         } catch (e: Exception) {
             throw e
         }
@@ -129,7 +165,10 @@ object PackageHandlers {
     /**
      * Helper function to check if an app is installed
      */
-    private fun isAppInstalled(context: Context, packageName: String): Boolean {
+    private fun isAppInstalled(
+        context: Context,
+        packageName: String
+    ): Boolean {
         return try {
             context.packageManager.getPackageInfo(packageName, 0)
             true
@@ -185,35 +224,5 @@ object PackageHandlers {
         } else {
             "https://github.com/$githubUrl"
         }
-    }
-
-
-    /**
-     * Creates beautifully formatted text for sharing
-     */
-    private fun createShareText(partner: PartnersData): String {
-        val divider = "\n" + "✨".repeat(15) + "\n"
-
-        return """
-            |🌟 Amazing Partnership Opportunity! 🌟
-            |
-            |I'd like to share this wonderful partner with you:
-            |
-            |🏢 ${partner.name} 
-            |${if (partner.status.isNotEmpty()) "📊 Status: ${partner.status}\n" else ""}${if (partner.type.isNotEmpty()) "🔍 Type: ${partner.type}\n" else ""}
-            |$divider
-            |📝 About:
-            |${partner.description.take(150)}${if (partner.description.length > 150) "..." else ""}
-            |
-            |🌐 Website: ${partner.web_url}
-            |${if (partner.linked_in.isNotEmpty()) "📱 LinkedIn: ${partner.linked_in}\n" else ""}${if (partner.twitter.isNotEmpty()) "🐦 Twitter: ${partner.twitter}\n" else ""}
-            |
-            |✉️ Contact: ${partner.contact_email}
-            |$divider
-            |
-            |This partnership has been ${if (partner.ongoing) "ongoing since ${partner.start_date}" else "active from ${partner.start_date} to ${partner.end_date ?: "present"}"}
-            |
-            |Learn more about this partnership opportunity in our app!
-        """.trimMargin()
     }
 }

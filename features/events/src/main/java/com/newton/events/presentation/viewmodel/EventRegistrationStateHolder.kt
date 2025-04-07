@@ -1,25 +1,37 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.events.presentation.viewmodel
 
-import com.newton.core.data.response.admin.RegistrationResponse
-import com.newton.core.domain.models.event_models.EventRegistrationRequest
-import com.newton.core.enums.EventRegistrationFlow
-import com.newton.events.presentation.events.EventRsvpUiEvent
-import com.newton.events.presentation.states.EventRegistrationState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.newton.core.enums.*
+import com.newton.events.presentation.events.*
+import com.newton.events.presentation.states.*
+import com.newton.network.data.response.admin.*
+import com.newton.network.domain.models.eventModels.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @Singleton
-class EventRegistrationStateHolder @Inject constructor(
+class EventRegistrationStateHolder
+@Inject
+constructor(
     private val eventRegistrationValidator: EventRegistrationValidator
 ) {
-
     private val _registrationState = MutableStateFlow(EventRegistrationState())
     val registrationState: StateFlow<EventRegistrationState> = _registrationState.asStateFlow()
-
 
     fun updateState(event: EventRsvpUiEvent) {
         when (event) {
@@ -46,11 +58,10 @@ class EventRegistrationStateHolder @Inject constructor(
         }
     }
 
-
     private fun firstNameChanged(firstName: String) {
         _registrationState.update {
             it.copy(
-                firstName = firstName,
+                firstName = firstName
             )
         }
     }
@@ -58,7 +69,7 @@ class EventRegistrationStateHolder @Inject constructor(
     private fun lastNameChanged(lastName: String) {
         _registrationState.update {
             it.copy(
-                lastName = lastName,
+                lastName = lastName
             )
         }
     }
@@ -66,7 +77,7 @@ class EventRegistrationStateHolder @Inject constructor(
     private fun emailChanged(email: String) {
         _registrationState.update {
             it.copy(
-                email = email,
+                email = email
             )
         }
     }
@@ -84,7 +95,7 @@ class EventRegistrationStateHolder @Inject constructor(
     private fun courseChanged(course: String) {
         _registrationState.update {
             it.copy(
-                course = course,
+                course = course
             )
         }
     }
@@ -121,14 +132,13 @@ class EventRegistrationStateHolder @Inject constructor(
             currentState.copy(
                 phoneNumberError = phoneValidation.errorMessage,
                 educationLevelError = educationLevelValidation.errorMessage,
-                expectationsError = expectationsValidation.errorMessage,
+                expectationsError = expectationsValidation.errorMessage
             )
         }
 
         return phoneValidation.isValid &&
-                educationLevelValidation.isValid &&
-                expectationsValidation.isValid
-
+            educationLevelValidation.isValid &&
+            expectationsValidation.isValid
     }
 
     fun setLoading(isLoading: Boolean) {
@@ -139,7 +149,10 @@ class EventRegistrationStateHolder @Inject constructor(
         _registrationState.update { it.copy(errorMessage = message) }
     }
 
-    fun setSuccess(message: RegistrationResponse?, eventRegistrationFlow: EventRegistrationFlow) {
+    fun setSuccess(
+        message: RegistrationResponse?,
+        eventRegistrationFlow: EventRegistrationFlow
+    ) {
         _registrationState.update {
             it.copy(
                 isLoading = false,
@@ -157,9 +170,7 @@ class EventRegistrationStateHolder @Inject constructor(
             course = _registrationState.value.course,
             educational_level = _registrationState.value.educationLevel,
             phone_number = _registrationState.value.phoneNumber,
-            expectations = _registrationState.value.expectations,
+            expectations = _registrationState.value.expectations
         )
     }
-
-
 }

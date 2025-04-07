@@ -1,51 +1,43 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.account.presentation.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.newton.account.presentation.events.TestimonialsNavigationEvent
-import com.newton.account.presentation.events.TestimonialsUiEvent
-import com.newton.account.presentation.states.TestimonialsUiState
-import com.newton.account.presentation.viewmodel.TestimonialsViewModel
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.MultilineInputField
-import com.newton.common_ui.ui.RatingBarInput
-import com.newton.common_ui.ui.SubmitButton
-import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.*
+import com.newton.account.presentation.events.*
+import com.newton.account.presentation.states.*
+import com.newton.account.presentation.viewmodel.*
+import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
+import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateTestimonial(
     viewModel: TestimonialsViewModel,
     onNavigateToHome: () -> Unit,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val rating by viewModel.rating.collectAsStateWithLifecycle()
@@ -53,7 +45,6 @@ fun CreateTestimonial(
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
@@ -90,8 +81,6 @@ fun CreateTestimonial(
         }
     }
 
-
-
     DefaultScaffold(
         isLoading = uiState is TestimonialsUiState.Loading,
         snackbarHostState = snackbarHostState,
@@ -105,7 +94,7 @@ fun CreateTestimonial(
                             contentDescription = "Go back"
                         )
                     }
-                },
+                }
             )
         }
     ) {
@@ -113,7 +102,8 @@ fun CreateTestimonial(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .verticalScroll(scrollState)
                     .padding(16.dp),
@@ -131,7 +121,13 @@ fun CreateTestimonial(
 
                     RatingBarInput(
                         currentRating = rating,
-                        onRatingChanged = { viewModel.handleEvent(TestimonialsUiEvent.RatingChanged(it)) }
+                        onRatingChanged = {
+                            viewModel.handleEvent(
+                                TestimonialsUiEvent.RatingChanged(
+                                    it
+                                )
+                            )
+                        }
                     )
                 }
 
@@ -142,10 +138,11 @@ fun CreateTestimonial(
                     onValueChange = { viewModel.handleEvent(TestimonialsUiEvent.ContentChanged(it)) },
                     label = "Your Testimonial",
                     placeholder = "Share your experience...",
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .heightIn(min = 150.dp),
-                    maxLines = 5,
+                    maxLines = 5
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))

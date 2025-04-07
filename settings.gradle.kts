@@ -19,22 +19,25 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "meruinnovators"
 include(
     ":app",
-    ":shared-ui",
+    ":commonUi",
     ":core",
     ":database",
     ":features:events",
     ":features:auth",
     ":features:home",
     ":features:account",
-    ":features:blogs"
+    ":features:blogs",
+    ":features:admin",
+    ":features:aboutUs",
+    ":notifications",
+    ":features:feedback",
+    ":navigation",
+    ":sharedPrefs",
+    ":network"
 )
-include(":features:admin")
-include(":features:about_us")
-include(":notifications")
-include(":features:feedback")
-include(":navigation")
-include(":sharedPrefs")
-include(":network")
+include(":shared")
+include(":features:testimonials")
+include(":features:partners")
+include(":features:settings")

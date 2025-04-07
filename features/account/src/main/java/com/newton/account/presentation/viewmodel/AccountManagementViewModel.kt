@@ -1,27 +1,37 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.account.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.account.presentation.events.DeleteAccountEvent
-import com.newton.account.presentation.events.DeleteAccountNavigationEvent
-import com.newton.account.presentation.events.LogoutEvent
-import com.newton.account.presentation.events.LogoutNavigationEvent
-import com.newton.account.presentation.states.DeleteAccountState
-import com.newton.account.presentation.states.LogoutState
-import com.newton.core.domain.repositories.AuthRepository
-import com.newton.core.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.account.presentation.events.*
+import com.newton.account.presentation.states.*
+import com.newton.network.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.*
+import timber.log.*
+import javax.inject.*
 
 @HiltViewModel
-class AccountManagementViewModel @Inject constructor(
+class AccountManagementViewModel
+@Inject
+constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
     private val _navigateToAccountDeleted = Channel<DeleteAccountNavigationEvent>()
@@ -42,6 +52,7 @@ class AccountManagementViewModel @Inject constructor(
             DeleteAccountEvent.DeleteAccount -> {
                 deleteAccount()
             }
+
             DeleteAccountEvent.ClearError -> {
                 _deleteAccountState.update { it.copy(errorMessage = null) }
             }
@@ -97,8 +108,6 @@ class AccountManagementViewModel @Inject constructor(
         }
     }
 
-
-
     private fun deleteAccount() {
         viewModelScope.launch {
             _deleteAccountState.update { it.copy(isLoading = true) }
@@ -121,7 +130,6 @@ class AccountManagementViewModel @Inject constructor(
                 }
         }
     }
-
 
     private suspend fun handleAccountDeletionSuccess() {
         try {
@@ -146,5 +154,4 @@ class AccountManagementViewModel @Inject constructor(
             Timber.e(e, "Failed to process account deletion")
         }
     }
-
 }

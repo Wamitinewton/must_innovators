@@ -1,37 +1,37 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.feedback.presentation.view.composables
 
-import android.net.Uri
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-
+import android.net.*
+import android.widget.*
+import androidx.activity.compose.*
+import androidx.activity.result.contract.*
+import androidx.compose.animation.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.unit.*
 
 @Composable
 fun ImageUploadSection(
@@ -42,30 +42,32 @@ fun ImageUploadSection(
     maxImages: Int
 ) {
     val context = LocalContext.current
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetMultipleContents()
-    ) { uris ->
-        val availableSlots = maxImages - images.size
-        val newUris = uris.filter { it !in images }
+    val galleryLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetMultipleContents()
+        ) { uris ->
+            val availableSlots = maxImages - images.size
+            val newUris = uris.filter { it !in images }
 
-        if (newUris.isEmpty()) {
-            Toast.makeText(context, "Cannot select same image twice", Toast.LENGTH_SHORT).show()
-            return@rememberLauncherForActivityResult
-        }
-
-        val urisToAdd = newUris.take(availableSlots)
-        if (urisToAdd.size < uris.size) {
-            val skippedCount = uris.size - urisToAdd.size
-            val message = if (availableSlots == 0) {
-                "Maximum $maxImages images reached"
-            } else {
-                "$skippedCount duplicate images skipped"
+            if (newUris.isEmpty()) {
+                Toast.makeText(context, "Cannot select same image twice", Toast.LENGTH_SHORT).show()
+                return@rememberLauncherForActivityResult
             }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
 
-        urisToAdd.forEach(onAddImage)
-    }
+            val urisToAdd = newUris.take(availableSlots)
+            if (urisToAdd.size < uris.size) {
+                val skippedCount = uris.size - urisToAdd.size
+                val message =
+                    if (availableSlots == 0) {
+                        "Maximum $maxImages images reached"
+                    } else {
+                        "$skippedCount duplicate images skipped"
+                    }
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            }
+
+            urisToAdd.forEach(onAddImage)
+        }
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -74,10 +76,10 @@ fun ImageUploadSection(
             targetState = images.size,
             transitionSpec = {
                 fadeIn() + slideInVertically() togetherWith
-                        fadeOut() + slideOutVertically()
+                    fadeOut() + slideOutVertically()
             },
             label = "imageCount"
-        ) {imageCount ->
+        ) { imageCount ->
             Text(
                 text = "$imageCount of $maxImages images",
                 style = MaterialTheme.typography.bodyMedium,
@@ -86,29 +88,27 @@ fun ImageUploadSection(
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-               if (images.isEmpty()) {
-                   EmptyImagePlaceholder(
-                       isEnabled = images.size < maxImages,
-                       onClick = { galleryLauncher.launch("image/*") }
-                   )
-               } else {
-                   ReorderableImageRow(
-                       images = images,
-                       onRemove = onRemoveImages,
-                       onReorder = onReorderImages,
-                       isAddEnabled = images.size < maxImages,
-                       onAdd = { galleryLauncher.launch("image/*") }
-                   )
-               }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (images.isEmpty()) {
+                EmptyImagePlaceholder(
+                    isEnabled = images.size < maxImages,
+                    onClick = { galleryLauncher.launch("image/*") }
+                )
+            } else {
+                ReorderableImageRow(
+                    images = images,
+                    onRemove = onRemoveImages,
+                    onReorder = onReorderImages,
+                    isAddEnabled = images.size < maxImages,
+                    onAdd = { galleryLauncher.launch("image/*") }
+                )
             }
         }
     }
-
-
+}
 
 @Composable
 private fun EmptyImagePlaceholder(
@@ -116,7 +116,8 @@ private fun EmptyImagePlaceholder(
     onClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .height(100.dp)
             .clip(RoundedCornerShape(8.dp))

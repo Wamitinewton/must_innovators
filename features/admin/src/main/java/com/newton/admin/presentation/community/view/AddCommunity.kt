@@ -1,3 +1,21 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
+package com.newton.admin.presentation.community.view
+
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,10 +33,10 @@ import com.newton.admin.presentation.community.view.composable.SessionDialog
 import com.newton.admin.presentation.community.view.composable.SocialDialog
 import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
 import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
-import com.newton.admin.presentation.role_management.executives.view.composables.UsersListModalBottomSheet
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.composables.MeruInnovatorsAppBar
-import com.newton.common_ui.ui.ErrorScreen
+import com.newton.admin.presentation.roleManagement.executives.view.composables.UsersListModalBottomSheet
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.composables.MeruInnovatorsAppBar
+import com.newton.commonUi.ui.ErrorScreen
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneOffset

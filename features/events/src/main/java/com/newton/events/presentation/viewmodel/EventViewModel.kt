@@ -1,36 +1,48 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.events.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.newton.core.domain.models.admin_models.EventsData
-import com.newton.core.domain.repositories.EventRepository
-import com.newton.events.presentation.states.EventDetailsState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import androidx.paging.*
+import com.newton.events.presentation.states.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
-class EventViewModel @Inject constructor(
+class EventViewModel
+@Inject
+constructor(
     private val eventRepository: EventRepository
 ) : ViewModel() {
-
-    val pagedEvents: Flow<PagingData<EventsData>> = eventRepository
-        .getPagedEvents()
-        .distinctUntilChanged()
-        .cachedIn(viewModelScope)
-
+    val pagedEvents: Flow<PagingData<EventsData>> =
+        eventRepository
+            .getPagedEvents()
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
 }
 
-
 @HiltViewModel
-class EventsSharedViewModel @Inject constructor(): ViewModel() {
+class EventsSharedViewModel
+@Inject
+constructor() : ViewModel() {
     private val _selectedEvent = MutableStateFlow<EventsData?>(null)
     private val selectedEvent: StateFlow<EventsData?> = _selectedEvent.asStateFlow()
 
@@ -40,10 +52,11 @@ class EventsSharedViewModel @Inject constructor(): ViewModel() {
     init {
         viewModelScope.launch {
             selectedEvent.collect { event ->
-                _uiState.value = when (event) {
-                    null -> EventDetailsState.Initial
-                    else -> EventDetailsState.Success(event)
-                }
+                _uiState.value =
+                    when (event) {
+                        null -> EventDetailsState.Initial
+                        else -> EventDetailsState.Success(event)
+                    }
             }
         }
     }

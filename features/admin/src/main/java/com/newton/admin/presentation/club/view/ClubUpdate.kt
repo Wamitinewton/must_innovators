@@ -10,8 +10,8 @@ import com.newton.admin.presentation.club.event.ClubEvent
 import com.newton.admin.presentation.club.view.composable.UpdateClubForm
 import com.newton.admin.presentation.club.viewmodel.ClubViewModel
 import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
-import com.newton.common_ui.composables.DefaultScaffold
-import com.newton.common_ui.ui.ErrorScreen
+import com.newton.commonUi.composables.DefaultScaffold
+import com.newton.commonUi.ui.ErrorScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

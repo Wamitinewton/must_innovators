@@ -1,73 +1,66 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.home.presentation.view
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Autorenew
-import androidx.compose.material.icons.outlined.Camera
-import androidx.compose.material.icons.outlined.Category
-import androidx.compose.material.icons.outlined.DateRange
-import androidx.compose.material.icons.outlined.Event
-import androidx.compose.material.icons.outlined.Language
-import androidx.compose.material.icons.outlined.Public
-import androidx.compose.material.icons.outlined.Schedule
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import com.newton.core.domain.models.home_models.PartnersData
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.vector.*
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import com.newton.network.domain.models.homeModels.*
 
 @Composable
 fun StatusChip(status: String) {
-    val (backgroundColor, contentColor) = when (status.uppercase()) {
-        "ACTIVE" -> Pair(
-            MaterialTheme.colorScheme.primaryContainer,
-            MaterialTheme.colorScheme.primary
-        )
+    val (backgroundColor, contentColor) =
+        when (status.uppercase()) {
+            "ACTIVE" ->
+                Pair(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.primary
+                )
 
-        "PENDING" -> Pair(
-            MaterialTheme.colorScheme.tertiaryContainer,
-            MaterialTheme.colorScheme.tertiary
-        )
+            "PENDING" ->
+                Pair(
+                    MaterialTheme.colorScheme.tertiaryContainer,
+                    MaterialTheme.colorScheme.tertiary
+                )
 
-        "INACTIVE" -> Pair(
-            MaterialTheme.colorScheme.errorContainer,
-            MaterialTheme.colorScheme.error
-        )
+            "INACTIVE" ->
+                Pair(
+                    MaterialTheme.colorScheme.errorContainer,
+                    MaterialTheme.colorScheme.error
+                )
 
-        else -> Pair(
-            MaterialTheme.colorScheme.secondaryContainer,
-            MaterialTheme.colorScheme.secondary
-        )
-    }
+            else ->
+                Pair(
+                    MaterialTheme.colorScheme.secondaryContainer,
+                    MaterialTheme.colorScheme.secondary
+                )
+        }
 
     Surface(
         color = backgroundColor,
@@ -86,7 +79,8 @@ fun StatusChip(status: String) {
 @Composable
 fun QuickInfoRow(partnerData: PartnersData) {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -98,7 +92,8 @@ fun QuickInfoRow(partnerData: PartnersData) {
         )
 
         VerticalDivider(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .height(40.dp)
                 .width(1.dp),
             color = MaterialTheme.colorScheme.outlineVariant
@@ -111,7 +106,8 @@ fun QuickInfoRow(partnerData: PartnersData) {
         )
 
         VerticalDivider(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .height(40.dp)
                 .width(1.dp),
             color = MaterialTheme.colorScheme.outlineVariant
@@ -207,12 +203,14 @@ fun ContactInfoCard(
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.elevatedCardColors(
+        colors =
+        CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -265,21 +263,24 @@ fun ContactInfoCard(
 
 @Composable
 fun PartnershipDetailsCard(partnerData: PartnersData) {
-    val durationText = if (partnerData.ongoing) {
-        "Since ${partnerData.start_date} (Ongoing)"
-    } else {
-        "${partnerData.start_date} to ${partnerData.end_date ?: "Present"}"
-    }
+    val durationText =
+        if (partnerData.ongoing) {
+            "Since ${partnerData.start_date} (Ongoing)"
+        } else {
+            "${partnerData.start_date} to ${partnerData.end_date ?: "Present"}"
+        }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
         )
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -362,17 +363,18 @@ fun ContactItem(
     clickable: Boolean = false,
     onClick: () -> Unit = {}
 ) {
-    val modifier = if (clickable) {
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick)
-            .padding(8.dp)
-    } else {
-        Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    }
+    val modifier =
+        if (clickable) {
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .clickable(onClick = onClick)
+                .padding(8.dp)
+        } else {
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -421,7 +423,8 @@ fun SocialButton(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(RoundedCornerShape(8.dp))
             .clickable(onClick = onClick)
             .padding(8.dp)

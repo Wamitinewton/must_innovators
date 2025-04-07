@@ -1,78 +1,89 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.core.network
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
-import javax.inject.Inject
-import javax.inject.Singleton
+import android.content.*
+import android.net.*
+import dagger.hilt.android.qualifiers.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.*
+import java.io.*
+import java.net.*
+import javax.inject.*
 
 @Singleton
- class NetworkConfiguration @Inject constructor(
+class NetworkConfiguration
+@Inject
+constructor(
     @ApplicationContext private val context: Context
-){
-
+) {
     private val connectivityManager: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
 
     /**
      * Monitors network connectivity changes and returns
      * a Flow of NetworkStatus
      */
-    fun observeNetworkStatus(): Flow<NetworkStatus> = callbackFlow {
-        val callBack = object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                // Launch in IO dispatcher for network check
-                launch(Dispatchers.IO) {
-                    val hasInternet = hasInternetConnection()
-                    trySend(if (hasInternet) NetworkStatus.Available else NetworkStatus.NoInternet)
+    fun observeNetworkStatus(): Flow<NetworkStatus> =
+        callbackFlow {
+            val callBack =
+                object : ConnectivityManager.NetworkCallback() {
+                    override fun onAvailable(network: Network) {
+                        // Launch in IO dispatcher for network check
+                        launch(Dispatchers.IO) {
+                            val hasInternet = hasInternetConnection()
+                            trySend(
+                                if (hasInternet) NetworkStatus.Available else NetworkStatus.NoInternet
+                            )
+                        }
+                    }
+
+                    override fun onLost(network: Network) {
+                        trySend(NetworkStatus.NoInternet)
+                    }
+
+                    override fun onUnavailable() {
+                        trySend(NetworkStatus.Unavailable)
+                    }
+                }
+            val request =
+                NetworkRequest.Builder()
+                    .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    .build()
+
+            connectivityManager.registerNetworkCallback(request, callBack)
+
+            launch(Dispatchers.IO) {
+                if (isNetworkAvailable()) {
+                    if (hasInternetConnection()) {
+                        trySend(NetworkStatus.Available)
+                    } else {
+                        trySend(NetworkStatus.NoInternet)
+                    }
+                } else {
+                    trySend(NetworkStatus.Unavailable)
                 }
             }
 
-            override fun onLost(network: Network) {
-                trySend(NetworkStatus.NoInternet)
+            awaitClose {
+                connectivityManager.unregisterNetworkCallback(callBack)
             }
-
-            override fun onUnavailable() {
-                trySend(NetworkStatus.Unavailable)
-            }
-        }
-        val request = NetworkRequest.Builder()
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            .build()
-
-        connectivityManager.registerNetworkCallback(request, callBack)
-
-       launch(Dispatchers.IO) {
-           if (isNetworkAvailable()) {
-               if (hasInternetConnection()) {
-                   trySend(NetworkStatus.Available)
-               } else {
-                   trySend(NetworkStatus.NoInternet)
-               }
-           } else {
-               trySend(NetworkStatus.Unavailable)
-           }
-       }
-
-        awaitClose {
-            connectivityManager.unregisterNetworkCallback(callBack)
-        }
-    }.distinctUntilChanged()
-
+        }.distinctUntilChanged()
 
     /**
      * Checks if device is connected to any network
@@ -105,19 +116,20 @@ import javax.inject.Singleton
      * Checks if there is actual internet connectivity
      * by making a lightweight request
      */
-    private suspend fun hasInternetConnection(): Boolean = withContext(Dispatchers.IO) {
-         try {
-            val url = URL("https://8.8.8.8") // Google DNS
-            val connection = url.openConnection() as HttpURLConnection
-            connection.setRequestProperty("User-Agent", "Android")
-            connection.setRequestProperty("Connection", "Close")
-            connection.connectTimeout = 1500
-            connection.connect()
-            connection.responseCode == 200
-        } catch (e: IOException) {
-            false
+    private suspend fun hasInternetConnection(): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+                val url = URL("https://8.8.8.8") // Google DNS
+                val connection = url.openConnection() as HttpURLConnection
+                connection.setRequestProperty("User-Agent", "Android")
+                connection.setRequestProperty("Connection", "Close")
+                connection.connectTimeout = 1500
+                connection.connect()
+                connection.responseCode == 200
+            } catch (e: IOException) {
+                false
+            }
         }
-    }
 
     /**
      * Get detailed network error message based on current status
@@ -126,10 +138,13 @@ import javax.inject.Singleton
         return when {
             !isNetworkAvailable() ->
                 "No network connection available. Please check your device's network settings."
+
             isWifiConnection() && !hasInternetConnection() ->
                 "Connected to WiFi but no internet access. Please check your WiFi connection."
+
             isCellularConnection() && !hasInternetConnection() ->
                 "Connected to mobile data but no internet access. Please check your data connection."
+
             else -> "Unable to connect to the internet. Please try again later."
         }
     }

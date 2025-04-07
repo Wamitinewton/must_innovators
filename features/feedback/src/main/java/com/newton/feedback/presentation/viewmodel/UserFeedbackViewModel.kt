@@ -1,18 +1,32 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.feedback.presentation.viewmodel
 
-import android.net.Uri
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import android.net.*
+import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
-class UserFeedbackViewModel @Inject constructor(): ViewModel() {
+class UserFeedbackViewModel
+@Inject
+constructor() : ViewModel() {
     private val _bugDescription = MutableStateFlow("")
     val bugDescription = _bugDescription.asStateFlow()
 
@@ -53,7 +67,10 @@ class UserFeedbackViewModel @Inject constructor(): ViewModel() {
         _rating.value = newRating
     }
 
-    fun reorderImages(fromIndex: Int, toIndex: Int) {
+    fun reorderImages(
+        fromIndex: Int,
+        toIndex: Int
+    ) {
         _bugImages.update { currentImages ->
             currentImages.toMutableList().apply {
                 val item = removeAt(fromIndex)

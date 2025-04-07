@@ -1,27 +1,25 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.database.db
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.newton.database.converters.DataConverters
-import com.newton.database.dao.ClubBioDao
-import com.newton.database.dao.EventDao
-import com.newton.database.dao.EventsFeedbackDao
-import com.newton.database.dao.PartnersDao
-import com.newton.database.dao.TestimonialsDao
-import com.newton.database.dao.TicketDao
-import com.newton.database.dao.UserDao
-import com.newton.database.dao.UserFeedbackDao
-import com.newton.database.entities.ClubBioEntity
-import com.newton.database.entities.EventEntity
-import com.newton.database.entities.EventPaginationMetadata
-import com.newton.database.entities.EventsFeedbackEntity
-import com.newton.database.entities.PartnerEntity
-import com.newton.database.entities.PartnersDataEntity
-import com.newton.database.entities.TestimonialsEntity
-import com.newton.database.entities.TicketsEntity
-import com.newton.database.entities.UserEntity
-import com.newton.database.entities.UserFeedbackEntity
+import androidx.room.*
+import com.newton.database.converters.*
+import com.newton.database.dao.*
+import com.newton.database.entities.*
 
 @Database(
     entities = [
@@ -36,11 +34,9 @@ import com.newton.database.entities.UserFeedbackEntity
         EventPaginationMetadata::class,
         TestimonialsEntity::class
     ],
-
     version = 25,
     exportSchema = false
 )
-
 @TypeConverters(DataConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val userDao: UserDao

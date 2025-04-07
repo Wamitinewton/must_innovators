@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.admin.presentation.partners.events.AddPartnersEvent
 import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.common_ui.ui.CustomCard
+import com.newton.commonUi.ui.CustomCard
 
 @Composable
 fun ContactInfo(
