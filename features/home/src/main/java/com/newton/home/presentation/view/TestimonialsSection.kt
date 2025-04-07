@@ -143,7 +143,7 @@ fun TestimonialCard(
     testimonialsData: TestimonialsData,
     onClick: (TestimonialsData) -> Unit
 ) {
-    Card(
+    CustomCard(
         modifier =
         Modifier
             .fillMaxWidth()
@@ -156,10 +156,6 @@ fun TestimonialCard(
             )
             .clickable { onClick(testimonialsData) },
         shape = RoundedCornerShape(16.dp),
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
     ) {
         Column(
             modifier =
