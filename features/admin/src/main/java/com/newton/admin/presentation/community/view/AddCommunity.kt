@@ -47,7 +47,7 @@ import java.util.Locale
 @Composable
 fun AddCommunityScreen(
     onEvent: (CommunityEvent) -> Unit,
-    viewModel: CommunityViewModel,
+    viewModel: CommunityViewModel
 ) {
     val addCommunityState by viewModel.communityState.collectAsState()
     val usersState by viewModel.userState.collectAsState()
@@ -81,14 +81,16 @@ fun AddCommunityScreen(
                 AdminSuccessScreen(
                     onFinish = {
                         onEvent.invoke(CommunityEvent.ToDefault)
-                    }, text = "Added Community Successfully"
+                    },
+                    text = "Added Community Successfully"
                 )
             }
 
             addCommunityState.uploadError != null -> {
                 ErrorScreen(
                     addCommunityState.uploadError!!,
-                    onRetry = { onEvent.invoke(CommunityEvent.AddCommunity) })
+                    onRetry = { onEvent.invoke(CommunityEvent.AddCommunity) }
+                )
             }
             else -> {
                 AddCommunityForm(addCommunityState, onEvent)
@@ -153,7 +155,6 @@ fun AddCommunityScreen(
                                 val formattedDate = format.format(date)
 
                                 onEvent.invoke(CommunityEvent.DateFoundedChanged(formattedDate))
-
                             }
                             onEvent.invoke(CommunityEvent.ShowDatePicker(false))
                         }
@@ -186,7 +187,6 @@ fun AddCommunityScreen(
                         "co-lead" -> {
                             onEvent.invoke(CommunityEvent.CoLeadChanged(user.name))
                             onEvent.invoke(CommunityEvent.CoLeadIdChanged(user.id))
-
                         }
 
                         "secretary" -> {

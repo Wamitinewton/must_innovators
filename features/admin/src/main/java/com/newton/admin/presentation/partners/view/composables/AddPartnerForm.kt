@@ -40,7 +40,7 @@ import com.newton.admin.presentation.partners.states.AddPartnersState
 import com.newton.commonUi.ui.CustomButton
 
 @Composable
-fun AddPartnerForm(partnersState:AddPartnersState,onEvent: (AddPartnersEvent)->Unit) {
+fun AddPartnerForm(partnersState: AddPartnersState, onEvent: (AddPartnersEvent) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()

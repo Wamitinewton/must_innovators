@@ -44,7 +44,7 @@ fun ActionItem(
             .clickable {
                 onClick()
             }
-            .padding(vertical = 4.dp),
+            .padding(vertical = 4.dp)
     ) {
         Column {
             Row(

@@ -82,7 +82,7 @@ fun PartnershipDetails(
             ) {
                 Icon(
                     imageVector = Icons.Default.CalendarToday,
-                    contentDescription = null,
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -103,7 +103,7 @@ fun PartnershipDetails(
                             DateTimeFormatter.ofPattern(
                                 "MMM d, yyyy"
                             )
-                        ),
+                        )
                     )
                 }
             }
@@ -115,7 +115,7 @@ fun PartnershipDetails(
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
-                    contentDescription = null,
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -134,7 +134,7 @@ fun PartnershipDetails(
                         if (it) {
                             onEvent.invoke(AddPartnersEvent.EndDateChange(null))
                         }
-                    },
+                    }
                 )
             }
             AnimatedVisibility(visible = !partnersState.ongoingPartnership) {
@@ -146,7 +146,7 @@ fun PartnershipDetails(
                 ) {
                     Icon(
                         imageVector = Icons.Default.EventBusy,
-                        contentDescription = null,
+                        contentDescription = null
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -194,7 +194,7 @@ fun PartnershipDetails(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.SignalCellularAlt,
-                            contentDescription = null,
+                            contentDescription = null
                         )
                     },
                     trailingIcon = {

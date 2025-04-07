@@ -43,14 +43,15 @@ import com.newton.commonUi.composables.animation.customAnimations.ShimmerWithFad
 
 @Composable
 fun AdminEventCardShimmer() {
-    Box(modifier = Modifier
-        .height(100.dp)
-        .padding(horizontal = 10.dp)
-        .border(
-            width = 1.dp,
-            brush = Brush.linearGradient(colors = listOf(Color.Red,Color.Green,Color.Blue)),
-            shape = RoundedCornerShape(10.dp),
-        )
+    Box(
+        modifier = Modifier
+            .height(100.dp)
+            .padding(horizontal = 10.dp)
+            .border(
+                width = 1.dp,
+                brush = Brush.linearGradient(colors = listOf(Color.Red, Color.Green, Color.Blue)),
+                shape = RoundedCornerShape(10.dp)
+            )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp)) {
             ShimmerWithFade(

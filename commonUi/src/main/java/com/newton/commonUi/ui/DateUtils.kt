@@ -1,4 +1,20 @@
-package com.newton.common_ui.ui
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
+package com.newton.commonUi.ui
 
 
 import java.time.*
@@ -10,20 +26,20 @@ fun Long.toFormattedDate(): String {
     val instant = Instant.ofEpochMilli(this)
     val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
     return "${localDateTime.dayOfMonth} ${
-        localDateTime.month.toString().lowercase()
-            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+    localDateTime.month.toString().lowercase()
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }, ${localDateTime.year}"
 }
 
-fun LocalDateTime.toFormattedDate():String{
+fun LocalDateTime.toFormattedDate(): String {
     val localDateTime: LocalDateTime = this
     return "${localDateTime.dayOfMonth} ${
-        localDateTime.month.toString().lowercase()
-            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+    localDateTime.month.toString().lowercase()
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }, ${localDateTime.year}"
 }
 
-fun LocalDateTime.toLocalDateTime():String{
+fun LocalDateTime.toLocalDateTime(): String {
     val instant = this.toInstant(ZoneOffset.UTC)
     return DateTimeFormatter.ISO_INSTANT.format(instant)
 }
@@ -33,8 +49,8 @@ fun String.toFormatedDate(): String {
     val instant = Instant.parse(this)
     val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
     return "${localDateTime.dayOfMonth} ${
-        localDateTime.month.toString().lowercase()
-            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+    localDateTime.month.toString().lowercase()
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }, ${localDateTime.year}"
 }
 
@@ -85,7 +101,6 @@ fun startDateAndEndDateOfMonth(
     month: Int = LocalDate.now().monthValue,
     currentYear: Int = LocalDate.now().year
 ): Pair<Long, Long> {
-
     val startDate = LocalDate.of(currentYear, month, 1)
         .atStartOfDay(ZoneId.systemDefault())
         .toInstant()

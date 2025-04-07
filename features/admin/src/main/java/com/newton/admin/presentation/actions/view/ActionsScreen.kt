@@ -40,14 +40,13 @@ import com.newton.navigation.NavigationRoutes
 fun ActionsScreen(
     navController: NavController
 ) {
-
     val actionList: List<NavItem> = listOf(
         NavItem("Add Partners", NavigationRoutes.AddPartners.routes),
         NavItem("Add Community", NavigationRoutes.AddCommunity.routes),
         NavItem("Add Event", NavigationRoutes.AddEvent.routes),
         NavItem("Add Executive", NavigationRoutes.UpdateExecutive.routes),
         NavItem("Update Community", NavigationRoutes.AdminCommunityList.routes),
-        NavItem("Club Update", NavigationRoutes.ClubUpdate.routes),
+        NavItem("Club Update", NavigationRoutes.ClubUpdate.routes)
     )
 
     val notificationList: List<NotificationItem> = listOf(
@@ -58,7 +57,7 @@ fun ActionsScreen(
             TopAppBar(
                 title = { Text("Actions Center", style = MaterialTheme.typography.headlineMedium) }
             )
-        },
+        }
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),

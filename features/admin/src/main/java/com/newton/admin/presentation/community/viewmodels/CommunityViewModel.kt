@@ -135,17 +135,17 @@ class CommunityViewModel @Inject constructor(
         if (_communityState.value.name.isBlank()) {
             errors["name"] = "Community name is required"
         }
-        if (_communityState.value.sessions .isEmpty()) {
+        if (_communityState.value.sessions.isEmpty()) {
             errors["sessions"] = "Assign sessions to your community"
         }
         if (_communityState.value.leadId == null) {
             errors["lead"] = "Lead is required in the community"
         }
-        if (_communityState.value.coLeadId==null) {
+        if (_communityState.value.coLeadId == null) {
             errors["colead"] = "Co-lead cannot be null int the community"
         }
 
-        if (_communityState.value.secretaryId ==null) {
+        if (_communityState.value.secretaryId == null) {
             errors["secretary"] = "Secretary of the community  is required"
         }
 
@@ -164,7 +164,7 @@ class CommunityViewModel @Inject constructor(
 
 
     private fun addCommunity() {
-        if (validate()){
+        if (validate()) {
             val community = AddCommunityRequest(
                 name = _communityState.value.name,
                 community_lead = _communityState.value.leadId!!,
@@ -240,7 +240,7 @@ class CommunityViewModel @Inject constructor(
                         is Resource.Success -> {
                             _communityState.value = _communityState.value.copy(
                                 isLoading = false,
-                                uploadError = null,
+                                uploadError = null
                             )
                         }
                     }
@@ -253,8 +253,8 @@ class CommunityViewModel @Inject constructor(
         val query = _usersState.value.searchQuery.lowercase()
         return _usersState.value.users.filter { user ->
             val matchesSearch = query.isEmpty() ||
-                    user.name.lowercase().contains(query) ||
-                    user.email.lowercase().contains(query)
+                user.name.lowercase().contains(query) ||
+                user.email.lowercase().contains(query)
             matchesSearch
         }
     }

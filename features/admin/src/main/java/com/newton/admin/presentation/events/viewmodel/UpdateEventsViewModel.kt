@@ -54,10 +54,10 @@ class UpdateEventsViewModel @Inject constructor(
         }
     }
 
-    private fun toDefault(){
+    private fun toDefault() {
         _updateState.value = UpdateEventState()
     }
-    private fun updateEvent(eventId:Int) {
+    private fun updateEvent(eventId: Int) {
         val request = UpdateEventRequest(
             name = _updateState.value.name,
             category = _updateState.value.category,
@@ -69,11 +69,11 @@ class UpdateEventsViewModel @Inject constructor(
             contactEmail = _updateState.value.contactEmail,
             title = _updateState.value.title,
             meetingLink = _updateState.value.meetingLink,
-            isVirtual = _updateState.value.isVirtual,
+            isVirtual = _updateState.value.isVirtual
         )
 
         viewModelScope.launch {
-            adminRepository.updateEvent(request, eventId).collectLatest {result ->
+            adminRepository.updateEvent(request, eventId).collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {
                         _updateState.value = _updateState.value.copy(errorMessage = result.message)
@@ -87,13 +87,11 @@ class UpdateEventsViewModel @Inject constructor(
                         _updateState.value = _updateState.value.copy(
                             uploadSuccess = true,
                             isLoading = false,
-                            errorMessage = null,
+                            errorMessage = null
                         )
                     }
                 }
-
             }
         }
     }
-
 }

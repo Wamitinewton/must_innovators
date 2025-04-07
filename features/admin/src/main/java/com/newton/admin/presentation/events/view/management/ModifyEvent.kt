@@ -81,8 +81,8 @@ fun ModifyEvent(
                     }
                 }
             )
-        }
-        , isLoading = state.isLoading
+        },
+        isLoading = state.isLoading
     ) {
         when (uiState) {
             is UpdateEvent.Error -> {
@@ -100,13 +100,13 @@ fun ModifyEvent(
                 }
             }
         }
-        when{
-            state.errorMessage!=null->{
+        when {
+            state.errorMessage != null -> {
                 OopsError(
                     errorMessage = state.errorMessage!!
                 )
             }
-            state.uploadSuccess->{
+            state.uploadSuccess -> {
                 AdminSuccessScreen(
                     onFinish = {
                         onEvent.invoke(EventUpdateEvent.ToDefault)

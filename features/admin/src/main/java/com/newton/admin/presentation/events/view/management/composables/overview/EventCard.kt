@@ -55,7 +55,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.newton.commonUi.ui.CustomCard
-import com.newton.common_ui.ui.toLocalDateTime
+import com.newton.commonUi.ui.toLocalDateTime
 import com.newton.network.domain.models.adminModels.EventsData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -69,7 +69,7 @@ fun EventCard(
 ) {
     val isPast = event.date.toLocalDateTime().isBefore(LocalDateTime.now())
     val density = LocalDensity.current
-    val animatedOffset = remember  { Animatable(0f) }
+    val animatedOffset = remember { Animatable(0f) }
     val infiniteTransition = rememberInfiniteTransition()
 
     LaunchedEffect(isScrolling) {

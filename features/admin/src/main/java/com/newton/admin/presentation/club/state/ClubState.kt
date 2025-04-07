@@ -19,16 +19,15 @@ package com.newton.admin.presentation.club.state
 import com.newton.network.domain.models.aboutUs.ClubBioData
 import com.newton.network.domain.models.admin.Socials
 
-
 data class ClubState(
-    val name:String = "",
-    val clubDetails:String = "",
-    val vision:String="",
-    val mission:String="",
-    val socials:List<Socials> = emptyList(),
-    val clubData: ClubBioData?=null,
-    val isLoading:Boolean=false,
-    val isUpdatedSuccess:Boolean=false,
-    val errorMessage:String?=null,
-    val errors:Map<String,String> = emptyMap()
+    val name: String = "",
+    val clubDetails: String = "",
+    val vision: String = "",
+    val mission: String = "",
+    val socials: List<Socials> = emptyList(),
+    val clubData: ClubBioData? = null,
+    val isLoading: Boolean = false,
+    val isUpdatedSuccess: Boolean = false,
+    val errorMessage: String? = null,
+    val errors: Map<String, String> = emptyMap()
 )

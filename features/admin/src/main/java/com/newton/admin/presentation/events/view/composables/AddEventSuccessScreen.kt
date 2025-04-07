@@ -47,7 +47,7 @@ import com.newton.commonUi.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun AdminSuccessScreen(onFinish:()->Unit, text:String) {
+fun AdminSuccessScreen(onFinish: () -> Unit, text: String) {
     var showText by remember { mutableStateOf(false) }
 
     LaunchedEffect(showText) {
@@ -67,12 +67,13 @@ fun AdminSuccessScreen(onFinish:()->Unit, text:String) {
             lottieFile = R.raw.innovators_success,
             onAnimationComplete = {
                 showText = true
-            },
+            }
         )
         Spacer(
             modifier = Modifier.height(32.dp)
         )
-        AnimatedVisibility(visible = showText,
+        AnimatedVisibility(
+            visible = showText,
             enter = fadeIn() + scaleIn(
                 initialScale = 0.8f,
                 animationSpec = spring(
@@ -97,5 +98,4 @@ fun AdminSuccessScreen(onFinish:()->Unit, text:String) {
             )
         }
     }
-
 }

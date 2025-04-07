@@ -59,14 +59,14 @@ class ClubViewModel @Inject constructor(
         loadClubData()
     }
 
-    private fun loadClubData(){
+    private fun loadClubData() {
         viewModelScope.launch {
-            communityRepository.getClubBio().collectLatest { result->
-                when(result){
+            communityRepository.getClubBio().collectLatest { result ->
+                when (result) {
                     is Resource.Error -> _clubState.update { it.copy(errorMessage = result.message) }
                     is Resource.Loading -> _clubState.update { it.copy(isLoading = result.isLoading) }
                     is Resource.Success -> {
-                        result.data?.let { club->
+                        result.data?.let { club ->
                             _clubState.update { it.copy(clubData = club) }
                         }
                     }
@@ -92,7 +92,7 @@ class ClubViewModel @Inject constructor(
             adminRepo.updateClub(club).collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {
-                        _clubState.update { it.copy(errorMessage = result.message ,isLoading = false,) }
+                        _clubState.update { it.copy(errorMessage = result.message, isLoading = false) }
                     }
 
                     is Resource.Loading -> _clubState.update { it.copy(isLoading = result.isLoading) }
@@ -108,6 +108,5 @@ class ClubViewModel @Inject constructor(
                 }
             }
         }
-
     }
 }

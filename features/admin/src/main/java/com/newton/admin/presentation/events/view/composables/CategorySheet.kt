@@ -35,8 +35,7 @@ import com.newton.commonUi.ui.ColumnWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategorySheet(onEvent: (AddEventEvents)->Unit,viewModel:AddEventViewModel) {
-
+fun CategorySheet(onEvent: (AddEventEvents) -> Unit, viewModel: AddEventViewModel) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(
         sheetState = sheetState,

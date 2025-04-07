@@ -42,87 +42,86 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.newton.commonUi.ui.CustomCard
 import com.newton.commonUi.ui.CustomDynamicAsyncImage
-import com.newton.common_ui.ui.toFormatedDate
+import com.newton.commonUi.ui.toFormatedDate
 import com.newton.network.domain.models.adminModels.EventsData
 
 @Composable
 fun EventCalendarItem(
-    event: EventsData,
+    event: EventsData
 ) {
     CustomCard(
         modifier = Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
-            CustomDynamicAsyncImage(
-                imageUrl = event.imageUrl,
-                contentDescription = "Event Image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .height(180.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
+        CustomDynamicAsyncImage(
+            imageUrl = event.imageUrl,
+            contentDescription = "Event Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .height(180.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
 //                    .align(Alignment.BottomCenter)
-                    .padding(12.dp)
-            ) {
-                Column {
-                    Text(
-                        text = event.name,
-                        color= MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = event.description,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.Light,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                .padding(12.dp)
+        ) {
+            Column {
+                Text(
+                    text = event.name,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = event.description,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Light,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
 
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.LocationOn,
+                            contentDescription = "Location",
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = event.location,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.LocationOn,
-                                contentDescription = "Location",
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = event.location,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Schedule,
-                                contentDescription = "Dates",
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = event.date.toFormatedDate(),
-                                color = MaterialTheme.colorScheme.onSurface,
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Default.Schedule,
+                            contentDescription = "Dates",
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = event.date.toFormatedDate(),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
                 }
             }
-
+        }
     }
 }

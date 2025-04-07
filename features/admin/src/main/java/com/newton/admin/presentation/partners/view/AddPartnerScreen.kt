@@ -75,7 +75,6 @@ fun AddPartnerScreen(
                     e.printStackTrace()
                 }
             }
-
         }
     )
     val mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
@@ -99,7 +98,6 @@ fun AddPartnerScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-
                     }) {
                         Icon(
                             imageVector = Icons.Default.Visibility,
@@ -109,7 +107,7 @@ fun AddPartnerScreen(
                     }
                 }
             )
-        },
+        }
     ) {
         when {
             partnersState.isSuccess -> {
@@ -124,7 +122,8 @@ fun AddPartnerScreen(
             partnersState.errorMessage != null -> {
                 ErrorScreen(
                     partnersState.errorMessage!!,
-                    onRetry = { onEvent.invoke(AddPartnersEvent.AddPartners) })
+                    onRetry = { onEvent.invoke(AddPartnersEvent.AddPartners) }
+                )
             }
 
             else -> {
@@ -208,5 +207,4 @@ fun AddPartnerScreen(
             DatePicker(state = datePickerState)
         }
     }
-
 }

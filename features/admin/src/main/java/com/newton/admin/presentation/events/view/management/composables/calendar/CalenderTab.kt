@@ -55,7 +55,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun CalendarTab(
-    calendarDays: List<CalendarDay>,
+    calendarDays: List<CalendarDay>
 ) {
     val today = LocalDate.now()
     val visibleMonths = remember {
@@ -79,15 +79,21 @@ fun CalendarTab(
                 Button(
                     onClick = { selectedMonth = month },
                     colors = ButtonDefaults.buttonColors().copy(
-                        containerColor = if (isSelected) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.surface
+                        containerColor = if (isSelected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.surface
+                        }
                     ),
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Text(
                         text = month.toString(),
-                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary
-                        else MaterialTheme.colorScheme.onSurface
+                        color = if (isSelected) {
+                            MaterialTheme.colorScheme.onPrimary
+                        } else {
+                            MaterialTheme.colorScheme.onSurface
+                        }
                     )
                 }
             }
@@ -173,7 +179,7 @@ fun CalendarTab(
                 contentAlignment = Alignment.Center
             ) {
                 OopsError(
-                    errorMessage = "No events scheduled for this day.",
+                    errorMessage = "No events scheduled for this day."
                 )
             }
         } else {
@@ -183,7 +189,7 @@ fun CalendarTab(
             ) {
                 items(selectedDayEvents) { event ->
                     EventCalendarItem(
-                        event = event,
+                        event = event
                     )
                 }
             }

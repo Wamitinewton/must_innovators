@@ -50,7 +50,7 @@ import com.newton.network.domain.models.admin.Socials
 import timber.log.Timber
 
 @Composable
-fun UpdateClubForm(clubState:ClubState, onEvent:(ClubEvent)->Unit) {
+fun UpdateClubForm(clubState: ClubState, onEvent: (ClubEvent) -> Unit) {
     var socialMediaLinks by remember {
         mutableStateOf(
             listOf(
@@ -137,14 +137,12 @@ fun UpdateClubForm(clubState:ClubState, onEvent:(ClubEvent)->Unit) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
                 OutlinedTextField(
                     value = link.platform,
                     onValueChange = {
                         socialMediaLinks = socialMediaLinks.toMutableList().apply {
                             this[index] = link.copy(platform = it)
                         }
-
                     },
                     label = { Text("Platform") },
                     modifier = Modifier.weight(.3f),

@@ -57,7 +57,7 @@ import com.newton.commonUi.ui.CustomButton
 import com.newton.commonUi.ui.CustomCard
 
 @Composable
-fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)->Unit) {
+fun AddCommunityForm(addCommunityState: CommunityState, onEvent: (CommunityEvent) -> Unit) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -67,7 +67,7 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         CustomCard(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -138,7 +138,7 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
             }
         }
         CustomCard(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -175,7 +175,8 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
                     onClick = {
                         onEvent.invoke(CommunityEvent.CurrentRoleSelectionChange("secretary"))
                         onEvent.invoke(CommunityEvent.ShowBottomSheet(true))
-                    })
+                    }
+                )
                 addCommunityState.errors["secretary"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             }
         }
@@ -233,7 +234,7 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
 
         CommunitySection(
             title = "Contact Information",
-            icon = Icons.Outlined.Contacts,
+            icon = Icons.Outlined.Contacts
         ) {
             OutlinedTextField(
                 value = addCommunityState.email,
@@ -284,7 +285,7 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
                 }
             }
         ) {
-            if ( addCommunityState.socials.isEmpty()) {
+            if (addCommunityState.socials.isEmpty()) {
                 Text(
                     text = "There is No socials associated to this community",
                     style = MaterialTheme.typography.bodyMedium,
@@ -302,19 +303,19 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
                             onEvent.invoke(CommunityEvent.ShowAddSocialDialog(true))
                         },
                         onDeleteClick = {
-                            val newSocial =  addCommunityState.socials.toMutableList()
+                            val newSocial = addCommunityState.socials.toMutableList()
                             newSocial.removeAt(index)
                             onEvent.invoke(CommunityEvent.SocialsChanged(newSocial))
                         }
                     )
-                    if (index <  addCommunityState.socials.size - 1) {
+                    if (index < addCommunityState.socials.size - 1) {
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                     }
                 }
             }
         }
         CustomCard(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -351,7 +352,7 @@ fun AddCommunityForm(addCommunityState:CommunityState,onEvent: (CommunityEvent)-
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(56.dp)
         ) {
             Text("Add Community")
         }

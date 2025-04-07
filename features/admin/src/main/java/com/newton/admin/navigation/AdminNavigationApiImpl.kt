@@ -54,7 +54,7 @@ import com.newton.navigation.NavigationSubGraphRoutes
 class AdminNavigationApiImpl : AdminNavigationApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController,
+        navHostController: NavHostController
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Admin.route,
@@ -73,7 +73,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 EventManagementScreen(
                     onEvent = viewModel::handleEvent,
                     viewModel = viewModel,
-                    onEventSelected = {event->
+                    onEventSelected = { event ->
                         sharedViewModel.setSelectedEvent(event)
                         navHostController.navigate(NavigationRoutes.ModifyEvent.routes)
                     }
@@ -106,7 +106,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val viewModel = hiltViewModel<CommunityViewModel>()
                 AddCommunityScreen(
                     viewModel = viewModel,
-                    onEvent = viewModel::handleEvent,
+                    onEvent = viewModel::handleEvent
                 )
             }
             composable(route = NavigationRoutes.AddPartners.routes) {
@@ -117,8 +117,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val viewModel = hiltViewModel<NotificationsViewModel>()
                 NewsletterAdminScreen(
                     viewModel = viewModel,
-                    onEvent = viewModel::handleEvents,
-                    navController = navHostController
+                    onEvent = viewModel::handleEvents
                 )
             }
             composable(route = NavigationRoutes.UpdateCommunity.routes) {
@@ -140,7 +139,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                     onEvent = viewModel::handleEvents
                 )
             }
-            composable(route= NavigationRoutes.AdminCommunityList.routes) {
+            composable(route = NavigationRoutes.AdminCommunityList.routes) {
                 val parentEntry = remember(it) {
                     navHostController.getBackStackEntry(NavigationRoutes.AdminCommunityList.routes)
                 }
@@ -148,7 +147,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                 val sharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 AdminCommunityList(
                     viewModel = viewModel,
-                    onCommunitySelected = {community->
+                    onCommunitySelected = { community ->
                         sharedViewModel.setSelectedCommunity(community)
                         navHostController.navigate(NavigationRoutes.UpdateCommunity.routes)
                     }
@@ -161,7 +160,6 @@ class AdminNavigationApiImpl : AdminNavigationApi {
                     onEvent = viewModel::handleEvent
                 )
             }
-
         }
     }
 }

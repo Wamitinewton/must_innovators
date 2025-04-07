@@ -40,7 +40,7 @@ import com.newton.admin.presentation.roleManagement.executives.events.ExecutiveE
 import com.newton.admin.presentation.roleManagement.executives.states.ExecutiveState
 
 @Composable
-fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents)->Unit) {
+fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents) -> Unit) {
     val positions: List<String> = listOf(
         "Chair person",
         "Vice chair person",
@@ -121,7 +121,7 @@ fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents)->Unit
                 Icon(Icons.Default.Save, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text ="ADD EXECUTIVE",
+                    text = "ADD EXECUTIVE",
                     fontSize = 16.sp
                 )
             }

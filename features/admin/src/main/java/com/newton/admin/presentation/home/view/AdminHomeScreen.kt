@@ -53,7 +53,6 @@ fun AdminHome(
     onEvent: (AdminHomeEvent) -> Unit,
     navController: NavController
 ) {
-
     val adminState by viewModel.adminState.collectAsState()
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -109,15 +108,15 @@ fun AdminHome(
     DefaultScaffold(
         topBar = {
             MeruInnovatorsAppBar(title = "Admin Dashboard")
-        },
+        }
     ) {
         var tooltipData by remember { mutableStateOf<ToolTipData?>(null) }
         LazyColumn(
-            contentPadding = PaddingValues(horizontal = 12.dp),
+            contentPadding = PaddingValues(horizontal = 12.dp)
         ) {
             item {
                 DashboardCard(
-                    title = "Community groups members statistics",
+                    title = "Community groups members statistics"
                 ) {
                     BarGraph(
                         communityGroups = communityGroups,
@@ -127,7 +126,7 @@ fun AdminHome(
             }
             item {
                 DashboardCard(
-                    title = "Active Users Trend",
+                    title = "Active Users Trend"
                 ) {
                     InteractiveLineGraph(
                         data = activeUsers,
@@ -137,7 +136,7 @@ fun AdminHome(
             }
             item {
                 DashboardCard(
-                    title = "Events Distribution",
+                    title = "Events Distribution"
                 ) {
                     EventsPieChart(
                         events = eventData,
@@ -147,14 +146,13 @@ fun AdminHome(
             }
             item {
                 DashboardCard(
-                    title = "Interactions",
+                    title = "Interactions"
                 ) {
                     InteractiveBarGraph(
-                        data = interactionData,
+                        data = interactionData
                     )
                 }
             }
         }
     }
-
 }

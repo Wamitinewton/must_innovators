@@ -118,7 +118,7 @@ class ExecutiveViewModel @Inject constructor(
             val executive = ExecutiveRequest(
                 userId = _execState.value.selectedUser!!.id,
                 position = _execState.value.position!!,
-                bio = _execState.value.bio,
+                bio = _execState.value.bio
             )
             viewModelScope.launch {
                 repository.updateExecutive(executive).collectLatest { result ->
@@ -127,7 +127,6 @@ class ExecutiveViewModel @Inject constructor(
                             result.message?.let {
                                 _execState.value = _execState.value.copy(errorMessage = it)
                             }
-
                         }
 
                         is Resource.Loading -> {
@@ -138,7 +137,7 @@ class ExecutiveViewModel @Inject constructor(
                             result.data?.let { user ->
                                 _execState.update {
                                     it.copy(
-                                        successMessage = "Added ${user.name} as an Executive successfully",
+                                        successMessage = "Added ${user.name} as an Executive successfully"
                                     )
                                 }
                             }
@@ -153,8 +152,8 @@ class ExecutiveViewModel @Inject constructor(
         val query = _userState.value.searchQuery.lowercase()
         return _userState.value.users.filter { user ->
             val matchesSearch = query.isEmpty() ||
-                    user.name.lowercase().contains(query) ||
-                    user.email.lowercase().contains(query)
+                user.name.lowercase().contains(query) ||
+                user.email.lowercase().contains(query)
             matchesSearch
         }
     }

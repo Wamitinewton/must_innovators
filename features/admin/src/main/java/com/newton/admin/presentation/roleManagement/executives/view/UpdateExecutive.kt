@@ -78,7 +78,8 @@ fun UpdateExecutiveScreen(
             execState.errorMessage != null -> {
                 ErrorScreen(
                     execState.errorMessage!!,
-                    onRetry = { onEvent.invoke(ExecutiveEvents.AddExecutive) })
+                    onRetry = { onEvent.invoke(ExecutiveEvents.AddExecutive) }
+                )
             }
 
             else -> {

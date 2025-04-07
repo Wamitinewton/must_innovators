@@ -38,7 +38,7 @@ import com.newton.admin.presentation.events.view.management.composables.overview
 import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.commonUi.composables.DefaultScaffold
 import com.newton.commonUi.composables.OopsError
-import com.newton.common_ui.ui.toLocalDate
+import com.newton.commonUi.ui.toLocalDate
 import com.newton.network.domain.models.adminModels.CalendarDay
 import com.newton.network.domain.models.adminModels.EventsData
 import java.time.LocalDate
@@ -54,7 +54,7 @@ fun EventManagementScreen(
     val events = eventState.events
     val today = LocalDate.now()
     val calendarDays = remember(eventState.events) {
-        val days:MutableList<CalendarDay> = mutableListOf()
+        val days: MutableList<CalendarDay> = mutableListOf()
         for (i in -30..60) {
             val date = today.plusDays(i.toLong())
             val dayEvents: MutableList<EventsData> = mutableListOf()
@@ -79,7 +79,7 @@ fun EventManagementScreen(
 
         topBar = {
             TopAppBar(
-                title = { Text("Events Management") },
+                title = { Text("Events Management") }
             )
         },
         bottomBar = {
@@ -92,10 +92,9 @@ fun EventManagementScreen(
                     )
                 }
             }
-        },
+        }
 
-        ) {
-
+    ) {
         when (selectedTab) {
             0 -> {
                 when {
@@ -116,7 +115,8 @@ fun EventManagementScreen(
                         OopsError(
                             errorMessage = eventState.hasError!!,
                             showButton = true,
-                            onClick = { onEvent.invoke(EventEvents.LoadEvents) })
+                            onClick = { onEvent.invoke(EventEvents.LoadEvents) }
+                        )
                     }
                 }
             }
@@ -129,7 +129,9 @@ fun EventManagementScreen(
             )
 
             3 -> FeedbackTab(
-                events, listState, isScrolling,
+                events,
+                listState,
+                isScrolling,
                 onEvent = onEvent,
                 viewModel = viewModel
             )

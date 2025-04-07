@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 package com.newton.admin.presentation.notification.view.composables
 
 import androidx.compose.animation.AnimatedVisibility
@@ -54,7 +70,7 @@ import com.newton.commonUi.ui.CustomButton
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->Unit) {
+fun AddNewsLetterForm(newsState: NotificationState, onEvent: (NotificationEvent) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -123,7 +139,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Link,
-                                contentDescription = "Add Link",
+                                contentDescription = "Add Link"
                             )
                         }
 
@@ -134,7 +150,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.FormatListBulleted,
-                                contentDescription = "Add Bullet Point",
+                                contentDescription = "Add Bullet Point"
                             )
                         }
 
@@ -145,7 +161,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Image,
-                                contentDescription = "Add Image",
+                                contentDescription = "Add Image"
                             )
                         }
                     }
@@ -169,7 +185,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                         textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Default,
+                            imeAction = ImeAction.Default
                         ),
                         keyboardActions = KeyboardActions(),
                         decorationBox = { innerTextField ->
@@ -184,9 +200,9 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                                 }
                                 innerTextField()
                             }
-                        },
+                        }
 
-                        )
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -214,13 +230,13 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
             ) {
                 Icon(
                     imageVector = Icons.Default.People,
-                    contentDescription = null,
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = "Will be sent to 1,245 subscribers",
+                    text = "Will be sent to 1,245 subscribers"
                 )
             }
         }
@@ -239,18 +255,18 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
             ) {
                 Icon(
                     imageVector = Icons.Default.Schedule,
-                    contentDescription = null,
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Column {
                     Text(
-                        text = "Schedule for later",
+                        text = "Schedule for later"
                     )
                     Text(
                         text = "Send your newsletter at the optimal time",
-                        fontSize = 12.sp,
+                        fontSize = 12.sp
                     )
                 }
 
@@ -259,7 +275,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
 
                 Switch(
                     checked = newsState.isScheduled,
-                    onCheckedChange = { onEvent.invoke(NotificationEvent.ScheduledChanged(it)) },
+                    onCheckedChange = { onEvent.invoke(NotificationEvent.ScheduledChanged(it)) }
                 )
             }
         }
@@ -279,7 +295,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                 ) {
                     Text(
                         text = "Schedule Date and Time",
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Medium
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -295,7 +311,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                             )
                             .background(MaterialTheme.colorScheme.surface)
                             .clickable { onEvent.invoke(NotificationEvent.ShowDateDialog(true)) }
-                            .padding(16.dp),
+                            .padding(16.dp)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -303,7 +319,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                         ) {
                             Icon(
                                 imageVector = Icons.Default.CalendarToday,
-                                contentDescription = "Select Date",
+                                contentDescription = "Select Date"
                             )
 
                             Spacer(modifier = Modifier.width(12.dp))
@@ -312,7 +328,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
                                 text = if (newsState.scheduledDateTime != null) {
                                     val formatter =
                                         DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' hh:mm a")
-                                    newsState.scheduledDateTime!!.format(formatter)
+                                    newsState.scheduledDateTime.format(formatter)
                                 } else {
                                     "Select date and time"
                                 },
@@ -335,7 +351,7 @@ fun AddNewsLetterForm(newsState:NotificationState, onEvent:(NotificationEvent)->
 
         CustomButton(
             onClick = {
-                    onEvent.invoke(NotificationEvent.SendNewsLetter)
+                onEvent.invoke(NotificationEvent.SendNewsLetter)
             },
             modifier = Modifier
                 .fillMaxWidth()

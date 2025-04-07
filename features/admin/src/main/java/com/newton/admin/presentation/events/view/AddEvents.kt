@@ -43,12 +43,11 @@ import com.newton.commonUi.composables.MeruInnovatorsAppBar
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEvents(
     viewModel: AddEventViewModel,
-    onEvent: (AddEventEvents) -> Unit,
+    onEvent: (AddEventEvents) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -56,7 +55,7 @@ fun AddEvents(
     DefaultScaffold(
         topBar = {
             MeruInnovatorsAppBar(
-                title = "Add Event",
+                title = "Add Event"
             )
         },
         isLoading = state.isLoading
@@ -67,12 +66,12 @@ fun AddEvents(
                     onFinish = {
                         onEvent.invoke(AddEventEvents.ToDefaultSate)
                     },
-                    text = "Event created Successfully",
+                    text = "Event created Successfully"
                 )
             }
 
             else -> {
-                AddEventContent(state, onEvent,viewModel)
+                AddEventContent(state, onEvent, viewModel)
             }
         }
         if (state.showDatePicker) {
@@ -160,5 +159,4 @@ fun AddEvents(
             CategorySheet(onEvent, viewModel)
         }
     }
-
 }

@@ -47,13 +47,12 @@ import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.states.AddEventState
 import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.commonUi.ui.CustomClickableOutlinedTextField
-import com.newton.common_ui.ui.toFormattedDate
+import com.newton.commonUi.ui.toFormattedDate
 import java.io.File
 import java.io.FileOutputStream
 
 @Composable
-fun AddEventContent(state:AddEventState,onEvent: (AddEventEvents)->Unit,viewModel:AddEventViewModel) {
-
+fun AddEventContent(state: AddEventState, onEvent: (AddEventEvents) -> Unit, viewModel: AddEventViewModel) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
     val imageLauncher = rememberLauncherForActivityResult(
@@ -73,7 +72,6 @@ fun AddEventContent(state:AddEventState,onEvent: (AddEventEvents)->Unit,viewMode
                     e.printStackTrace()
                 }
             }
-
         }
     )
     val mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
@@ -201,7 +199,7 @@ fun AddEventContent(state:AddEventState,onEvent: (AddEventEvents)->Unit,viewMode
         }
         AnimatedVisibility(
             visible = state.isVirtual
-        ){
+        ) {
             OutlinedTextField(
                 value = state.meetingLink,
                 onValueChange = {

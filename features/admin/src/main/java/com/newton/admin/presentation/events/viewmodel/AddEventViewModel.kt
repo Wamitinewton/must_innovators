@@ -22,7 +22,7 @@ import androidx.lifecycle.viewModelScope
 import com.newton.admin.presentation.events.events.AddEventEvents
 import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.states.AddEventState
-import com.newton.common_ui.ui.toLocalDateTime
+import com.newton.commonUi.ui.toLocalDateTime
 import com.newton.network.Resource
 import com.newton.network.domain.models.adminModels.AddEventRequest
 import com.newton.network.domain.repositories.AdminRepository
@@ -79,7 +79,6 @@ class AddEventViewModel @Inject constructor(
             AddEventEvents.AddEvent -> saveEvent()
             AddEventEvents.PickImage -> emit(AddEventEffect.PickImage)
             AddEventEvents.ClearImage -> _state.update { it.copy(image = null) }
-
         }
     }
 
@@ -113,7 +112,7 @@ class AddEventViewModel @Inject constructor(
                             _state.value = _state.value.copy(
                                 uploadSuccess = true,
                                 isLoading = false,
-                                uploadError = null,
+                                uploadError = null
                             )
                         }
                     }
@@ -162,6 +161,4 @@ class AddEventViewModel @Inject constructor(
         _state.value = _state.value.copy(errors = errors)
         return errors.isEmpty()
     }
-
-
 }
