@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Meruinnovators"
-        tools:targetApi="31">
+        tools:targetApi="tiramisu">
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"

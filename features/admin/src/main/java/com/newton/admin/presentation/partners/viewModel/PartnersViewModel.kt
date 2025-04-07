@@ -115,6 +115,7 @@ class PartnersViewModel @Inject constructor(
 
             AddPartnersEvent.AddPartners -> addPartner()
             AddPartnersEvent.PickImage -> emit(AddPartnersEffect.PickImage)
+            AddPartnersEvent.ToDefault -> toDefault()
         }
     }
 

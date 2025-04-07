@@ -1,6 +1,5 @@
 package com.newton.admin.presentation.community.viewmodels
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.admin.data.mappers.User
@@ -76,6 +75,7 @@ class CommunityViewModel @Inject constructor(
             is CommunityEvent.LeadIdChanged -> _communityState.update { it.copy(leadId = event.leadId) }
             is CommunityEvent.SecretaryIdChanged -> _communityState.update { it.copy(secretaryId = event.secretaryId) }
             is CommunityEvent.SearchQuery -> _usersState.update { it.copy(searchQuery = event.query) }
+            CommunityEvent.ToDefault -> toDefault()
         }
     }
 
@@ -182,8 +182,8 @@ class CommunityViewModel @Inject constructor(
                             _communityState.value = _communityState.value.copy(
                                 isLoading = false,
                                 uploadError = null,
+                                isSuccess = true
                             )
-                            toDefault()
                         }
                     }
                 }

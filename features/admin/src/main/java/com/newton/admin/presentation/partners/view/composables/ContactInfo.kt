@@ -15,8 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -37,11 +35,10 @@ import com.newton.common_ui.ui.CustomCard
 
 @Composable
 fun ContactInfo(
-    modifier: Modifier = Modifier,
     partnersState: AddPartnersState,
     onEvent: (AddPartnersEvent) -> Unit
 ) {
-    CustomCard (
+    CustomCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
@@ -93,7 +90,12 @@ fun ContactInfo(
                     )
                 },
                 supportingText = {
-                    partnersState.errors["email"]?.let { Text(it) }
+                    partnersState.errors["email"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
@@ -117,7 +119,12 @@ fun ContactInfo(
                 },
                 singleLine = true,
                 supportingText = {
-                    partnersState.errors["person"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    partnersState.errors["person"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             )
 
@@ -148,7 +155,12 @@ fun ContactInfo(
                 },
                 singleLine = true,
                 supportingText = {
-                    partnersState.errors["linkedin"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    partnersState.errors["linkedin"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             )
 
@@ -172,7 +184,12 @@ fun ContactInfo(
                 },
                 singleLine = true,
                 supportingText = {
-                    partnersState.errors["twitter"]?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                    partnersState.errors["twitter"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             )
         }

@@ -13,6 +13,7 @@ sealed class ExecutiveEvents {
     data class ShowPositionDropdown(val shown: Boolean):ExecutiveEvents()
     data class Expanded(val expanded: Boolean):ExecutiveEvents()
     data object LoadUsers:ExecutiveEvents()
+    data object ToDefault:ExecutiveEvents()
     data object AddExecutive:ExecutiveEvents()
 
 }

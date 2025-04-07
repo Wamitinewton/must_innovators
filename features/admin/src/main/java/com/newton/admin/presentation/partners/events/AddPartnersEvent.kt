@@ -29,4 +29,5 @@ sealed class AddPartnersEvent {
     data class OnGoingPartnership(val ongoing: Boolean):AddPartnersEvent()
     data object PickImage :AddPartnersEvent()
     data object AddPartners:AddPartnersEvent()
+    data object ToDefault:AddPartnersEvent()
 }

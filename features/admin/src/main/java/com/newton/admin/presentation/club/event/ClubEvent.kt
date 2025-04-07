@@ -9,4 +9,6 @@ sealed class ClubEvent {
     data class MissionChanged(val mission:String):ClubEvent()
     data class SocialsChanged(val social:List<Socials>):ClubEvent()
     data object UpdateClub:ClubEvent()
+    data object ToDefault:ClubEvent()
+    data object LoadClub:ClubEvent()
 }

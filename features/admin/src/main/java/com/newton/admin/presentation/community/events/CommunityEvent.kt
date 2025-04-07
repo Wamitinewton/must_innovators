@@ -31,5 +31,6 @@ sealed class CommunityEvent {
     data class SocialToEditChange(val social: Socials?): CommunityEvent()
     data class SessionToEdit(val session: Session?): CommunityEvent()
     data object AddCommunity : CommunityEvent()
+    data object ToDefault : CommunityEvent()
     data class LoadUsers(val isRefresh:Boolean) : CommunityEvent()
 }

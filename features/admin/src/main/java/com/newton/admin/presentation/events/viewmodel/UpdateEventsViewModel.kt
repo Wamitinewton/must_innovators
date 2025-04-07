@@ -34,9 +34,13 @@ class UpdateEventsViewModel @Inject constructor(
             is EventUpdateEvent.OrganizerChanged -> _updateState.update { it.copy(organizer = event.organizer) }
             is EventUpdateEvent.Update -> updateEvent(event.eventId)
             is EventUpdateEvent.VirtualChanged -> _updateState.update { it.copy(isVirtual = event.virtual) }
+            EventUpdateEvent.ToDefault -> toDefault()
         }
     }
 
+    private fun toDefault(){
+        _updateState.value = UpdateEventState()
+    }
     private fun updateEvent(eventId:Int) {
         val request = UpdateEventRequest(
             name = _updateState.value.name,

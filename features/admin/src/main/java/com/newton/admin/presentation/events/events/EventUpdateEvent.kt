@@ -11,6 +11,7 @@ sealed class EventUpdateEvent {
     data class OrganizerChanged(val organizer:String):EventUpdateEvent()
     data class ContactEmailChanged(val email:String):EventUpdateEvent()
     data class VirtualChanged(val virtual:Boolean):EventUpdateEvent()
+    data object ToDefault:EventUpdateEvent()
 }
 
 sealed class UpdateEvent {

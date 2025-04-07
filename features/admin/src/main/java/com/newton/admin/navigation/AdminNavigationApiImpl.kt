@@ -9,29 +9,29 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
-import com.newton.admin.presentation.events.view.AddEvents
-import com.newton.admin.presentation.events.view.management.ModifyEvent
-import com.newton.admin.presentation.events.view.management.EventManagementScreen
-import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
-import com.newton.admin.presentation.events.viewmodel.EventsViewModel
-import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
-import com.newton.admin.presentation.feedbacks.view.FeedbackScreen
-import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
-import com.newton.admin.presentation.home.view.AdminHome
-import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
-import com.newton.admin.presentation.partners.view.AddPartnerScreen
-import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
-import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
-import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
 import com.newton.admin.presentation.actions.view.ActionsScreen
 import com.newton.admin.presentation.club.view.AddClubScreen
 import com.newton.admin.presentation.club.viewmodel.ClubViewModel
 import com.newton.admin.presentation.community.view.AdminCommunityList
 import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
+import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
 import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
+import com.newton.admin.presentation.events.view.AddEvents
+import com.newton.admin.presentation.events.view.management.EventManagementScreen
+import com.newton.admin.presentation.events.view.management.ModifyEvent
+import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
 import com.newton.admin.presentation.events.viewmodel.AdminEventsSharedViewModel
+import com.newton.admin.presentation.events.viewmodel.EventsViewModel
 import com.newton.admin.presentation.events.viewmodel.UpdateEventsViewModel
+import com.newton.admin.presentation.feedbacks.view.FeedbackScreen
+import com.newton.admin.presentation.feedbacks.viewmodel.AdminFeedbackViewModel
+import com.newton.admin.presentation.home.view.AdminHome
+import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
+import com.newton.admin.presentation.notification.viewmodel.NotificationsViewModel
+import com.newton.admin.presentation.partners.view.AddPartnerScreen
+import com.newton.admin.presentation.partners.viewModel.PartnersViewModel
+import com.newton.admin.presentation.role_management.executives.view.UpdateExecutiveScreen
+import com.newton.admin.presentation.role_management.executives.viewModel.ExecutiveViewModel
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubGraphRoutes
 
@@ -72,7 +72,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             }
             composable(route = NavigationRoutes.AddEvent.routes) {
                 val viewModel = hiltViewModel<AddEventViewModel>()
-                AddEvents(viewModel, viewModel::handleEvent, navHostController)
+                AddEvents(viewModel, viewModel::handleEvent)
             }
             composable(route = NavigationRoutes.ModifyEvent.routes) {
                 val parentEntry = remember(it) {
@@ -120,9 +120,7 @@ class AdminNavigationApiImpl : AdminNavigationApi {
             composable(route = NavigationRoutes.UpdateExecutive.routes) {
                 val viewModel = hiltViewModel<ExecutiveViewModel>()
                 UpdateExecutiveScreen(
-                    navController = navHostController,
                     viewModel = viewModel,
-                    executiveId = null,
                     onEvent = viewModel::handleEvents
                 )
             }

@@ -7,4 +7,6 @@ data class ExecutiveRequest(
     val userId: Int,
     val position: ExecutivePosition,
     val bio:String,
+    val name: String,
+    val email:String
 )

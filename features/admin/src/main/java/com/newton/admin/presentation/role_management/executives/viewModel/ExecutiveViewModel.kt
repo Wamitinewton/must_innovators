@@ -8,7 +8,6 @@ import com.newton.admin.presentation.role_management.executives.events.Executive
 import com.newton.admin.presentation.role_management.executives.states.ExecutiveState
 import com.newton.admin.presentation.role_management.executives.states.ExecutiveUsersState
 import com.newton.core.domain.models.admin_models.ExecutiveRequest
-import com.newton.core.domain.models.admin_models.FeedbackData
 import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,30 +22,31 @@ import javax.inject.Inject
 @HiltViewModel
 class ExecutiveViewModel @Inject constructor(
     private val repository: AdminRepository
-): ViewModel() {
+) : ViewModel() {
     private val _execState = MutableStateFlow(ExecutiveState())
     val execState: StateFlow<ExecutiveState> = _execState.asStateFlow()
     private val _userState = MutableStateFlow(ExecutiveUsersState())
     val userState: StateFlow<ExecutiveUsersState> = _userState.asStateFlow()
 
 
-    fun handleEvents(event:ExecutiveEvents){
-        when(event){
-            is ExecutiveEvents.BioChanged -> _execState.update { it.copy(bio=event.bio) }
+    fun handleEvents(event: ExecutiveEvents) {
+        when (event) {
+            is ExecutiveEvents.BioChanged -> _execState.update { it.copy(bio = event.bio) }
             is ExecutiveEvents.IsSearching -> _execState.update { it.copy(isSearching = event.searching) }
-            ExecutiveEvents.LoadUsers ->loadUsers()
+            ExecutiveEvents.LoadUsers -> loadUsers()
             is ExecutiveEvents.PositionChanged -> _execState.update { it.copy(position = event.position) }
             is ExecutiveEvents.SelectedUserChange -> _execState.update { it.copy(selectedUser = event.user) }
             is ExecutiveEvents.ShowBottomSheet -> _execState.update { it.copy(showBottomSheet = event.shown) }
-            is ExecutiveEvents.ShowPositionDropdown -> _execState.update { it.copy(showPosition=event.shown) }
-            ExecutiveEvents.AddExecutive -> addExecutive()
+            is ExecutiveEvents.ShowPositionDropdown -> _execState.update { it.copy(showPosition = event.shown) }
             is ExecutiveEvents.Expanded -> _execState.update { it.copy(expanded = event.expanded) }
             is ExecutiveEvents.SearchQuery -> _userState.update { it.copy(searchQuery = event.query) }
+            ExecutiveEvents.AddExecutive -> addExecutive()
+            ExecutiveEvents.ToDefault -> toDefault()
         }
     }
 
 
-    private fun loadUsers(){
+    private fun loadUsers() {
         viewModelScope.launch {
             repository.getAllUsers(true).collectLatest { result ->
                 when (result) {
@@ -76,6 +76,7 @@ class ExecutiveViewModel @Inject constructor(
             }
         }
     }
+
     private fun validate(): Boolean {
         val errors = mutableMapOf<String, String>()
         if (_execState.value.bio.isBlank()) {
@@ -91,33 +92,42 @@ class ExecutiveViewModel @Inject constructor(
         return errors.isEmpty()
     }
 
-    private fun toDefault(){
+    private fun toDefault() {
         _execState.value = ExecutiveState()
         _userState.value = ExecutiveUsersState()
     }
 
-    private fun addExecutive(){
-        if (validate()){
+    private fun addExecutive() {
+        if (validate()) {
             val executive = ExecutiveRequest(
                 userId = _execState.value.selectedUser!!.id,
                 position = _execState.value.position!!,
-                bio =_execState.value.bio
+                bio = _execState.value.bio,
+                name = _execState.value.selectedUser!!.name,
+                email = _execState.value.selectedUser!!.email
             )
             viewModelScope.launch {
-                repository.updateExecutive(executive).collectLatest { result->
+                repository.updateExecutive(executive).collectLatest { result ->
                     when (result) {
                         is Resource.Error -> {
                             result.message?.let {
                                 _execState.value = _execState.value.copy(errorMessage = it)
                             }
-                            
+
                         }
 
                         is Resource.Loading -> {
                             _execState.value = _execState.value.copy(isLoading = result.isLoading)
                         }
+
                         is Resource.Success -> {
-                           toDefault()
+                            result.data?.let { user ->
+                                _execState.update {
+                                    it.copy(
+                                        successMessage = "Added ${user.name} as an Executive successfully",
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -128,10 +138,10 @@ class ExecutiveViewModel @Inject constructor(
     fun getSearchedUser(): List<User> {
         val query = _userState.value.searchQuery.lowercase()
         return _userState.value.users.filter { user ->
-                val matchesSearch = query.isEmpty() ||
-                        user.name.lowercase().contains(query) ||
-                        user.email.lowercase().contains(query)
-                matchesSearch
-            }
+            val matchesSearch = query.isEmpty() ||
+                    user.name.lowercase().contains(query) ||
+                    user.email.lowercase().contains(query)
+            matchesSearch
+        }
     }
 }

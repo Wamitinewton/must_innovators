@@ -61,9 +61,11 @@ fun AdminEventCardShimmer() {
                         .height(10.dp)
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                        modifier = Modifier.background(
+                            MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.1f
+                            )
+                        )
                     )
                 }
                 ShimmerWithFade(
@@ -72,9 +74,11 @@ fun AdminEventCardShimmer() {
                         .height(10.dp)
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                        modifier = Modifier.background(
+                            MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.1f
+                            )
+                        )
                     )
                 }
                 ShimmerWithFade(
@@ -83,9 +87,11 @@ fun AdminEventCardShimmer() {
                         .height(10.dp)
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                        modifier = Modifier.background(
+                            MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.1f
+                            )
+                        )
                     )
                 }
             }

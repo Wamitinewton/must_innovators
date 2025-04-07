@@ -4,10 +4,9 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newton.admin.presentation.events.events.AddEventEvents
-import com.newton.admin.presentation.events.events.EventEvents
 import com.newton.admin.presentation.events.states.AddEventEffect
 import com.newton.admin.presentation.events.states.AddEventState
-import com.newton.common_ui.ui.toLocaltime
+import com.newton.common_ui.ui.toLocalDateTime
 import com.newton.core.domain.models.admin_models.AddEventRequest
 import com.newton.core.domain.repositories.AdminRepository
 import com.newton.core.utils.Resource
@@ -48,7 +47,6 @@ class AddEventViewModel @Inject constructor(
             is AddEventEvents.ChangeDate -> _state.update { it.copy(date = event.date) }
             is AddEventEvents.ChangedLocation -> _state.update { it.copy(location = event.location) }
             is AddEventEvents.ChangedOrganizer -> _state.update { it.copy(organizer = event.organizer) }
-            is AddEventEvents.Dialog -> _state.update { it.copy(isShowDialog = event.shown) }
             is AddEventEvents.Sheet -> _state.update { it.copy(showCategorySheet = event.shown) }
             is AddEventEvents.ChangedFile -> _state.update { it.copy(image = event.file) }
             is AddEventEvents.ChangedMeetingLink -> _state.update { it.copy(meetingLink = event.link) }
@@ -57,10 +55,15 @@ class AddEventViewModel @Inject constructor(
             is AddEventEvents.ChangedName -> _state.update { it.copy(name = event.name) }
             is AddEventEvents.ChangedTitle -> _state.update { it.copy(title = event.title) }
             is AddEventEvents.ChangedVirtual -> _state.update { it.copy(isVirtual = event.isVirtual) }
+            is AddEventEvents.ScheduledDateTimeChanged -> _state.update { it.copy(scheduledDateTime = event.date) }
+            is AddEventEvents.SelectedDateChange -> _state.update { it.copy(selectedDate = event.date) }
+            is AddEventEvents.ShowDateDialog -> _state.update { it.copy(showDatePicker = event.shown) }
+            is AddEventEvents.ShowTimeDialog -> _state.update { it.copy(showTimePicker = event.shown) }
             AddEventEvents.ToDefaultSate -> toDefaultState()
             AddEventEvents.AddEvent -> saveEvent()
             AddEventEvents.PickImage -> emit(AddEventEffect.PickImage)
             AddEventEvents.ClearImage -> _state.update { it.copy(image = null) }
+
         }
     }
 
@@ -72,7 +75,7 @@ class AddEventViewModel @Inject constructor(
                 category = _state.value.category,
                 description = _state.value.description,
                 image = _state.value.image!!,
-                date = _state.value.date.toLocaltime(),
+                date = _state.value.selectedDate.toLocalDateTime(),
                 location = _state.value.location,
                 organizer = _state.value.organizer,
                 contactEmail = _state.value.contactEmail,
