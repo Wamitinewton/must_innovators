@@ -14,18 +14,17 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.di
+package com.newton.partners.presentation.state
 
-import com.newton.home.navigation.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import javax.inject.*
+import com.newton.network.domain.models.homeModels.*
 
-@Module
-@InstallIn(SingletonComponent::class)
-object HomeNavigationModule {
-    @Provides
-    @Singleton
-    fun provideHomeNavigationApi(): HomeNavigationApi = HomeNavigationApiImpl()
+sealed class PartnersUiState {
+    data object Loading : PartnersUiState()
+
+    data class Success(val partners: List<PartnersData>) : PartnersUiState()
+
+    data class Error(val message: String) : PartnersUiState()
+
+    data object Empty : PartnersUiState()
 }
+

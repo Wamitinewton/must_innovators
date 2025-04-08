@@ -14,14 +14,14 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.viewmodels
+package com.newton.partners.presentation.viewModel
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
-import com.newton.home.presentation.states.*
 import com.newton.network.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.repositories.*
+import com.newton.partners.presentation.state.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

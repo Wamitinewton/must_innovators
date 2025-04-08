@@ -17,16 +17,13 @@
 package com.newton.home.navigation
 
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.*
 import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.newton.communities.presentation.viewModel.*
-import com.newton.core.utils.*
-import com.newton.home.data.*
 import com.newton.home.presentation.view.*
-import com.newton.home.presentation.viewmodels.*
 import com.newton.navigation.*
+import com.newton.partners.presentation.viewModel.*
 import com.newton.testimonials.presentation.viewModel.*
 
 class HomeNavigationApiImpl : HomeNavigationApi {
@@ -64,36 +61,9 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                     communitiesViewModel = communitiesViewModel,
                     onSeeAllTestimonials = {
                         navHostController.navigate(NavigationRoutes.AllTestimonialsRoute.routes)
-                    }
-                )
-            }
-
-            composable(route = NavigationRoutes.PartnersDetails.routes) {
-                val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
-                }
-                val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
-                val context = LocalContext.current
-
-                PartnerDetailsScreen(
-                    partnersSharedViewModel = partnersSharedViewModel,
-                    onBackPressed = {
-                        navHostController.navigateUp()
                     },
-                    onSharePartner = { partner ->
-                        PartnerContentUtils.sharePartner(context, partner)
-                    },
-                    onNavigateToWebsite = { url ->
-                        PackageHandlers.navigateToWebsite(context, url)
-                    },
-                    onNavigateToLinkedIn = { linkedIn ->
-                        PackageHandlers.navigateToLinkedIn(context, linkedIn)
-                    },
-                    onNavigateToTwitter = { twitter ->
-                        PackageHandlers.navigateToTwitter(context, twitter)
-                    },
-                    onContactEmail = { email ->
-                        PackageHandlers.contactViaEmail(context, email)
+                    onSeeAllPartners = {
+                        navHostController.navigate(NavigationRoutes.AllPartnersRoute.routes)
                     }
                 )
             }
