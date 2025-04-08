@@ -22,8 +22,7 @@ import com.newton.admin.presentation.club.event.ClubEvent
 import com.newton.admin.presentation.club.state.ClubState
 import com.newton.network.Resource
 import com.newton.network.domain.models.adminModels.Club
-import com.newton.network.domain.repositories.AdminRepository
-import com.newton.network.domain.repositories.CommunityRepository
+import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,7 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClubViewModel @Inject constructor(
     private val adminRepo: AdminRepository,
-    private val communityRepository: CommunityRepository
+    private val clubBioRepository: ClubBioRepository
 ) : ViewModel() {
     private val _clubState = MutableStateFlow(ClubState())
     val clubState: StateFlow<ClubState> = _clubState.asStateFlow()
@@ -61,7 +60,7 @@ class ClubViewModel @Inject constructor(
 
     private fun loadClubData() {
         viewModelScope.launch {
-            communityRepository.getClubBio().collectLatest { result ->
+            clubBioRepository.getClubBio().collectLatest { result ->
                 when (result) {
                     is Resource.Error -> _clubState.update { it.copy(errorMessage = result.message) }
                     is Resource.Loading -> _clubState.update { it.copy(isLoading = result.isLoading) }

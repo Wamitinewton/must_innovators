@@ -51,15 +51,15 @@ fun UserListItem(
         ) {
             // User profile image
             if (user.photo != null) {
-                CustomDynamicAsyncImage(
-                    user.photo,
+                NetworkImage(
                     contentDescription = "Profile picture of ${user.name}",
                     modifier =
                     Modifier
                         .size(48.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surface),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    imageUrl = user.photo
                 )
             } else {
                 Box(

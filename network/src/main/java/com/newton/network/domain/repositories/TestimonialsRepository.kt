@@ -21,4 +21,6 @@ import kotlinx.coroutines.flow.*
 
 interface TestimonialsRepository {
     suspend fun createTestimonial(request: CreateTestimonial): Flow<com.newton.network.Resource<TestimonialsData>>
+
+    suspend fun getTestimonials(): Flow<com.newton.network.Resource<List<TestimonialsData>>>
 }

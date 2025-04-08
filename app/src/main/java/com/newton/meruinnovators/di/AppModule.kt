@@ -29,6 +29,7 @@ import com.newton.home.navigation.*
 import com.newton.meruinnovators.*
 import com.newton.meruinnovators.navigation.*
 import com.newton.settings.navigation.*
+import com.newton.testimonials.navigation.*
 import dagger.*
 import dagger.hilt.*
 import dagger.hilt.android.qualifiers.*
@@ -56,9 +57,11 @@ object AppModule {
         blogsNavigationApi: BlogsNavigationApi,
         accountNavigationApi: AccountNavigationApi,
         adminNavigationApi: AdminNavigationApi,
-        communityNavigationApi: CommunityNavigationApi,
+        aboutUsNavigationApi: AboutUsNavigationApi,
         feedbackNavigationApi: FeedbackNavigationApi,
-        settingNavigationApi: SettingNavigationApi
+        settingNavigationApi: SettingNavigationApi,
+        communityNavigationApi: CommunityNavigationApi,
+        testimonialsNavigationApi: TestimonialsNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -67,9 +70,11 @@ object AppModule {
             blogsNavigationApi,
             accountNavigationApi,
             adminNavigationApi,
-            communityNavigationApi,
+            aboutUsNavigationApi,
             feedbackNavigationApi,
-            settingNavigationApi
+            settingNavigationApi,
+            communityNavigationApi,
+            testimonialsNavigationApi
         )
     }
 

@@ -25,7 +25,7 @@ plugins {
 }
 
 android {
-    namespace = "com.newton.communities"
+    namespace = "com.newton.aboutUs"
     compileSdk = 35
 
     defaultConfig {
@@ -98,5 +98,4 @@ dependencies {
     implementation(project(":database"))
     implementation(project(":navigation"))
     implementation(project(":network"))
-    implementation(project(":shared"))
 }

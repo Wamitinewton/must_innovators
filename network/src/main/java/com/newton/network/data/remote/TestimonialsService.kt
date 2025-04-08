@@ -23,4 +23,7 @@ interface TestimonialsService {
     suspend fun createTestimonial(
         @Body request: com.newton.network.domain.models.testimonials.CreateTestimonial
     ): com.newton.network.domain.models.testimonials.TestimonialsData
+
+    @GET(ApiEndpoints.GET_TESTIMONIALS)
+    suspend fun getTestimonials(): com.newton.network.domain.models.testimonials.Testimonials
 }

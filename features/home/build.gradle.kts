@@ -85,10 +85,11 @@ dependencies {
     implementation(Dependencies.extendedIcons)
 
     implementation(project(":core"))
-    implementation(project(":features:events"))
     implementation(project(":commonUi"))
     implementation(project(":database"))
     implementation(project(":navigation"))
     implementation(project(":network"))
     implementation(project(":shared"))
+    implementation(project(":features:communities"))
+    implementation(project(":features:testimonials"))
 }

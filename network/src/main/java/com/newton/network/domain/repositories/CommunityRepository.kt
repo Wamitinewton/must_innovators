@@ -16,13 +16,12 @@
  */
 package com.newton.network.domain.repositories
 
+import com.newton.network.*
 import com.newton.network.domain.models.aboutUs.*
 import kotlinx.coroutines.flow.*
 
 interface CommunityRepository {
-    fun getCommunities(isRefreshing: Boolean): Flow<com.newton.network.Resource<List<Community>>>
+    fun getCommunities(): Flow<Resource<List<Community>>>
 
-    suspend fun getCommunityById(communityId: Int): com.newton.network.Resource<Community>
-
-    suspend fun getClubBio(): Flow<com.newton.network.Resource<ClubBioData>>
+    suspend fun getCommunityById(communityId: Int): Resource<Community>
 }

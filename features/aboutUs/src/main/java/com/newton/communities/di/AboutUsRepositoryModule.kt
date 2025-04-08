@@ -28,15 +28,14 @@ import javax.inject.*
 @Module
 @InstallIn(SingletonComponent::class)
 object AboutUsRepositoryModule {
-    @Provides
-    @Singleton
-    fun provideAboutUsRepository(
-        aboutUsApi: AboutClubService,
-        clubBioDao: ClubBioDao
-    ): CommunityRepository = CommunityRepositoryImpl(aboutUsApi, clubBioDao)
 
     @Provides
     @Singleton
     fun provideExecutiveRepository(executiveApi: AboutClubService): ExecutiveRepository =
         ExecutiveRepositoryImpl(executiveApi)
+
+    @Provides
+    @Singleton
+    fun provideClubBioRepository(aboutClubService: AboutClubService, clubBioDao: ClubBioDao): ClubBioRepository =
+        ClubBioRepositoryImpl(aboutClubService, clubBioDao)
 }

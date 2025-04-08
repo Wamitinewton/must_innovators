@@ -93,22 +93,6 @@ class AccountNavigationApiImpl : AccountNavigationApi {
                 )
             }
 
-            composable(route = NavigationRoutes.CreateTestimonialsRoute.routes) {
-                val testimonialsViewModel = hiltViewModel<TestimonialsViewModel>()
-                CreateTestimonial(
-                    viewModel = testimonialsViewModel,
-                    onNavigateToHome = {
-                        navHostController.navigate(NavigationRoutes.HomeRoute.routes) {
-                            popUpTo(NavigationRoutes.CreateTestimonialsRoute.routes) {
-                                inclusive = true
-                            }
-                        }
-                    },
-                    onNavigateBack = {
-                        navHostController.navigateUp()
-                    }
-                )
-            }
             composable(route = NavigationRoutes.DeleteAccountSuccessRoute.routes) {
                 AccountDeletedScreen(
                     onCreateNewAccount = {

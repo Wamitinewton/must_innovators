@@ -18,7 +18,7 @@ package com.newton.core.utils
 
 import android.content.*
 import android.content.pm.*
-import android.net.*
+import androidx.core.net.*
 
 /**
  * Generic utility for handling external app navigation and sharing
@@ -32,7 +32,7 @@ object PackageHandlers {
         url: String
     ) {
         try {
-            val websiteIntent = Intent(Intent.ACTION_VIEW, Uri.parse(formatUrl(url)))
+            val websiteIntent = Intent(Intent.ACTION_VIEW, formatUrl(url).toUri())
             websiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(websiteIntent)
         } catch (e: Exception) {
@@ -53,9 +53,9 @@ object PackageHandlers {
 
             if (isAppInstalled(context, "com.linkedin.android")) {
                 linkedInAppIntent.setPackage("com.linkedin.android")
-                linkedInAppIntent.data = Uri.parse(formattedUrl)
+                linkedInAppIntent.data = formattedUrl.toUri()
             } else {
-                linkedInAppIntent.data = Uri.parse(formattedUrl)
+                linkedInAppIntent.data = formattedUrl.toUri()
             }
 
             linkedInAppIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -78,9 +78,9 @@ object PackageHandlers {
 
             if (isAppInstalled(context, "com.github.android")) {
                 githubAppIntent.setPackage("com.github.android")
-                githubAppIntent.data = Uri.parse(formattedUrl)
+                githubAppIntent.data = formattedUrl.toUri()
             } else {
-                githubAppIntent.data = Uri.parse(formattedUrl)
+                githubAppIntent.data = formattedUrl.toUri()
             }
 
             githubAppIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -103,9 +103,9 @@ object PackageHandlers {
 
             if (isAppInstalled(context, "com.twitter.android")) {
                 twitterAppIntent.setPackage("com.twitter.android")
-                twitterAppIntent.data = Uri.parse(formattedUrl)
+                twitterAppIntent.data = formattedUrl.toUri()
             } else {
-                twitterAppIntent.data = Uri.parse(formattedUrl)
+                twitterAppIntent.data = formattedUrl.toUri()
             }
 
             twitterAppIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -124,7 +124,7 @@ object PackageHandlers {
     ) {
         try {
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:$email")
+                data = "mailto:$email".toUri()
             }
 
             if (isAppInstalled(context, "com.google.android.gm")) {

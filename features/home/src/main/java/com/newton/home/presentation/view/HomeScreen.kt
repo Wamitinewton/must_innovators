@@ -26,24 +26,30 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
-import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.composables.*
+import com.newton.communities.presentation.view.*
+import com.newton.communities.presentation.viewModel.*
 import com.newton.home.presentation.viewmodels.*
+import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.models.testimonials.*
+import com.newton.testimonials.presentation.view.pagedTestimonials.*
+import com.newton.testimonials.presentation.viewModel.*
 
 @Composable
 fun HomeScreen(
     partnersViewModel: PartnersViewModel,
-    testimonialsViewModel: TestimonialsViewModel,
+    getTestimonialsViewModel: GetTestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
-    onNavigateToAboutUs: () -> Unit,
-    onPartnerClick: (PartnersData) -> Unit
+    onNavigateToCommunityDetails: (Community) -> Unit,
+    onPartnerClick: (PartnersData) -> Unit,
+    communitiesViewModel: CommunitiesViewModel,
+    onSeeAllTestimonials: () -> Unit
 ) {
-    val configuration = LocalConfiguration.current
     val partnersState by partnersViewModel.partnersState.collectAsState()
-    val testimonialsUiState by testimonialsViewModel.uiState.collectAsState()
+    val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
+    val communitiesState by communitiesViewModel.uiState.collectAsState()
 
     var selectedTestimonial by remember { mutableStateOf<TestimonialsData?>(null) }
 
@@ -112,7 +118,7 @@ fun HomeScreen(
                 SectionHeader(
                     title = "Testimonials",
                     showViewAll = true,
-                    onViewAllClick = { }
+                    onViewAllClick = onSeeAllTestimonials
                 )
             }
 
@@ -120,11 +126,27 @@ fun HomeScreen(
                 TestimonialsSection(
                     uiState = testimonialsUiState,
                     onRetryClick = {
-                        testimonialsViewModel.retryLoadingTestimonials()
+                        getTestimonialsViewModel.retryLoadingTestimonials()
                     },
                     onTestimonialClick = { testimonial ->
                         selectedTestimonial = testimonial
                     }
+                )
+            }
+            item {
+                SectionHeader(
+                    title = "Communities",
+                    showViewAll = true,
+                    onViewAllClick = { }
+                )
+            }
+
+
+            item {
+                CommunityContent(
+                    uiState = communitiesState,
+                    onCommunityDetailsClick = onNavigateToCommunityDetails,
+                    communitiesViewModel = communitiesViewModel
                 )
             }
 
@@ -132,13 +154,6 @@ fun HomeScreen(
                 SectionHeader(
                     title = "About Us",
                     showViewAll = false
-                )
-            }
-
-            item {
-                AboutUsSection(
-                    configuration = configuration,
-                    onClick = { onNavigateToAboutUs() }
                 )
             }
 

@@ -30,24 +30,47 @@ fun CustomCard(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(12.dp),
     border: BorderStroke? = null,
-    content:
-        @Composable()
-        (ColumnScope.() -> Unit)
+    elevation: Dp = 4.dp,
+    onClick: (() -> Unit)? = null,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    content: @Composable ColumnScope.() -> Unit
 ) {
-    Card(
-        modifier =
-        Modifier
-            .padding(8.dp)
-            .then(modifier),
-        content = content,
-        colors =
-        CardDefaults.cardColors(
-            MaterialTheme.colorScheme.surface
-        ),
-        shape = shape,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        border = border
-    )
+    val cardModifier = Modifier
+        .padding(8.dp)
+        .then(modifier)
+
+    if (onClick != null) {
+        Card(
+            modifier = cardModifier,
+            onClick = onClick,
+            content = content,
+            colors = CardDefaults.cardColors(
+                containerColor = containerColor,
+                contentColor = contentColor
+            ),
+            shape = shape,
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = elevation,
+                pressedElevation = elevation + 4.dp,
+                focusedElevation = elevation + 2.dp,
+                hoveredElevation = elevation + 2.dp
+            ),
+            border = border
+        )
+    } else {
+        Card(
+            modifier = cardModifier,
+            content = content,
+            colors = CardDefaults.cardColors(
+                containerColor = containerColor,
+                contentColor = contentColor
+            ),
+            shape = shape,
+            elevation = CardDefaults.cardElevation(defaultElevation = elevation),
+            border = border
+        )
+    }
 }
 
 @Composable

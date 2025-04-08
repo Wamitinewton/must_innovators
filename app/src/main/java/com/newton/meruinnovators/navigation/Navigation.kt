@@ -33,7 +33,6 @@ fun MeruInnovatorsNavigation(
 
     NavHost(
         navController = navHostController,
-//        startDestination = NavigationSubGraphRoutes.Home.route
         startDestination =
         if (isUserLoggedIn) {
             NavigationSubGraphRoutes.Home.route
@@ -65,7 +64,7 @@ fun MeruInnovatorsNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
-        navigationSubGraphs.communityNavigationApi.registerGraph(
+        navigationSubGraphs.aboutUsNavigationApi.registerGraph(
             navHostController = navHostController,
             navGraphBuilder = this
         )
@@ -74,6 +73,14 @@ fun MeruInnovatorsNavigation(
             navGraphBuilder = this
         )
         navigationSubGraphs.settingNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.communityNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+        navigationSubGraphs.testimonialsNavigationApi.registerGraph(
             navHostController = navHostController,
             navGraphBuilder = this
         )

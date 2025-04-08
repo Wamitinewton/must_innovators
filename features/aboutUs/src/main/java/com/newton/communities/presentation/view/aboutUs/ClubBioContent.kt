@@ -22,7 +22,6 @@ import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
 import com.newton.communities.presentation.state.*
-import com.newton.communities.presentation.view.aboutUs.composables.*
 
 @Composable
 fun ClubBioContent(

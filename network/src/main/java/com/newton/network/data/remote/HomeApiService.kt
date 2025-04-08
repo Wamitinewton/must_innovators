@@ -21,7 +21,4 @@ import retrofit2.http.*
 interface HomeApiService {
     @GET(ApiEndpoints.GET_PARTNERS)
     suspend fun getPartners(): com.newton.network.domain.models.homeModels.Partners
-
-    @GET(ApiEndpoints.GET_TESTIMONIALS)
-    suspend fun getTestimonials(): com.newton.network.domain.models.testimonials.Testimonials
 }

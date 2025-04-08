@@ -29,7 +29,7 @@ import javax.inject.*
 class ClubBioViewModel
 @Inject
 constructor(
-    private val communityRepository: CommunityRepository
+    private val clubBioRepository: ClubBioRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ClubBioUiState>(ClubBioUiState.Loading)
     val uiState: StateFlow<ClubBioUiState> = _uiState.asStateFlow()
@@ -41,7 +41,7 @@ constructor(
     private fun fetchClubBio() {
         viewModelScope.launch {
             try {
-                communityRepository.getClubBio().onEach { result ->
+                clubBioRepository.getClubBio().onEach { result ->
                     when (result) {
                         is Resource.Error -> {
                             _uiState.value =
@@ -67,5 +67,9 @@ constructor(
                 _uiState.value = ClubBioUiState.Error(e.message ?: "An unknown error occurred")
             }
         }
+    }
+
+    fun retry() {
+        fetchClubBio()
     }
 }
