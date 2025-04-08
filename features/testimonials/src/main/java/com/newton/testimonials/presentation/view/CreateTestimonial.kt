@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.account.presentation.view
+package com.newton.testimonials.presentation.view
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -25,17 +25,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.*
-import com.newton.account.presentation.events.*
-import com.newton.account.presentation.states.*
-import com.newton.account.presentation.viewmodel.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
+import com.newton.testimonials.presentation.event.*
+import com.newton.testimonials.presentation.state.*
+import com.newton.testimonials.presentation.viewModel.*
 import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateTestimonial(
-    viewModel: TestimonialsViewModel,
+    viewModel: CreateTestimonialViewModel,
     onNavigateToHome: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
@@ -58,20 +58,20 @@ fun CreateTestimonial(
 
     LaunchedEffect(uiState) {
         when (uiState) {
-            is TestimonialsUiState.Error -> {
+            is CreateTestimonialsUiState.Error -> {
                 launch {
                     snackbarHostState.showSnackbar(
-                        message = (uiState as TestimonialsUiState.Error).message,
+                        message = (uiState as CreateTestimonialsUiState.Error).message,
                         duration = SnackbarDuration.Short
                     )
                     viewModel.handleEvent(TestimonialsUiEvent.ClearError)
                 }
             }
 
-            is TestimonialsUiState.Success -> {
+            is CreateTestimonialsUiState.Success -> {
                 launch {
                     snackbarHostState.showSnackbar(
-                        message = (uiState as TestimonialsUiState.Success).message,
+                        message = (uiState as CreateTestimonialsUiState.Success).message,
                         duration = SnackbarDuration.Short
                     )
                 }
@@ -82,7 +82,7 @@ fun CreateTestimonial(
     }
 
     DefaultScaffold(
-        isLoading = uiState is TestimonialsUiState.Loading,
+        isLoading = uiState is CreateTestimonialsUiState.Loading,
         snackbarHostState = snackbarHostState,
         topBar = {
             TopAppBar(
@@ -123,7 +123,7 @@ fun CreateTestimonial(
                         currentRating = rating,
                         onRatingChanged = {
                             viewModel.handleEvent(
-                                TestimonialsUiEvent.RatingChanged(
+                                com.newton.testimonials.presentation.event.TestimonialsUiEvent.RatingChanged(
                                     it
                                 )
                             )
@@ -135,7 +135,7 @@ fun CreateTestimonial(
 
                 MultilineInputField(
                     value = content,
-                    onValueChange = { viewModel.handleEvent(TestimonialsUiEvent.ContentChanged(it)) },
+                    onValueChange = { viewModel.handleEvent(com.newton.testimonials.presentation.event.TestimonialsUiEvent.ContentChanged(it)) },
                     label = "Your Testimonial",
                     placeholder = "Share your experience...",
                     modifier =
@@ -149,7 +149,7 @@ fun CreateTestimonial(
 
                 SubmitButton(
                     text = "Submit Testimonial",
-                    isSubmitting = uiState is TestimonialsUiState.Loading,
+                    isSubmitting = uiState is CreateTestimonialsUiState.Loading,
                     enabled = content.isNotEmpty() && rating > 0,
                     onClick = {
                         coroutineScope.launch {

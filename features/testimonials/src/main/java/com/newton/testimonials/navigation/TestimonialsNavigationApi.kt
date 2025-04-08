@@ -14,21 +14,8 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.account.di
+package com.newton.testimonials.navigation
 
-import com.newton.network.data.remote.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import retrofit2.*
-import javax.inject.*
+import com.newton.navigation.*
 
-@Module
-@InstallIn(SingletonComponent::class)
-object TestimonialsApiModule {
-    @Provides
-    @Singleton
-    fun provideTestimonialApi(retrofit: Retrofit): TestimonialsService = retrofit.create(
-        TestimonialsService::class.java
-    )
-}
+interface TestimonialsNavigationApi : NavigationApi

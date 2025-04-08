@@ -34,18 +34,20 @@ import com.newton.home.presentation.viewmodels.*
 import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.models.testimonials.*
+import com.newton.testimonials.presentation.view.*
+import com.newton.testimonials.presentation.viewModel.*
 
 @Composable
 fun HomeScreen(
     partnersViewModel: PartnersViewModel,
-    testimonialsViewModel: TestimonialsViewModel,
+    getTestimonialsViewModel: GetTestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
     onNavigateToCommunityDetails: (Community) -> Unit,
     onPartnerClick: (PartnersData) -> Unit,
     communitiesViewModel: CommunitiesViewModel
 ) {
     val partnersState by partnersViewModel.partnersState.collectAsState()
-    val testimonialsUiState by testimonialsViewModel.uiState.collectAsState()
+    val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
     val communitiesState by communitiesViewModel.uiState.collectAsState()
 
     var selectedTestimonial by remember { mutableStateOf<TestimonialsData?>(null) }
@@ -123,7 +125,7 @@ fun HomeScreen(
                 TestimonialsSection(
                     uiState = testimonialsUiState,
                     onRetryClick = {
-                        testimonialsViewModel.retryLoadingTestimonials()
+                        getTestimonialsViewModel.retryLoadingTestimonials()
                     },
                     onTestimonialClick = { testimonial ->
                         selectedTestimonial = testimonial

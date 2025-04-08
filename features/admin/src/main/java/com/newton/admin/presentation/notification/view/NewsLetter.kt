@@ -36,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
 import com.newton.admin.presentation.notification.events.NotificationEvent
 import com.newton.admin.presentation.notification.view.composables.AddNewsLetterForm

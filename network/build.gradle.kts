@@ -36,6 +36,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     id("kotlinx-serialization")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -81,6 +83,10 @@ dependencies {
     implementation(Dependencies.retrofit2Converter)
     implementation(Dependencies.gsonCoverter)
     implementation(Dependencies.kotlinxSerialization)
+
+    // Hilt
+    implementation(Dependencies.hiltAndroid)
+    ksp(Dependencies.hiltCompiler)
 
     implementation(Dependencies.work)
     implementation(Dependencies.hiltWorker)

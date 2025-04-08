@@ -41,7 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.newton.commonUi.ui.CustomCard
-import com.newton.commonUi.ui.CustomDynamicAsyncImage
+import com.newton.commonUi.ui.NetworkImage
 import com.newton.commonUi.ui.toFormatedDate
 import com.newton.network.domain.models.adminModels.EventsData
 
@@ -54,7 +54,7 @@ fun EventCalendarItem(
             .fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
-        CustomDynamicAsyncImage(
+        NetworkImage(
             imageUrl = event.imageUrl,
             contentDescription = "Event Image",
             contentScale = ContentScale.Crop,

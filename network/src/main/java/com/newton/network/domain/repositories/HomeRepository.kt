@@ -22,6 +22,4 @@ import kotlinx.coroutines.flow.*
 
 interface HomeRepository {
     suspend fun getPartners(): Flow<com.newton.network.Resource<List<PartnersData>>>
-
-    suspend fun getTestimonials(): Flow<com.newton.network.Resource<List<TestimonialsData>>>
 }

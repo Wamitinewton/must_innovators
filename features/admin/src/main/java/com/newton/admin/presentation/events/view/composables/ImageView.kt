@@ -44,7 +44,7 @@ internal fun ImageReceiptView(
                 .height(150.dp)
                 .padding(vertical = 10.dp)
         ) {
-            CustomDynamicAsyncImage(
+            NetworkImage(
                 modifier =
                 Modifier
                     .fillMaxSize()

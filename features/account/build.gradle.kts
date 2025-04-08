@@ -94,9 +94,9 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":commonUi"))
-    implementation(project(":features:auth"))
     implementation(project(":database"))
     implementation(project(":navigation"))
     implementation(project(":network"))
     implementation(project(":shared"))
+    implementation(project(":features:testimonials"))
 }

@@ -34,7 +34,7 @@ fun CustomCard(
     onClick: (() -> Unit)? = null,
     containerColor: Color = MaterialTheme.colorScheme.surface,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    content: @Composable() (ColumnScope.() -> Unit)
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val cardModifier = Modifier
         .padding(8.dp)
@@ -72,6 +72,7 @@ fun CustomCard(
         )
     }
 }
+
 @Composable
 fun CustomDialog(
     title: String,

@@ -25,6 +25,7 @@ import com.newton.events.navigation.*
 import com.newton.feedback.navigation.*
 import com.newton.home.navigation.*
 import com.newton.settings.navigation.*
+import com.newton.testimonials.navigation.*
 
 data class NavigationSubGraphs(
     val authNavigationApi: AuthNavigationApi,
@@ -36,5 +37,6 @@ data class NavigationSubGraphs(
     val aboutUsNavigationApi: AboutUsNavigationApi,
     val feedbackNavigationApi: FeedbackNavigationApi,
     val settingNavigationApi: SettingNavigationApi,
-    val communityNavigationApi: CommunityNavigationApi
+    val communityNavigationApi: CommunityNavigationApi,
+    val testimonialsNavigationApi: TestimonialsNavigationApi
 )
