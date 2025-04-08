@@ -16,22 +16,18 @@
  */
 package com.newton.communities.data.repository
 
-import com.newton.database.dao.*
-import com.newton.database.mappers.*
 import com.newton.network.*
 import com.newton.network.data.mappers.*
 import com.newton.network.data.remote.*
 import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.flow.*
-import timber.log.*
 import javax.inject.*
 
 class CommunityRepositoryImpl
 @Inject
 constructor(
-    private val aboutUsApi: AboutClubService,
-    private val clubBioDao: ClubBioDao
+    private val communitiesApiService: CommunitiesApiService
 ) : CommunityRepository {
     override fun getCommunities(): Flow<Resource<List<Community>>> =
         fetchRemoteCommunities()
@@ -41,7 +37,7 @@ constructor(
      */
     private fun fetchRemoteCommunities(): Flow<Resource<List<Community>>> =
         safeApiCall {
-            val response = aboutUsApi.getCommunities()
+            val response = communitiesApiService.getCommunities()
             val communities = response.data.toDomainList()
             communities
         }
@@ -59,48 +55,6 @@ constructor(
 
             is Resource.Error -> Resource.Error(result.message ?: "")
             is Resource.Loading -> Resource.Loading()
-        }
-    }
-
-    override suspend fun getClubBio(): Flow<Resource<ClubBioData>> =
-        flow {
-            val cachedClub = clubBioDao.getClubBio()
-
-            if (cachedClub != null) {
-                emit(Resource.Success(cachedClub.toDomain()))
-            }
-
-            safeApiCall {
-                aboutUsApi.getClubBio().data
-            }.collect { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        result.data?.let { clubBioData ->
-                            updateLocalClub(clubBioData)
-                        }
-                        emit(result)
-                    }
-
-                    is Resource.Error -> {
-                        if (cachedClub == null) {
-                            emit(result)
-                        }
-                    }
-
-                    is Resource.Loading -> {
-                        if (result.isLoading && cachedClub == null) {
-                            emit(result)
-                        }
-                    }
-                }
-            }
-        }
-
-    private suspend fun updateLocalClub(clubBioData: ClubBioData) {
-        try {
-            clubBioDao.insertClubBio(clubBioData.toEntity())
-        } catch (e: Exception) {
-            Timber.e(e.message)
         }
     }
 }

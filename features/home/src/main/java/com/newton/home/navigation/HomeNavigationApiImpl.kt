@@ -27,6 +27,7 @@ import com.newton.home.data.*
 import com.newton.home.presentation.view.*
 import com.newton.home.presentation.viewmodels.*
 import com.newton.navigation.*
+import com.newton.testimonials.presentation.viewModel.*
 
 class HomeNavigationApiImpl : HomeNavigationApi {
     override fun registerGraph(
@@ -42,13 +43,13 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                     navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
                 }
                 val partnersViewModel = hiltViewModel<PartnersViewModel>()
-                val testimonialsViewModel = hiltViewModel<TestimonialsViewModel>()
+                val getTestimonialsViewModel = hiltViewModel<GetTestimonialsViewModel>()
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 val communitiesViewModel = hiltViewModel<CommunitiesViewModel>()
                 val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>()
                 HomeScreen(
                     partnersViewModel = partnersViewModel,
-                    testimonialsViewModel = testimonialsViewModel,
+                    getTestimonialsViewModel = getTestimonialsViewModel,
                     onNavigateToAdmin = {
                         navHostController.navigate(NavigationRoutes.AdminDashboard.routes)
                     },

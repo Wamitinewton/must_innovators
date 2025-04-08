@@ -14,14 +14,21 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.account.presentation.states
+package com.newton.network.di
 
-sealed class TestimonialsUiState {
-    data object Idle : TestimonialsUiState()
+import com.newton.network.data.remote.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import retrofit2.*
+import javax.inject.*
 
-    data object Loading : TestimonialsUiState()
-
-    data class Success(val message: String) : TestimonialsUiState()
-
-    data class Error(val message: String) : TestimonialsUiState()
+@Module
+@InstallIn(SingletonComponent::class)
+object EventApiModule {
+    @Provides
+    @Singleton
+    fun providesEventApi(retrofit: Retrofit): EventService {
+        return retrofit.create(EventService::class.java)
+    }
 }

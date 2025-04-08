@@ -14,31 +14,30 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.account.presentation.viewmodel
+package com.newton.testimonials.presentation.viewModel
 
 import androidx.lifecycle.*
-import com.newton.account.presentation.events.*
-import com.newton.account.presentation.states.*
 import com.newton.network.*
 import com.newton.network.domain.models.testimonials.*
 import com.newton.network.domain.repositories.*
 import com.newton.shared.sharedBus.*
+import com.newton.testimonials.presentation.event.*
+import com.newton.testimonials.presentation.state.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
-import timber.log.*
 import javax.inject.*
 
 @HiltViewModel
-class TestimonialsViewModel
+class CreateTestimonialViewModel
 @Inject
 constructor(
     private val testimonialRepository: TestimonialsRepository,
     private val eventBus: EventBus
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Idle)
-    val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<CreateTestimonialsUiState>(CreateTestimonialsUiState.Idle)
+    val uiState: StateFlow<CreateTestimonialsUiState> = _uiState.asStateFlow()
 
     private val _navigateToHome = Channel<TestimonialsNavigationEvent>(Channel.BUFFERED)
     val navigationEvent = _navigateToHome.receiveAsFlow()
@@ -53,18 +52,18 @@ constructor(
         when (event) {
             is TestimonialsUiEvent.ContentChanged -> _content.value = event.content
             is TestimonialsUiEvent.RatingChanged -> _rating.value = event.rating
-            is TestimonialsUiEvent.ClearError -> _uiState.value = TestimonialsUiState.Idle
+            is TestimonialsUiEvent.ClearError -> _uiState.value = CreateTestimonialsUiState.Idle
             is TestimonialsUiEvent.Submit -> submitTestimonial()
         }
     }
 
     private fun submitTestimonial() {
         if (_content.value.isBlank()) {
-            _uiState.value = TestimonialsUiState.Error("Testimonial content cannot be empty")
+            CreateTestimonialsUiState.Error("Testimonial content cannot be empty")
             return
         }
         if (_rating.value == 0) {
-            _uiState.value = TestimonialsUiState.Error("Please provide a rating")
+            _uiState.value = CreateTestimonialsUiState.Error("Please provide a rating")
             return
         }
 
@@ -79,12 +78,12 @@ constructor(
                 when (result) {
                     is Resource.Error -> {
                         _uiState.value =
-                            TestimonialsUiState.Error(result.message ?: "Unknown Error")
+                            CreateTestimonialsUiState.Error(result.message ?: "Unknown Error")
                     }
 
                     is Resource.Loading -> {
                         if (result.isLoading) {
-                            _uiState.value = TestimonialsUiState.Loading
+                            _uiState.value = CreateTestimonialsUiState.Loading
                         }
                     }
 
@@ -98,14 +97,13 @@ constructor(
 
     private suspend fun handleTestimonialSuccess() {
         try {
-            _uiState.value = TestimonialsUiState.Success("Testimonial posted successfully")
+            _uiState.value = CreateTestimonialsUiState.Success("Testimonial posted successfully")
 
             _navigateToHome.send(TestimonialsNavigationEvent.NavigateToHome)
-            Timber.d("NAVIGATING..............TO HOME SCREEN")
             eventBus.notifyTestimonialUpdate()
         } catch (e: Exception) {
             _uiState.value =
-                TestimonialsUiState.Error("Failed to process testimonial: ${e.message}")
+                CreateTestimonialsUiState.Error("Failed to process testimonial: ${e.message}")
         }
     }
 }

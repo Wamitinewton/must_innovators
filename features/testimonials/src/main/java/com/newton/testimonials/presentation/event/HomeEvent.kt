@@ -14,21 +14,8 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.di
+package com.newton.testimonials.presentation.event
 
-import com.newton.network.data.remote.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import retrofit2.*
-import javax.inject.*
-
-@Module
-@InstallIn(SingletonComponent::class)
-object AuthServiceModule {
-    @Provides
-    @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService {
-        return retrofit.create(AuthService::class.java)
-    }
+sealed class HomeEvent {
+    data class RSVPEvent(val eventId: Int) : HomeEvent()
 }

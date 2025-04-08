@@ -93,7 +93,7 @@ fun PartnersContent(
         when (partnersState) {
             is PartnersUiState.Loading -> {
                 LoadingIndicator(
-                    text = "Loading partners...",
+                    text = "Loading partners..."
                 )
             }
 
@@ -375,7 +375,6 @@ fun PartnersSection(
             .fillMaxWidth()
             .padding(vertical = 16.dp)
     ) {
-
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -387,7 +386,7 @@ fun PartnersSection(
             ) { partner ->
                 PartnerCard(
                     partner = partner,
-                    onClick = { onPartnerClick(partner) },
+                    onClick = { onPartnerClick(partner) }
                 )
             }
         }

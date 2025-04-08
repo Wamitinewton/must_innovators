@@ -17,6 +17,7 @@
 package com.newton.communities.presentation.viewModel
 
 import androidx.lifecycle.*
+import com.newton.communities.presentation.state.*
 import com.newton.network.*
 import com.newton.network.domain.repositories.*
 import dagger.hilt.android.lifecycle.*
@@ -28,10 +29,10 @@ import javax.inject.*
 class ClubBioViewModel
 @Inject
 constructor(
-    private val communityRepository: CommunityRepository
+    private val clubBioRepository: ClubBioRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<com.newton.communities.presentation.state.ClubBioUiState>(com.newton.communities.presentation.state.ClubBioUiState.Loading)
-    val uiState: StateFlow<com.newton.communities.presentation.state.ClubBioUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<ClubBioUiState>(ClubBioUiState.Loading)
+    val uiState: StateFlow<ClubBioUiState> = _uiState.asStateFlow()
 
     init {
         fetchClubBio()
@@ -40,30 +41,30 @@ constructor(
     private fun fetchClubBio() {
         viewModelScope.launch {
             try {
-                communityRepository.getClubBio().onEach { result ->
+                clubBioRepository.getClubBio().onEach { result ->
                     when (result) {
                         is Resource.Error -> {
                             _uiState.value =
-                                com.newton.communities.presentation.state.ClubBioUiState.Error(result.message ?: "An unknown error occurred")
+                                ClubBioUiState.Error(result.message ?: "An unknown error occurred")
                         }
 
                         is Resource.Loading -> {
                             if (result.isLoading) {
-                                _uiState.value = com.newton.communities.presentation.state.ClubBioUiState.Loading
+                                _uiState.value = ClubBioUiState.Loading
                             }
                         }
 
                         is Resource.Success -> {
                             result.data?.let { data ->
-                                _uiState.value = com.newton.communities.presentation.state.ClubBioUiState.Success(data)
+                                _uiState.value = ClubBioUiState.Success(data)
                             } ?: run {
-                                _uiState.value = com.newton.communities.presentation.state.ClubBioUiState.Error("Data is null")
+                                _uiState.value = ClubBioUiState.Error("Data is null")
                             }
                         }
                     }
                 }.launchIn(this)
             } catch (e: Exception) {
-                _uiState.value = com.newton.communities.presentation.state.ClubBioUiState.Error(e.message ?: "An unknown error occurred")
+                _uiState.value = ClubBioUiState.Error(e.message ?: "An unknown error occurred")
             }
         }
     }

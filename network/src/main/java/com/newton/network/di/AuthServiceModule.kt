@@ -14,9 +14,8 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.events.di
+package com.newton.network.di
 
-import com.newton.events.navigation.*
 import com.newton.network.data.remote.*
 import dagger.*
 import dagger.hilt.*
@@ -26,16 +25,10 @@ import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)
-object EventModule {
+object AuthServiceModule {
     @Provides
     @Singleton
-    fun provideEventNavApi(): EventsNavigationApi {
-        return EventsNavigationApiImpl()
-    }
-
-    @Provides
-    @Singleton
-    fun providesEventApi(retrofit: Retrofit): EventService {
-        return retrofit.create(EventService::class.java)
+    fun provideAuthService(retrofit: Retrofit): AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 }

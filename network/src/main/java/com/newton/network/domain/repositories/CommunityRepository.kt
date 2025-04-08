@@ -24,6 +24,4 @@ interface CommunityRepository {
     fun getCommunities(): Flow<Resource<List<Community>>>
 
     suspend fun getCommunityById(communityId: Int): Resource<Community>
-
-    suspend fun getClubBio(): Flow<Resource<ClubBioData>>
 }

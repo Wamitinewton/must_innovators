@@ -25,7 +25,7 @@ plugins {
 }
 
 android {
-    namespace = "com.newton.communities"
+    namespace = "com.newton.aboutUs"
     compileSdk = 35
 
     defaultConfig {

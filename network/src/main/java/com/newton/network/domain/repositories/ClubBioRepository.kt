@@ -14,8 +14,12 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.events
+package com.newton.network.domain.repositories
 
-sealed class HomeEvent {
-    data class RSVPEvent(val eventId: Int) : HomeEvent()
+import com.newton.network.*
+import com.newton.network.domain.models.aboutUs.*
+import kotlinx.coroutines.flow.*
+
+interface ClubBioRepository {
+    suspend fun getClubBio(): Flow<Resource<ClubBioData>>
 }

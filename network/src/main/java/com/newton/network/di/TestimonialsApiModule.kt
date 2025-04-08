@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.communities.di
+package com.newton.network.di
 
 import com.newton.network.data.remote.*
 import dagger.*
@@ -25,8 +25,10 @@ import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AboutUsApiModule {
+object TestimonialsApiModule {
     @Provides
     @Singleton
-    fun provideAboutUsApi(retrofit: Retrofit): AboutClubService = retrofit.create(AboutClubService::class.java)
+    fun provideTestimonialApi(retrofit: Retrofit): TestimonialsService = retrofit.create(
+        TestimonialsService::class.java
+    )
 }

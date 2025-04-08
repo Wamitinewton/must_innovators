@@ -34,11 +34,4 @@ object AccountRepositoryModule {
         userDao: UserDao,
         authService: AuthService
     ): UpdateUserRepository = UpdateUserRepositoryImpl(userDao, authService)
-
-    @Provides
-    @Singleton
-    fun provideTestimonialRepository(
-        testimonialsService: TestimonialsService,
-        testimonialsDao: TestimonialsDao
-    ): TestimonialsRepository = TestimonialRepositoryImpl(testimonialsService, testimonialsDao)
 }

@@ -14,27 +14,27 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.viewmodels
+package com.newton.testimonials.presentation.viewModel
 
 import androidx.lifecycle.*
-import com.newton.home.presentation.states.*
 import com.newton.network.*
 import com.newton.network.domain.repositories.*
 import com.newton.shared.sharedBus.*
+import com.newton.testimonials.presentation.state.*
 import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 
 @HiltViewModel
-class TestimonialsViewModel
+class GetTestimonialsViewModel
 @Inject
 constructor(
-    private val homeRepository: HomeRepository,
+    private val testimonialsRepository: TestimonialsRepository,
     private val eventBus: EventBus
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<TestimonialsUiState>(TestimonialsUiState.Initial)
-    val uiState: StateFlow<TestimonialsUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<GetTestimonialsUiState>(GetTestimonialsUiState.Initial)
+    val uiState: StateFlow<GetTestimonialsUiState> = _uiState.asStateFlow()
 
     init {
         loadTestimonials()
@@ -48,25 +48,25 @@ constructor(
 
     private fun loadTestimonials() {
         viewModelScope.launch {
-            _uiState.value = TestimonialsUiState.Loading
-            homeRepository.getTestimonials().collectLatest { result ->
+            _uiState.value = GetTestimonialsUiState.Loading
+            testimonialsRepository.getTestimonials().collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {
                         _uiState.value =
-                            TestimonialsUiState.Error(
+                            GetTestimonialsUiState.Error(
                                 message = result.message ?: "An Unknown error occurred"
                             )
                     }
 
                     is Resource.Loading -> {
                         if (result.isLoading) {
-                            _uiState.value = TestimonialsUiState.Loading
+                            _uiState.value = GetTestimonialsUiState.Loading
                         }
                     }
 
                     is Resource.Success -> {
                         _uiState.value =
-                            TestimonialsUiState.Success(
+                            GetTestimonialsUiState.Success(
                                 testimonials = result.data ?: emptyList()
                             )
                     }

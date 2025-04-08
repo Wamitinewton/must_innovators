@@ -28,15 +28,15 @@ import com.newton.navigation.*
 class CommunityNavigationApiImpl : CommunityNavigationApi {
     override fun registerGraph(navGraphBuilder: NavGraphBuilder, navHostController: NavHostController) {
         navGraphBuilder.navigation(
-            route = NavigationSubGraphRoutes.AboutUs.route,
-            startDestination = NavigationRoutes.AboutUsRoute.routes
+            route = NavigationSubGraphRoutes.Communities.route,
+            startDestination = NavigationRoutes.CommunitiesDetailsRoute.routes
         ) {
             composable(
                 route = NavigationRoutes.CommunitiesDetailsRoute.routes
             ) {
                 val parentEntry =
                     remember(it) {
-                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.AboutUs.route)
+                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Communities.route)
                     }
                 val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 CommunityDetailsScreen(

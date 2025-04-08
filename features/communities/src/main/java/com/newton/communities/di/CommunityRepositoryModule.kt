@@ -16,7 +16,6 @@
  */
 package com.newton.communities.di
 
-import com.newton.database.dao.*
 import com.newton.network.data.remote.*
 import com.newton.network.domain.repositories.*
 import dagger.*
@@ -30,8 +29,7 @@ object CommunityRepositoryModule {
     @Provides
     @Singleton
     fun provideAboutUsRepository(
-        aboutUsApi: AboutClubService,
-        clubBioDao: ClubBioDao
+        communityApiService: CommunitiesApiService
     ): CommunityRepository =
-        com.newton.communities.data.repository.CommunityRepositoryImpl(aboutUsApi, clubBioDao)
+        com.newton.communities.data.repository.CommunityRepositoryImpl(communityApiService)
 }

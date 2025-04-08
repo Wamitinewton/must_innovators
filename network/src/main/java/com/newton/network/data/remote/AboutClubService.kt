@@ -20,9 +20,6 @@ import com.newton.network.data.response.aboutUs.*
 import retrofit2.http.*
 
 interface AboutClubService {
-    @GET(ApiEndpoints.GET_COMMUNITIES)
-    suspend fun getCommunities(): CommunityApiResponse<CommunitiesResponse>
-
     @GET(ApiEndpoints.GET_EXECUTIVES)
     suspend fun getExecutives(): com.newton.network.domain.models.aboutUs.ExecutiveData
 

@@ -34,10 +34,4 @@ constructor(
             val response = homeApiService.getPartners().results
             response
         }
-
-    override suspend fun getTestimonials(): Flow<Resource<List<TestimonialsData>>> =
-        safeApiCall {
-            val response = homeApiService.getTestimonials().results
-            response
-        }
 }

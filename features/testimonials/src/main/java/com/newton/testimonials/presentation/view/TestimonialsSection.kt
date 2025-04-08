@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.view
+package com.newton.testimonials.presentation.view
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -26,21 +26,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
-import androidx.compose.ui.layout.*
-import androidx.compose.ui.text.font.*
-import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import coil3.compose.*
 import com.newton.commonUi.ui.*
-import com.newton.core.utils.*
-import com.newton.home.presentation.states.*
 import com.newton.network.domain.models.testimonials.*
+import com.newton.testimonials.presentation.state.*
 import kotlinx.coroutines.*
-import kotlin.math.*
 
 @Composable
 fun TestimonialsSection(
-    uiState: TestimonialsUiState,
+    uiState: GetTestimonialsUiState,
     onRetryClick: () -> Unit,
     onTestimonialClick: (TestimonialsData) -> Unit = {}
 ) {
@@ -51,16 +45,16 @@ fun TestimonialsSection(
             .padding(vertical = 8.dp)
     ) {
         when (uiState) {
-            is TestimonialsUiState.Loading -> {
+            is GetTestimonialsUiState.Loading -> {
                 LoadingIndicator(
                     text = "Loading Testimonials"
                 )
             }
 
-            is TestimonialsUiState.Success -> {
+            is GetTestimonialsUiState.Success -> {
                 val testimonials = uiState.testimonials
                 if (testimonials.isNotEmpty()) {
-                    AutoScrollingTestimonials(
+                    PagedTestimonials(
                         testimonials = testimonials,
                         onTestimonialClick = onTestimonialClick
                     )
@@ -75,7 +69,7 @@ fun TestimonialsSection(
                 }
             }
 
-            is TestimonialsUiState.Error -> {
+            is GetTestimonialsUiState.Error -> {
                 val errorMessage = uiState.message
                 ErrorScreen(
                     titleText = "Failed to load TESTIMONIALS",
@@ -84,14 +78,14 @@ fun TestimonialsSection(
                 )
             }
 
-            TestimonialsUiState.Initial -> {
+            GetTestimonialsUiState.Initial -> {
             }
         }
     }
 }
 
 @Composable
-fun AutoScrollingTestimonials(
+fun PagedTestimonials(
     testimonials: List<TestimonialsData>,
     onTestimonialClick: (TestimonialsData) -> Unit
 ) {
@@ -138,100 +132,7 @@ fun AutoScrollingTestimonials(
     }
 }
 
-@Composable
-fun TestimonialCard(
-    testimonialsData: TestimonialsData,
-    onClick: (TestimonialsData) -> Unit
-) {
-    CustomCard(
-        modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .padding(horizontal = 4.dp, vertical = 8.dp)
-            .shadow(
-                elevation = 4.dp,
-                shape = RoundedCornerShape(16.dp)
-            )
-            .clickable { onClick(testimonialsData) },
-        shape = RoundedCornerShape(16.dp),
-    ) {
-        Column(
-            modifier =
-            Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-        ) {
-            Icon(
-                imageVector = Icons.Filled.FormatQuote,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-                modifier = Modifier.size(36.dp)
-            )
 
-            Text(
-                text = testimonialsData.content,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier =
-                Modifier
-                    .padding(vertical = 12.dp)
-                    .weight(1f),
-                maxLines = 4,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TestimonialAvatar(imageUrl = "")
-                Spacer(modifier = Modifier.width(12.dp))
-
-                Column {
-                    Text(
-                        text = testimonialsData.user_name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
-                    Text(
-                        text = formatDateTime(testimonialsData.created_at),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Row {
-                    repeat(min(3, testimonialsData.rating)) {
-                        Icon(
-                            imageVector = Icons.Filled.Star,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-
-                    if (testimonialsData.rating > 3) {
-                        Text(
-                            text = "+${testimonialsData.rating - 3}",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun TestimonialAvatar(imageUrl: String?) {
@@ -242,24 +143,9 @@ fun TestimonialAvatar(imageUrl: String?) {
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
     ) {
-        if (imageUrl != null) {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = "Author Image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        } else {
-            Text(
-                text = "N",
-                fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-                modifier =
-                Modifier
-                    .align(Alignment.Center)
-            )
-        }
+        NetworkImage(
+            imageUrl = imageUrl
+        )
     }
 }
 

@@ -17,6 +17,7 @@
 package com.newton.communities.di
 
 import com.newton.communities.data.repository.*
+import com.newton.database.dao.*
 import com.newton.network.data.remote.*
 import com.newton.network.domain.repositories.*
 import dagger.*
@@ -32,4 +33,9 @@ object AboutUsRepositoryModule {
     @Singleton
     fun provideExecutiveRepository(executiveApi: AboutClubService): ExecutiveRepository =
         ExecutiveRepositoryImpl(executiveApi)
+
+    @Provides
+    @Singleton
+    fun provideClubBioRepository(aboutClubService: AboutClubService, clubBioDao: ClubBioDao): ClubBioRepository =
+        ClubBioRepositoryImpl(aboutClubService, clubBioDao)
 }

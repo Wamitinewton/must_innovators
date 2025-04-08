@@ -22,5 +22,4 @@ sealed class CommunityUiEvent {
 
         data object DismissError : Action()
     }
-
 }

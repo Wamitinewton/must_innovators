@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.account.data.repository
+package com.newton.testimonials.data
 
 import com.newton.database.dao.*
 import com.newton.database.entities.*
@@ -57,5 +57,11 @@ constructor(
                 user = response.user,
                 user_name = response.user_name
             )
+        }
+
+    override suspend fun getTestimonials(): Flow<Resource<List<TestimonialsData>>> =
+        safeApiCall {
+            val response = testimonialsService.getTestimonials().results
+            response
         }
 }
