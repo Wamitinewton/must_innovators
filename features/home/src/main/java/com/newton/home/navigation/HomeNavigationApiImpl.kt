@@ -61,7 +61,10 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                         partnersSharedViewModel.updateSelectedPartner(partner)
                         navHostController.navigate(NavigationRoutes.PartnersDetails.routes)
                     },
-                    communitiesViewModel = communitiesViewModel
+                    communitiesViewModel = communitiesViewModel,
+                    onSeeAllTestimonials = {
+                        navHostController.navigate(NavigationRoutes.AllTestimonialsRoute.routes)
+                    }
                 )
             }
 

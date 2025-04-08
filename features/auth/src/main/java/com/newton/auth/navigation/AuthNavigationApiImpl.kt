@@ -41,7 +41,9 @@ class AuthNavigationApiImpl : AuthNavigationApi {
                 val signupViewModel = hiltViewModel<SignupViewModel>()
                 SignupRoute(
                     signupViewModel = signupViewModel,
-                    onNavigateToOnboarding = {},
+                    onNavigateToOnboarding = {
+                        navHostController.navigate(NavigationRoutes.OnboardingRoute.routes)
+                    },
                     onContinueToLogin = {
                         navHostController.navigate(NavigationRoutes.LoginRoute.routes) {
                             popUpTo(NavigationSubGraphRoutes.Auth.route) {
@@ -70,7 +72,10 @@ class AuthNavigationApiImpl : AuthNavigationApi {
                 LoginScreen(
                     navHostController = navHostController,
                     loginViewModel = loginViewModel,
-                    onForgotPasswordClick = { navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.routes) }
+                    onForgotPasswordClick = { navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.routes) },
+                    onNavigateToOnboarding = {
+                        navHostController.navigate(NavigationRoutes.OnboardingRoute.routes)
+                    }
                 )
             }
 
