@@ -29,7 +29,9 @@ class SettingsNavigationApiImpl : SettingNavigationApi {
         ) {
             composable(route = NavigationRoutes.SettingsRoute.routes) {
                 SettingsScreen(
-                    onBackPressed = {},
+                    onBackPressed = {
+                        navHostController.navigateUp()
+                    },
                     onClearCache = {},
                     onNotificationSettingsChanged = {},
                     onPrivacyPolicyClicked = {},

@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.testimonials.presentation.view
+package com.newton.testimonials.presentation.view.pagedTestimonials
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -54,8 +54,15 @@ fun TestimonialsSection(
             is GetTestimonialsUiState.Success -> {
                 val testimonials = uiState.testimonials
                 if (testimonials.isNotEmpty()) {
+                    val randomTestimonials = remember(testimonials) {
+                        if (testimonials.size <= 5) {
+                            testimonials
+                        } else {
+                            testimonials.shuffled().take(5)
+                        }
+                    }
                     PagedTestimonials(
-                        testimonials = testimonials,
+                        testimonials = randomTestimonials,
                         onTestimonialClick = onTestimonialClick
                     )
                 } else {

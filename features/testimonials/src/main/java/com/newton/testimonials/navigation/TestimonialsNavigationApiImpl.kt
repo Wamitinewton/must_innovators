@@ -20,7 +20,8 @@ import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.newton.navigation.*
-import com.newton.testimonials.presentation.view.*
+import com.newton.testimonials.presentation.view.allTestimonials.*
+import com.newton.testimonials.presentation.view.createTestimonial.*
 import com.newton.testimonials.presentation.viewModel.*
 
 class TestimonialsNavigationApiImpl : TestimonialsNavigationApi {
@@ -43,6 +44,16 @@ class TestimonialsNavigationApiImpl : TestimonialsNavigationApi {
                     onNavigateBack = {
                         navHostController.navigateUp()
                     }
+                )
+            }
+
+            composable(route = NavigationRoutes.AllTestimonialsRoute.routes) {
+                val testimonialsViewModel = hiltViewModel<GetTestimonialsViewModel>()
+                AllTestimonialsScreen(
+                    onBackPressed = {
+                        navHostController.navigateUp()
+                    },
+                    testimonialViewModel = testimonialsViewModel
                 )
             }
         }

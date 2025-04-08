@@ -34,7 +34,7 @@ import com.newton.home.presentation.viewmodels.*
 import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.models.testimonials.*
-import com.newton.testimonials.presentation.view.*
+import com.newton.testimonials.presentation.view.pagedTestimonials.*
 import com.newton.testimonials.presentation.viewModel.*
 
 @Composable
@@ -44,7 +44,8 @@ fun HomeScreen(
     onNavigateToAdmin: () -> Unit,
     onNavigateToCommunityDetails: (Community) -> Unit,
     onPartnerClick: (PartnersData) -> Unit,
-    communitiesViewModel: CommunitiesViewModel
+    communitiesViewModel: CommunitiesViewModel,
+    onSeeAllTestimonials: () -> Unit,
 ) {
     val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
@@ -117,7 +118,7 @@ fun HomeScreen(
                 SectionHeader(
                     title = "Testimonials",
                     showViewAll = true,
-                    onViewAllClick = { }
+                    onViewAllClick = onSeeAllTestimonials
                 )
             }
 
