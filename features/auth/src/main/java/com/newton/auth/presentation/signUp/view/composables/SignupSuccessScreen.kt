@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.presentation.signUp.view
+package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*

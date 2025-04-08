@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.*
 import androidx.lifecycle.compose.*
 import androidx.navigation.*
 import com.newton.auth.presentation.login.event.*
+import com.newton.auth.presentation.login.view.composables.LoginContent
 import com.newton.auth.presentation.login.viewModel.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
@@ -78,7 +79,9 @@ fun LoginScreen(
             onEvent = loginViewModel::onEvent,
             onBackClick = { navHostController.navigate(NavigationRoutes.OnboardingRoute.routes) },
             onForgotPasswordClick = onForgotPasswordClick,
-            onVerifyAccountClick = {}
+            onVerifyAccountClick = {},
+            state = snackbarHostState,
+            scope = scope
         )
     }
 }

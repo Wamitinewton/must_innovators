@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.presentation.login.view
+package com.newton.auth.presentation.login.view.composables
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -29,6 +29,8 @@ import com.newton.auth.presentation.login.event.*
 import com.newton.auth.presentation.login.state.*
 import com.newton.auth.presentation.utils.*
 import com.newton.commonUi.ui.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginContent(
@@ -36,7 +38,9 @@ fun LoginContent(
     onEvent: (LoginEvent) -> Unit,
     onBackClick: () -> Unit,
     onForgotPasswordClick: () -> Unit,
-    onVerifyAccountClick: () -> Unit
+    onVerifyAccountClick: () -> Unit,
+    scope:CoroutineScope,
+    state:SnackbarHostState
 ) {
     Column(
         modifier =
@@ -52,8 +56,22 @@ fun LoginContent(
         )
 
         SocialAuthentication(
-            onGithubLogin = {},
-            onGoogleLogin = {}
+            onGithubLogin = {
+                scope.launch {
+                    state.showSnackbar(
+                        message = "Upcoming Feature",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            },
+            onGoogleLogin = {
+                scope.launch {
+                    state.showSnackbar(
+                        message = "Upcoming Feature",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
         )
 
         OrContinueWith()
@@ -90,37 +108,37 @@ fun LoginContent(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
-                    shape = MaterialTheme.shapes.small
-                )
-                .border(
-                    width = 1.dp,
-                    brush = Brush.horizontalGradient(
-                        listOf(
-                            MaterialTheme.colorScheme.primary,
-                            MaterialTheme.colorScheme.tertiary
-                        )
-                    ),
-                    shape = MaterialTheme.shapes.small
-                )
-                .clickable(onClick = onVerifyAccountClick)
-                .padding(vertical = 12.dp, horizontal = 16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Complete your registration! Verify your account now",
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                ),
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(bottom = 16.dp)
+//                .background(
+//                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+//                    shape = MaterialTheme.shapes.small
+//                )
+//                .border(
+//                    width = 1.dp,
+//                    brush = Brush.horizontalGradient(
+//                        listOf(
+//                            MaterialTheme.colorScheme.primary,
+//                            MaterialTheme.colorScheme.tertiary
+//                        )
+//                    ),
+//                    shape = MaterialTheme.shapes.small
+//                )
+//                .clickable(onClick = onVerifyAccountClick)
+//                .padding(vertical = 12.dp, horizontal = 16.dp),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Text(
+//                text = "Complete your registration! Verify your account now",
+//                style = MaterialTheme.typography.bodyMedium.copy(
+//                    fontWeight = FontWeight.SemiBold,
+//                    textAlign = TextAlign.Center
+//                ),
+//                color = MaterialTheme.colorScheme.primary
+//            )
+//        }
 
         Row(
             modifier = Modifier

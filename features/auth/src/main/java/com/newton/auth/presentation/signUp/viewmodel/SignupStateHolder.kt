@@ -42,6 +42,7 @@ constructor(
             is SignupUiEvent.LastNameChanged -> lastNameChanged(event.lastname)
             is SignupUiEvent.PasswordChanged -> passwordChanged(event.password)
             is SignupUiEvent.OtpChanged -> updateOtp(event.otp)
+            is SignupUiEvent.OnCheckedChanged -> _signUpState.update { it.copy(isChecked = event.checked) }
             else -> {}
         }
     }

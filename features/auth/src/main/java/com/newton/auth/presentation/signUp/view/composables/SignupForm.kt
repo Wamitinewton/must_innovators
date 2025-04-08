@@ -14,13 +14,14 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.presentation.signUp.view
+package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.input.*
+import com.newton.auth.presentation.signUp.view.composables.TermsCheckboxRow
 import com.newton.commonUi.ui.*
 
 @Composable
@@ -44,7 +45,11 @@ fun SignupForm(
     confirmPassword: String,
     onConfirmPasswordChanged: (String) -> Unit,
     confirmPwdError: String?,
-    isConfirmPwdError: Boolean = false
+    isConfirmPwdError: Boolean = false,
+    isChecked:Boolean,
+    onTermsClicked:()->Unit,
+    onPolicyClicked:()->Unit,
+    onCheckedClicked:()->Unit
 ) {
     Column {
         val focusManager = LocalFocusManager.current
@@ -118,5 +123,6 @@ fun SignupForm(
             isError = isConfirmPwdError,
             imeAction = ImeAction.Next
         )
+        TermsCheckboxRow(isChecked,onTermsClicked,onPolicyClicked,onCheckedClicked)
     }
 }

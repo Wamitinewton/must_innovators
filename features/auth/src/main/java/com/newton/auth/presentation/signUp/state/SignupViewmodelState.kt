@@ -22,6 +22,7 @@ data class SignupViewmodelState(
     val otp: String = "",
     val userName: String = "",
     val isLoading: Boolean = false,
+    val isChecked: Boolean = false,
     val errorMessage: String? = null,
     val firstNameInput: String = "",
     val lastNameInput: String = "",

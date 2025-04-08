@@ -14,10 +14,11 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.presentation.signUp.view
+package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.runtime.*
 import com.newton.auth.presentation.signUp.event.*
+import com.newton.auth.presentation.signUp.view.SignupScreen
 import com.newton.auth.presentation.signUp.viewmodel.*
 import com.newton.auth.presentation.utils.*
 import com.newton.core.enums.*
