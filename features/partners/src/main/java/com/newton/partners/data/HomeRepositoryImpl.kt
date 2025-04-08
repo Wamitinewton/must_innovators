@@ -14,23 +14,23 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.di
+package com.newton.partners.data
 
-import com.newton.home.data.*
+import com.newton.network.*
 import com.newton.network.data.remote.*
+import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.repositories.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
+import kotlinx.coroutines.flow.*
 import javax.inject.*
 
-@Module
-@InstallIn(SingletonComponent::class)
-object HomeRepositoryModule {
-    @Provides
-    @Singleton
-    fun provideHomeRepository(
-        partnersService: HomeApiService
-//        partnersDao: PartnersDao
-    ): HomeRepository = HomeRepositoryImpl(partnersService)
+class HomeRepositoryImpl
+@Inject
+constructor(
+    private val partnersService: PartnersService
+) : HomeRepository {
+    override suspend fun getPartners(): Flow<Resource<List<PartnersData>>> =
+        safeApiCall {
+            val response = partnersService.getPartners().results
+            response
+        }
 }

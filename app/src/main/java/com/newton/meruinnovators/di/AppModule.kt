@@ -28,6 +28,7 @@ import com.newton.feedback.navigation.*
 import com.newton.home.navigation.*
 import com.newton.meruinnovators.*
 import com.newton.meruinnovators.navigation.*
+import com.newton.partners.navigation.*
 import com.newton.settings.navigation.*
 import com.newton.testimonials.navigation.*
 import dagger.*
@@ -61,7 +62,8 @@ object AppModule {
         feedbackNavigationApi: FeedbackNavigationApi,
         settingNavigationApi: SettingNavigationApi,
         communityNavigationApi: CommunityNavigationApi,
-        testimonialsNavigationApi: TestimonialsNavigationApi
+        testimonialsNavigationApi: TestimonialsNavigationApi,
+        partnersNavigationApi: PartnersNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -74,7 +76,8 @@ object AppModule {
             feedbackNavigationApi,
             settingNavigationApi,
             communityNavigationApi,
-            testimonialsNavigationApi
+            testimonialsNavigationApi,
+            partnersNavigationApi
         )
     }
 

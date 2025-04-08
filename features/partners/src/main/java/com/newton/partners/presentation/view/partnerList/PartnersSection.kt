@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.view
+package com.newton.partners.presentation.view.partnerList
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
 import com.newton.commonUi.ui.*
-import com.newton.home.presentation.states.*
 import com.newton.network.domain.models.homeModels.*
+import com.newton.partners.presentation.state.*
 
 @Composable
 fun SectionHeader(

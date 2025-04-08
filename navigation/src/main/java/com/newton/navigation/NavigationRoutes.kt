@@ -92,4 +92,6 @@ sealed class NavigationRoutes(val routes: String) {
     data object SettingsRoute : NavigationRoutes("settings_screen")
 
     data object AllTestimonialsRoute : NavigationRoutes("all_testimonials")
+
+    data object AllPartnersRoute : NavigationRoutes("all_partners")
 }

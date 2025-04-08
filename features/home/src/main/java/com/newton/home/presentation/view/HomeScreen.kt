@@ -30,10 +30,11 @@ import androidx.compose.ui.unit.*
 import com.newton.commonUi.composables.*
 import com.newton.communities.presentation.view.*
 import com.newton.communities.presentation.viewModel.*
-import com.newton.home.presentation.viewmodels.*
 import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.models.testimonials.*
+import com.newton.partners.presentation.view.partnerList.*
+import com.newton.partners.presentation.viewModel.*
 import com.newton.testimonials.presentation.view.pagedTestimonials.*
 import com.newton.testimonials.presentation.viewModel.*
 
@@ -45,7 +46,8 @@ fun HomeScreen(
     onNavigateToCommunityDetails: (Community) -> Unit,
     onPartnerClick: (PartnersData) -> Unit,
     communitiesViewModel: CommunitiesViewModel,
-    onSeeAllTestimonials: () -> Unit
+    onSeeAllTestimonials: () -> Unit,
+    onSeeAllPartners: () -> Unit
 ) {
     val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
@@ -102,7 +104,8 @@ fun HomeScreen(
             item {
                 SectionHeader(
                     title = "Our Partners",
-                    showViewAll = false
+                    showViewAll = true,
+                    onViewAllClick = onSeeAllPartners
                 )
             }
 
