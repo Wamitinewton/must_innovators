@@ -45,7 +45,7 @@ fun HomeScreen(
     onNavigateToCommunityDetails: (Community) -> Unit,
     onPartnerClick: (PartnersData) -> Unit,
     communitiesViewModel: CommunitiesViewModel,
-    onSeeAllTestimonials: () -> Unit,
+    onSeeAllTestimonials: () -> Unit
 ) {
     val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
