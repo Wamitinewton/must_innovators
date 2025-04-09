@@ -75,7 +75,7 @@ fun EventsScreen(
                 }
             )
         },
-        snackbarHostState = snackBarHostState,
+        snackbarHostState = snackBarHostState
     ) {
         Box(
             modifier =
@@ -95,7 +95,7 @@ fun EventsScreen(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                pagingItems.itemCount == 0-> {
+                pagingItems.itemCount == 0 -> {
                     EmptyEventsCard(modifier = Modifier.fillMaxSize())
                 }
 
