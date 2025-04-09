@@ -182,7 +182,7 @@ fun EmailInput(
                         shape = RoundedCornerShape(12.dp),
                         colors =
                         ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.primary
                         ),
                         contentPadding = ButtonDefaults.ContentPadding
                     ) {

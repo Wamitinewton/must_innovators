@@ -48,7 +48,7 @@ fun EventsTopBar(
                             fontWeight = FontWeight.Bold
                         )
                     )
-                },
+                }
 //                actions = {
 //                    IconButton(onClick = {}) {
 //                        Icon(
