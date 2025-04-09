@@ -67,34 +67,34 @@ fun HomeScreen(
         showOrbitals = true,
         topBar = {
             MeruInnovatorsAppBar(
-                title = "MUST Innovators",
-                actions = {
-                    Box(
-                        modifier =
-                        Modifier
-                            .clip(CircleShape)
-                            .clickable {
-                                onNavigateToAdmin()
-                            }
-                            .padding(10.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.AdminPanelSettings,
-                            contentDescription = "Admin panel"
-                        )
-                    }
-
-                    Box(
-                        modifier =
-                        Modifier
-                            .clip(CircleShape)
-                            .clickable {
-                            }
-                            .padding(10.dp)
-                    ) {
-                        Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
-                    }
-                }
+                title = "MUST Innovators"
+//                actions = {
+//                    Box(
+//                        modifier =
+//                        Modifier
+//                            .clip(CircleShape)
+//                            .clickable {
+//                                onNavigateToAdmin()
+//                            }
+//                            .padding(10.dp)
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.Filled.AdminPanelSettings,
+//                            contentDescription = "Admin panel"
+//                        )
+//                    }
+//
+//                    Box(
+//                        modifier =
+//                        Modifier
+//                            .clip(CircleShape)
+//                            .clickable {
+//                            }
+//                            .padding(10.dp)
+//                    ) {
+//                        Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
+//                    }
+//                }
             )
         }
     ) {

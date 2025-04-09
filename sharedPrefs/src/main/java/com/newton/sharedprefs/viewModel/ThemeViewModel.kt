@@ -106,5 +106,5 @@ sealed class ThemeEvent {
 }
 
 data class ThemeUiState(
-    val themeMode: ThemeMode = ThemeMode.LIGHT
+    val themeMode: ThemeMode = ThemeMode.SYSTEM
 )

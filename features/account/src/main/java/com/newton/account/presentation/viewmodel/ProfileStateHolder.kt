@@ -40,9 +40,9 @@ constructor(
                 registrationNo = userData.registration_no ?: "",
                 bio = userData.bio ?: "",
                 techStacks = userData.tech_stacks ?: emptyList(),
-                github = userData.social_media?.github ?: "",
-                linkedin = userData.social_media?.linkedin ?: "",
-                twitter = userData.social_media?.twitter ?: "",
+                github = userData.social_media?.github,
+                linkedin = userData.social_media?.linkedin,
+                twitter = userData.social_media?.twitter,
                 yearOfStudy = userData.year_of_study,
                 graduationYear = userData.graduation_year,
                 projects = userData.projects ?: emptyList(),
@@ -141,10 +141,14 @@ constructor(
 
         val socialMedia =
             SocialMedia(
-                github = formState.github.takeIf { it != currentUserData.social_media?.github },
-                linkedin = formState.linkedin.takeIf { it != currentUserData.social_media?.linkedin },
-                twitter = formState.twitter.takeIf { it != currentUserData.social_media?.twitter }
+                github = formState.github
+                    ?.takeIf { it.isNotBlank() && it != currentUserData.social_media?.github },
+                linkedin = formState.linkedin
+                    ?.takeIf { it.isNotBlank() && it != currentUserData.social_media?.linkedin },
+                twitter = formState.twitter
+                    ?.takeIf { it.isNotBlank() && it != currentUserData.social_media?.twitter }
             )
+
 
         val socialMediaToInclude =
             if (
