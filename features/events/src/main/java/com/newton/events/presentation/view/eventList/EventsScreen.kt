@@ -19,6 +19,8 @@ package com.newton.events.presentation.view.eventList
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
@@ -26,8 +28,11 @@ import androidx.paging.*
 import androidx.paging.compose.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
+import com.newton.core.enums.*
 import com.newton.events.presentation.viewmodel.*
 import com.newton.network.domain.models.adminModels.*
+import kotlinx.coroutines.*
+import java.time.LocalDateTime
 
 @Composable
 fun EventsScreen(
@@ -36,16 +41,41 @@ fun EventsScreen(
     onRsvpClick: (EventsData) -> Unit
 ) {
     val pagingItems = eventViewModel.pagedEvents.collectAsLazyPagingItems()
+    val coroutineScope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
 
-    val isInitialLoading =
-        pagingItems.loadState.refresh is LoadState.Loading &&
-            pagingItems.itemCount == 0
+    val upcomingEvents = remember(pagingItems.itemSnapshotList.items) {
+        pagingItems.itemSnapshotList.items
+            .filter { it.date.toLocalDateTime().isAfter(LocalDateTime.now()) }
+            .sortedBy { it.date.toLocalDateTime() }
+    }
+
+    val pastEvents = remember(pagingItems.itemSnapshotList.items) {
+        pagingItems.itemSnapshotList.items
+            .filter { it.date.toLocalDateTime().isBefore(LocalDateTime.now()) }
+            .sortedByDescending { it.date.toLocalDateTime() }
+    }
+
+    val pagerState = rememberPagerState(pageCount = { EventCategory.entries.size })
+    val selectedTabIndex = pagerState.currentPage
+
+    val isLoading = pagingItems.loadState.refresh is LoadState.Loading && pagingItems.itemCount == 0
+    val isError = pagingItems.loadState.refresh is LoadState.Error
+    val isRefreshing = pagingItems.loadState.refresh is LoadState.Loading && pagingItems.itemCount > 0
 
     DefaultScaffold(
         showOrbitals = true,
         topBar = {
-            EventsTopBar()
-        }
+            EventsTopBar(
+                selectedTabIndex = selectedTabIndex,
+                onTabSelected = { index ->
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                }
+            )
+        },
+        snackbarHostState = snackBarHostState,
     ) {
         Box(
             modifier =
@@ -53,31 +83,56 @@ fun EventsScreen(
                 .fillMaxSize()
         ) {
             when {
-                isInitialLoading -> {
+                isLoading -> {
                     EventShimmerList(count = 3)
                 }
-
-                pagingItems.loadState.refresh is LoadState.Error -> {
+                isError -> {
                     val error = pagingItems.loadState.refresh as LoadState.Error
                     ErrorScreen(
-                        titleText = "failed to load CLUB EVENTS",
+                        titleText = "Failed to Load Events",
                         message = error.error.localizedMessage ?: "Something went wrong",
                         onRetry = { pagingItems.refresh() },
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-
-                pagingItems.itemCount == 0 && pagingItems.loadState.refresh !is LoadState.Loading -> {
+                pagingItems.itemCount == 0-> {
                     EmptyEventsCard(modifier = Modifier.fillMaxSize())
                 }
 
                 else -> {
-                    EventListView(
-                        pagingItems = pagingItems,
-                        onEventClick = onEventClick,
-                        onRsvpClick = onRsvpClick,
+                    Column(
                         modifier = Modifier.fillMaxSize()
-                    )
+                    ) {
+                        HorizontalPager(
+                            state = pagerState,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        ) { page ->
+                            when (page) {
+                                EventCategory.UPCOMING.ordinal -> {
+                                    EventCategoryContentWithPullToRefresh(
+                                        events = upcomingEvents,
+                                        emptyMessage = "No upcoming events",
+                                        onEventClick = onEventClick,
+                                        onRsvpClick = onRsvpClick,
+                                        isRefreshing = isRefreshing,
+                                        onRefresh = { pagingItems.refresh() }
+                                    )
+                                }
+                                EventCategory.PAST.ordinal -> {
+                                    EventCategoryContentWithPullToRefresh(
+                                        events = pastEvents,
+                                        emptyMessage = "No past events",
+                                        onEventClick = onEventClick,
+                                        onRsvpClick = onRsvpClick,
+                                        isRefreshing = isRefreshing,
+                                        onRefresh = { pagingItems.refresh() }
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

@@ -39,7 +39,11 @@ fun ExecutivesSection(uiState: ExecutiveUiState) {
         )
         when (uiState) {
             is ExecutiveUiState.Loading -> {
-                ExecutiveCardShimmer()
+                LazyRow {
+                    repeat(3) {
+                        item { ExecutiveCardShimmer() }
+                    }
+                }
             }
 
             is ExecutiveUiState.Success -> {

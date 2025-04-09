@@ -36,7 +36,7 @@ class PartnersNavigationApiImpl : PartnersNavigationApi {
         ) {
             composable(route = NavigationRoutes.PartnersDetails.routes) {
                 val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Partners.route)
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
                 }
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 val context = LocalContext.current
@@ -67,7 +67,7 @@ class PartnersNavigationApiImpl : PartnersNavigationApi {
             composable(route = NavigationRoutes.AllPartnersRoute.routes) {
                 val partnersViewModel = hiltViewModel<PartnersViewModel>()
                 val parentEntry = remember(it) {
-                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Partners.route)
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
                 }
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 AllPartnersListScreen(
