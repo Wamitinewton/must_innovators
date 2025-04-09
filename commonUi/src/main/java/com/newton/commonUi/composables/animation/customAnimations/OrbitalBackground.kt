@@ -567,7 +567,7 @@ private data class GalaxyCluster(
     val starCount: Int
 )
 
-private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawStar(
+private fun DrawScope.drawStar(
     center: Offset,
     outerRadius: Float,
     innerRadius: Float,
@@ -595,7 +595,7 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawStar(
     drawPath(path, color)
 }
 
-private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawOrbitalEllipse(
+private fun DrawScope.drawOrbitalEllipse(
     center: Offset,
     radiusX: Float,
     radiusY: Float,
