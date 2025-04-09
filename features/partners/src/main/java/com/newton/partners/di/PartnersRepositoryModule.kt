@@ -14,4 +14,22 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.view
+package com.newton.partners.di
+
+import com.newton.network.data.remote.*
+import com.newton.network.domain.repositories.*
+import com.newton.partners.data.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import javax.inject.*
+
+@Module
+@InstallIn(SingletonComponent::class)
+object PartnersRepositoryModule {
+    @Provides
+    @Singleton
+    fun providePartnersRepository(
+        partnersService: PartnersService
+    ): HomeRepository = HomeRepositoryImpl(partnersService)
+}

@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.data
+package com.newton.partners.data
 
 import android.content.Context
 import com.newton.core.utils.PackageHandlers

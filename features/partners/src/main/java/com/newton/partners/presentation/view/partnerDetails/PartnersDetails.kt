@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.view
+package com.newton.partners.presentation.view.partnerDetails
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -38,8 +38,9 @@ import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
 import com.newton.commonUi.composables.*
-import com.newton.home.presentation.viewmodels.*
 import com.newton.network.domain.models.homeModels.*
+import com.newton.partners.presentation.view.partnerList.*
+import com.newton.partners.presentation.viewModel.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

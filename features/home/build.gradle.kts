@@ -69,12 +69,6 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
-    // Retrofit
-    implementation(Dependencies.retrofit)
-    implementation(Dependencies.retrofit2Converter)
-    implementation(Dependencies.gsonCoverter)
-    implementation(Dependencies.kotlinxSerialization)
-
     // navigation
     implementation(Dependencies.hiltNavigation)
     implementation(Dependencies.composeNavigation)
@@ -92,4 +86,5 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":features:communities"))
     implementation(project(":features:testimonials"))
+    implementation(project(":features:partners"))
 }

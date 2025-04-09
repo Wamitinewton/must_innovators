@@ -25,4 +25,5 @@ object PrefsConstants {
     const val KEY_SYSTEM_THEME = "system_theme"
     const val KEY_USER_EMAIL = "user_email"
     const val KEY_VERIFICATION_PENDING = "verification_pending"
+    const val KEY_SIGNUP_SUCCESSFUL = "signup_successful"
 }

@@ -14,21 +14,11 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.di
+package com.newton.network.data.remote
 
-import com.newton.network.data.remote.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.components.*
-import retrofit2.*
-import javax.inject.*
+import retrofit2.http.*
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ProvideHomeApiService {
-    @Provides
-    @Singleton
-    fun provideHomeApiService(retrofit: Retrofit): HomeApiService {
-        return retrofit.create(HomeApiService::class.java)
-    }
+interface PartnersService {
+    @GET(ApiEndpoints.GET_PARTNERS)
+    suspend fun getPartners(): com.newton.network.domain.models.homeModels.Partners
 }

@@ -36,4 +36,7 @@ interface PrefsRepository {
     fun getUserEmail(): String
     fun setUserEmail(email: String)
     fun clearUserEmail()
+
+    fun wasSignupSuccessful(): Boolean
+    fun setSignupSuccessful(isSuccessful: Boolean)
 }

@@ -14,18 +14,9 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.states
+package com.newton.core.enums
 
-import com.newton.network.domain.models.homeModels.*
-import com.newton.network.domain.models.testimonials.*
-
-sealed class PartnersUiState {
-    data object Loading : PartnersUiState()
-
-    data class Success(val partners: List<PartnersData>) : PartnersUiState()
-
-    data class Error(val message: String) : PartnersUiState()
-
-    data object Empty : PartnersUiState()
+enum class EventCategory(val title: String) {
+    UPCOMING("Upcoming"),
+    PAST("Past")
 }
-

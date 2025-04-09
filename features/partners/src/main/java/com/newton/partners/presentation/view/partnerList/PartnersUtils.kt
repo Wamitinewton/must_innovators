@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.home.presentation.view
+package com.newton.partners.presentation.view.partnerList
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
