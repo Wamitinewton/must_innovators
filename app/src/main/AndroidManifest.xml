@@ -56,14 +56,8 @@
         </service>
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.newton.meruinnovators.dev.notifications-startup"
-            android:exported="false"
-            tools:replace="android:authorities"
-            android:initOrder="101"
-            tools:node="merge">
-            <meta-data
-                android:name="com.newton.notifications.initializer.NotificationsInitializer"
-                android:value="androidx.startup" />
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
         </provider>
         <provider
             android:name="androidx.core.content.FileProvider"

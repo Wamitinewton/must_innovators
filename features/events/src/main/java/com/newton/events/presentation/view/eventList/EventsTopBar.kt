@@ -49,21 +49,21 @@ fun EventsTopBar(
                         )
                     )
                 },
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search Events"
-                        )
-                    }
-
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.FilterList,
-                            contentDescription = "Filter Events"
-                        )
-                    }
-                }
+//                actions = {
+//                    IconButton(onClick = {}) {
+//                        Icon(
+//                            imageVector = Icons.Default.Search,
+//                            contentDescription = "Search Events"
+//                        )
+//                    }
+//
+//                    IconButton(onClick = {}) {
+//                        Icon(
+//                            imageVector = Icons.Default.FilterList,
+//                            contentDescription = "Filter Events"
+//                        )
+//                    }
+//                }
             )
 
             TabRow(

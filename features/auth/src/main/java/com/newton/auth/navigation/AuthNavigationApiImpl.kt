@@ -84,7 +84,9 @@ class AuthNavigationApiImpl : AuthNavigationApi {
             composable(route = NavigationRoutes.ForgotPasswordRoute.routes) {
                 val forgotPasswordViewModel = hiltViewModel<ForgotPasswordViewModel>()
                 ForgotPasswordRoute(
-                    onNavigateToLogin = {},
+                    onNavigateToLogin = {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.routes)
+                    },
                     forgotPasswordViewModel = forgotPasswordViewModel
                 )
             }

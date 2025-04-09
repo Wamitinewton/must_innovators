@@ -313,7 +313,7 @@ fun ProfileUpdateScreen(
 
             FormSection(title = "Social Media") {
                 DefaultTextField(
-                    value = profileFormState.github,
+                    value = profileFormState.github ?: "",
                     onValueChange = {
                         viewModel.updateGithub(it)
                         hasUnsavedChanges = true
@@ -326,14 +326,14 @@ fun ProfileUpdateScreen(
                         keyboardType = KeyboardType.Uri,
                         imeAction = ImeAction.Next
                     ),
-                    isError = profileFormState.github.isNotEmpty() && !isValidUrl(profileFormState.github),
+                    isError = !profileFormState.github.isNullOrEmpty() && !isValidUrl(profileFormState.github),
                     validateUrl = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.linkedin,
+                    value = profileFormState.linkedin ?: "",
                     onValueChange = {
                         viewModel.updateLinkedin(it)
                         hasUnsavedChanges = true
@@ -346,13 +346,13 @@ fun ProfileUpdateScreen(
                         keyboardType = KeyboardType.Uri,
                         imeAction = ImeAction.Next
                     ),
-                    isError = profileFormState.linkedin.isNotEmpty() && !isValidUrl(profileFormState.linkedin)
+                    isError = !profileFormState.linkedin.isNullOrEmpty() && !isValidUrl(profileFormState.linkedin)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.twitter,
+                    value = profileFormState.twitter ?: "",
                     onValueChange = {
                         viewModel.updateTwitter(it)
                         hasUnsavedChanges = true
@@ -365,7 +365,7 @@ fun ProfileUpdateScreen(
                         keyboardType = KeyboardType.Uri,
                         imeAction = ImeAction.Next
                     ),
-                    isError = profileFormState.twitter.isNotEmpty() && !isValidUrl(profileFormState.twitter)
+                    isError = !profileFormState.twitter.isNullOrEmpty() && !isValidUrl(profileFormState.twitter)
                 )
             }
 
