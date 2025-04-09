@@ -16,12 +16,13 @@
  */
 package com.newton.auth.presentation.login.view.composables
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.focus.*
-import androidx.compose.ui.platform.*
-import androidx.compose.ui.text.input.*
-import com.newton.commonUi.ui.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import com.newton.commonUi.ui.AuthTextFields
+import com.newton.commonUi.ui.PasswordTextInput
 
 @Composable
 fun LoginForm(
@@ -46,7 +47,8 @@ fun LoginForm(
             label = "email",
             onSubmitted = {},
             imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
+            supportingText = {}
         )
         PasswordTextInput(
             value = password,

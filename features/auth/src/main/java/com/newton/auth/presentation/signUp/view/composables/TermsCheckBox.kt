@@ -90,13 +90,13 @@ fun TermsCheckboxRow(
 
                 }
 
-                append(" and acknowledge the ")
+                append(" and ")
 
                 withStyle(
                     style = SpanStyle(
                         color = Color(0xFF2196F3),
                         fontWeight = FontWeight.Medium,
-                        textDecoration = TextDecoration.Underline
+                        textDecoration = TextDecoration.Underline,
                     )
                 ) {
                     Box(modifier = Modifier.clickable(onClick = onPolicyClicked)){

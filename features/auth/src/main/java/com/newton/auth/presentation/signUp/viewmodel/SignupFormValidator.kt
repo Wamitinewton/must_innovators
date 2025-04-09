@@ -26,8 +26,8 @@ constructor() {
         return InputValidators.validateEmail(email)
     }
 
-    fun validatePassword(password: String): ValidationResult {
-        return PasswordValidator.validatePassword(password)
+    fun validatePassword(password: String,email: String?): ValidationResult {
+        return PasswordValidator.validatePassword(password,email)
     }
 
     fun validatePasswordMatch(
@@ -43,5 +43,16 @@ constructor() {
             isValid = isValid,
             errorMessage = if (isValid) null else "Invalid OTP"
         )
+    }
+
+    fun validateName(name:String):ValidationResult{
+        return InputValidators.validateName(name)
+    }
+    fun validateCourse(course:String):ValidationResult{
+        return InputValidators.validateCourse(course)
+    }
+
+    fun validateUsername(username:String):ValidationResult{
+        return InputValidators.validateUsername(username)
     }
 }

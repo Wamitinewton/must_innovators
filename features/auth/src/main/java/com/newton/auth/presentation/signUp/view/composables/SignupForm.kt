@@ -17,11 +17,15 @@
 package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.input.*
+import com.newton.auth.presentation.signUp.state.SignupViewmodelState
 import com.newton.auth.presentation.signUp.view.composables.TermsCheckboxRow
+import com.newton.auth.presentation.signUp.viewmodel.SignupStateHolder
 import com.newton.commonUi.ui.*
 
 @Composable
@@ -49,7 +53,8 @@ fun SignupForm(
     isChecked:Boolean,
     onTermsClicked:()->Unit,
     onPolicyClicked:()->Unit,
-    onCheckedClicked:()->Unit
+    onCheckedClicked:()->Unit,
+    uiState: SignupViewmodelState
 ) {
     Column {
         val focusManager = LocalFocusManager.current
@@ -61,7 +66,10 @@ fun SignupForm(
             label = "first name",
             onSubmitted = {},
             imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
+            supportingText = {
+                uiState.firstNameError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         AuthTextFields(
             onInputChanged = {
@@ -71,7 +79,10 @@ fun SignupForm(
             label = "last name",
             onSubmitted = {},
             imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
+            supportingText = {
+                uiState.lastNameError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         AuthTextFields(
             onInputChanged = {
@@ -81,7 +92,10 @@ fun SignupForm(
             label = "Username",
             onSubmitted = {},
             imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
+            supportingText = {
+                uiState.usernameError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         AuthTextFields(
             onInputChanged = {
@@ -93,7 +107,10 @@ fun SignupForm(
             label = "email",
             onSubmitted = {},
             imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
+            supportingText = {
+                uiState.emailError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         AuthTextFields(
             onInputChanged = {
@@ -103,7 +120,10 @@ fun SignupForm(
             label = "Course name",
             onSubmitted = {},
             imeAction = ImeAction.Next,
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) }
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
+            supportingText = {
+                uiState.courseError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         PasswordTextInput(
             value = password,
@@ -112,7 +132,10 @@ fun SignupForm(
             },
             label = "password",
             isError = isPasswordError,
-            imeAction = ImeAction.Next
+            imeAction = ImeAction.Next,
+            supportingText = {
+                uiState.passwordError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         PasswordTextInput(
             value = confirmPassword,
@@ -121,7 +144,10 @@ fun SignupForm(
             },
             label = "confirm password",
             isError = isConfirmPwdError,
-            imeAction = ImeAction.Next
+            imeAction = ImeAction.Next,
+            supportingText = {
+                uiState.confirmPasswordError?.let{ Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium,) }
+            }
         )
         TermsCheckboxRow(isChecked,onTermsClicked,onPolicyClicked,onCheckedClicked)
     }

@@ -102,7 +102,7 @@ fun SignupContent(
             },
             password = uiState.passwordInput,
             onPasswordChanged = {
-                onEvent(SignupUiEvent.PasswordChanged(it))
+                onEvent(SignupUiEvent.PasswordChanged(it,uiState.emailInput))
             },
             confirmPassword = uiState.confirmPassword,
             onConfirmPasswordChanged = {
@@ -125,7 +125,8 @@ fun SignupContent(
             },
             onCheckedClicked = {
                 onEvent.invoke(SignupUiEvent.OnCheckedChanged(!uiState.isChecked))
-            }
+            },
+            uiState = uiState
         )
 
         Spacer(modifier = Modifier.height(15.dp))
