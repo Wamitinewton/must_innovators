@@ -73,13 +73,6 @@ fun AboutUsScreen(
 
             item {
                 SectionHeading(
-                    title = "Our Communities",
-                    icon = Icons.Filled.Groups
-                )
-            }
-
-            item {
-                SectionHeading(
                     title = "Executive Team",
                     icon = Icons.Filled.Person
                 )

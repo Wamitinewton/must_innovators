@@ -47,7 +47,8 @@ fun HomeScreen(
     onPartnerClick: (PartnersData) -> Unit,
     communitiesViewModel: CommunitiesViewModel,
     onSeeAllTestimonials: () -> Unit,
-    onSeeAllPartners: () -> Unit
+    onSeeAllPartners: () -> Unit,
+    onNavigateToAboutUs: () -> Unit
 ) {
     val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
@@ -159,6 +160,14 @@ fun HomeScreen(
                     showViewAll = false
                 )
             }
+
+            item {
+                AboutUsSection(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    onNavigateToAboutUs = onNavigateToAboutUs
+                )
+            }
+
 
             item {
                 Spacer(modifier = Modifier.height(50.dp))

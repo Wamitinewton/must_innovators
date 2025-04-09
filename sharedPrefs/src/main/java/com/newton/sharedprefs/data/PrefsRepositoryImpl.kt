@@ -87,4 +87,12 @@ class PrefsRepositoryImpl @Inject constructor(
     override fun clearUserEmail() {
         preferenceManager.putString(PrefsConstants.KEY_USER_EMAIL, "")
     }
+
+    override fun wasSignupSuccessful(): Boolean {
+        return preferenceManager.getBoolean(PrefsConstants.KEY_SIGNUP_SUCCESSFUL, false)
+    }
+
+    override fun setSignupSuccessful(isSuccessful: Boolean) {
+        preferenceManager.putBoolean(PrefsConstants.KEY_SIGNUP_SUCCESSFUL, isSuccessful)
+    }
 }

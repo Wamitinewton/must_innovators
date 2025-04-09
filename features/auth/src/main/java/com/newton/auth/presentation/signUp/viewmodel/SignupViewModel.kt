@@ -40,7 +40,7 @@ constructor(
     val authUiState: StateFlow<SignupViewmodelState> = stateHolder.signUpState
 
     init {
-        if (prefsRepository.isVerificationPending()) {
+        if (prefsRepository.isVerificationPending() && prefsRepository.wasSignupSuccessful()) {
             val savedEmail = prefsRepository.getUserEmail()
             if (savedEmail.isNotEmpty()) {
                 stateHolder.updateState(SignupUiEvent.EmailChanged(savedEmail))
@@ -71,13 +71,14 @@ constructor(
 
                 val signupRequest = stateHolder.getSignupRequest()
                 prefsRepository.setUserEmail(signupRequest.email)
-                prefsRepository.setVerificationPending(true)
-
                 authRepository.createUserWithEmailAndPassword(stateHolder.getSignupRequest())
                     .onEach { result ->
                         when (result) {
                             is Resource.Error -> {
                                 stateHolder.setError(result.message)
+
+                                prefsRepository.setVerificationPending(false)
+                                prefsRepository.setSignupSuccessful(false)
                             }
 
                             is Resource.Loading -> {
@@ -85,6 +86,8 @@ constructor(
                             }
 
                             is Resource.Success -> {
+                                prefsRepository.setVerificationPending(true)
+                                prefsRepository.setSignupSuccessful(true)
                                 stateHolder.setSuccess(result.message, AuthFlow.OTP_INPUT)
                             }
                         }
@@ -120,6 +123,7 @@ constructor(
                             Timber.d("OTP verified successfully")
 
                             prefsRepository.setVerificationPending(false)
+                            prefsRepository.setSignupSuccessful(false)
                         }
                     }
                 }.launchIn(this)

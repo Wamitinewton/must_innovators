@@ -64,6 +64,9 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                     },
                     onSeeAllPartners = {
                         navHostController.navigate(NavigationRoutes.AllPartnersRoute.routes)
+                    },
+                    onNavigateToAboutUs = {
+                        navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
                     }
                 )
             }
