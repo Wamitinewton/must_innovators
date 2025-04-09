@@ -39,8 +39,8 @@ fun LoginContent(
     onBackClick: () -> Unit,
     onForgotPasswordClick: () -> Unit,
     onVerifyAccountClick: () -> Unit,
-    scope:CoroutineScope,
-    state:SnackbarHostState
+    scope: CoroutineScope,
+    state: SnackbarHostState
 ) {
     Column(
         modifier =

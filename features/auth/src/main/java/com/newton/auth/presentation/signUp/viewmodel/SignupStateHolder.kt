@@ -40,7 +40,7 @@ constructor(
             is SignupUiEvent.EmailChanged -> emailChanged(event.email)
             is SignupUiEvent.FirstNameChanged -> firstNameChanged(event.firstName)
             is SignupUiEvent.LastNameChanged -> lastNameChanged(event.lastname)
-            is SignupUiEvent.PasswordChanged -> passwordChanged(event.password,event.email)
+            is SignupUiEvent.PasswordChanged -> passwordChanged(event.password, event.email)
             is SignupUiEvent.OtpChanged -> updateOtp(event.otp)
             is SignupUiEvent.OnCheckedChanged -> _signUpState.update { it.copy(isChecked = event.checked) }
             else -> {}
@@ -103,8 +103,8 @@ constructor(
         }
     }
 
-    private fun passwordChanged(password: String,email: String) {
-        val validationResult = validator.validatePassword(password,email)
+    private fun passwordChanged(password: String, email: String) {
+        val validationResult = validator.validatePassword(password, email)
         _signUpState.update { currentState ->
             currentState.copy(
                 passwordInput = password,

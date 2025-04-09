@@ -22,11 +22,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.*
 import com.newton.auth.presentation.signUp.event.*
 import com.newton.auth.presentation.signUp.state.*
-import com.newton.auth.presentation.signUp.view.composables.SignupForm
 import com.newton.auth.presentation.utils.*
 import com.newton.commonUi.ui.*
 import com.newton.core.utils.Links
@@ -102,7 +100,7 @@ fun SignupContent(
             },
             password = uiState.passwordInput,
             onPasswordChanged = {
-                onEvent(SignupUiEvent.PasswordChanged(it,uiState.emailInput))
+                onEvent(SignupUiEvent.PasswordChanged(it, uiState.emailInput))
             },
             confirmPassword = uiState.confirmPassword,
             onConfirmPasswordChanged = {
@@ -121,7 +119,7 @@ fun SignupContent(
                 navigateToWebsite(context, Links.TERMS_AND_CONDITION)
             },
             onPolicyClicked = {
-                navigateToWebsite(context,Links.PRIVACY_POLICY)
+                navigateToWebsite(context, Links.PRIVACY_POLICY)
             },
             onCheckedClicked = {
                 onEvent.invoke(SignupUiEvent.OnCheckedChanged(!uiState.isChecked))

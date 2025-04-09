@@ -51,7 +51,7 @@ fun AuthTextFields(
     imeAction: ImeAction = ImeAction.Next,
     onImeAction: () -> Unit = {},
     onSubmitted: (() -> Unit)? = null,
-    supportingText: @Composable() (() -> Unit)
+    supportingText: @Composable () -> Unit
 ) {
     OutlinedTextField(
         value = inputText,
@@ -169,7 +169,7 @@ fun PasswordTextInput(
     isError: Boolean = false,
     imeAction: ImeAction = ImeAction.Done,
     onImeAction: () -> Unit = {},
-    supportingText: @Composable() (() -> Unit) = {}
+    supportingText: @Composable () -> Unit = {}
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -229,7 +229,7 @@ fun PasswordTextInput(
                     )
                 }
             }
-        },
+        }
 
     )
 }

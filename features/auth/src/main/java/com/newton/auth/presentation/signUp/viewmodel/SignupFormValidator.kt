@@ -26,8 +26,8 @@ constructor() {
         return InputValidators.validateEmail(email)
     }
 
-    fun validatePassword(password: String,email: String?): ValidationResult {
-        return PasswordValidator.validatePassword(password,email)
+    fun validatePassword(password: String, email: String?): ValidationResult {
+        return PasswordValidator.validatePassword(password, email)
     }
 
     fun validatePasswordMatch(
@@ -45,14 +45,14 @@ constructor() {
         )
     }
 
-    fun validateName(name:String):ValidationResult{
+    fun validateName(name: String): ValidationResult {
         return InputValidators.validateName(name)
     }
-    fun validateCourse(course:String):ValidationResult{
+    fun validateCourse(course: String): ValidationResult {
         return InputValidators.validateCourse(course)
     }
 
-    fun validateUsername(username:String):ValidationResult{
+    fun validateUsername(username: String): ValidationResult {
         return InputValidators.validateUsername(username)
     }
 }

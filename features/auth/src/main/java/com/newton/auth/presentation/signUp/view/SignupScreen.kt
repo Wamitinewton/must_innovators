@@ -68,7 +68,7 @@ fun SignupScreen(
             onBackClick = { onNavigateToOnBoarding() },
             context,
             snackbarHostState,
-            scope,
+            scope
         )
     }
 }

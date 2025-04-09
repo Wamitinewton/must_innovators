@@ -60,7 +60,7 @@ fun AccountDrawerContent(
     val coroutineScope = rememberCoroutineScope()
     var showConfirmationDialog by remember { mutableStateOf(false) }
 
-    if (showConfirmationDialog){
+    if (showConfirmationDialog) {
         ConfirmLogoutDialog(
             onConfirm = {
                 showConfirmationDialog = false
@@ -175,7 +175,7 @@ fun AccountDrawerContent(
                 },
                 selected = false,
                 onClick = {
-                   showConfirmationDialog = true
+                    showConfirmationDialog = true
                 },
                 colors =
                 NavigationDrawerItemDefaults.colors(

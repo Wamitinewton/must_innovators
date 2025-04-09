@@ -32,7 +32,7 @@ object PasswordValidator {
      * @return ValidationResult containing success status and error message if any
      */
 
-    fun validatePassword(password: String,email: String?): ValidationResult {
+    fun validatePassword(password: String, email: String?): ValidationResult {
         return when {
             password.length < MIN_PASSWORD_LENGTH -> {
                 ValidationResult(
@@ -71,6 +71,7 @@ object PasswordValidator {
 
         return false
     }
+
     /**
      * Validates if the confirm password matches the password
      */
@@ -128,7 +129,7 @@ object InputValidators {
             }
         }
     }
-    fun validateUsername(username: String?): ValidationResult{
+    fun validateUsername(username: String?): ValidationResult {
         return when {
             username == null || username.trim().isEmpty() -> {
                 ValidationResult(false, "Username cannot be empty")
@@ -156,7 +157,6 @@ object InputValidators {
             }
         }
     }
-
 }
 
 /**

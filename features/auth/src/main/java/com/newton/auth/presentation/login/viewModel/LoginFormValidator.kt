@@ -27,7 +27,7 @@ constructor() {
     }
 
     fun validatePassword(password: String): ValidationResult {
-        return PasswordValidator.validatePassword(password,null)
+        return PasswordValidator.validatePassword(password, null)
     }
 
     fun validateForm(
@@ -38,5 +38,4 @@ constructor() {
         val passwordResult = validatePassword(password)
         return Pair(emailResult, passwordResult)
     }
-
 }
