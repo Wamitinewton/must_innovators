@@ -16,19 +16,37 @@
  */
 package com.newton.account.presentation.composables.account
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.*
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.res.*
-import androidx.compose.ui.text.font.*
-import androidx.compose.ui.unit.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.newton.commonUi.R
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
 @Composable
 fun AccountDrawerContent(
@@ -40,7 +58,17 @@ fun AccountDrawerContent(
     onLogoutClicked: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
+    var showConfirmationDialog by remember { mutableStateOf(false) }
 
+    if (showConfirmationDialog) {
+        ConfirmLogoutDialog(
+            onConfirm = {
+                showConfirmationDialog = false
+                onLogoutClicked()
+            },
+            onDismiss = { showConfirmationDialog = false }
+        )
+    }
     ModalDrawerSheet(
         modifier =
         Modifier.background(
@@ -147,7 +175,7 @@ fun AccountDrawerContent(
                 },
                 selected = false,
                 onClick = {
-                    onLogoutClicked()
+                    showConfirmationDialog = true
                 },
                 colors =
                 NavigationDrawerItemDefaults.colors(

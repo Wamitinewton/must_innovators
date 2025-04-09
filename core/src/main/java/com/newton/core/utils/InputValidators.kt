@@ -16,6 +16,7 @@
  */
 package com.newton.core.utils
 
+
 /**
  * Utility class for password validation operations
  */
@@ -31,7 +32,7 @@ object PasswordValidator {
      * @return ValidationResult containing success status and error message if any
      */
 
-    fun validatePassword(password: String): ValidationResult {
+    fun validatePassword(password: String, email: String?): ValidationResult {
         return when {
             password.length < MIN_PASSWORD_LENGTH -> {
                 ValidationResult(
@@ -51,9 +52,24 @@ object PasswordValidator {
             !lowercaseRegex.containsMatchIn(password) -> {
                 ValidationResult(false, "Password must contain at least one lowercase letter")
             }
-
+            email != null && containsMatchingSequence(password, email) -> {
+                ValidationResult(false, "Password should not match email pattern")
+            }
             else -> ValidationResult(true)
         }
+    }
+    private fun containsMatchingSequence(username: String, email: String): Boolean {
+        if (username.length < 5 || email.length < 5) {
+            return false
+        }
+        for (i in 0..username.length - 5) {
+            val sequence = username.substring(i, i + 5)
+            if (email.contains(sequence, ignoreCase = true)) {
+                return true
+            }
+        }
+
+        return false
     }
 
     /**
@@ -95,6 +111,50 @@ object InputValidators {
             ValidationResult(true)
         } else {
             ValidationResult(false, "Invalid email format")
+        }
+    }
+
+    fun validateName(name: String?): ValidationResult {
+        return when {
+            name == null || name.trim().isEmpty() -> {
+                ValidationResult(false, "Name cannot be empty")
+            }
+
+            !name.matches("[A-Za-z\\s]+".toRegex()) -> {
+                ValidationResult(false, "Name should only contain letters ")
+            }
+
+            else -> {
+                ValidationResult(true)
+            }
+        }
+    }
+    fun validateUsername(username: String?): ValidationResult {
+        return when {
+            username == null || username.trim().isEmpty() -> {
+                ValidationResult(false, "Username cannot be empty")
+            }
+
+            !username.matches("[A-Za-z0-9_]+".toRegex()) -> {
+                ValidationResult(false, "Username should only contain letters, numbers, and underscores")
+            }
+            else -> {
+                ValidationResult(true)
+            }
+        }
+    }
+
+    fun validateCourse(course: String?): ValidationResult {
+        return when {
+            course == null || course.trim().isEmpty() -> {
+                ValidationResult(false, "Course cannot be empty")
+            }
+            !course.matches("[A-Za-z\\s]+".toRegex()) -> {
+                ValidationResult(false, "Course should only contain letters and spaces")
+            }
+            else -> {
+                ValidationResult(true)
+            }
         }
     }
 }

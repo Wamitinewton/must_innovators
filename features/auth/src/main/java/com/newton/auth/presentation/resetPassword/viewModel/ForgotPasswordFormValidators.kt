@@ -44,7 +44,7 @@ class ForgotPasswordFormValidator {
             return ValidationResult(isValid = false, errorMessage = "Password cannot be empty")
         }
 
-        return PasswordValidator.validatePassword(password)
+        return PasswordValidator.validatePassword(password, null)
     }
 
     fun validatePasswordMatch(

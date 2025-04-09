@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.*
 import androidx.hilt.navigation.compose.*
 import androidx.lifecycle.compose.*
 import com.newton.auth.presentation.signUp.event.*
+import com.newton.auth.presentation.signUp.view.composables.SignupContent
 import com.newton.auth.presentation.signUp.viewmodel.*
 import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
@@ -64,7 +65,10 @@ fun SignupScreen(
         SignupContent(
             uiState = uiState,
             onEvent = signupViewModel::onEvent,
-            onBackClick = { onNavigateToOnBoarding() }
+            onBackClick = { onNavigateToOnBoarding() },
+            context,
+            snackbarHostState,
+            scope
         )
     }
 }

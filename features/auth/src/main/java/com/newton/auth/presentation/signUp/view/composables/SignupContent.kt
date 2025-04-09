@@ -14,8 +14,9 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.presentation.signUp.view
+package com.newton.auth.presentation.signUp.view.composables
 
+import android.content.Context
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -26,12 +27,19 @@ import com.newton.auth.presentation.signUp.event.*
 import com.newton.auth.presentation.signUp.state.*
 import com.newton.auth.presentation.utils.*
 import com.newton.commonUi.ui.*
+import com.newton.core.utils.Links
+import com.newton.core.utils.PackageHandlers.navigateToWebsite
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignupContent(
     uiState: SignupViewmodelState,
     onEvent: (SignupUiEvent) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    context: Context,
+    state: SnackbarHostState,
+    scope: CoroutineScope
 ) {
     Column(
         modifier =
@@ -47,8 +55,22 @@ fun SignupContent(
         )
 
         SocialAuthentication(
-            onGoogleLogin = {},
-            onGithubLogin = {}
+            onGoogleLogin = {
+                scope.launch {
+                    state.showSnackbar(
+                        message = "Upcoming Feature",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            },
+            onGithubLogin = {
+                scope.launch {
+                    state.showSnackbar(
+                        message = "Upcoming Feature",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
         )
 
         OrContinueWith()
@@ -78,7 +100,7 @@ fun SignupContent(
             },
             password = uiState.passwordInput,
             onPasswordChanged = {
-                onEvent(SignupUiEvent.PasswordChanged(it))
+                onEvent(SignupUiEvent.PasswordChanged(it, uiState.emailInput))
             },
             confirmPassword = uiState.confirmPassword,
             onConfirmPasswordChanged = {
@@ -91,7 +113,18 @@ fun SignupContent(
             passwordError = uiState.passwordError,
             isPasswordError = uiState.passwordError != null,
             confirmPwdError = uiState.confirmPasswordError,
-            isConfirmPwdError = uiState.confirmPasswordError != null
+            isConfirmPwdError = uiState.confirmPasswordError != null,
+            isChecked = uiState.isChecked,
+            onTermsClicked = {
+                navigateToWebsite(context, Links.TERMS_AND_CONDITION)
+            },
+            onPolicyClicked = {
+                navigateToWebsite(context, Links.PRIVACY_POLICY)
+            },
+            onCheckedClicked = {
+                onEvent.invoke(SignupUiEvent.OnCheckedChanged(!uiState.isChecked))
+            },
+            uiState = uiState
         )
 
         Spacer(modifier = Modifier.height(15.dp))
@@ -100,7 +133,7 @@ fun SignupContent(
             onClick = {
                 onEvent(SignupUiEvent.SignUp)
             },
-            enabled = !uiState.isLoading,
+            enabled = !uiState.isLoading && uiState.isChecked,
             content = {
                 Text(
                     text = "Sign up",

@@ -14,28 +14,10 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.presentation.login.viewModel
+package com.newton.core.utils
 
-import com.newton.core.utils.*
-import javax.inject.*
-
-class LoginFormValidator
-@Inject
-constructor() {
-    fun validateEmail(email: String): ValidationResult {
-        return InputValidators.validateEmail(email)
-    }
-
-    fun validatePassword(password: String): ValidationResult {
-        return PasswordValidator.validatePassword(password, null)
-    }
-
-    fun validateForm(
-        email: String,
-        password: String
-    ): Pair<ValidationResult, ValidationResult> {
-        val emailResult = validateEmail(email)
-        val passwordResult = validatePassword(password)
-        return Pair(emailResult, passwordResult)
-    }
+object Links {
+    const val TERMS_AND_CONDITION = "https://sites.google.com/view/merutechhub-terms-of-service/home"
+    const val PRIVACY_POLICY = "https://sites.google.com/view/merutechhub-privacy-policy"
+    const val DELETION_POLICY = "https://sites.google.com/view/merutechhub-deletion-policy/home"
 }

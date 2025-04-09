@@ -40,8 +40,9 @@ constructor(
             is SignupUiEvent.EmailChanged -> emailChanged(event.email)
             is SignupUiEvent.FirstNameChanged -> firstNameChanged(event.firstName)
             is SignupUiEvent.LastNameChanged -> lastNameChanged(event.lastname)
-            is SignupUiEvent.PasswordChanged -> passwordChanged(event.password)
+            is SignupUiEvent.PasswordChanged -> passwordChanged(event.password, event.email)
             is SignupUiEvent.OtpChanged -> updateOtp(event.otp)
+            is SignupUiEvent.OnCheckedChanged -> _signUpState.update { it.copy(isChecked = event.checked) }
             else -> {}
         }
     }
@@ -72,31 +73,38 @@ constructor(
     }
 
     private fun courseNameChanged(course: String) {
+        val courseError = validator.validateCourse(course)
         _signUpState.update { currentState ->
-            currentState.copy(courseName = course)
+            currentState.copy(courseName = course, courseError = courseError.errorMessage)
         }
     }
 
     private fun firstNameChanged(firstName: String) {
+        val firstNameError = validator.validateName(firstName)
         _signUpState.update { currentState ->
-            currentState.copy(firstNameInput = firstName)
+            currentState.copy(firstNameInput = firstName, firstNameError = firstNameError.errorMessage)
         }
     }
 
     private fun lastNameChanged(lastName: String) {
+        val lastnameError = validator.validateName(lastName)
         _signUpState.update { currentState ->
-            currentState.copy(lastNameInput = lastName)
+            currentState.copy(lastNameInput = lastName, lastNameError = lastnameError.errorMessage)
         }
     }
 
     private fun userNameChanged(userName: String) {
+        val error = validator.validateUsername(userName)
         _signUpState.update { currentState ->
-            currentState.copy(userName = userName)
+            currentState.copy(
+                userName = userName,
+                usernameError = error.errorMessage
+            )
         }
     }
 
-    private fun passwordChanged(password: String) {
-        val validationResult = validator.validatePassword(password)
+    private fun passwordChanged(password: String, email: String) {
+        val validationResult = validator.validatePassword(password, email)
         _signUpState.update { currentState ->
             currentState.copy(
                 passwordInput = password,
@@ -121,7 +129,7 @@ constructor(
 
     fun isFormValid(): Boolean {
         val emailValidation = validator.validateEmail(_signUpState.value.emailInput)
-        val passwordValidation = validator.validatePassword(_signUpState.value.passwordInput)
+        val passwordValidation = validator.validatePassword(_signUpState.value.passwordInput, _signUpState.value.emailInput)
         val confirmPasswordValidation =
             validator.validatePasswordMatch(
                 _signUpState.value.passwordInput,
@@ -135,10 +143,18 @@ constructor(
                 confirmPasswordError = confirmPasswordValidation.errorMessage
             )
         }
+        val usernameValidation = validator.validateUsername(_signUpState.value.userName)
+        val courseValidation = validator.validateCourse(_signUpState.value.courseName)
+        val firstNameValidation = validator.validateName(_signUpState.value.firstNameInput)
+        val lastNameValidation = validator.validateName(_signUpState.value.lastNameInput)
 
         return emailValidation.isValid &&
             passwordValidation.isValid &&
-            confirmPasswordValidation.isValid
+            confirmPasswordValidation.isValid &&
+            usernameValidation.isValid &&
+            courseValidation.isValid &&
+            firstNameValidation.isValid &&
+            lastNameValidation.isValid
     }
 
     fun validateOtp(otp: String): Boolean {

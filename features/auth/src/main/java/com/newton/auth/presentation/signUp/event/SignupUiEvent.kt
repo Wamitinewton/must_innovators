@@ -23,9 +23,11 @@ sealed class SignupUiEvent {
 
     data class LastNameChanged(val lastname: String) : SignupUiEvent()
 
-    data class PasswordChanged(val password: String) : SignupUiEvent()
+    data class PasswordChanged(val password: String, val email: String) : SignupUiEvent()
 
     data class ConfirmPasswordChanged(val confirmPwd: String) : SignupUiEvent()
+
+    data class OnCheckedChanged(val checked: Boolean) : SignupUiEvent()
 
     data class CourseChanged(val course: String) : SignupUiEvent()
 
