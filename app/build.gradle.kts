@@ -121,18 +121,18 @@ android {
         create("production") {
             applicationIdSuffix = ""
             dimension = "appStatus"
-            manifestPlaceholders["appName"] = "M.U.S.I.C"
+            manifestPlaceholders["appName"] = "MeruTechHub"
         }
 
         create("dev") {
             applicationIdSuffix = ".dev"
             dimension = "appStatus"
-            manifestPlaceholders["appName"] = "[DEV] M.U.S.I.C"
+            manifestPlaceholders["appName"] = "[DEV] MeruTechHub"
         }
         create("staging") {
             applicationIdSuffix = ".stg"
             dimension = "appStatus"
-            manifestPlaceholders["appName"] = "[STG] M.U.S.I.C"
+            manifestPlaceholders["appName"] = "[STG] MeruTechHub"
         }
     }
     compileOptions {

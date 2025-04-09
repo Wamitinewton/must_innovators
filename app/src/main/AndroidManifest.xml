@@ -56,14 +56,15 @@
         </service>
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.newton.meruinnovators.dev.notifications-startup"
+            android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
-            tools:replace="android:authorities"
-            android:initOrder="101"
             tools:node="merge">
             <meta-data
-                android:name="com.newton.notifications.initializer.NotificationsInitializer"
-                android:value="androidx.startup" />
+                android:name="androidx.work.WorkManagerInitializer"
+                tools:node="remove" />
+<!--            <meta-data-->
+<!--                android:name="com.newton.notifications.initializer.NotificationsInitializer"-->
+<!--                android:value="androidx.startup" />-->
         </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -74,9 +75,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
 
-            <meta-data
-                android:name="com.newton.notifications.initializer.NotificationsInitializer"
-                android:value="androidx.startup" />
+<!--            <meta-data-->
+<!--                android:name="com.newton.notifications.initializer.NotificationsInitializer"-->
+<!--                android:authorities="${applicationId}.workmanager-init"-->
+<!--                android:exported="false" />-->
         </provider>
     </application>
 

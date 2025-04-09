@@ -152,7 +152,7 @@ fun ProfileUpdateScreen(
                 title = "Basic Information"
             ) {
                 DefaultTextField(
-                    value = profileFormState.firstName,
+                    value = profileFormState.firstName?:"",
                     onValueChange = {
                         viewModel.updateFirstName(it)
                         hasUnsavedChanges = true
@@ -173,7 +173,7 @@ fun ProfileUpdateScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.lastName,
+                    value = profileFormState.lastName?:"",
                     onValueChange = {
                         viewModel.updateLastName(it)
                         hasUnsavedChanges = true
@@ -191,7 +191,7 @@ fun ProfileUpdateScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.email,
+                    value = profileFormState.email?:"",
                     onValueChange = { },
                     label = "Email",
                     modifier = Modifier.fillMaxWidth(),
@@ -204,7 +204,7 @@ fun ProfileUpdateScreen(
 
             FormSection(title = "Academic Information") {
                 DefaultTextField(
-                    value = profileFormState.course,
+                    value = profileFormState.course?:"",
                     onValueChange = {
                         viewModel.updateCourse(it)
                         hasUnsavedChanges = true
@@ -222,7 +222,7 @@ fun ProfileUpdateScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.registrationNo,
+                    value = profileFormState.registrationNo?:"",
                     onValueChange = {
                         viewModel.updateRegistrationNo(it)
                         hasUnsavedChanges = true
@@ -266,7 +266,7 @@ fun ProfileUpdateScreen(
 
             FormSection(title = "About You") {
                 MultilineInputField(
-                    value = profileFormState.bio,
+                    value = profileFormState.bio?:"",
                     onValueChange = {
                         viewModel.updateBio(it)
                         hasUnsavedChanges = true
@@ -313,7 +313,7 @@ fun ProfileUpdateScreen(
 
             FormSection(title = "Social Media") {
                 DefaultTextField(
-                    value = profileFormState.github,
+                    value = profileFormState.github?:"",
                     onValueChange = {
                         viewModel.updateGithub(it)
                         hasUnsavedChanges = true
@@ -326,14 +326,14 @@ fun ProfileUpdateScreen(
                         keyboardType = KeyboardType.Uri,
                         imeAction = ImeAction.Next
                     ),
-                    isError = profileFormState.github.isNotEmpty() && !isValidUrl(profileFormState.github),
+                    isError = profileFormState.github?.isNotEmpty() ?: false && !isValidUrl(profileFormState.github),
                     validateUrl = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.linkedin,
+                    value = profileFormState.linkedin?:"",
                     onValueChange = {
                         viewModel.updateLinkedin(it)
                         hasUnsavedChanges = true
@@ -346,13 +346,13 @@ fun ProfileUpdateScreen(
                         keyboardType = KeyboardType.Uri,
                         imeAction = ImeAction.Next
                     ),
-                    isError = profileFormState.linkedin.isNotEmpty() && !isValidUrl(profileFormState.linkedin)
+                    isError = profileFormState.linkedin?.isNotEmpty() ?: false && !isValidUrl(profileFormState.linkedin)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DefaultTextField(
-                    value = profileFormState.twitter,
+                    value = profileFormState.twitter?:"",
                     onValueChange = {
                         viewModel.updateTwitter(it)
                         hasUnsavedChanges = true
@@ -365,7 +365,7 @@ fun ProfileUpdateScreen(
                         keyboardType = KeyboardType.Uri,
                         imeAction = ImeAction.Next
                     ),
-                    isError = profileFormState.twitter.isNotEmpty() && !isValidUrl(profileFormState.twitter)
+                    isError = profileFormState.twitter?.isNotEmpty() ?: false && !isValidUrl(profileFormState.twitter)
                 )
             }
 

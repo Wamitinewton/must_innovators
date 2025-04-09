@@ -1,7 +1,12 @@
--keep class com.newton.core.** { *; }
--keepnames class com.newton.core.** { *; }
--keepclassmembers class com.newton.core.** { *; }
--keepclasseswithmembers class com.newton.core.** { *; }
+#-keep class com.newton.core.** { *; }
+#-keepnames class com.newton.core.** { *; }
+#-keepclassmembers class com.newton.core.** { *; }
+#-keepclasseswithmembers class com.newton.core.** { *; }
+
+-keep class com.newton.network.** { *; }
+-keepnames class com.newton.network.** { *; }
+-keepclassmembers class com.newton.network.** { *; }
+-keepclasseswithmembers class com.newton.network.** { *; }
 
 -keep class com.newton.database.** { *; }
 -keepnames class com.newton.database.** { *; }

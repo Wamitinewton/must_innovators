@@ -46,7 +46,7 @@ fun RegisteredEventsSection(
 
         is UserTicketsUiState.Error ->
             ErrorScreen(
-                message = uiState.message,
+                message = "Server error, Try again later",
                 onRetry = {},
                 titleText = "Could not load your EVENT TICKETS"
             )
