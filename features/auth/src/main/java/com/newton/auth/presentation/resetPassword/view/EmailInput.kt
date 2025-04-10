@@ -182,24 +182,18 @@ fun EmailInput(
                         shape = RoundedCornerShape(12.dp),
                         colors =
                         ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                            disabledContainerColor = Color.Gray.copy(alpha = 0.3f)
+                            containerColor = MaterialTheme.colorScheme.primary
                         ),
                         contentPadding = ButtonDefaults.ContentPadding
                     ) {
                         Box(
                             modifier =
                             Modifier
-                                .fillMaxSize()
-                                .background(
-                                    brush = Brush.horizontalGradient(gradientColors),
-                                    shape = RoundedCornerShape(12.dp)
-                                ),
+                                .fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = "Send Code",
-                                color = Color.White,
                                 fontWeight = FontWeight.Bold
                             )
                         }

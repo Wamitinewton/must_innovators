@@ -33,9 +33,7 @@ fun CommunityContent(
 ) {
     when (uiState) {
         is CommunitiesUiState.Loading -> {
-            LoadingIndicator(
-                text = "Loading Communities"
-            )
+            CommunityCardShimmer()
         }
 
         is CommunitiesUiState.Success -> {
@@ -52,14 +50,10 @@ fun CommunityContent(
                     }
                 )
             } else {
-                communities.forEach { community ->
-                    CommunityCard(
-                        community = community,
-                        onSeeDetailsClick = {
-                            onCommunityDetailsClick(community)
-                        }
-                    )
-                }
+                CommunitiesList(
+                    communities = communities,
+                    onCommunityClick = onCommunityDetailsClick
+                )
             }
         }
 

@@ -141,10 +141,14 @@ constructor(
 
         val socialMedia =
             SocialMedia(
-                github = formState.github.takeIf { it != currentUserData.social_media?.github },
-                linkedin = formState.linkedin.takeIf { it != currentUserData.social_media?.linkedin },
-                twitter = formState.twitter.takeIf { it != currentUserData.social_media?.twitter }
+                github = formState.github
+                    ?.takeIf { it.isNotBlank() && it != currentUserData.social_media?.github },
+                linkedin = formState.linkedin
+                    ?.takeIf { it.isNotBlank() && it != currentUserData.social_media?.linkedin },
+                twitter = formState.twitter
+                    ?.takeIf { it.isNotBlank() && it != currentUserData.social_media?.twitter }
             )
+
 
         val socialMediaToInclude =
             if (
