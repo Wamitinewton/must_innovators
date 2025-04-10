@@ -98,8 +98,11 @@ class ExecutiveViewModel @Inject constructor(
         if (_execState.value.bio.isBlank()) {
             errors["bio"] = "Users bio is required"
         }
-        if (_execState.value.position == null) {
-            errors["position"] = "Users position cannot be empty"
+//        if (_execState.value.position == null) {
+//            errors["position"] = "Users position cannot be empty"
+//        }
+        if (_execState.value.position.isBlank()) {
+            errors["position"] = "Executive position cannot be empty"
         }
         if (_execState.value.selectedUser == null) {
             errors["user"] = "Select the user to add as an Executive"
@@ -117,7 +120,7 @@ class ExecutiveViewModel @Inject constructor(
         if (validate()) {
             val executive = ExecutiveRequest(
                 userId = _execState.value.selectedUser!!.id,
-                position = _execState.value.position!!,
+                position = _execState.value.position,
                 bio = _execState.value.bio
             )
             viewModelScope.launch {

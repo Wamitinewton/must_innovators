@@ -36,7 +36,7 @@ fun PositionDropdown(
         modifier = Modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
-            value = state.position?.name ?: "Assign a position",
+            value = state.position,
             onValueChange = { },
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = { Icon(Icons.Default.Group, contentDescription = null) },
@@ -72,7 +72,7 @@ fun PositionDropdown(
 
                 DropdownMenuItem(
                     onClick = {
-                        onEvent.invoke(ExecutiveEvents.PositionChanged(getPosition()))
+//                        onEvent.invoke(ExecutiveEvents.PositionChanged(getPosition()))
                         onEvent.invoke(ExecutiveEvents.Expanded(false))
                     },
                     text = {

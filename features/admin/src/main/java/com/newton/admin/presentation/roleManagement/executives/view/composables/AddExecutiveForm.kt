@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -82,16 +83,37 @@ fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents) -> Un
         }
 
         item {
-            Text(
-                text = "Lead position",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
-            )
-            PositionDropdown(
-                positions = positions,
-                onEvent = onEvent,
-                state = execState
+//            Text(
+//                text = "Lead position",
+//                style = MaterialTheme.typography.titleSmall,
+//                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+//                modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
+//            )
+//            PositionDropdown(
+//                positions = positions,
+//                onEvent = onEvent,
+//                state = execState
+//            )
+            OutlinedTextField(
+                value = execState.position,
+                onValueChange = { onEvent.invoke(ExecutiveEvents.PositionChanged(it)) },
+                label = { Text("Lead Position") },
+                modifier = Modifier.fillMaxWidth(),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Person,
+                        contentDescription = null
+                    )
+                },
+                singleLine = true,
+                supportingText = {
+                    execState.errors["position"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             )
         }
         execState.selectedUser?.let { user ->
@@ -116,7 +138,7 @@ fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents) -> Un
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                enabled = execState.bio.isNotEmpty() && execState.selectedUser != null && execState.position != null
+                enabled = execState.bio.isNotEmpty() && execState.selectedUser != null && execState.position.isNotEmpty()
             ) {
                 Icon(Icons.Default.Save, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))

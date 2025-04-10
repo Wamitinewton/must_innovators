@@ -20,6 +20,7 @@ import com.newton.core.enums.*
 
 data class ExecutiveRequest(
     val userId: Int,
-    val position: ExecutivePosition,
+//    val position: ExecutivePosition,
+    val position: String,
     val bio: String
 )
