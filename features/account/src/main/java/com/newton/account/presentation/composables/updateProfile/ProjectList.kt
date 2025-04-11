@@ -78,19 +78,19 @@ fun ProjectItem(
 
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .animateContentSize(
-                    animationSpec =
-                        spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                ),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
+        Modifier
+            .fillMaxWidth()
+            .animateContentSize(
+                animationSpec =
+                spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessMedium
+                )
             ),
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -124,9 +124,9 @@ fun ProjectItem(
             AnimatedVisibility(visible = expanded) {
                 Column(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
                 ) {
                     // Description field
                     OutlinedTextField(
@@ -136,13 +136,13 @@ fun ProjectItem(
                         },
                         label = { Text("Description") },
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(100.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .height(100.dp),
                         keyboardOptions =
-                            KeyboardOptions(
-                                capitalization = KeyboardCapitalization.Sentences
-                            ),
+                        KeyboardOptions(
+                            capitalization = KeyboardCapitalization.Sentences
+                        ),
                         maxLines = 4
                     )
 
@@ -165,9 +165,9 @@ fun ProjectItem(
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         keyboardOptions =
-                            KeyboardOptions(
-                                keyboardType = KeyboardType.Uri
-                            ),
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Uri
+                        ),
                         isError = project.link.isNotEmpty() && !isValidUrl(project.link),
                         supportingText = {
                             if (project.link.isNotEmpty() && !isValidUrl(project.link)) {
@@ -182,9 +182,9 @@ fun ProjectItem(
                         onClick = onProjectRemoved,
                         modifier = Modifier.align(Alignment.End),
                         colors =
-                            ButtonDefaults.outlinedButtonColors(
-                                contentColor = MaterialTheme.colorScheme.error
-                            ),
+                        ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error
+                        ),
                         border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
                     ) {
                         Icon(

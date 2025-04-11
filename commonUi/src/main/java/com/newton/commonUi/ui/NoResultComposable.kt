@@ -51,17 +51,17 @@ fun EmptyStateCard(
 ) {
     ElevatedCard(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+        modifier
+            .fillMaxWidth()
+            .padding(16.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier =
-                Modifier
-                    .padding(24.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .padding(24.dp)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -88,9 +88,9 @@ fun EmptyStateCard(
             Button(
                 onClick = onActionClick,
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = buttonColor
-                    )
+                ButtonDefaults.buttonColors(
+                    containerColor = buttonColor
+                )
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,

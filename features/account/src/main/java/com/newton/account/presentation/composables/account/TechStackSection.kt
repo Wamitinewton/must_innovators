@@ -39,21 +39,21 @@ fun TechStacksSection(techStacks: List<String>?) {
 
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -72,9 +72,9 @@ fun TechStacksSection(techStacks: List<String>?) {
 
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
             ) {
                 FlowRow {
                     techStacks.forEach { tech ->
@@ -82,9 +82,9 @@ fun TechStacksSection(techStacks: List<String>?) {
                             selected = false,
                             onClick = { },
                             colors =
-                                FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
-                                ),
+                            FilterChipDefaults.filterChipColors(
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                            ),
                             label = {
                                 Text(
                                     text = tech,

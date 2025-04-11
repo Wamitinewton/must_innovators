@@ -62,5 +62,5 @@ interface AuthService {
 
     @AuthRunTime
     @DELETE(ApiEndpoints.DELETE_ACCOUNT)
-    suspend fun deleteAccount(): com.newton.network.domain.models.authModels.DeleteAccount
+    suspend fun deleteAccount()
 }

@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.*
 fun MeruInnovatorsAppBar(
     title: String,
     actions:
-    @Composable()
-    (RowScope.() -> Unit) = {}
+        @Composable()
+        (RowScope.() -> Unit) = {}
 ) {
     TopAppBar(
         actions = {

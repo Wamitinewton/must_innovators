@@ -57,9 +57,9 @@ fun SessionDialog(
         text = {
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
             ) {
                 // Day dropdown
                 ExposedDropdownMenuBox(
@@ -74,9 +74,9 @@ fun SessionDialog(
                         label = { Text("Day") },
                         leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = "Day") },
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .menuAnchor()
+                        Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
                     )
 
                     ExposedDropdownMenu(
@@ -154,9 +154,9 @@ fun SessionDialog(
                             )
                         },
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .menuAnchor()
+                        Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
                     )
 
                     ExposedDropdownMenu(

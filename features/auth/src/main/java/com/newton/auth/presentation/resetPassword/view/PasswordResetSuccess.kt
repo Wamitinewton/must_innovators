@@ -45,40 +45,40 @@ fun PasswordResetSuccess(onNavigateToLogin: () -> Unit) {
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(24.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             AnimatedVisibility(
                 visibleState = cardVisibleState,
                 enter =
-                    fadeIn(animationSpec = tween(500)) +
-                        slideInVertically(
-                            initialOffsetY = { it / 2 },
-                            animationSpec = tween(500)
-                        )
+                fadeIn(animationSpec = tween(500)) +
+                    slideInVertically(
+                        initialOffsetY = { it / 2 },
+                        animationSpec = tween(500)
+                    )
             ) {
                 Card(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     elevation =
-                        CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
+                    CardDefaults.cardElevation(
+                        defaultElevation = 6.dp
+                    ),
                     colors =
-                        CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        )
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
                 ) {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(24.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         EnhancedLottieAnimation(
@@ -107,27 +107,27 @@ fun PasswordResetSuccess(onNavigateToLogin: () -> Unit) {
                         AnimatedVisibility(
                             visible = showButton,
                             enter =
-                                fadeIn(tween(500)) +
-                                    slideInVertically(
-                                        initialOffsetY = { it / 2 },
-                                        animationSpec = tween(500)
-                                    )
+                            fadeIn(tween(500)) +
+                                slideInVertically(
+                                    initialOffsetY = { it / 2 },
+                                    animationSpec = tween(500)
+                                )
                         ) {
                             ElevatedButton(
                                 onClick = onNavigateToLogin,
                                 modifier =
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .height(56.dp),
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(56.dp),
                                 colors =
-                                    ButtonDefaults.elevatedButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                        contentColor = MaterialTheme.colorScheme.onPrimary
-                                    ),
+                                ButtonDefaults.elevatedButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                ),
                                 elevation =
-                                    ButtonDefaults.elevatedButtonElevation(
-                                        defaultElevation = 6.dp
-                                    )
+                                ButtonDefaults.elevatedButtonElevation(
+                                    defaultElevation = 6.dp
+                                )
                             ) {
                                 Text(
                                     "Return to Login",

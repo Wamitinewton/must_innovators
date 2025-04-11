@@ -110,8 +110,6 @@ constructor(
 
     private fun deleteAccount() {
         viewModelScope.launch {
-            _deleteAccountState.update { it.copy(isLoading = true) }
-
             authRepository.deleteAccount()
                 .collect { result ->
                     when (result) {

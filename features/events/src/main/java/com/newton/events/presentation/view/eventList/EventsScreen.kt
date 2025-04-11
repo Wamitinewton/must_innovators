@@ -78,8 +78,8 @@ fun EventsScreen(
     ) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxSize()
+            Modifier
+                .fillMaxSize()
         ) {
             when {
                 isLoading -> {
@@ -143,9 +143,9 @@ fun EventsScreen(
                 enter = fadeIn(tween(200)),
                 exit = fadeOut(tween(200)),
                 modifier =
-                    Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 16.dp)
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 16.dp)
             ) {
                 PaginationLoadingIndicator()
             }

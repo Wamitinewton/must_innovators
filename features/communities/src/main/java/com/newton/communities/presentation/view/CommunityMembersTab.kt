@@ -43,9 +43,9 @@ fun MembersTab(
 ) {
     LazyColumn(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         itemsIndexed(members) { index, member ->
@@ -54,11 +54,11 @@ fun MembersTab(
             AnimatedVisibility(
                 visible = true,
                 enter =
-                    fadeIn(animationSpec = tween(durationMillis = 300, delayMillis = staggerDelay)) +
-                        slideInHorizontally(
-                            animationSpec = tween(durationMillis = 300, delayMillis = staggerDelay),
-                            initialOffsetX = { it / 2 }
-                        )
+                fadeIn(animationSpec = tween(durationMillis = 300, delayMillis = staggerDelay)) +
+                    slideInHorizontally(
+                        animationSpec = tween(durationMillis = 300, delayMillis = staggerDelay),
+                        initialOffsetX = { it / 2 }
+                    )
             ) {
                 MemberCard(member = member, onClick = { onMemberClick(member) })
             }
@@ -77,9 +77,9 @@ fun MemberCard(
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Avatar
@@ -138,10 +138,10 @@ fun MemberDetailsDialog(
     Dialog(
         onDismissRequest = onDismiss,
         properties =
-            DialogProperties(
-                dismissOnBackPress = true,
-                dismissOnClickOutside = false
-            )
+        DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = false
+        )
     ) {
         val animatedScale = remember { Animatable(0.8f) }
 
@@ -149,29 +149,29 @@ fun MemberDetailsDialog(
             animatedScale.animateTo(
                 targetValue = 1f,
                 animationSpec =
-                    spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
+                spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
             )
         }
 
         ElevatedCard(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .scale(animatedScale.value),
+            Modifier
+                .fillMaxWidth()
+                .scale(animatedScale.value),
             shape = RoundedCornerShape(16.dp),
             colors =
-                CardDefaults.elevatedCardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
         ) {
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(24.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Surface(

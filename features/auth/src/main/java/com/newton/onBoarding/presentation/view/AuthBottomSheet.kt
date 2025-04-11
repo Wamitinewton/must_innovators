@@ -34,9 +34,9 @@ fun AuthBottomSheetContent(
 ) {
     Column(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(

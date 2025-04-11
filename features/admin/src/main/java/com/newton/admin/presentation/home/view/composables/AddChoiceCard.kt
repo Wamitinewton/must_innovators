@@ -33,8 +33,8 @@ fun AddChoiceCard(
 ) {
     Card(
         modifier =
-            Modifier
-                .height(50.dp),
+        Modifier
+            .height(50.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
         onClick = onclick
@@ -43,17 +43,17 @@ fun AddChoiceCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(horizontal = 20.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(horizontal = 20.dp)
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(color = Color.Cyan)
+                    Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(color = Color.Cyan)
                 )
                 Spacer(Modifier.width(20.dp))
                 Text(text, style = MaterialTheme.typography.titleMedium)

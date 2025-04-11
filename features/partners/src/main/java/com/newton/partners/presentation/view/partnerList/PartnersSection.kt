@@ -51,9 +51,9 @@ fun SectionHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
     ) {
         Text(
             text = title,
@@ -63,11 +63,11 @@ fun SectionHeader(
         if (showViewAll) {
             Box(
                 modifier =
-                    Modifier
-                        .clip(MaterialTheme.shapes.large)
-                        .clickable(onClick = onViewAllClick)
-                        .background(color = MaterialTheme.colorScheme.secondaryContainer)
-                        .padding(horizontal = 12.dp, vertical = 5.dp)
+                Modifier
+                    .clip(MaterialTheme.shapes.large)
+                    .clickable(onClick = onViewAllClick)
+                    .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                    .padding(horizontal = 12.dp, vertical = 5.dp)
             ) {
                 Text(
                     text = "ALL",

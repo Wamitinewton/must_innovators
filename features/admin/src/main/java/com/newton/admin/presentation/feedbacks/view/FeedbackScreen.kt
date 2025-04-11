@@ -55,9 +55,9 @@ fun FeedbackScreen(
                             value = uiState.searchQuery,
                             onValueChange = { onEvent.invoke(FeedbackEvent.SearchQueryChange(it)) },
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(end = 40.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(end = 40.dp),
                             placeholder = { Text("Search feedback...") },
                             singleLine = true
                         )
@@ -88,8 +88,8 @@ fun FeedbackScreen(
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
+            Modifier
+                .fillMaxSize()
         ) {
             // Filter Chips
             FilterSection(
@@ -107,9 +107,9 @@ fun FeedbackScreen(
             // Feedback List
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             ) {
                 if (uiState.isLoading) {
                     FeedbackCardShimmer()
@@ -118,11 +118,11 @@ fun FeedbackScreen(
                     if (filteredFeedbacks.isEmpty()) {
                         EmptyState(
                             message =
-                                if (uiState.searchQuery.isNotEmpty()) {
-                                    "No results found for \"${uiState.searchQuery}\""
-                                } else {
-                                    "No feedback items available"
-                                }
+                            if (uiState.searchQuery.isNotEmpty()) {
+                                "No results found for \"${uiState.searchQuery}\""
+                            } else {
+                                "No feedback items available"
+                            }
                         )
                     } else {
                         FeedbackList(

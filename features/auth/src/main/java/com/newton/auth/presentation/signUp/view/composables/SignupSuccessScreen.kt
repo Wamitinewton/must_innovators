@@ -46,9 +46,9 @@ fun SignupSuccessScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
         ) {
             EnhancedLottieAnimation(
                 lottieFile = R.raw.innovators_success,
@@ -67,18 +67,18 @@ fun SignupSuccessScreen(
             AnimatedVisibility(
                 visible = showContent,
                 enter =
-                    fadeIn(
-                        initialAlpha = 0f,
-                        animationSpec = tween(durationMillis = 500)
-                    ) +
-                        slideInVertically(
-                            initialOffsetY = { 50 },
-                            animationSpec =
-                                spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
-                                )
+                fadeIn(
+                    initialAlpha = 0f,
+                    animationSpec = tween(durationMillis = 500)
+                ) +
+                    slideInVertically(
+                        initialOffsetY = { 50 },
+                        animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
                         )
+                    )
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -112,31 +112,31 @@ fun SignupSuccessScreen(
             AnimatedVisibility(
                 visible = showButton,
                 enter =
-                    fadeIn(
-                        initialAlpha = 0f,
-                        animationSpec = tween(durationMillis = 500)
-                    ) +
-                        expandVertically(
-                            animationSpec =
-                                spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
-                                )
+                fadeIn(
+                    initialAlpha = 0f,
+                    animationSpec = tween(durationMillis = 500)
+                ) +
+                    expandVertically(
+                        animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
                         )
+                    )
             ) {
                 Button(
                     onClick = {
                         onContinueClick()
                     },
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
                     shape = MaterialTheme.shapes.medium,
                     colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
+                    ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
                 ) {
                     Text(
                         text = "Proceed to Login",

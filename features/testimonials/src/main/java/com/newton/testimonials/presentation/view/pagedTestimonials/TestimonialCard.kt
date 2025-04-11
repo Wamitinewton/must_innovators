@@ -39,23 +39,23 @@ fun TestimonialCard(
 ) {
     CustomCard(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .padding(horizontal = 4.dp, vertical = 8.dp)
-                .shadow(
-                    elevation = 4.dp,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .clickable { onClick(testimonialsData) },
+        Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .padding(horizontal = 4.dp, vertical = 8.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .clickable { onClick(testimonialsData) },
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier =
-                Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
+            Modifier
+                .padding(16.dp)
+                .fillMaxSize()
         ) {
             Icon(
                 imageVector = Icons.Filled.FormatQuote,
@@ -69,9 +69,9 @@ fun TestimonialCard(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier =
-                    Modifier
-                        .padding(vertical = 12.dp)
-                        .weight(1f),
+                Modifier
+                    .padding(vertical = 12.dp)
+                    .weight(1f),
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis
             )

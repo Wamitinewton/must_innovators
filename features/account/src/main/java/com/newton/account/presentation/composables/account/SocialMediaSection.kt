@@ -38,21 +38,21 @@ fun SocialMediaSection(socialMedia: SocialMedia?) {
 
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -118,18 +118,18 @@ fun SocialButton(
         onClick = { uriHandler.openUri(url) },
         shape = RoundedCornerShape(8.dp),
         colors =
-            ButtonDefaults.elevatedButtonColors(
-                containerColor = backgroundColor,
-                contentColor = Color.White
-            ),
+        ButtonDefaults.elevatedButtonColors(
+            containerColor = backgroundColor,
+            contentColor = Color.White
+        ),
         contentPadding = ButtonDefaults.ButtonWithIconContentPadding
     ) {
         AsyncImage(
             model =
-                ImageRequest.Builder(context)
-                    .data(iconUrl)
-                    .crossfade(true)
-                    .build(),
+            ImageRequest.Builder(context)
+                .data(iconUrl)
+                .crossfade(true)
+                .build(),
             contentDescription = "$label icon",
             contentScale = ContentScale.Fit,
             modifier = Modifier.size(18.dp)

@@ -35,9 +35,9 @@ fun AboutUsSectionCard(
 ) {
     Card(
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
         onClick = onClick
     ) {
@@ -57,10 +57,10 @@ fun AboutUsSectionCard(
                         contentDescription = "Innovators Image",
                         contentScale = ContentScale.Crop,
                         modifier =
-                            Modifier
-                                .fillMaxHeight()
-                                .padding(8.dp)
-                                .clip(MaterialTheme.shapes.medium)
+                        Modifier
+                            .fillMaxHeight()
+                            .padding(8.dp)
+                            .clip(MaterialTheme.shapes.medium)
                     )
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {

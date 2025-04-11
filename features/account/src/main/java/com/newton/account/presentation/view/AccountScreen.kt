@@ -98,9 +98,9 @@ fun AccountScreen(
     ) {
         DefaultScaffold(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehaviour.nestedScrollConnection),
+            Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehaviour.nestedScrollConnection),
             topBar = {
                 LargeTopAppBar(
                     title = {
@@ -145,8 +145,8 @@ fun AccountScreen(
         ) {
             LazyColumn(
                 modifier =
-                    Modifier
-                        .fillMaxSize(),
+                Modifier
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {

@@ -148,13 +148,12 @@ constructor(
             authService.resetPassword(passwordRequest)
         }
 
-    override suspend fun deleteAccount(): Flow<Resource<DeleteAccount>> =
+    override suspend fun deleteAccount(): Flow<Resource<Unit>> =
         flow {
             emit(Resource.Loading(true))
-
             try {
-                val response = authService.deleteAccount()
-                emit(Resource.Success(response))
+                authService.deleteAccount()
+                emit(Resource.Success(Unit))
             } catch (e: Exception) {
                 Timber.e(e, "Failed to delete account")
                 emit(Resource.Error(e.message ?: "Failed to delete account"))
@@ -162,6 +161,7 @@ constructor(
                 emit(Resource.Loading(false))
             }
         }.flowOn(Dispatchers.IO)
+
 
     override suspend fun clearUserData() {
         sessionManager.clearTokens()

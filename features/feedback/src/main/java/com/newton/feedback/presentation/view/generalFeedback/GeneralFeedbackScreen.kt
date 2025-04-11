@@ -54,24 +54,24 @@ fun GeneralFeedbackScreen(
                     }
                 },
                 colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                    )
+                TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                )
             )
         }
     ) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxSize()
+            Modifier
+                .fillMaxSize()
         ) {
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(scrollState)
-                        .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Column(
@@ -98,9 +98,9 @@ fun GeneralFeedbackScreen(
                     label = "Your feedback",
                     placeholder = "What do you like? What could be improved?",
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = 150.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 150.dp),
                     maxLines = 5
                 )
 

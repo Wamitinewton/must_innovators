@@ -44,26 +44,26 @@ fun EventCardShimmer(
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp)
-                .shadow(
-                    elevation = 4.dp,
-                    shape = RoundedCornerShape(12.dp),
-                    spotColor = Color(0x40000000)
-                ),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp),
+                spotColor = Color(0x40000000)
+            ),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .clip(RoundedCornerShape(8.dp)),
+                Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(8.dp)),
                 colors = shimmerColors,
                 durationMillis = durationMillis
             ) {
@@ -78,10 +78,10 @@ fun EventCardShimmer(
 
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .fillMaxWidth(0.7f)
-                        .height(20.dp)
-                        .clip(RoundedCornerShape(4.dp)),
+                Modifier
+                    .fillMaxWidth(0.7f)
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(4.dp)),
                 colors = shimmerColors,
                 durationMillis = durationMillis
             ) {
@@ -98,9 +98,9 @@ fun EventCardShimmer(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     ShimmerWithFade(
                         modifier =
-                            Modifier
-                                .size(20.dp)
-                                .clip(CircleShape),
+                        Modifier
+                            .size(20.dp)
+                            .clip(CircleShape),
                         colors = shimmerColors,
                         durationMillis = durationMillis
                     ) {
@@ -115,10 +115,10 @@ fun EventCardShimmer(
 
                     ShimmerWithFade(
                         modifier =
-                            Modifier
-                                .width(if (it == 0) 100.dp else 120.dp)
-                                .height(14.dp)
-                                .clip(RoundedCornerShape(4.dp)),
+                        Modifier
+                            .width(if (it == 0) 100.dp else 120.dp)
+                            .height(14.dp)
+                            .clip(RoundedCornerShape(4.dp)),
                         colors = shimmerColors,
                         durationMillis = durationMillis
                     ) {
@@ -135,11 +135,11 @@ fun EventCardShimmer(
 
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .width(100.dp)
-                        .height(36.dp)
-                        .clip(RoundedCornerShape(16.dp)),
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .width(100.dp)
+                    .height(36.dp)
+                    .clip(RoundedCornerShape(16.dp)),
                 colors = shimmerColors,
                 durationMillis = durationMillis
             ) {

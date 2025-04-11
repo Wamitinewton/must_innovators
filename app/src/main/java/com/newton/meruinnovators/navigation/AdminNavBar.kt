@@ -34,11 +34,11 @@ fun AdminNavBar(
 ) {
     BottomAppBar(
         modifier =
-            Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .clip(
-                    shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
-                )
+        Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .clip(
+                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+            )
     ) {
         adminNavDestinations.forEach { destination ->
             val selected =

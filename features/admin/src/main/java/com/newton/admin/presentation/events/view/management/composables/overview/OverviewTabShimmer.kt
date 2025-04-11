@@ -37,25 +37,25 @@ fun OverviewTabShimmer() {
             item {
                 Row(
                     modifier =
-                        Modifier
-                            .fillMaxWidth(),
+                    Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     List(4) {
                         ShimmerWithFade(
                             modifier =
-                                Modifier
-                                    .height(100.dp)
-                                    .width(80.dp)
-                                    .clip(RoundedCornerShape(10.dp))
+                            Modifier
+                                .height(100.dp)
+                                .width(80.dp)
+                                .clip(RoundedCornerShape(10.dp))
                         ) {
                             Box(
                                 modifier =
-                                    Modifier.background(
-                                        MaterialTheme.colorScheme.onSurface.copy(
-                                            alpha = .3f
-                                        )
+                                Modifier.background(
+                                    MaterialTheme.colorScheme.onSurface.copy(
+                                        alpha = .3f
                                     )
+                                )
                             )
                         }
                     }

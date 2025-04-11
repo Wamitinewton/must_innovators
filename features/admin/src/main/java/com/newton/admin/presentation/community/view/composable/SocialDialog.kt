@@ -42,9 +42,9 @@ fun SocialDialog(
         text = {
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
             ) {
                 OutlinedTextField(
                     value = platform,
@@ -59,8 +59,8 @@ fun SocialDialog(
                         )
                     },
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = url,
@@ -75,8 +75,8 @@ fun SocialDialog(
                         )
                     },
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                 )
             }
         },

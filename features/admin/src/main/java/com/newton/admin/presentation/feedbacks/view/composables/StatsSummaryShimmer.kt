@@ -31,71 +31,71 @@ import com.newton.commonUi.ui.*
 fun StatsSummaryShimmer(modifier: Modifier = Modifier) {
     CustomCard(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+        modifier
+            .fillMaxWidth()
+            .padding(16.dp)
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .height(50.dp)
-                        .width(60.dp)
-                        .clip(RoundedCornerShape(10.dp))
+                Modifier
+                    .height(50.dp)
+                    .width(60.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFF1A1A1A))
                 )
             }
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .height(50.dp)
-                        .width(60.dp)
-                        .clip(RoundedCornerShape(10.dp))
+                Modifier
+                    .height(50.dp)
+                    .width(60.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFF1A1A1A))
                 )
             }
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .height(50.dp)
-                        .width(60.dp)
-                        .clip(RoundedCornerShape(10.dp))
+                Modifier
+                    .height(50.dp)
+                    .width(60.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFF1A1A1A))
                 )
             }
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .height(50.dp)
-                        .width(60.dp)
-                        .clip(RoundedCornerShape(10.dp))
+                Modifier
+                    .height(50.dp)
+                    .width(60.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color(0xFF1A1A1A))
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFF1A1A1A))
                 )
             }
         }

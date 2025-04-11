@@ -34,11 +34,11 @@ fun MeruInnovatorsNavigation(
     NavHost(
         navController = navHostController,
         startDestination =
-            if (isUserLoggedIn) {
-                NavigationSubGraphRoutes.Home.route
-            } else {
-                NavigationSubGraphRoutes.Auth.route
-            }
+        if (isUserLoggedIn) {
+            NavigationSubGraphRoutes.Home.route
+        } else {
+            NavigationSubGraphRoutes.Auth.route
+        }
     ) {
         navigationSubGraphs.authNavigationApi.registerGraph(
             navHostController = navHostController,
