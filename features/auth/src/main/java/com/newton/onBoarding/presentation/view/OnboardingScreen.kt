@@ -171,7 +171,6 @@ fun OnboardingScreen(
                     DisplayLargeText(
                         text = "Meru Science Innovators Club",
                         textAlign = TextAlign.Center,
-                        color = Color.White,
                         style = MaterialTheme.typography.displayMedium
                     )
 
@@ -179,8 +178,7 @@ fun OnboardingScreen(
 
                     TitleLargeText(
                         text = "Empowering the next generation of tech leaders",
-                        textAlign = TextAlign.Center,
-                        color = Color.White.copy(alpha = 0.9f)
+                        textAlign = TextAlign.Center
                     )
                 }
             }
