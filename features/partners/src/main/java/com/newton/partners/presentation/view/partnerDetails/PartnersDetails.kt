@@ -92,7 +92,9 @@ fun PartnerDetailsScreen(
                     Box(
                         modifier =
                             Modifier
-                                .fillMaxSize()
+                                .fillMaxHeight(0.35f)
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter)
                                 .background(
                                     brush =
                                         Brush.verticalGradient(
@@ -100,11 +102,11 @@ fun PartnerDetailsScreen(
                                                 listOf(
                                                     Color.Transparent,
                                                     MaterialTheme.colorScheme.surface
-                                                )
+                                                ),
                                         )
                                 )
-                    )
 
+                    )
                     Box(
                         modifier =
                             Modifier

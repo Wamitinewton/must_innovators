@@ -40,25 +40,25 @@ fun StatusChip(status: String) {
             "ACTIVE" ->
                 Pair(
                     MaterialTheme.colorScheme.primaryContainer,
-                    MaterialTheme.colorScheme.primary
+                    MaterialTheme.colorScheme.onPrimary
                 )
 
             "PENDING" ->
                 Pair(
                     MaterialTheme.colorScheme.tertiaryContainer,
-                    MaterialTheme.colorScheme.tertiary
+                    MaterialTheme.colorScheme.onTertiary
                 )
 
             "INACTIVE" ->
                 Pair(
                     MaterialTheme.colorScheme.errorContainer,
-                    MaterialTheme.colorScheme.error
+                    MaterialTheme.colorScheme.onError
                 )
 
             else ->
                 Pair(
                     MaterialTheme.colorScheme.secondaryContainer,
-                    MaterialTheme.colorScheme.secondary
+                    MaterialTheme.colorScheme.onSecondary
                 )
         }
 
