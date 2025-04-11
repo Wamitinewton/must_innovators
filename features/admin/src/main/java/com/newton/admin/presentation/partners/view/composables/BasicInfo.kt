@@ -50,9 +50,9 @@ fun BasicInfo(
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
         ) {
             Text(
                 text = "Basic Information",
@@ -108,9 +108,9 @@ fun BasicInfo(
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = partnersState.partnerTypeExpanded)
                     },
                     modifier =
-                    Modifier
-                        .menuAnchor()
-                        .fillMaxWidth(),
+                        Modifier
+                            .menuAnchor()
+                            .fillMaxWidth(),
                     supportingText = {
                         partnersState.errors["partnerType"]?.let {
                             Text(
@@ -146,9 +146,9 @@ fun BasicInfo(
                 label = { Text("Description") },
                 placeholder = { Text("Describe the partner and their contributions") },
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 120.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 120.dp),
                 minLines = 3,
                 supportingText = {
                     partnersState.errors["description"]?.let {

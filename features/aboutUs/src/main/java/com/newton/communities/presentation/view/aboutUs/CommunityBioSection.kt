@@ -39,14 +39,14 @@ fun AboutSection(
 ) {
     ElevatedCard(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         colors =
-        CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -99,9 +99,9 @@ fun AboutSection(
                         imageVector = Icons.Outlined.KeyboardArrowDown,
                         contentDescription = "Expnad",
                         modifier =
-                        Modifier
-                            .padding(start = 4.dp)
-                            .rotate(rotation)
+                            Modifier
+                                .padding(start = 4.dp)
+                                .rotate(rotation)
                     )
                 }
             }
@@ -116,14 +116,14 @@ fun VisionAndMission(
 ) {
     Card(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-        ),
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            ),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
@@ -202,9 +202,9 @@ fun SectionHeading(
 ) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

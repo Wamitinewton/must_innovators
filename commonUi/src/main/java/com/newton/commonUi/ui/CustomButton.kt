@@ -50,8 +50,8 @@ fun CustomButton(
     minWidth: Dp = 120.dp,
     minHeight: Dp = 48.dp,
     content:
-        @Composable()
-        (RowScope.() -> Unit)
+    @Composable()
+    (RowScope.() -> Unit)
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val pressed by interactionSource.collectIsPressedAsState()
@@ -68,16 +68,16 @@ fun CustomButton(
 
     Surface(
         modifier =
-        modifier
-            .defaultMinSize(minWidth = minWidth, minHeight = minHeight)
-            .scale(scale)
-            .clip(shape)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = rememberRipple(),
-                enabled = enabled,
-                onClick = onClick
-            ),
+            modifier
+                .defaultMinSize(minWidth = minWidth, minHeight = minHeight)
+                .scale(scale)
+                .clip(shape)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = rememberRipple(),
+                    enabled = enabled,
+                    onClick = onClick
+                ),
         shape = shape,
         color = if (enabled) containerColor else disabledContainerColor,
         contentColor = if (enabled) contentColor else disabledContentColor,
@@ -111,9 +111,9 @@ fun CustomTextButton(
         enabled = enabled,
         contentPadding = contentPadding,
         colors =
-        ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.primary
-        ),
+            ButtonDefaults.textButtonColors(
+                contentColor = MaterialTheme.colorScheme.primary
+            ),
         content = content
     )
 }
@@ -134,21 +134,21 @@ fun CustomOutlinedButton(
         enabled = enabled,
         shape = shape,
         colors =
-        ButtonDefaults.outlinedButtonColors(
-            contentColor = color
-        ),
+            ButtonDefaults.outlinedButtonColors(
+                contentColor = color
+            ),
         border =
-        BorderStroke(
-            width = CustomButtonDefaults.OutlinedButtonBorderWidth,
-            color =
-            if (enabled) {
-                color
-            } else {
-                MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = CustomButtonDefaults.DisabledOutlinedButtonBorderAlpha
-                )
-            }
-        ),
+            BorderStroke(
+                width = CustomButtonDefaults.OutlinedButtonBorderWidth,
+                color =
+                    if (enabled) {
+                        color
+                    } else {
+                        MaterialTheme.colorScheme.onSurface.copy(
+                            alpha = CustomButtonDefaults.DisabledOutlinedButtonBorderAlpha
+                        )
+                    }
+            ),
         contentPadding = contentPadding,
         content = content
     )
@@ -170,10 +170,10 @@ fun CustomElevatedButton(
         modifier = modifier,
         shape = shape,
         colors =
-        ButtonDefaults.elevatedButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor
-        ),
+            ButtonDefaults.elevatedButtonColors(
+                containerColor = containerColor,
+                contentColor = contentColor
+            ),
         elevation = ButtonDefaults.elevatedButtonElevation(6.dp),
         contentPadding = contentPadding,
         content = content,
@@ -193,10 +193,10 @@ fun AuthButton(
         initialValue = 1f,
         targetValue = 1.2f,
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(800),
-            repeatMode = RepeatMode.Reverse
-        ),
+            infiniteRepeatable(
+                animation = tween(800),
+                repeatMode = RepeatMode.Reverse
+            ),
         label = "icon-scale"
     )
 
@@ -204,24 +204,24 @@ fun AuthButton(
         ElevatedButton(
             onClick = onClick,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(56.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
             shape = RoundedCornerShape(16.dp),
             colors =
-            ButtonDefaults.elevatedButtonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ),
+                ButtonDefaults.elevatedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ),
             elevation = ButtonDefaults.elevatedButtonElevation(6.dp)
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 modifier =
-                Modifier
-                    .scale(iconScale)
-                    .size(24.dp)
+                    Modifier
+                        .scale(iconScale)
+                        .size(24.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
@@ -234,18 +234,18 @@ fun AuthButton(
         CustomOutlinedButton(
             onClick = onClick,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(56.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
             enabled = true,
             content = {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
                     modifier =
-                    Modifier
-                        .scale(iconScale)
-                        .size(24.dp)
+                        Modifier
+                            .scale(iconScale)
+                            .size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
@@ -268,17 +268,17 @@ fun SubmitButton(
     Button(
         onClick = onClick,
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(56.dp),
+            Modifier
+                .fillMaxWidth()
+                .height(56.dp),
         enabled = enabled && !isSubmitting,
         colors =
-        ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+            ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
     ) {
         AnimatedContent(
             targetState = isSubmitting,
@@ -307,15 +307,15 @@ fun AddItemButton(
 ) {
     Box(
         modifier =
-        Modifier
-            .size(100.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .clickable(onClick = onClick),
+            Modifier
+                .size(100.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Icon(

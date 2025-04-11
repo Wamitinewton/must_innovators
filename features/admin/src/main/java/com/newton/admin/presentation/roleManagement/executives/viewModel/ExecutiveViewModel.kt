@@ -16,24 +16,22 @@
  */
 package com.newton.admin.presentation.roleManagement.executives.viewModel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.data.mappers.User
+import androidx.lifecycle.*
+import com.newton.admin.data.mappers.*
 import com.newton.admin.data.mappers.UserDataMappers.toDomainList
-import com.newton.admin.presentation.roleManagement.executives.events.ExecutiveEvents
-import com.newton.admin.presentation.roleManagement.executives.states.ExecutiveState
-import com.newton.admin.presentation.roleManagement.executives.states.ExecutiveUsersState
-import com.newton.network.Resource
-import com.newton.network.domain.models.adminModels.ExecutiveRequest
-import com.newton.network.domain.repositories.AdminRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import com.newton.admin.presentation.roleManagement.executives.events.*
+import com.newton.admin.presentation.roleManagement.executives.states.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
+import kotlin.collections.List
+import kotlin.collections.filter
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
 
 @HiltViewModel
 class ExecutiveViewModel @Inject constructor(

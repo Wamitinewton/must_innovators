@@ -40,9 +40,9 @@ fun TestimonialsSection(
 ) {
     Box(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
     ) {
         when (uiState) {
             is GetTestimonialsUiState.Loading -> {
@@ -110,16 +110,16 @@ fun PagedTestimonials(
 
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
     ) {
         HorizontalPager(
             state = pagerState,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+                Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
         ) { page ->
             TestimonialCard(
                 testimonialsData = testimonials[page],
@@ -140,15 +140,14 @@ fun PagedTestimonials(
 }
 
 
-
 @Composable
 fun TestimonialAvatar(imageUrl: String?) {
     Box(
         modifier =
-        Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+            Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
     ) {
         NetworkImage(
             imageUrl = imageUrl
@@ -189,11 +188,11 @@ fun PagerIndicator(
 
             Box(
                 modifier =
-                Modifier
-                    .padding(4.dp)
-                    .size(8.dp)
-                    .clip(CircleShape)
-                    .background(color.copy(alpha = alpha))
+                    Modifier
+                        .padding(4.dp)
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(color.copy(alpha = alpha))
             )
         }
     }

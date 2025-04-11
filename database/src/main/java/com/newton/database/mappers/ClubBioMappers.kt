@@ -27,12 +27,12 @@ fun ClubBioEntity.toDomain(): ClubBioData {
         mission = mission,
         vision = vision,
         social_media =
-        socialMedia.map {
-            com.newton.network.domain.models.aboutUs.SocialMediaX(
-                platform = it.platform,
-                url = it.url
-            )
-        }
+            socialMedia.map {
+                com.newton.network.domain.models.aboutUs.SocialMediaX(
+                    platform = it.platform,
+                    url = it.url
+                )
+            }
     )
 }
 
@@ -44,11 +44,11 @@ fun ClubBioData.toEntity(): ClubBioEntity {
         mission = mission,
         vision = vision,
         socialMedia =
-        social_media.map {
-            ClubSocialMediaEntity(
-                platform = it.platform,
-                url = it.url
-            )
-        }
+            social_media.map {
+                ClubSocialMediaEntity(
+                    platform = it.platform,
+                    url = it.url
+                )
+            }
     )
 }

@@ -27,7 +27,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.animation.customAnimations.*
+import com.newton.commonUi.animations.*
 import com.newton.commonUi.ui.*
 
 @Composable
@@ -35,10 +35,10 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
     val cardScale by animateFloatAsState(
         targetValue = 1f,
         animationSpec =
-        tween(
-            durationMillis = 300,
-            easing = EaseOutBack
-        )
+            tween(
+                durationMillis = 300,
+                easing = EaseOutBack
+            )
     )
     val cardAlpha by animateFloatAsState(
         targetValue = 1f,
@@ -48,26 +48,26 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
         items(8) {
             CustomCard(
                 modifier =
-                modifier
-                    .fillMaxWidth()
-                    .scale(cardScale)
-                    .alpha(cardAlpha)
-                    .shadow(
-                        elevation = 8.dp,
-                        shape = RoundedCornerShape(16.dp)
-                    ),
+                    modifier
+                        .fillMaxWidth()
+                        .scale(cardScale)
+                        .alpha(cardAlpha)
+                        .shadow(
+                            elevation = 8.dp,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
                 shape = RoundedCornerShape(16.dp),
                 border =
-                BorderStroke(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.surfaceVariant
-                )
+                    BorderStroke(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
             ) {
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -75,15 +75,15 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                     ) {
                         ShimmerWithFade(
                             modifier =
-                            Modifier
-                                .size(12.dp)
-                                .clip(CircleShape)
+                                Modifier
+                                    .size(12.dp)
+                                    .clip(CircleShape)
                         ) {
                             Box(
                                 modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(Color(0xFF1A1A1A))
+                                    Modifier
+                                        .fillMaxSize()
+                                        .background(Color(0xFF1A1A1A))
                             )
                         }
                         Spacer(modifier = Modifier.width(8.dp))
@@ -99,9 +99,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                                 ) {
                                     Box(
                                         modifier =
-                                        Modifier
-                                            .fillMaxSize()
-                                            .background(Color(0xFF1A1A1A))
+                                            Modifier
+                                                .fillMaxSize()
+                                                .background(Color(0xFF1A1A1A))
                                     )
                                 }
                             }
@@ -118,9 +118,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                                 ) {
                                     Box(
                                         modifier =
-                                        Modifier
-                                            .fillMaxSize()
-                                            .background(Color(0xFF1A1A1A))
+                                            Modifier
+                                                .fillMaxSize()
+                                                .background(Color(0xFF1A1A1A))
                                     )
                                 }
                             }
@@ -138,9 +138,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                         ) {
                             Box(
                                 modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(Color(0xFF1A1A1A))
+                                    Modifier
+                                        .fillMaxSize()
+                                        .background(Color(0xFF1A1A1A))
                             )
                         }
                         Spacer(modifier = Modifier.width(12.dp))
@@ -152,9 +152,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                             ) {
                                 Box(
                                     modifier =
-                                    Modifier
-                                        .fillMaxSize()
-                                        .background(Color(0xFF1A1A1A))
+                                        Modifier
+                                            .fillMaxSize()
+                                            .background(Color(0xFF1A1A1A))
                                 )
                             }
                             ShimmerWithFade(
@@ -164,9 +164,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                             ) {
                                 Box(
                                     modifier =
-                                    Modifier
-                                        .fillMaxSize()
-                                        .background(Color(0xFF1A1A1A))
+                                        Modifier
+                                            .fillMaxSize()
+                                            .background(Color(0xFF1A1A1A))
                                 )
                             }
                         }
@@ -179,9 +179,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                             ShimmerWithFade(modifier = Modifier.width(80.dp)) {
                                 Box(
                                     modifier =
-                                    Modifier
-                                        .fillMaxSize()
-                                        .background(Color(0xFF1A1A1A))
+                                        Modifier
+                                            .fillMaxSize()
+                                            .background(Color(0xFF1A1A1A))
                                 )
                             }
                         }
@@ -190,9 +190,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                     ShimmerWithFade(modifier = Modifier.height(80.dp)) {
                         Box(
                             modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .background(Color(0xFF1A1A1A))
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(Color(0xFF1A1A1A))
                         )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
@@ -207,10 +207,10 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                         ) {
                             Box(
                                 modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .weight(1f)
-                                    .background(Color(0xFF1A1A1A))
+                                    Modifier
+                                        .fillMaxSize()
+                                        .weight(1f)
+                                        .background(Color(0xFF1A1A1A))
                             )
                         }
                         Spacer(modifier = Modifier.width(8.dp))
@@ -221,10 +221,10 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                         ) {
                             Box(
                                 modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .weight(1f)
-                                    .background(Color(0xFF1A1A1A))
+                                    Modifier
+                                        .fillMaxSize()
+                                        .weight(1f)
+                                        .background(Color(0xFF1A1A1A))
                             )
                         }
                         Spacer(modifier = Modifier.width(8.dp))
@@ -236,10 +236,10 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                         ) {
                             Box(
                                 modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .weight(1f)
-                                    .background(Color(0xFF1A1A1A))
+                                    Modifier
+                                        .fillMaxSize()
+                                        .weight(1f)
+                                        .background(Color(0xFF1A1A1A))
                             )
                         }
                     }
@@ -252,9 +252,9 @@ fun FeedbackCardShimmer(modifier: Modifier = Modifier) {
                     ) {
                         Box(
                             modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .background(Color(0xFF1A1A1A))
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(Color(0xFF1A1A1A))
                         )
                     }
                 }

@@ -30,9 +30,9 @@ fun SuccessAnimation() {
     var animationState by remember { mutableStateOf<LottieAnimationState>(LottieAnimationState.Playing) }
     Box(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f)),
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f)),
         contentAlignment = Alignment.Center
     ) {
         Column(

@@ -16,21 +16,16 @@
  */
 package com.newton.admin.presentation.events.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.presentation.events.events.EventUpdateEvent
-import com.newton.admin.presentation.events.states.UpdateEventState
-import com.newton.network.Resource
-import com.newton.network.domain.models.adminModels.UpdateEventRequest
-import com.newton.network.domain.repositories.AdminRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.states.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
 class UpdateEventsViewModel @Inject constructor(
@@ -57,6 +52,7 @@ class UpdateEventsViewModel @Inject constructor(
     private fun toDefault() {
         _updateState.value = UpdateEventState()
     }
+
     private fun updateEvent(eventId: Int) {
         val request = UpdateEventRequest(
             name = _updateState.value.name,

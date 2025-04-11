@@ -25,7 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.communities.presentation.viewModel.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,9 +58,9 @@ fun AboutUsScreen(
     ) {
         LazyColumn(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {

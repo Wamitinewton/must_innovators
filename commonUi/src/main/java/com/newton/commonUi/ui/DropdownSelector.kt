@@ -48,18 +48,18 @@ fun DropdownSelector(
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
                 leadingIcon =
-                leadingIcon?.let {
-                    {
-                        Icon(
-                            imageVector = it,
-                            contentDescription = contentDescription
-                        )
-                    }
-                },
+                    leadingIcon?.let {
+                        {
+                            Icon(
+                                imageVector = it,
+                                contentDescription = contentDescription
+                            )
+                        }
+                    },
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(),
+                    Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                 label = { Text(label) }
             )
             ExposedDropdownMenu(

@@ -54,20 +54,20 @@ fun OverviewTab(community: Community) {
 
     LazyColumn(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
             AnimatedVisibility(
                 visible = true,
                 enter =
-                fadeIn(animationSpec = tween(durationMillis = 500)) +
-                    slideInVertically(
-                        animationSpec = tween(durationMillis = 500),
-                        initialOffsetY = { it / 2 }
-                    )
+                    fadeIn(animationSpec = tween(durationMillis = 500)) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 500),
+                            initialOffsetY = { it / 2 }
+                        )
             ) {
                 ElevatedCard(
                     modifier = Modifier.fillMaxWidth()
@@ -94,11 +94,11 @@ fun OverviewTab(community: Community) {
             AnimatedVisibility(
                 visible = true,
                 enter =
-                fadeIn(animationSpec = tween(durationMillis = 600)) +
-                    slideInVertically(
-                        animationSpec = tween(durationMillis = 600),
-                        initialOffsetY = { it / 2 }
-                    )
+                    fadeIn(animationSpec = tween(durationMillis = 600)) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 600),
+                            initialOffsetY = { it / 2 }
+                        )
             ) {
                 ElevatedCard(
                     modifier = Modifier.fillMaxWidth()
@@ -115,7 +115,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Community Lead",
-                            name = community.communityLead.name,
+                            name = community.communityLead.username,
                             icon = Icons.Default.Stars
                         )
 
@@ -123,7 +123,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Co-Lead",
-                            name = community.communityLead.name,
+                            name = community.communityLead.username,
                             icon = Icons.Default.Person
                         )
 
@@ -131,7 +131,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Secretary",
-                            name = community.communityLead.name,
+                            name = community.communityLead.username,
                             icon = Icons.Default.Edit
                         )
                     }
@@ -143,11 +143,11 @@ fun OverviewTab(community: Community) {
             AnimatedVisibility(
                 visible = true,
                 enter =
-                fadeIn(animationSpec = tween(durationMillis = 700)) +
-                    slideInVertically(
-                        animationSpec = tween(durationMillis = 700),
-                        initialOffsetY = { it / 2 }
-                    )
+                    fadeIn(animationSpec = tween(durationMillis = 700)) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 700),
+                            initialOffsetY = { it / 2 }
+                        )
             ) {
                 ElevatedCard(
                     modifier = Modifier.fillMaxWidth()
@@ -202,11 +202,11 @@ fun OverviewTab(community: Community) {
             AnimatedVisibility(
                 visible = true,
                 enter =
-                fadeIn(animationSpec = tween(durationMillis = 800)) +
-                    slideInVertically(
-                        animationSpec = tween(durationMillis = 800),
-                        initialOffsetY = { it / 2 }
-                    )
+                    fadeIn(animationSpec = tween(durationMillis = 800)) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 800),
+                            initialOffsetY = { it / 2 }
+                        )
             ) {
                 ElevatedCard(
                     modifier = Modifier.fillMaxWidth()
@@ -237,11 +237,11 @@ fun OverviewTab(community: Community) {
             AnimatedVisibility(
                 visible = true,
                 enter =
-                fadeIn(animationSpec = tween(durationMillis = 900)) +
-                    slideInVertically(
-                        animationSpec = tween(durationMillis = 900),
-                        initialOffsetY = { it / 2 }
-                    )
+                    fadeIn(animationSpec = tween(durationMillis = 900)) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 900),
+                            initialOffsetY = { it / 2 }
+                        )
             ) {
                 ElevatedCard(
                     modifier = Modifier.fillMaxWidth()

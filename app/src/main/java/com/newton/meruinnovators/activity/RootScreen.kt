@@ -44,7 +44,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs,navController:NavHostCon
             NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.BlogsRoute.routes,
             NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
             NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminActions.routes
-            -> true
+                -> true
 
             else -> false
         }
@@ -52,7 +52,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs,navController:NavHostCon
         when (currentDestination?.route) {
             NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
             NavigationRoutes.AdminActions.routes
-            -> true
+                -> true
 
             else -> false
         }

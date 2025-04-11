@@ -207,9 +207,9 @@ constructor(
                 description = _updateCommunityState.value.description,
                 foundingDate = _updateCommunityState.value.dateFounded,
                 techStack =
-                _updateCommunityState.value.toolsText?.split(
-                    ","
-                )?.map { it.trim() }?.filter { it.isNotEmpty() },
+                    _updateCommunityState.value.toolsText?.split(
+                        ","
+                    )?.map { it.trim() }?.filter { it.isNotEmpty() },
                 sessions = _updateCommunityState.value.sessions,
                 socialMedia = _updateCommunityState.value.socials
             )

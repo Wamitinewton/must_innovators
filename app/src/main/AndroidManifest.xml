@@ -13,6 +13,7 @@
 
 
     <application
+        android:usesCleartextTraffic="true"
         android:name=".application.MeruInnovatorsApp"
         android:enableOnBackInvokedCallback="true"
         android:allowBackup="true"

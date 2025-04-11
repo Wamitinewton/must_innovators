@@ -40,8 +40,8 @@ fun FilterSection(
 
     ScrollableTabRow(
         selectedTabIndex =
-        filters.indexOfFirst { it.first == selectedFilter }.takeIf { it >= 0 }
-            ?: 0,
+            filters.indexOfFirst { it.first == selectedFilter }.takeIf { it >= 0 }
+                ?: 0,
         edgePadding = 16.dp,
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.primary,

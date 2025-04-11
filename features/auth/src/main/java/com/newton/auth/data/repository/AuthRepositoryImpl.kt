@@ -19,8 +19,8 @@ package com.newton.auth.data.repository
 import coil3.network.*
 import com.newton.auth.data.dataStore.*
 import com.newton.auth.data.tokenHolder.*
-import com.newton.database.*
 import com.newton.database.dao.*
+import com.newton.database.dbManager.*
 import com.newton.database.mappers.*
 import com.newton.network.*
 import com.newton.network.data.remote.*
@@ -39,7 +39,7 @@ constructor(
     private val authService: AuthService,
     private val sessionManager: SessionManager,
     private val userDao: UserDao,
-    private val dbCleaner: DbCleaner
+    private val roomDataManager: RoomDataManager
 ) : AuthRepository {
     init {
         try {
@@ -165,7 +165,7 @@ constructor(
 
     override suspend fun clearUserData() {
         sessionManager.clearTokens()
-        dbCleaner.clearAllTables()
+        roomDataManager.clearAllTables()
     }
 
     override suspend fun logoutUser(): Flow<Resource<Unit>> =
@@ -176,7 +176,7 @@ constructor(
             AuthTokenHolder.refreshToken = null
 
             sessionManager.clearTokens()
-            dbCleaner.clearAllTables()
+            roomDataManager.clearAllTables()
 
             emit(Resource.Success(Unit))
         }.catch { e ->

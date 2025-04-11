@@ -32,7 +32,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.animation.customAnimations.*
+import com.newton.commonUi.animations.*
 import com.newton.network.domain.models.aboutUs.*
 
 @Composable
@@ -251,16 +251,16 @@ fun CommunityCardShimmer() {
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         colors =
-        CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
     ) {
         Column {
             Row(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
@@ -276,20 +276,20 @@ fun CommunityCardShimmer() {
                 Column(modifier = Modifier.weight(1f)) {
                     Box(
                         modifier =
-                        Modifier
-                            .size(width = 120.dp, height = 16.dp)
-                            .shimmerEffect()
-                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                            Modifier
+                                .size(width = 120.dp, height = 16.dp)
+                                .shimmerEffect()
+                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Box(
                         modifier =
-                        Modifier
-                            .size(width = 80.dp, height = 12.dp)
-                            .shimmerEffect()
-                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                            Modifier
+                                .size(width = 80.dp, height = 12.dp)
+                                .shimmerEffect()
+                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                     )
                 }
             }
@@ -297,33 +297,33 @@ fun CommunityCardShimmer() {
             Column(modifier = Modifier.padding(16.dp)) {
                 Box(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(12.dp)
-                        .shimmerEffect()
-                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        Modifier
+                            .fillMaxWidth()
+                            .height(12.dp)
+                            .shimmerEffect()
+                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Box(
                     modifier =
-                    Modifier
-                        .fillMaxWidth(0.8f)
-                        .height(12.dp)
-                        .shimmerEffect()
-                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        Modifier
+                            .fillMaxWidth(0.8f)
+                            .height(12.dp)
+                            .shimmerEffect()
+                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Box(
                     modifier =
-                    Modifier
-                        .align(Alignment.End)
-                        .size(width = 100.dp, height = 36.dp)
-                        .shimmerEffect()
-                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        Modifier
+                            .align(Alignment.End)
+                            .size(width = 100.dp, height = 36.dp)
+                            .shimmerEffect()
+                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                 )
             }
         }

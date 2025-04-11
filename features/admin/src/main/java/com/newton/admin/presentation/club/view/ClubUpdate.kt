@@ -16,18 +16,13 @@
  */
 package com.newton.admin.presentation.club.view
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.newton.admin.presentation.club.event.ClubEvent
-import com.newton.admin.presentation.club.view.composable.UpdateClubForm
-import com.newton.admin.presentation.club.viewmodel.ClubViewModel
-import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
-import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.commonUi.ui.ErrorScreen
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import com.newton.admin.presentation.club.event.*
+import com.newton.admin.presentation.club.view.composable.*
+import com.newton.admin.presentation.club.viewmodel.*
+import com.newton.admin.presentation.events.view.composables.*
+import com.newton.commonUi.ui.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +50,7 @@ fun AddClubScreen(
                     text = "Club Updated Successfully"
                 )
             }
+
             clubState.errorMessage != null -> {
                 ErrorScreen(
                     message = clubState.errorMessage!!,
@@ -62,6 +58,7 @@ fun AddClubScreen(
                     titleText = "Something wrong happened when loading Club data"
                 )
             }
+
             else -> {
                 UpdateClubForm(clubState, onEvent)
             }

@@ -55,10 +55,10 @@ data class CommunityResponse(
 @Serializable
 data class CommunityLeadsResponse(
     val id: Int,
-    val name: String,
+    val username: String,
     val email: String,
-    val position: String,
-    val bio: String?
+    val first_name: String,
+    val last_name: String?
 )
 
 @Serializable
@@ -73,7 +73,7 @@ data class MemberResponse(
     val id: Int,
     val name: String,
     val email: String,
-    val joined_at: String
+    val joined_date: String
 )
 
 @Serializable

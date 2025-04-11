@@ -16,8 +16,8 @@
  */
 package com.newton.admin.presentation.partners.events
 
-import java.io.File
-import java.time.LocalDate
+import java.io.*
+import java.time.*
 
 sealed class AddPartnersEvent {
     data class NameChange(val name: String) : AddPartnersEvent()

@@ -38,9 +38,9 @@ fun SessionsTab(sessions: List<Session>) {
 
     LazyColumn(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         groupedSessions.forEach { (day, daySessions) ->
@@ -59,16 +59,16 @@ fun SessionsTab(sessions: List<Session>) {
                 AnimatedVisibility(
                     visible = true,
                     enter =
-                    fadeIn(
-                        animationSpec = tween(
-                            durationMillis = 300,
-                            delayMillis = staggerDelay
-                        )
-                    ) +
-                        slideInVertically(
-                            animationSpec = tween(durationMillis = 300, delayMillis = staggerDelay),
-                            initialOffsetY = { it / 2 }
-                        )
+                        fadeIn(
+                            animationSpec = tween(
+                                durationMillis = 300,
+                                delayMillis = staggerDelay
+                            )
+                        ) +
+                            slideInVertically(
+                                animationSpec = tween(durationMillis = 300, delayMillis = staggerDelay),
+                                initialOffsetY = { it / 2 }
+                            )
                 ) {
                     SessionCard(session = session)
                 }
@@ -98,17 +98,17 @@ fun SessionCard(session: Session) {
     ) {
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier =
-                Modifier
-                    .size(64.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(locationColor.copy(alpha = 0.1f)),
+                    Modifier
+                        .size(64.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(locationColor.copy(alpha = 0.1f)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

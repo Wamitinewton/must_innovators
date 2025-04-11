@@ -36,14 +36,14 @@ fun SocialAuthentication(
                 onGoogleLogin()
             },
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(bottom = 12.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(bottom = 12.dp),
             colors =
-            ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            ),
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
             shape = RoundedCornerShape(14.dp)
         ) {
             Row(
@@ -59,9 +59,9 @@ fun SocialAuthentication(
                 Text(
                     text = "Continue with google",
                     style =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                        MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                 )
             }
         }
@@ -71,14 +71,14 @@ fun SocialAuthentication(
                 onGithubLogin()
             },
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(bottom = 12.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(bottom = 12.dp),
             colors =
-            ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            ),
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
             shape = RoundedCornerShape(14.dp)
         ) {
             Row(
@@ -94,9 +94,9 @@ fun SocialAuthentication(
                 Text(
                     text = "Continue with github",
                     style =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                        MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                 )
             }
         }

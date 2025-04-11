@@ -26,10 +26,10 @@ fun BlogsScreen(modifier: Modifier = Modifier) {
     Scaffold(modifier = Modifier.fillMaxSize()) { values ->
         Box(
             modifier =
-            Modifier.padding(
-                top = values.calculateTopPadding(),
-                bottom = values.calculateBottomPadding()
-            )
+                Modifier.padding(
+                    top = values.calculateTopPadding(),
+                    bottom = values.calculateBottomPadding()
+                )
         ) {
             Text("Blogs Screen")
         }

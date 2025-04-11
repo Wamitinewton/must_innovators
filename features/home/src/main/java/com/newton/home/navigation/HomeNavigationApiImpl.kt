@@ -43,7 +43,7 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                 val getTestimonialsViewModel = hiltViewModel<GetTestimonialsViewModel>()
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 val communitiesViewModel = hiltViewModel<CommunitiesViewModel>()
-                val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>()
+                val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 HomeScreen(
                     partnersViewModel = partnersViewModel,
                     getTestimonialsViewModel = getTestimonialsViewModel,

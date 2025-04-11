@@ -40,7 +40,7 @@ data class Community(
 @Serializable
 data class CommunityLeads(
     val id: Int,
-    val name: String,
+    val username: String,
     val email: String,
     val position: String,
     val bio: String?

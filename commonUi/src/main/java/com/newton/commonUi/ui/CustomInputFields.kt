@@ -61,24 +61,24 @@ fun AuthTextFields(
             Text(
                 text = label,
                 style =
-                MaterialTheme.typography.bodyMedium.copy(
-                    color = PurpleGrey40
-                )
+                    MaterialTheme.typography.bodyMedium.copy(
+                        color = PurpleGrey40
+                    )
             )
         },
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
         isError = isError,
         keyboardOptions =
-        KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
+            KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
         keyboardActions =
-        KeyboardActions(
-            onNext = { onImeAction() },
-            onDone = { onImeAction() }
-        ),
+            KeyboardActions(
+                onNext = { onImeAction() },
+                onDone = { onImeAction() }
+            ),
         supportingText = supportingText
     )
 }
@@ -152,11 +152,11 @@ fun DefaultTextField(
         },
         supportingText = displayErrorMessage?.let { { Text(it) } },
         keyboardOptions =
-        KeyboardOptions(
-            capitalization = capitalization,
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        )
+            KeyboardOptions(
+                capitalization = capitalization,
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            )
     )
 }
 
@@ -181,30 +181,30 @@ fun PasswordTextInput(
             Text(
                 text = label,
                 style =
-                MaterialTheme.typography.bodyMedium.copy(
-                    color = PurpleGrey40
-                )
+                    MaterialTheme.typography.bodyMedium.copy(
+                        color = PurpleGrey40
+                    )
             )
         },
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
         isError = isError,
         visualTransformation =
-        if (passwordVisible) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
+            if (passwordVisible) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
         keyboardOptions =
-        KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = imeAction
-        ),
+            KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = imeAction
+            ),
         keyboardActions =
-        KeyboardActions(
-            onNext = { onImeAction() },
-            onDone = { onImeAction() }
-        ),
+            KeyboardActions(
+                onNext = { onImeAction() },
+                onDone = { onImeAction() }
+            ),
         supportingText = supportingText,
         trailingIcon = {
             Row(
@@ -213,19 +213,19 @@ fun PasswordTextInput(
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         painter =
-                        painterResource(
-                            if (passwordVisible) {
-                                R.drawable.ic_visibility_off
-                            } else {
-                                R.drawable.ic_visibility
-                            }
-                        ),
+                            painterResource(
+                                if (passwordVisible) {
+                                    R.drawable.ic_visibility_off
+                                } else {
+                                    R.drawable.ic_visibility
+                                }
+                            ),
                         contentDescription =
-                        if (passwordVisible) {
-                            "Hide password"
-                        } else {
-                            "Show password"
-                        }
+                            if (passwordVisible) {
+                                "Hide password"
+                            } else {
+                                "Show password"
+                            }
                     )
                 }
             }
@@ -253,18 +253,18 @@ fun ReadOnlyTextField(
         readOnly = true,
         enabled = false,
         modifier =
-        modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         leadingIcon =
-        leadingIcon?.let {
-            {
-                Icon(
-                    imageVector = it,
-                    contentDescription = contentDescription
-                )
+            leadingIcon?.let {
+                {
+                    Icon(
+                        imageVector = it,
+                        contentDescription = contentDescription
+                    )
+                }
             }
-        }
     )
 }
 
@@ -295,14 +295,14 @@ fun ValidatedTextField(
             maxLines = maxLines,
             enabled = enabled,
             leadingIcon =
-            leadingIcon?.let {
-                {
-                    Icon(
-                        imageVector = it,
-                        contentDescription = contentDescription
-                    )
+                leadingIcon?.let {
+                    {
+                        Icon(
+                            imageVector = it,
+                            contentDescription = contentDescription
+                        )
+                    }
                 }
-            }
         )
 
         AnimatedVisibility(visible = errorMessage != null) {
@@ -327,7 +327,7 @@ fun CustomClickableOutlinedTextField(
     onClick: () -> Unit,
     isError: Boolean = false,
     supportingText:
-        @Composable()
+    @Composable()
         () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -353,15 +353,15 @@ fun CustomClickableOutlinedTextField(
             )
         },
         interactionSource =
-        interactionSource.also { interaction ->
-            LaunchedEffect(key1 = interaction) {
-                interaction.interactions.collect {
-                    if (it is PressInteraction.Release) {
-                        onClick.invoke()
+            interactionSource.also { interaction ->
+                LaunchedEffect(key1 = interaction) {
+                    interaction.interactions.collect {
+                        if (it is PressInteraction.Release) {
+                            onClick.invoke()
+                        }
                     }
                 }
             }
-        }
     )
 }
 
@@ -394,19 +394,19 @@ fun MultilineInputField(
             minLines = minLines,
             maxLines = maxLines,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .heightIn(min = 120.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 120.dp),
             isError = errorMessage != null,
             leadingIcon =
-            leadingIcon?.let {
-                {
-                    Icon(
-                        imageVector = it,
-                        contentDescription = contentDescription
-                    )
+                leadingIcon?.let {
+                    {
+                        Icon(
+                            imageVector = it,
+                            contentDescription = contentDescription
+                        )
+                    }
                 }
-            }
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -454,41 +454,41 @@ fun OtpDigitBox(
         value = value,
         onValueChange = onValueChanged,
         modifier =
-        Modifier
-            .size(56.dp)
-            .focusRequester(focusRequester)
-            .onFocusChanged { onFocusChanged(it.isFocused) }
-            .onKeyEvent(onKeyEvent)
-            .border(
-                width = 2.dp,
-                color = borderColor,
-                shape = RoundedCornerShape(12.dp)
-            ),
+            Modifier
+                .size(56.dp)
+                .focusRequester(focusRequester)
+                .onFocusChanged { onFocusChanged(it.isFocused) }
+                .onKeyEvent(onKeyEvent)
+                .border(
+                    width = 2.dp,
+                    color = borderColor,
+                    shape = RoundedCornerShape(12.dp)
+                ),
         textStyle =
-        androidx.compose.ui.text.TextStyle(
-            textAlign = TextAlign.Center,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
-        ),
+            androidx.compose.ui.text.TextStyle(
+                textAlign = TextAlign.Center,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            ),
         keyboardOptions =
-        KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next
-        ),
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
         keyboardActions = KeyboardActions(),
         singleLine = true,
         enabled = isEnabled,
         colors =
-        TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-            disabledContainerColor = MaterialTheme.colorScheme.surface,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.primary
-        ),
+            TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                disabledContainerColor = MaterialTheme.colorScheme.surface,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                cursorColor = MaterialTheme.colorScheme.primary
+            ),
         shape = RoundedCornerShape(12.dp),
         maxLines = 1
     )

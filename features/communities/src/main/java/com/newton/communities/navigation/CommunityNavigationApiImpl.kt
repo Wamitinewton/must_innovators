@@ -20,7 +20,6 @@ import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
-import androidx.navigation.navigation
 import com.newton.communities.presentation.view.*
 import com.newton.communities.presentation.viewModel.*
 import com.newton.navigation.*
@@ -36,7 +35,7 @@ class CommunityNavigationApiImpl : CommunityNavigationApi {
             ) {
                 val parentEntry =
                     remember(it) {
-                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Communities.route)
+                        navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
                     }
                 val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 CommunityDetailsScreen(

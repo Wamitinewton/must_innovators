@@ -14,13 +14,13 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.database
+package com.newton.database.dbManager
 
 import com.newton.database.db.*
 import kotlinx.coroutines.*
 import javax.inject.*
 
-class DbCleaner
+class RoomDataManager
 @Inject
 constructor(
     private val appDatabase: AppDatabase

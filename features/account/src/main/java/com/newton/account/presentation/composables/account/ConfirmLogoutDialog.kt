@@ -16,10 +16,9 @@
  */
 package com.newton.account.presentation.composables.account
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import com.newton.commonUi.ui.CustomDialog
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import com.newton.commonUi.ui.*
 
 @Composable
 fun ConfirmLogoutDialog(

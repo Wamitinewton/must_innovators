@@ -66,9 +66,9 @@ fun ErrorState(message: String) {
             Button(
                 onClick = { /* Retry action */ },
                 colors =
-                ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,

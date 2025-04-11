@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.club.event
 
-import com.newton.network.domain.models.admin.Socials
+import com.newton.network.domain.models.admin.*
 
 sealed class ClubEvent {
     data class NameChanged(val name: String) : ClubEvent()

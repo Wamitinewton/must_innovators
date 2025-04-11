@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.notification.events
 
-import java.time.LocalDateTime
+import java.time.*
 
 sealed class NotificationEvent {
     data object SendNewsLetter : NotificationEvent()

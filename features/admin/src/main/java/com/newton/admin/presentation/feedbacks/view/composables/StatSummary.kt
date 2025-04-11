@@ -41,17 +41,17 @@ fun StatsSummary(feedbacks: List<FeedbackData>) {
 
     Card(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StatItem(
@@ -63,9 +63,9 @@ fun StatsSummary(feedbacks: List<FeedbackData>) {
 
             VerticalDivider(
                 modifier =
-                Modifier
-                    .width(1.dp)
-                    .height(40.dp),
+                    Modifier
+                        .width(1.dp)
+                        .height(40.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
 
@@ -78,9 +78,9 @@ fun StatsSummary(feedbacks: List<FeedbackData>) {
 
             VerticalDivider(
                 modifier =
-                Modifier
-                    .height(40.dp)
-                    .width(1.dp),
+                    Modifier
+                        .height(40.dp)
+                        .width(1.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
 
@@ -93,9 +93,9 @@ fun StatsSummary(feedbacks: List<FeedbackData>) {
 
             VerticalDivider(
                 modifier =
-                Modifier
-                    .height(40.dp)
-                    .width(1.dp),
+                    Modifier
+                        .height(40.dp)
+                        .width(1.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
 

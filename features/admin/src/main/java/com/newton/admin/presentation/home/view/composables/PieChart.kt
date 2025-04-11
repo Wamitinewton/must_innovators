@@ -46,11 +46,11 @@ fun EventsPieChart(
 
     Canvas(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .pointerInput(Unit) {
-                detectTapGestures(
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures(
 //                    onPress = { offset ->
 //                        val center = Offset(size.width / 2, size.height / 2)
 //                        val radius = size.minDimension / 2
@@ -82,12 +82,12 @@ fun EventsPieChart(
 //                            }
 //                        }
 //                    },
-                    onTap = {
-                        selectedSegment = null
-                        onTooltipChanged(null)
-                    }
-                )
-            }
+                        onTap = {
+                            selectedSegment = null
+                            onTooltipChanged(null)
+                        }
+                    )
+                }
     ) {
         val center = Offset(size.width / 2, size.height / 2)
 //        val animatedRotation by animateFloatAsState(

@@ -38,21 +38,21 @@ fun SkillsSection(skills: List<String>?) {
 
     Card(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -74,9 +74,9 @@ fun SkillsSection(skills: List<String>?) {
                     SuggestionChip(
                         onClick = { },
                         colors =
-                        SuggestionChipDefaults.suggestionChipColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                        ),
+                            SuggestionChipDefaults.suggestionChipColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer
+                            ),
                         label = {
                             Text(
                                 text = skill,

@@ -32,9 +32,9 @@ import com.newton.network.domain.models.authModels.*
 fun ProfileSection(user: UserData) {
     Box(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(

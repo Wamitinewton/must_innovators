@@ -17,13 +17,12 @@
 package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.input.*
-import com.newton.auth.presentation.signUp.state.SignupViewmodelState
+import com.newton.auth.presentation.signUp.state.*
 import com.newton.commonUi.ui.*
 
 @Composable

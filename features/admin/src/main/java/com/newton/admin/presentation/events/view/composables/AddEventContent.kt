@@ -16,40 +16,25 @@
  */
 package com.newton.admin.presentation.events.view.composables
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Today
-import androidx.compose.material.icons.outlined.Category
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.events.events.AddEventEvents
-import com.newton.admin.presentation.events.states.AddEventEffect
-import com.newton.admin.presentation.events.states.AddEventState
-import com.newton.admin.presentation.events.viewmodel.AddEventViewModel
-import com.newton.commonUi.ui.CustomClickableOutlinedTextField
-import com.newton.commonUi.ui.toFormattedDate
-import java.io.File
-import java.io.FileOutputStream
+import androidx.activity.compose.*
+import androidx.activity.result.*
+import androidx.activity.result.contract.*
+import androidx.compose.animation.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.states.*
+import com.newton.admin.presentation.events.viewmodel.*
+import com.newton.commonUi.ui.*
+import java.io.*
 
 @Composable
 fun AddEventContent(state: AddEventState, onEvent: (AddEventEvents) -> Unit, viewModel: AddEventViewModel) {

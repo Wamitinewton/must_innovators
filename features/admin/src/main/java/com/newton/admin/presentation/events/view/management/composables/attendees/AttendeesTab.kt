@@ -29,7 +29,6 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.unit.*
 import com.newton.admin.presentation.events.events.*
 import com.newton.admin.presentation.events.viewmodel.*
-import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
 import com.newton.network.domain.models.adminModels.*
 import java.time.*
@@ -57,19 +56,19 @@ fun AttendeesTab(
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier =
-            Modifier
-                .padding(8.dp)
-                .clip(RoundedCornerShape(4.dp))
-                .background(MaterialTheme.colorScheme.surface)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(4.dp)
-                )
-                .fillMaxWidth()
-                .height(40.dp)
-                .clickable { expanded = true }
-                .padding(horizontal = 20.dp),
+                Modifier
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .clickable { expanded = true }
+                    .padding(horizontal = 20.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Text(
@@ -87,9 +86,9 @@ fun AttendeesTab(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier =
-                Modifier
-                    .padding(horizontal = 12.dp)
-                    .fillMaxWidth()
+                    Modifier
+                        .padding(horizontal = 12.dp)
+                        .fillMaxWidth()
             ) {
                 allEvents.forEach { event ->
                     DropdownMenuItem(
@@ -116,8 +115,8 @@ fun AttendeesTab(
 
             Text(
                 text = "Date: ${
-                selectedEvent!!.date.toLocalDateTime()
-                    .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
+                    selectedEvent!!.date.toLocalDateTime()
+                        .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
                 }",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
@@ -128,9 +127,9 @@ fun AttendeesTab(
             } else if (attendeesState.isSuccess && attendeesState.attendees.isNotEmpty()) {
                 Row(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     AttendanceStatistics(
