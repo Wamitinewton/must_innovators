@@ -103,7 +103,10 @@ class EventsNavigationApiImpl : EventsNavigationApi {
                         navHostController.navigateUp()
                     },
                     onTicketSelected = {},
-                    userTicketsViewModel = userTicketsViewModel
+                    userTicketsViewModel = userTicketsViewModel,
+                    onNavigateToEventsList = {
+                        navHostController.navigate(NavigationRoutes.EventsRoute.routes)
+                    }
                 )
             }
 

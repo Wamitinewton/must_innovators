@@ -98,8 +98,8 @@ fun PartnerDetailsScreen(
                                         Brush.verticalGradient(
                                             colors =
                                                 listOf(
-                                                    Color.Black.copy(alpha = 0.2f),
-                                                    Color.Black.copy(alpha = 0.7f)
+                                                    Color.Transparent,
+                                                    MaterialTheme.colorScheme.surface
                                                 )
                                         )
                                 )
