@@ -108,17 +108,17 @@ fun OtpVerificationScreen(
                     }
                 },
                 colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Transparent
-                    )
+                TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent
+                )
             )
         }
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -204,16 +204,16 @@ fun OtpVerificationScreen(
                 onClick = onVerifyOtp,
                 enabled = !isLoading && otp.length == 6,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
                 colors =
-                    ButtonDefaults.elevatedButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                        disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
+                ButtonDefaults.elevatedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                ),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 if (isLoading) {
@@ -257,19 +257,19 @@ fun OtpVerificationScreen(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold,
                         modifier =
-                            Modifier
-                                .padding(start = 4.dp)
-                                .border(
-                                    width = 0.dp,
-                                    color = Color.Transparent,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .padding(4.dp)
-                                .clickableWithRipple {
-                                    onResendOtp()
-                                    remainingSeconds = 60
-                                    isTimerRunning = true
-                                },
+                        Modifier
+                            .padding(start = 4.dp)
+                            .border(
+                                width = 0.dp,
+                                color = Color.Transparent,
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .padding(4.dp)
+                            .clickableWithRipple {
+                                onResendOtp()
+                                remainingSeconds = 60
+                                isTimerRunning = true
+                            },
                         fontSize = 14.sp
                     )
                 }

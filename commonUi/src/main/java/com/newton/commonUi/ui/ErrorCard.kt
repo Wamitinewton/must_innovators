@@ -73,9 +73,9 @@ fun ErrorScreen(
             Button(
                 onClick = onRetry,
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             ) {
                 Text("Try Again")
             }

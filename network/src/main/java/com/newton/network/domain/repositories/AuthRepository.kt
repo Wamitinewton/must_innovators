@@ -53,7 +53,7 @@ interface AuthRepository {
 
     suspend fun resetPassword(passwordRequest: ResetPasswordRequest): Flow<com.newton.network.Resource<RequestOtpResponse>>
 
-    suspend fun deleteAccount(): Flow<com.newton.network.Resource<DeleteAccount>>
+    suspend fun deleteAccount(): Flow<com.newton.network.Resource<Unit>>
 
     suspend fun clearUserData()
 

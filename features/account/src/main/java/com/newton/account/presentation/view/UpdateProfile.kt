@@ -133,10 +133,10 @@ fun ProfileUpdateScreen(
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
-                    .padding(horizontal = 24.dp)
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(horizontal = 24.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -158,15 +158,15 @@ fun ProfileUpdateScreen(
                     },
                     label = "First Name",
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .focusRequester(firstNameFocusRequester),
+                    Modifier
+                        .fillMaxWidth()
+                        .focusRequester(firstNameFocusRequester),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            capitalization = KeyboardCapitalization.Words,
-                            imeAction = ImeAction.Next
-                        )
+                    KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -181,10 +181,10 @@ fun ProfileUpdateScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            capitalization = KeyboardCapitalization.Words,
-                            imeAction = ImeAction.Next
-                        )
+                    KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -212,10 +212,10 @@ fun ProfileUpdateScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            capitalization = KeyboardCapitalization.Words,
-                            imeAction = ImeAction.Next
-                        )
+                    KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -254,10 +254,10 @@ fun ProfileUpdateScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Next
-                        )
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    )
                 )
             }
 
@@ -321,10 +321,10 @@ fun ProfileUpdateScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Uri,
-                            imeAction = ImeAction.Next
-                        ),
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Uri,
+                        imeAction = ImeAction.Next
+                    ),
                     isError = !profileFormState.github.isNullOrEmpty() && !isValidUrl(profileFormState.github),
                     validateUrl = true
                 )
@@ -341,10 +341,10 @@ fun ProfileUpdateScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Uri,
-                            imeAction = ImeAction.Next
-                        ),
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Uri,
+                        imeAction = ImeAction.Next
+                    ),
                     isError = !profileFormState.linkedin.isNullOrEmpty() && !isValidUrl(profileFormState.linkedin)
                 )
 
@@ -360,10 +360,10 @@ fun ProfileUpdateScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Uri,
-                            imeAction = ImeAction.Next
-                        ),
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Uri,
+                        imeAction = ImeAction.Next
+                    ),
                     isError = !profileFormState.twitter.isNullOrEmpty() && !isValidUrl(profileFormState.twitter)
                 )
             }

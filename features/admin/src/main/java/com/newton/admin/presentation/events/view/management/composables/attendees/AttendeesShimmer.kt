@@ -39,54 +39,54 @@ fun AttendeesShimmer() {
                 ) {
                     ShimmerWithFade(
                         modifier =
-                            Modifier
-                                .size(80.dp)
-                                .clip(RoundedCornerShape(10.dp))
+                        Modifier
+                            .size(80.dp)
+                            .clip(RoundedCornerShape(10.dp))
                     ) {
                         Box(
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
+                            Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                     ShimmerWithFade(
                         modifier =
-                            Modifier
-                                .size(80.dp)
-                                .clip(RoundedCornerShape(10.dp))
+                        Modifier
+                            .size(80.dp)
+                            .clip(RoundedCornerShape(10.dp))
                     ) {
                         Box(
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
+                            Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                     ShimmerWithFade(
                         modifier =
-                            Modifier
-                                .size(80.dp)
-                                .clip(RoundedCornerShape(10.dp))
+                        Modifier
+                            .size(80.dp)
+                            .clip(RoundedCornerShape(10.dp))
                     ) {
                         Box(
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
+                            Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                     ShimmerWithFade(
                         modifier =
-                            Modifier
-                                .size(80.dp)
-                                .clip(RoundedCornerShape(10.dp))
+                        Modifier
+                            .size(80.dp)
+                            .clip(RoundedCornerShape(10.dp))
                     ) {
                         Box(
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
+                            Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                         )
                     }
                 }
@@ -96,89 +96,89 @@ fun AttendeesShimmer() {
             items(7) {
                 CustomCard(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     Row(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ShimmerWithFade(
                             modifier =
-                                Modifier
-                                    .size(48.dp)
-                                    .clip(CircleShape)
+                            Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
                         ) {
                             Box(
                                 modifier =
-                                    Modifier
-                                        .fillMaxSize()
-                                        .background(
-                                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
-                                            shape = CircleShape
-                                        )
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
+                                        shape = CircleShape
+                                    )
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             ShimmerWithFade(
                                 modifier =
-                                    Modifier
-                                        .fillMaxWidth(.6f)
-                                        .height(10.dp)
-                                        .clip(
-                                            RoundedCornerShape(3.dp)
-                                        )
+                                Modifier
+                                    .fillMaxWidth(.6f)
+                                    .height(10.dp)
+                                    .clip(
+                                        RoundedCornerShape(3.dp)
+                                    )
                             ) {
                                 Box(
                                     modifier =
-                                        Modifier
-                                            .fillMaxSize()
-                                            .background(
-                                                color = MaterialTheme.colorScheme.surface.copy(alpha = .3f)
-                                            )
+                                    Modifier
+                                        .fillMaxSize()
+                                        .background(
+                                            color = MaterialTheme.colorScheme.surface.copy(alpha = .3f)
+                                        )
                                 )
                             }
                             Spacer(Modifier.height(4.dp))
                             ShimmerWithFade(
                                 modifier =
-                                    Modifier
-                                        .fillMaxWidth(.4f)
-                                        .height(10.dp)
-                                        .clip(
-                                            RoundedCornerShape(3.dp)
-                                        )
+                                Modifier
+                                    .fillMaxWidth(.4f)
+                                    .height(10.dp)
+                                    .clip(
+                                        RoundedCornerShape(3.dp)
+                                    )
                             ) {
                                 Box(
                                     modifier =
-                                        Modifier
-                                            .fillMaxSize()
-                                            .background(
-                                                color = MaterialTheme.colorScheme.surface.copy(alpha = .3f)
-                                            )
+                                    Modifier
+                                        .fillMaxSize()
+                                        .background(
+                                            color = MaterialTheme.colorScheme.surface.copy(alpha = .3f)
+                                        )
                                 )
                             }
                         }
                         Column(horizontalAlignment = Alignment.End) {
                             ShimmerWithFade(
                                 modifier =
-                                    Modifier
-                                        .fillMaxWidth(.3f)
-                                        .height(26.dp)
-                                        .clip(RoundedCornerShape(16.dp))
+                                Modifier
+                                    .fillMaxWidth(.3f)
+                                    .height(26.dp)
+                                    .clip(RoundedCornerShape(16.dp))
                             ) {
                                 Box(
                                     modifier =
-                                        Modifier
-                                            .fillMaxSize()
-                                            .background(
-                                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                                shape = CircleShape
-                                            )
+                                    Modifier
+                                        .fillMaxSize()
+                                        .background(
+                                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                            shape = CircleShape
+                                        )
                                 )
                             }
                         }

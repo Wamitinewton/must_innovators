@@ -41,12 +41,12 @@ fun EmptyEventsCard(modifier: Modifier = Modifier) {
         ) {
             Box(
                 modifier =
-                    Modifier
-                        .size(80.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = CircleShape
-                        ),
+                Modifier
+                    .size(80.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = CircleShape
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

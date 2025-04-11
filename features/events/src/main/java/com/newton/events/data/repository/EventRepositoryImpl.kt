@@ -45,14 +45,14 @@ constructor(
     override fun getPagedEvents(): Flow<PagingData<EventsData>> {
         return Pager(
             config =
-                PagingConfig(
-                    pageSize = NETWORK_PAGE_SIZE,
-                    prefetchDistance = 1,
-                    enablePlaceholders = false,
-                    maxSize = NETWORK_PAGE_SIZE * 5,
-                    initialLoadSize = NETWORK_PAGE_SIZE * 2,
-                    jumpThreshold = NETWORK_PAGE_SIZE * 4
-                ),
+            PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                prefetchDistance = 1,
+                enablePlaceholders = false,
+                maxSize = NETWORK_PAGE_SIZE * 5,
+                initialLoadSize = NETWORK_PAGE_SIZE * 2,
+                jumpThreshold = NETWORK_PAGE_SIZE * 4
+            ),
             remoteMediator = EventRemoteMediator(api, db, eventDao),
             pagingSourceFactory = {
                 db.eventDao.getPagedEvents()

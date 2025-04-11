@@ -73,32 +73,32 @@ fun FeedbackCard(
 
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .shadow(
-                    elevation = with(density) { animatedElevation.value.dp },
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .background(color = MaterialTheme.colorScheme.surface)
-                .rotate(animatedRotation.value),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .shadow(
+                elevation = with(density) { animatedElevation.value.dp },
+                shape = RoundedCornerShape(16.dp)
+            )
+            .background(color = MaterialTheme.colorScheme.surface)
+            .rotate(animatedRotation.value),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(
-                        brush =
-                            Brush.verticalGradient(
-                                colors =
-                                    listOf(
-                                        MaterialTheme.colorScheme.surface,
-                                        MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-                                    )
-                            )
+            Modifier
+                .fillMaxWidth()
+                .background(
+                    brush =
+                    Brush.verticalGradient(
+                        colors =
+                        listOf(
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+                        )
                     )
-                    .padding(16.dp)
+                )
+                .padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -159,13 +159,13 @@ fun FeedbackCard(
                 Surface(
                     shape = CircleShape,
                     color =
-                        when (feedback.rating) {
-                            5 -> Color(0xFF4CAF50)
-                            4 -> Color(0xFF8BC34A)
-                            3 -> Color(0xFFFFC107)
-                            2 -> Color(0xFFFF9800)
-                            else -> Color(0xFFF44336)
-                        }
+                    when (feedback.rating) {
+                        5 -> Color(0xFF4CAF50)
+                        4 -> Color(0xFF8BC34A)
+                        3 -> Color(0xFFFFC107)
+                        2 -> Color(0xFFFF9800)
+                        else -> Color(0xFFF44336)
+                    }
                 ) {
                     Text(
                         text = feedback.rating.toString(),
@@ -185,17 +185,17 @@ fun FeedbackCard(
             ) {
                 Row(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
                 ) {
                     Surface(
                         color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(2.dp),
                         modifier =
-                            Modifier
-                                .width(4.dp)
-                                .height(IntrinsicSize.Max)
+                        Modifier
+                            .width(4.dp)
+                            .height(IntrinsicSize.Max)
                     ) {
                         Spacer(modifier = Modifier.fillMaxHeight())
                     }

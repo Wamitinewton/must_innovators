@@ -45,20 +45,20 @@ fun Modifier.shimmerEffect(
             initialValue = -2 * size.width.toFloat(),
             targetValue = 2 * size.width.toFloat(),
             animationSpec =
-                infiniteRepeatable(
-                    animation = tween(durationMillis, easing = LinearEasing),
-                    repeatMode = RepeatMode.Restart
-                ),
+            infiniteRepeatable(
+                animation = tween(durationMillis, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart
+            ),
             label = "shimmer_offset_x"
         )
 
         background(
             brush =
-                Brush.linearGradient(
-                    colors = colors,
-                    start = Offset(startOffsetX, 0f),
-                    end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
-                )
+            Brush.linearGradient(
+                colors = colors,
+                start = Offset(startOffsetX, 0f),
+                end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
+            )
         ).onGloballyPositioned {
             size = it.size
         }
@@ -86,23 +86,23 @@ fun ShimmerWithFade(
             initialValue = 0.6f,
             targetValue = 1f,
             animationSpec =
-                infiniteRepeatable(
-                    animation =
-                        tween(
-                            durationMillis = durationMillis / 2,
-                            easing = FastOutSlowInEasing
-                        ),
-                    repeatMode = RepeatMode.Reverse
+            infiniteRepeatable(
+                animation =
+                tween(
+                    durationMillis = durationMillis / 2,
+                    easing = FastOutSlowInEasing
                 ),
+                repeatMode = RepeatMode.Reverse
+            ),
             label = "shimmer_fade_alpha"
         )
 
         Box(
             modifier =
-                Modifier
-                    .matchParentSize()
-                    .alpha(alpha)
-                    .shimmerEffect(colors = colors)
+            Modifier
+                .matchParentSize()
+                .alpha(alpha)
+                .shimmerEffect(colors = colors)
         )
     }
 }

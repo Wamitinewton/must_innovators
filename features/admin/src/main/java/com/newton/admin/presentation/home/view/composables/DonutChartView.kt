@@ -36,9 +36,9 @@ internal fun DonutChartComponentView(
     val formattedColors = colors.map { Color(it) }
     ColumnWrapper(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Box(

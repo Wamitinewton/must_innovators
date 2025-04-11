@@ -98,9 +98,9 @@ fun CustomDialog(
             Button(
                 onClick = onConfirm,
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = if (isErrorDialog) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
-                    )
+                ButtonDefaults.buttonColors(
+                    containerColor = if (isErrorDialog) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                )
             ) {
                 Text(confirmButtonText)
             }

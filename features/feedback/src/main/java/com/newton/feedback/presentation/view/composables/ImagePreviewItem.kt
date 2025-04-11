@@ -66,15 +66,15 @@ fun ReorderableImageRow(
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(itemSpacing),
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .animateContentSize(
-                    animationSpec =
-                        spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessLow
-                        )
+        Modifier
+            .fillMaxWidth()
+            .animateContentSize(
+                animationSpec =
+                spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
                 )
+            )
     ) {
         itemsIndexed(
             items = images,
@@ -85,57 +85,57 @@ fun ReorderableImageRow(
 
             Box(
                 modifier =
-                    Modifier
-                        .size(100.dp)
-                        .graphicsLayer {
-                            if (isDragged) {
-                                scaleX = 1.1f
-                                scaleY = 1.1f
-                            }
+                Modifier
+                    .size(100.dp)
+                    .graphicsLayer {
+                        if (isDragged) {
+                            scaleX = 1.1f
+                            scaleY = 1.1f
                         }
-                        .shadow(
-                            elevation = if (isDragged) 8.dp else 0.dp,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .offset { IntOffset(offsetX, 0) }
-                        .zIndex(if (isDragged) 1f else 0f)
-                        .pointerInput(Unit) {
-                            detectDragGesturesAfterLongPress(
-                                onDragStart = {
-                                    draggedItemIndex = index
-                                },
-                                onDrag = { change, dragAmount ->
-                                    change.consume()
-                                    dragOffset += dragAmount
-                                    // Calculate which item we're hovering over
-                                    val totalDragX = dragOffset.x
-                                    val estimatedPosition =
-                                        (totalDragX / (itemWidth.toPx() + itemSpacing.toPx())).roundToInt()
-                                    val targetIndex =
-                                        (index + estimatedPosition).coerceIn(0, images.lastIndex)
+                    }
+                    .shadow(
+                        elevation = if (isDragged) 8.dp else 0.dp,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .offset { IntOffset(offsetX, 0) }
+                    .zIndex(if (isDragged) 1f else 0f)
+                    .pointerInput(Unit) {
+                        detectDragGesturesAfterLongPress(
+                            onDragStart = {
+                                draggedItemIndex = index
+                            },
+                            onDrag = { change, dragAmount ->
+                                change.consume()
+                                dragOffset += dragAmount
+                                // Calculate which item we're hovering over
+                                val totalDragX = dragOffset.x
+                                val estimatedPosition =
+                                    (totalDragX / (itemWidth.toPx() + itemSpacing.toPx())).roundToInt()
+                                val targetIndex =
+                                    (index + estimatedPosition).coerceIn(0, images.lastIndex)
 
-                                    if (targetIndex != currentHoveredIndex) {
-                                        currentHoveredIndex = targetIndex
-                                    }
-                                },
-                                onDragEnd = {
-                                    currentHoveredIndex?.let { targetValue ->
-                                        if (targetValue != index) {
-                                            onReorder(index, targetValue)
-                                        }
-                                    }
-
-                                    draggedItemIndex = null
-                                    dragOffset = Offset.Zero
-                                    currentHoveredIndex = null
-                                },
-                                onDragCancel = {
-                                    draggedItemIndex = null
-                                    dragOffset = Offset.Zero
-                                    currentHoveredIndex = null
+                                if (targetIndex != currentHoveredIndex) {
+                                    currentHoveredIndex = targetIndex
                                 }
-                            )
-                        }
+                            },
+                            onDragEnd = {
+                                currentHoveredIndex?.let { targetValue ->
+                                    if (targetValue != index) {
+                                        onReorder(index, targetValue)
+                                    }
+                                }
+
+                                draggedItemIndex = null
+                                dragOffset = Offset.Zero
+                                currentHoveredIndex = null
+                            },
+                            onDragCancel = {
+                                draggedItemIndex = null
+                                dragOffset = Offset.Zero
+                                currentHoveredIndex = null
+                            }
+                        )
+                    }
             ) {
                 ImagePreviewItem(
                     uri = uri,
@@ -165,22 +165,22 @@ fun ImagePreviewItem(
 ) {
     Box(
         modifier =
-            modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(
-                    if (isDragging) {
-                        MaterialTheme.colorScheme.primaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.surfaceVariant
-                    }
-                )
+        modifier
+            .size(100.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(
+                if (isDragging) {
+                    MaterialTheme.colorScheme.primaryContainer
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant
+                }
+            )
     ) {
         AsyncImage(
             model =
-                ImageRequest.Builder(LocalContext.current)
-                    .data(uri)
-                    .build(),
+            ImageRequest.Builder(LocalContext.current)
+                .data(uri)
+                .build(),
             contentDescription = "Image Preview",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -189,13 +189,13 @@ fun ImagePreviewItem(
         IconButton(
             onClick = onRemove,
             modifier =
-                Modifier
-                    .align(Alignment.TopEnd)
-                    .size(24.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.8f),
-                        shape = CircleShape
-                    )
+            Modifier
+                .align(Alignment.TopEnd)
+                .size(24.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.8f),
+                    shape = CircleShape
+                )
         ) {
             Icon(
                 imageVector = Icons.Default.Close,

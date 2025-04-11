@@ -33,9 +33,9 @@ import com.newton.admin.data.mappers.*
 fun SelectedUserCard(user: User) {
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
     ) {
         Column(
@@ -53,10 +53,10 @@ fun SelectedUserCard(user: User) {
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary),
+                    Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -69,9 +69,9 @@ fun SelectedUserCard(user: User) {
 
                 Column(
                     modifier =
-                        Modifier
-                            .padding(start = 16.dp)
-                            .weight(1f)
+                    Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f)
                 ) {
                     Text(
                         text = user.name,

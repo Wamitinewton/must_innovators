@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
+import com.newton.commonUi.ui.*
 
 @Composable
 fun AccountDeletedScreen(
@@ -39,31 +40,27 @@ fun AccountDeletedScreen(
 ) {
     val currentContext = LocalContext.current
 
-    Scaffold { paddingValues ->
+    DefaultScaffold {
         Box(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .background(MaterialTheme.colorScheme.background),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
         ) {
             Column(
-                modifier =
-                    Modifier
-                        .fillMaxWidth(0.9f)
-                        .verticalScroll(rememberScrollState())
-                        .padding(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Box(
-                    modifier =
-                        Modifier
-                            .padding(bottom = 48.dp)
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primaryContainer),
+                    modifier = Modifier
+                        .padding(bottom = 32.dp)
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -73,52 +70,40 @@ fun AccountDeletedScreen(
                         modifier = Modifier.size(64.dp)
                     )
                 }
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Account Successfully Deleted",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Account Successfully Deleted",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
 
-                    Text(
-                        text = "Your account and all associated data have been permanently removed from our system.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        textAlign = TextAlign.Center
-                    )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Your account and all associated data have been permanently removed from our system.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
 
-                    Text(
-                        text = "Thank you for being part of our community. We're sorry to see you go and hope you'll join us again in the future.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                    Spacer(modifier = Modifier.height(48.dp))
-                }
-            }
+                Text(
+                    text = "Thank you for being part of our community. We're sorry to see you go and hope you'll join us again in the future.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
+                Spacer(modifier = Modifier.height(48.dp))
                 Button(
                     onClick = onCreateNewAccount,
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                    colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -131,16 +116,17 @@ fun AccountDeletedScreen(
                     )
                 }
 
+                Spacer(modifier = Modifier.height(16.dp))
+
                 OutlinedButton(
                     onClick = {
                         (currentContext as? Activity)?.let { activity ->
                             onExitApp(activity)
                         }
                     },
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(56.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ExitToApp,

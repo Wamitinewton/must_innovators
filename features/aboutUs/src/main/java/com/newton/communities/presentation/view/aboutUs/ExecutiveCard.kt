@@ -173,19 +173,19 @@ fun ExecutiveCard(
 fun ExecutiveCardShimmer() {
     Card(
         modifier =
-            Modifier
-                .width(180.dp)
-                .padding(8.dp)
-                .shadow(
-                    elevation = 4.dp,
-                    shape = RoundedCornerShape(16.dp),
-                    spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                ),
+        Modifier
+            .width(180.dp)
+            .padding(8.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(16.dp),
+                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+            ),
         shape = RoundedCornerShape(16.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
+        )
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -199,18 +199,18 @@ fun ExecutiveCardShimmer() {
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .shimmerEffect(
-                                colors =
-                                    listOf(
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                                    )
+                    Modifier
+                        .fillMaxSize()
+                        .shimmerEffect(
+                            colors =
+                            listOf(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                             )
+                        )
                 )
             }
 
@@ -218,29 +218,29 @@ fun ExecutiveCardShimmer() {
 
             Box(
                 modifier =
-                    Modifier
-                        .width(120.dp)
-                        .height(20.dp)
-                        .shimmerEffect()
+                Modifier
+                    .width(120.dp)
+                    .height(20.dp)
+                    .shimmerEffect()
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Box(
                 modifier =
-                    Modifier
-                        .width(100.dp)
-                        .height(16.dp)
-                        .shimmerEffect(
-                            colors =
-                                listOf(
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                                )
+                Modifier
+                    .width(100.dp)
+                    .height(16.dp)
+                    .shimmerEffect(
+                        colors =
+                        listOf(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                         )
+                    )
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -248,11 +248,11 @@ fun ExecutiveCardShimmer() {
                 repeat(3) {
                     Box(
                         modifier =
-                            Modifier
-                                .width(if (it == 2) 80.dp else 140.dp)
-                                .height(12.dp)
-                                .padding(vertical = 2.dp)
-                                .shimmerEffect()
+                        Modifier
+                            .width(if (it == 2) 80.dp else 140.dp)
+                            .height(12.dp)
+                            .padding(vertical = 2.dp)
+                            .shimmerEffect()
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                 }

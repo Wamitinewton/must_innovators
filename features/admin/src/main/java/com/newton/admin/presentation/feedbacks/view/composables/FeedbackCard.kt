@@ -61,10 +61,10 @@ fun FeedbackCard(
     val cardScale by animateFloatAsState(
         targetValue = if (cardVisible) 1f else 0.8f,
         animationSpec =
-            tween(
-                durationMillis = 300,
-                easing = EaseOutBack
-            )
+        tween(
+            durationMillis = 300,
+            easing = EaseOutBack
+        )
     )
 
     val cardAlpha by animateFloatAsState(
@@ -99,36 +99,36 @@ fun FeedbackCard(
     Card(
         onClick = onCardClick,
         modifier =
-            modifier
-                .fillMaxWidth()
-                .scale(cardScale)
-                .alpha(cardAlpha)
-                .shadow(
-                    elevation = 8.dp,
-                    shape = RoundedCornerShape(16.dp),
-                    spotColor = priorityColor.copy(alpha = 0.1f)
-                ),
+        modifier
+            .fillMaxWidth()
+            .scale(cardScale)
+            .alpha(cardAlpha)
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(16.dp),
+                spotColor = priorityColor.copy(alpha = 0.1f)
+            ),
         shape = RoundedCornerShape(16.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
         border =
-            BorderStroke(
-                width = 1.dp,
-                color =
-                    when (feedback.status) {
-                        FeedbackStatus.PENDING -> MaterialTheme.colorScheme.surfaceVariant
-                        FeedbackStatus.IN_PROGRESS -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
-                        FeedbackStatus.RESOLVED -> MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
-                    }
-            )
+        BorderStroke(
+            width = 1.dp,
+            color =
+            when (feedback.status) {
+                FeedbackStatus.PENDING -> MaterialTheme.colorScheme.surfaceVariant
+                FeedbackStatus.IN_PROGRESS -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
+                FeedbackStatus.RESOLVED -> MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+            }
+        )
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -137,10 +137,10 @@ fun FeedbackCard(
                 // Priority indicator
                 Box(
                     modifier =
-                        Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(priorityColor)
+                    Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(priorityColor)
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -165,9 +165,9 @@ fun FeedbackCard(
 
                         Text(
                             text =
-                                feedback.category.name.replace("_", " ").lowercase()
-                                    .split(" ")
-                                    .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } },
+                            feedback.category.name.replace("_", " ").lowercase()
+                                .split(" ")
+                                .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } },
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -208,10 +208,10 @@ fun FeedbackCard(
                     model = feedback.userProfilePic,
                     contentDescription = "Profile picture of ${feedback.userName}",
                     modifier =
-                        Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.surfaceVariant),
+                    Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentScale = ContentScale.Crop
                 )
 
@@ -267,20 +267,20 @@ fun FeedbackCard(
             Surface(
                 shape = RoundedCornerShape(8.dp),
                 color =
-                    if (feedback.hasGrammarIssues) {
-                        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.2f)
-                    } else {
-                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                    }
+                if (feedback.hasGrammarIssues) {
+                    MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.2f)
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                }
             ) {
                 Text(
                     text = feedback.content,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis
                 )

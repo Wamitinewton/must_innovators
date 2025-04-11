@@ -35,9 +35,9 @@ fun FeedbackSelectionBottomSheet(
 
     Column(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

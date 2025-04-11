@@ -36,15 +36,15 @@ fun StatCard(
 ) {
     CustomCard(
         modifier =
-            modifier
-                .height(120.dp)
-                .shadow(4.dp, RoundedCornerShape(8.dp))
+        modifier
+            .height(120.dp)
+            .shadow(4.dp, RoundedCornerShape(8.dp))
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(8.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

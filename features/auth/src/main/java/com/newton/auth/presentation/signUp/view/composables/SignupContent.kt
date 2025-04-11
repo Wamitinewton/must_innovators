@@ -42,10 +42,10 @@ fun SignupContent(
 ) {
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 14.dp),
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AuthHeader(
@@ -137,9 +137,9 @@ fun SignupContent(
                 Text(
                     text = "Sign up",
                     style =
-                        MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
+                    MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 )
             }
         )

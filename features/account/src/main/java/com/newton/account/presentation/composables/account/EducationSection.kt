@@ -32,21 +32,21 @@ fun EducationSection(user: UserData) {
 
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

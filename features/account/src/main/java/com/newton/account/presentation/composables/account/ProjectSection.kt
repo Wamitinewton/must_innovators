@@ -41,18 +41,18 @@ fun ProjectsSection(projects: List<Project>?) {
 
     Card(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .animateContentSize(),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .animateContentSize(),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -122,25 +122,25 @@ fun ProjectCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(
-                        brush =
-                            Brush.linearGradient(
-                                colors =
-                                    listOf(
-                                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
-                                        MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
-                                    )
-                            )
+            Modifier
+                .fillMaxWidth()
+                .background(
+                    brush =
+                    Brush.linearGradient(
+                        colors =
+                        listOf(
+                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
+                        )
                     )
-                    .padding(16.dp)
+                )
+                .padding(16.dp)
         ) {
             Column {
                 Text(
@@ -174,12 +174,12 @@ fun ProjectCard(
                         SuggestionChip(
                             onClick = { },
                             colors =
-                                SuggestionChipDefaults.suggestionChipColors(
-                                    containerColor =
-                                        MaterialTheme.colorScheme.tertiaryContainer.copy(
-                                            alpha = 0.7f
-                                        )
-                                ),
+                            SuggestionChipDefaults.suggestionChipColors(
+                                containerColor =
+                                MaterialTheme.colorScheme.tertiaryContainer.copy(
+                                    alpha = 0.7f
+                                )
+                            ),
                             label = {
                                 Text(
                                     text = tech,
@@ -196,9 +196,9 @@ fun ProjectCard(
                     onClick = onLinkClick,
                     modifier = Modifier.align(Alignment.End),
                     colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
+                    ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Link,

@@ -102,10 +102,10 @@ fun CreateTestimonial(
         ) {
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(scrollState)
-                        .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Column(
@@ -138,9 +138,9 @@ fun CreateTestimonial(
                     label = "Your Testimonial",
                     placeholder = "Share your experience...",
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = 150.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 150.dp),
                     maxLines = 5
                 )
 

@@ -35,9 +35,9 @@ fun SocialItem(
 ) {
     Row(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Session info column

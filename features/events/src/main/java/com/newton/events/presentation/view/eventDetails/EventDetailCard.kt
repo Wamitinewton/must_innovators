@@ -32,15 +32,15 @@ fun EventDetailCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
         Row(
             modifier =
-                Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(

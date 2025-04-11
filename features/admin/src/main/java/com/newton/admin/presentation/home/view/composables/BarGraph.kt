@@ -37,30 +37,30 @@ fun BarGraph(
 
     Canvas(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onPress = { offset ->
-                            val barWidth = size.width / communityGroups.size - 10f
-                            val barIndex = (offset.x / (barWidth + 10f)).toInt()
+        Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = { offset ->
+                        val barWidth = size.width / communityGroups.size - 10f
+                        val barIndex = (offset.x / (barWidth + 10f)).toInt()
 
-                            if (barIndex in communityGroups.indices) {
-                                val group = communityGroups[barIndex]
-                                onTooltipChanged(
-                                    ToolTipData(
-                                        title = group.name,
-                                        value = "${group.name} members",
-                                        position = offset
-                                    )
+                        if (barIndex in communityGroups.indices) {
+                            val group = communityGroups[barIndex]
+                            onTooltipChanged(
+                                ToolTipData(
+                                    title = group.name,
+                                    value = "${group.name} members",
+                                    position = offset
                                 )
-                                hoveredBar = barIndex
-                            }
-                        },
-                        onTap = { hoveredBar = null }
-                    )
-                }
+                            )
+                            hoveredBar = barIndex
+                        }
+                    },
+                    onTap = { hoveredBar = null }
+                )
+            }
     ) {
         val maxCount = communityGroups.maxOfOrNull { it.members }?.toFloat() ?: 0f
         val barWidth = size.width / communityGroups.size - 10f

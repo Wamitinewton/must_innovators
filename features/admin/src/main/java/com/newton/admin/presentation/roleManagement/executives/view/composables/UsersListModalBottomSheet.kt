@@ -78,9 +78,9 @@ fun UserSelectionBottomSheet(
 ) {
     Column(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+        Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
     ) {
         Text(
             text = "Select User",
@@ -129,19 +129,19 @@ fun UserListItem(
 ) {
     Row(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(vertical = 12.dp),
+        Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier =
-                Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary)
-                    .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape),
+            Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primary)
+                .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -153,9 +153,9 @@ fun UserListItem(
 
         Column(
             modifier =
-                Modifier
-                    .padding(start = 16.dp)
-                    .weight(1f)
+            Modifier
+                .padding(start = 16.dp)
+                .weight(1f)
         ) {
             Text(
                 text = user.name,
@@ -175,28 +175,28 @@ fun UserListItem(
 fun UsersShimmer() {
     Surface(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
         color = Color.Transparent
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ShimmerWithFade(
                 modifier =
-                    Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
+                Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F))
+                    Modifier
+                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F))
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
@@ -205,29 +205,29 @@ fun UsersShimmer() {
             ) {
                 ShimmerWithFade(
                     modifier =
-                        Modifier
-                            .height(12.dp)
-                            .fillMaxWidth(.6f)
-                            .clip(RoundedCornerShape(4.dp))
+                    Modifier
+                        .height(12.dp)
+                        .fillMaxWidth(.6f)
+                        .clip(RoundedCornerShape(4.dp))
                 ) {
                     Box(
                         modifier =
-                            Modifier
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F))
+                        Modifier
+                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F))
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 ShimmerWithFade(
                     modifier =
-                        Modifier
-                            .height(12.dp)
-                            .fillMaxWidth(.4f)
-                            .clip(RoundedCornerShape(4.dp))
+                    Modifier
+                        .height(12.dp)
+                        .fillMaxWidth(.4f)
+                        .clip(RoundedCornerShape(4.dp))
                 ) {
                     Box(
                         modifier =
-                            Modifier
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F))
+                        Modifier
+                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F))
                     )
                 }
             }
