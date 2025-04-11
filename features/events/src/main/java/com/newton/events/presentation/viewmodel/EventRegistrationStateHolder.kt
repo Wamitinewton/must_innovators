@@ -24,7 +24,6 @@ import com.newton.network.domain.models.eventModels.*
 import kotlinx.coroutines.flow.*
 import javax.inject.*
 
-@Singleton
 class EventRegistrationStateHolder
 @Inject
 constructor(
