@@ -61,7 +61,7 @@ fun HomeScreen(
         showOrbitals = true,
         topBar = {
             MeruInnovatorsAppBar(
-                title = "MUST Innovators",
+                title = "MUST Innovators"
 //                actions = {
 //                    Box(
 //                        modifier =

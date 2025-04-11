@@ -36,11 +36,11 @@ fun BottomNavigationBar(
 ) {
     BottomAppBar(
         modifier =
-            Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .clip(
-                    shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
-                )
+        Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .clip(
+                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+            )
     ) {
         bottomNavigationDestinations.forEach { destination ->
             val selected =
@@ -90,12 +90,12 @@ fun RowScope.BottomNavItem(
 
     Column(
         modifier =
-            Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .clickable(
-                    onClick = onClick
-                ),
+        Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .clickable(
+                onClick = onClick
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -110,11 +110,11 @@ fun RowScope.BottomNavItem(
         }) {
             Icon(
                 imageVector =
-                    if (isSelected) {
-                        destination.selectedIcon
-                    } else {
-                        destination.unSelectedIcon
-                    },
+                if (isSelected) {
+                    destination.selectedIcon
+                } else {
+                    destination.unSelectedIcon
+                },
                 contentDescription = destination.title,
                 tint = iconColor
             )

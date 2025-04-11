@@ -51,10 +51,10 @@ fun DeleteAccountScreen(
         targetValue = if (showConfirmationDialog) 1.2f else 1f,
         label = "warning icon animation",
         animationSpec =
-            spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
-            )
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
     )
 
     LaunchedEffect(key1 = true) {
@@ -100,29 +100,29 @@ fun DeleteAccountScreen(
                     }
                 },
                 colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.1f),
-                        titleContentColor = MaterialTheme.colorScheme.error
-                    )
+                TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.1f),
+                    titleContentColor = MaterialTheme.colorScheme.error
+                )
             )
         }
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Box(
                 modifier =
-                    Modifier
-                        .padding(vertical = 24.dp)
-                        .size(80.dp * warningIconSize)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.errorContainer),
+                Modifier
+                    .padding(vertical = 24.dp)
+                    .size(80.dp * warningIconSize)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.errorContainer),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -177,14 +177,14 @@ fun DeleteAccountScreen(
             Button(
                 onClick = { showConfirmationDialog = true },
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error,
-                        contentColor = MaterialTheme.colorScheme.onError
-                    ),
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError
+                ),
                 enabled = !uiState.isLoading
             ) {
                 AnimatedVisibility(
@@ -223,9 +223,9 @@ fun DeleteAccountScreen(
             TextButton(
                 onClick = onNavigateBack,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
                 enabled = !uiState.isLoading
             ) {
                 Text(

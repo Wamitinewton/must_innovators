@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            RootScreen(navigationSubGraphs,navController)
+            RootScreen(navigationSubGraphs, navController)
         }
     }
 

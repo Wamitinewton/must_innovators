@@ -31,9 +31,9 @@ fun AuthHeader(
 ) {
     Row(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp, top = 30.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(bottom = 24.dp, top = 30.dp),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -51,9 +51,9 @@ fun AuthHeader(
         Text(
             text = headerText,
             style =
-                MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 18.sp
-                )
+            MaterialTheme.typography.headlineMedium.copy(
+                fontSize = 18.sp
+            )
         )
     }
 }
@@ -62,23 +62,23 @@ fun AuthHeader(
 fun OrContinueWith() {
     Row(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp, top = 24.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp, top = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         HorizontalDivider(
             modifier =
-                Modifier
-                    .weight(1f)
-                    .padding(end = 8.dp)
+            Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
         )
         Text("Or continue with email")
         HorizontalDivider(
             modifier =
-                Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp)
+            Modifier
+                .weight(1f)
+                .padding(start = 8.dp)
         )
     }
 }

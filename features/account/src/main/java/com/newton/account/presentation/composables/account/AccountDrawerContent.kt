@@ -53,23 +53,23 @@ fun AccountDrawerContent(
     }
     ModalDrawerSheet(
         modifier =
-            Modifier.background(
-                brush =
-                    Brush.linearGradient(
-                        colors =
-                            listOf(
-                                MaterialTheme.colorScheme.surface,
-                                MaterialTheme.colorScheme.surfaceDim,
-                                MaterialTheme.colorScheme.surfaceBright
-                            )
-                    )
+        Modifier.background(
+            brush =
+            Brush.linearGradient(
+                colors =
+                listOf(
+                    MaterialTheme.colorScheme.surface,
+                    MaterialTheme.colorScheme.surfaceDim,
+                    MaterialTheme.colorScheme.surfaceBright
+                )
             )
+        )
     ) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             contentAlignment = Alignment.CenterEnd
         ) {
             IconButton(onClick = { coroutineScope.launch { drawerState.close() } }) {
@@ -87,9 +87,9 @@ fun AccountDrawerContent(
             Text(
                 text = "Account",
                 style =
-                    MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
+                MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold
+                ),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
@@ -160,9 +160,9 @@ fun AccountDrawerContent(
                     showConfirmationDialog = true
                 },
                 colors =
-                    NavigationDrawerItemDefaults.colors(
-                        unselectedContainerColor = Color.Transparent
-                    )
+                NavigationDrawerItemDefaults.colors(
+                    unselectedContainerColor = Color.Transparent
+                )
             )
 
             NavigationDrawerItem(
@@ -184,9 +184,9 @@ fun AccountDrawerContent(
                     onDeleteAccountClicked()
                 },
                 colors =
-                    NavigationDrawerItemDefaults.colors(
-                        unselectedContainerColor = Color.Transparent
-                    )
+                NavigationDrawerItemDefaults.colors(
+                    unselectedContainerColor = Color.Transparent
+                )
             )
         }
     }

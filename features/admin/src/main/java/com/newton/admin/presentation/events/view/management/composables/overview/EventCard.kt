@@ -67,10 +67,10 @@ fun EventCard(
                 initialValue = 1f,
                 targetValue = 1.02f,
                 animationSpec =
-                    infiniteRepeatable(
-                        animation = tween(800, easing = FastOutSlowInEasing),
-                        repeatMode = RepeatMode.Reverse
-                    )
+                infiniteRepeatable(
+                    animation = tween(800, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                )
             )
         } else {
             remember { mutableFloatStateOf(1f) }
@@ -78,37 +78,37 @@ fun EventCard(
 
     CustomCard(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .offset {
-                    IntOffset(y = with(density) { animatedOffset.value.toDp().roundToPx() }, x = 0)
-                }
-                .clickable {
-                    onClick()
-                }
-                .scale(pulseScale.value)
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .offset {
+                IntOffset(y = with(density) { animatedOffset.value.toDp().roundToPx() }, x = 0)
+            }
+            .clickable {
+                onClick()
+            }
+            .scale(pulseScale.value)
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier =
-                    Modifier
-                        .size(56.dp)
-                        .background(
-                            color =
-                                if (isPast) {
-                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-                                } else {
-                                    MaterialTheme.colorScheme.primary
-                                },
-                            shape = CircleShape
-                        ),
+                Modifier
+                    .size(56.dp)
+                    .background(
+                        color =
+                        if (isPast) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                        } else {
+                            MaterialTheme.colorScheme.primary
+                        },
+                        shape = CircleShape
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -118,22 +118,22 @@ fun EventCard(
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         color =
-                            if (isPast) {
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                            } else {
-                                MaterialTheme.colorScheme.onPrimary
-                            }
+                        if (isPast) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        } else {
+                            MaterialTheme.colorScheme.onPrimary
+                        }
                     )
                     Text(
                         text = event.date.toLocalDateTime()
                             .format(DateTimeFormatter.ofPattern("MMM")),
                         style = MaterialTheme.typography.bodyMedium,
                         color =
-                            if (isPast) {
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                            } else {
-                                MaterialTheme.colorScheme.onPrimary
-                            }
+                        if (isPast) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        } else {
+                            MaterialTheme.colorScheme.onPrimary
+                        }
                     )
                 }
             }
@@ -158,10 +158,10 @@ fun EventCard(
 
                 Text(
                     text =
-                        "${
-                            event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                        } - " +
-                            event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                    "${
+                    event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                    } - " +
+                        event.date.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                     style = MaterialTheme.typography.labelMedium
                 )
 

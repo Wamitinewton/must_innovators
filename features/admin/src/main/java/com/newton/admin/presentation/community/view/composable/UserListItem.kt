@@ -36,17 +36,17 @@ fun UserListItem(
 ) {
     Surface(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(vertical = 4.dp),
+        Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 4.dp),
         color = Color.Transparent
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // User profile image
@@ -54,19 +54,19 @@ fun UserListItem(
                 NetworkImage(
                     contentDescription = "Profile picture of ${user.name}",
                     modifier =
-                        Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.surface),
+                    Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surface),
                     contentScale = ContentScale.Crop,
                     imageUrl = user.photo
                 )
             } else {
                 Box(
                     modifier =
-                        Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
+                    Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
                 ) {
                     Text(
                         user.name.take(1),

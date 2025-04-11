@@ -82,53 +82,53 @@ fun EmailInput(
                     }
                 },
                 colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Transparent
-                    )
+                TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent
+                )
             )
         }
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Card(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 colors =
-                    CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
                 elevation =
-                    CardDefaults.cardElevation(
-                        defaultElevation = 8.dp
-                    ),
+                CardDefaults.cardElevation(
+                    defaultElevation = 8.dp
+                ),
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
                         modifier =
-                            Modifier
-                                .padding(bottom = 16.dp)
-                                .height(60.dp)
-                                .clip(RoundedCornerShape(50))
-                                .background(
-                                    brush = Brush.linearGradient(gradientColors),
-                                    shape = RoundedCornerShape(50)
-                                )
-                                .padding(12.dp),
+                        Modifier
+                            .padding(bottom = 16.dp)
+                            .height(60.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(
+                                brush = Brush.linearGradient(gradientColors),
+                                shape = RoundedCornerShape(50)
+                            )
+                            .padding(12.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -159,9 +159,9 @@ fun EmailInput(
                         label = "Email",
                         isError = emailError != null,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 16.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp),
                         singleLine = true,
                         leadingIcon = Icons.Default.Email,
                         shape = RoundedCornerShape(12.dp)
@@ -174,21 +174,21 @@ fun EmailInput(
                         },
                         enabled = !isLoading,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp)
-                                .height(56.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                            .height(56.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors =
-                            ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary
-                            ),
+                        ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
                         contentPadding = ButtonDefaults.ContentPadding
                     ) {
                         Box(
                             modifier =
-                                Modifier
-                                    .fillMaxSize(),
+                            Modifier
+                                .fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(

@@ -47,10 +47,10 @@ fun TestimonialDetailSheet(
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 8.dp)
-                    .navigationBarsPadding()
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 8.dp)
+                .navigationBarsPadding()
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth()
@@ -130,13 +130,13 @@ fun TestimonialStatusChip(status: String) {
 private fun TestimonialContent(content: String) {
     Box(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(16.dp)
+        Modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
+                shape = RoundedCornerShape(16.dp)
+            )
+            .padding(16.dp)
     ) {
         Row {
             Icon(
@@ -144,9 +144,9 @@ private fun TestimonialContent(content: String) {
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
                 modifier =
-                    Modifier
-                        .padding(end = 8.dp)
-                        .size(24.dp)
+                Modifier
+                    .padding(end = 8.dp)
+                    .size(24.dp)
             )
 
             Spacer(modifier = Modifier.width(4.dp))

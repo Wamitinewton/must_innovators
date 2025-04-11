@@ -29,7 +29,7 @@ fun RegisteredEventsScreen(
     onBackPressed: () -> Unit,
     onTicketSelected: (Int) -> Unit = {},
     userTicketsViewModel: UserTicketsViewModel,
-    onNavigateToEventsList: ()->Unit
+    onNavigateToEventsList: () -> Unit
 ) {
     val uiState by userTicketsViewModel.userTicketsUiState.collectAsState()
 
@@ -47,16 +47,16 @@ fun RegisteredEventsScreen(
                     }
                 },
                 colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
+                TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
             )
         }
     ) {
         RegisteredEventsSection(
             uiState = uiState,
             onTicketSelected = onTicketSelected,
-            onNavigateToEventsList= onNavigateToEventsList
+            onNavigateToEventsList = onNavigateToEventsList
         )
     }
 }

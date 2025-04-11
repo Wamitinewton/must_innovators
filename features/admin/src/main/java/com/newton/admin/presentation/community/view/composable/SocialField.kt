@@ -33,9 +33,9 @@ fun SocialField(
 ) {
     Row(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (isEditing) {
@@ -46,10 +46,10 @@ fun SocialField(
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 keyboardOptions =
-                    KeyboardOptions(
-                        keyboardType = KeyboardType.Uri,
-                        imeAction = ImeAction.Next
-                    )
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Uri,
+                    imeAction = ImeAction.Next
+                )
             )
         } else {
             Column(

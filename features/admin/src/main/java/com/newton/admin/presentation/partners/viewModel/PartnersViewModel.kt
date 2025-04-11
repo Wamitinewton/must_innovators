@@ -190,7 +190,7 @@ class PartnersViewModel @Inject constructor(
         if (_addPartnersState.value.contactEmail.isBlank()) {
             errors["email"] = "Contact email is required"
         } else if (!Patterns.EMAIL_ADDRESS.matcher(_addPartnersState.value.contactEmail)
-                .matches()
+            .matches()
         ) {
             errors["email"] = "Invalid email format"
         }

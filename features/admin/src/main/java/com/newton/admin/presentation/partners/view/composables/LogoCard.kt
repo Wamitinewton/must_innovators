@@ -46,9 +46,9 @@ fun LogoCard(
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -64,25 +64,25 @@ fun LogoCard(
                 uri?.let { safeUri ->
                     Box(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(150.dp)
-                                .padding(vertical = 10.dp)
+                        Modifier
+                            .fillMaxWidth()
+                            .height(150.dp)
+                            .padding(vertical = 10.dp)
                     ) {
                         NetworkImage(
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .clip(MaterialTheme.shapes.small),
+                            Modifier
+                                .fillMaxSize()
+                                .clip(MaterialTheme.shapes.small),
                             imageUrl = safeUri,
                             contentDescription = "Receipt Image",
                             contentScale = ContentScale.Crop
                         )
                         CloseButton(
                             modifier =
-                                Modifier
-                                    .align(Alignment.TopEnd)
-                                    .padding(12.dp),
+                            Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(12.dp),
                             onDismiss = { onEvent.invoke(AddPartnersEvent.LogoChange(null)) }
                         )
                     }
@@ -90,15 +90,15 @@ fun LogoCard(
             } else {
                 Box(
                     modifier =
-                        Modifier
-                            .size(120.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.LightGray.copy(alpha = 0.3f))
-                            .border(
-                                width = 1.dp,
-                                color = Color.LightGray,
-                                shape = RoundedCornerShape(8.dp)
-                            ),
+                    Modifier
+                        .size(120.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.LightGray.copy(alpha = 0.3f))
+                        .border(
+                            width = 1.dp,
+                            color = Color.LightGray,
+                            shape = RoundedCornerShape(8.dp)
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(

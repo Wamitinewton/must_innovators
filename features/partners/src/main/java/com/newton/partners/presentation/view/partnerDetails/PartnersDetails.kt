@@ -68,22 +68,22 @@ fun PartnerDetailsScreen(
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .verticalScroll(scrollState)
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(280.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .height(280.dp)
                 ) {
                     AsyncImage(
                         model =
-                            ImageRequest.Builder(context)
-                                .data(partnerData?.logo)
-                                .crossfade(true)
-                                .build(),
+                        ImageRequest.Builder(context)
+                            .data(partnerData?.logo)
+                            .crossfade(true)
+                            .build(),
                         contentDescription = "${partnerData?.name} background",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
@@ -91,27 +91,27 @@ fun PartnerDetailsScreen(
 
                     Box(
                         modifier =
-                            Modifier
-                                .fillMaxHeight(0.35f)
-                                .fillMaxWidth()
-                                .align(Alignment.BottomCenter)
-                                .background(
-                                    brush =
-                                        Brush.verticalGradient(
-                                            colors =
-                                                listOf(
-                                                    Color.Transparent,
-                                                    MaterialTheme.colorScheme.surface
-                                                ),
-                                        )
+                        Modifier
+                            .fillMaxHeight(0.35f)
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                brush =
+                                Brush.verticalGradient(
+                                    colors =
+                                    listOf(
+                                        Color.Transparent,
+                                        MaterialTheme.colorScheme.surface
+                                    )
                                 )
+                            )
 
                     )
                     Box(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 24.dp, vertical = 16.dp),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 24.dp, vertical = 16.dp),
                         contentAlignment = Alignment.BottomStart
                     ) {
                         Row(
@@ -121,13 +121,13 @@ fun PartnerDetailsScreen(
                             Card(
                                 shape = RoundedCornerShape(16.dp),
                                 colors =
-                                    CardDefaults.cardColors(
-                                        containerColor = MaterialTheme.colorScheme.surface
-                                    ),
+                                CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surface
+                                ),
                                 elevation =
-                                    CardDefaults.cardElevation(
-                                        defaultElevation = 8.dp
-                                    ),
+                                CardDefaults.cardElevation(
+                                    defaultElevation = 8.dp
+                                ),
                                 modifier = Modifier.size(100.dp)
                             ) {
                                 Box(
@@ -136,16 +136,16 @@ fun PartnerDetailsScreen(
                                 ) {
                                     AsyncImage(
                                         model =
-                                            ImageRequest.Builder(context)
-                                                .data(partnerData?.logo)
-                                                .crossfade(true)
-                                                .build(),
+                                        ImageRequest.Builder(context)
+                                            .data(partnerData?.logo)
+                                            .crossfade(true)
+                                            .build(),
                                         contentDescription = "${partnerData?.name} logo",
                                         contentScale = ContentScale.Crop,
                                         modifier =
-                                            Modifier
-                                                .fillMaxSize()
-                                                .padding(8.dp)
+                                        Modifier
+                                            .fillMaxSize()
+                                            .padding(8.dp)
                                     )
                                 }
                             }
@@ -190,12 +190,12 @@ fun PartnerDetailsScreen(
                     IconButton(
                         onClick = onBackPressed,
                         modifier =
-                            Modifier
-                                .padding(16.dp)
-                                .size(40.dp)
-                                .align(Alignment.TopStart)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                        Modifier
+                            .padding(16.dp)
+                            .size(40.dp)
+                            .align(Alignment.TopStart)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -211,12 +211,12 @@ fun PartnerDetailsScreen(
                             }
                         },
                         modifier =
-                            Modifier
-                                .padding(16.dp)
-                                .size(40.dp)
-                                .align(Alignment.TopEnd)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                        Modifier
+                            .padding(16.dp)
+                            .size(40.dp)
+                            .align(Alignment.TopEnd)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
                     ) {
                         Icon(
                             imageVector = Icons.Default.Share,
@@ -228,9 +228,9 @@ fun PartnerDetailsScreen(
 
                 Column(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     if (partnerData != null) {
@@ -306,16 +306,16 @@ fun PartnerDetailsScreen(
             AnimatedVisibility(
                 visible = showTopBar,
                 enter =
-                    fadeIn(animationSpec = tween(300)) +
-                        slideInVertically(
-                            animationSpec = tween(300),
-                            initialOffsetY = { with(density) { -50.dp.roundToPx() } }
-                        ),
+                fadeIn(animationSpec = tween(300)) +
+                    slideInVertically(
+                        animationSpec = tween(300),
+                        initialOffsetY = { with(density) { -50.dp.roundToPx() } }
+                    ),
                 exit = fadeOut(animationSpec = tween(300)),
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.TopCenter)
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter)
             ) {
                 TopAppBar(
                     title = {
@@ -327,10 +327,10 @@ fun PartnerDetailsScreen(
                                     model = partnerData.logo,
                                     contentDescription = null,
                                     modifier =
-                                        Modifier
-                                            .size(36.dp)
-                                            .clip(CircleShape)
-                                            .background(MaterialTheme.colorScheme.surfaceVariant),
+                                    Modifier
+                                        .size(36.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.surfaceVariant),
                                     contentScale = ContentScale.Crop
                                 )
                             }
@@ -368,9 +368,9 @@ fun PartnerDetailsScreen(
                         }
                     },
                     colors =
-                        TopAppBarDefaults.topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
-                        ),
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+                    ),
                     scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
                 )
             }
@@ -382,9 +382,9 @@ fun PartnerDetailsScreen(
                     }
                 },
                 modifier =
-                    Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(24.dp),
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(24.dp),
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {

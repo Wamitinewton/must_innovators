@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 
 @Composable
-fun EmptyTicketsView(modifier: Modifier = Modifier, navigateToEventsScreen:()->Unit) {
+fun EmptyTicketsView(modifier: Modifier = Modifier, navigateToEventsScreen: () -> Unit) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

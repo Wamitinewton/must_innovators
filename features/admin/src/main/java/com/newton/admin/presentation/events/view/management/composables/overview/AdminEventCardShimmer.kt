@@ -39,9 +39,12 @@ fun AdminEventCardShimmer() {
                 shape = RoundedCornerShape(10.dp)
             )
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 12.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
+        ) {
             ShimmerWithFade(
                 modifier = Modifier
                     .size(56.dp)

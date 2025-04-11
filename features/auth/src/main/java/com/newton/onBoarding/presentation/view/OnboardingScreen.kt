@@ -105,10 +105,10 @@ fun OnboardingScreen(
     val logoScale by animateFloatAsState(
         targetValue = if (visibleState.value) 1f else 0f,
         animationSpec =
-            spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
-            ),
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
         label = "logo-scale"
     )
 
@@ -117,10 +117,10 @@ fun OnboardingScreen(
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(24.dp)
-                    .verticalScroll(scrollState),
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(40.dp))
@@ -128,29 +128,29 @@ fun OnboardingScreen(
             AnimatedVisibility(
                 visible = visibleState.value,
                 enter =
-                    fadeIn(tween(1000)) +
-                        slideInVertically(
-                            animationSpec =
-                                spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
-                                ),
-                            initialOffsetY = { -200 }
-                        )
+                fadeIn(tween(1000)) +
+                    slideInVertically(
+                        animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
+                        ),
+                        initialOffsetY = { -200 }
+                    )
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Card(
                         modifier =
-                            Modifier
-                                .size(120.dp)
-                                .scale(logoScale),
+                        Modifier
+                            .size(120.dp)
+                            .scale(logoScale),
                         shape = CircleShape,
                         colors =
-                            CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary
-                            ),
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
                         elevation = CardDefaults.cardElevation(8.dp)
                     ) {
                         Box(
@@ -190,11 +190,11 @@ fun OnboardingScreen(
             AnimatedVisibility(
                 visible = visibleState.value,
                 enter =
-                    fadeIn(tween(1000, delayMillis = 500)) +
-                        slideInVertically(
-                            initialOffsetY = { 200 },
-                            animationSpec = tween(durationMillis = 700, delayMillis = 500)
-                        )
+                fadeIn(tween(1000, delayMillis = 500)) +
+                    slideInVertically(
+                        initialOffsetY = { 200 },
+                        animationSpec = tween(durationMillis = 700, delayMillis = 500)
+                    )
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -209,61 +209,61 @@ fun OnboardingScreen(
                     HorizontalPager(
                         state = pagerState,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
+                        Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
                     ) { page ->
                         Card(
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 24.dp)
-                                    .graphicsLayer {
-                                        val pageOffset =
-                                            ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp)
+                                .graphicsLayer {
+                                    val pageOffset =
+                                        ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
 
-                                        alpha = 1f - (0.5f * pageOffset.coerceIn(-1f, 1f).absoluteValue)
-                                        scaleX = 0.8f + (
-                                            0.2f * (
-                                                1f -
-                                                    pageOffset.coerceIn(
-                                                        -1f,
-                                                        1f
-                                                    ).absoluteValue
-                                                )
+                                    alpha = 1f - (0.5f * pageOffset.coerceIn(-1f, 1f).absoluteValue)
+                                    scaleX = 0.8f + (
+                                        0.2f * (
+                                            1f -
+                                                pageOffset.coerceIn(
+                                                    -1f,
+                                                    1f
+                                                ).absoluteValue
                                             )
-                                        scaleY = 0.8f + (
-                                            0.2f * (
-                                                1f -
-                                                    pageOffset.coerceIn(
-                                                        -1f,
-                                                        1f
-                                                    ).absoluteValue
-                                                )
+                                        )
+                                    scaleY = 0.8f + (
+                                        0.2f * (
+                                            1f -
+                                                pageOffset.coerceIn(
+                                                    -1f,
+                                                    1f
+                                                ).absoluteValue
                                             )
-                                    },
+                                        )
+                                },
                             colors =
-                                CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surface
-                                ),
+                            CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            ),
                             shape = RoundedCornerShape(24.dp),
                             elevation = CardDefaults.cardElevation(6.dp)
                         ) {
                             Column(
                                 modifier =
-                                    Modifier
-                                        .fillMaxSize()
-                                        .padding(24.dp),
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(24.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Box(
                                     modifier =
-                                        Modifier
-                                            .size(48.dp)
-                                            .clip(CircleShape)
-                                            .background(MaterialTheme.colorScheme.primary)
-                                            .padding(8.dp),
+                                    Modifier
+                                        .size(48.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary)
+                                        .padding(8.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     aboutItems[page].icon
@@ -293,23 +293,23 @@ fun OnboardingScreen(
                     AnimatedVisibility(
                         visible = visibleState.value,
                         enter =
-                            fadeIn(tween(1000, delayMillis = 1000)) +
-                                slideInVertically(
-                                    initialOffsetY = { 200 },
-                                    animationSpec = tween(durationMillis = 700, delayMillis = 1000)
-                                )
+                        fadeIn(tween(1000, delayMillis = 1000)) +
+                            slideInVertically(
+                                initialOffsetY = { 200 },
+                                animationSpec = tween(durationMillis = 700, delayMillis = 1000)
+                            )
                     ) {
                         ElevatedButton(
                             onClick = { showBottomSheet = true },
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(60.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(60.dp),
                             shape = RoundedCornerShape(16.dp),
                             colors =
-                                ButtonDefaults.elevatedButtonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                ),
+                            ButtonDefaults.elevatedButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ),
                             elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
                         ) {
                             LabelLargeText(

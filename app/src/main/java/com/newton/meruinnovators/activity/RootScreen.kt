@@ -24,7 +24,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.platform.*
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.google.accompanist.systemuicontroller.*
@@ -33,8 +32,7 @@ import com.newton.meruinnovators.navigation.*
 import com.newton.navigation.*
 
 @Composable
-fun RootScreen(navigationSubGraphs: NavigationSubGraphs,navController:NavHostController) {
-
+fun RootScreen(navigationSubGraphs: NavigationSubGraphs, navController: NavHostController) {
     val currentBackStackEntryAsState by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntryAsState?.destination
     val context = LocalContext.current
@@ -44,7 +42,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs,navController:NavHostCon
             NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.BlogsRoute.routes,
             NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
             NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminActions.routes
-                -> true
+            -> true
 
             else -> false
         }
@@ -52,7 +50,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs,navController:NavHostCon
         when (currentDestination?.route) {
             NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
             NavigationRoutes.AdminActions.routes
-                -> true
+            -> true
 
             else -> false
         }

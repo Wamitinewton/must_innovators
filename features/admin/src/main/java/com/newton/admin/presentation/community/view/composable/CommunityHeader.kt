@@ -40,15 +40,15 @@ fun CommunityHeader(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(16.dp),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             if (isEditing) {
                 OutlinedTextField(
@@ -72,10 +72,10 @@ fun CommunityHeader(
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(if (isRecruiting) Color.Green else Color.Red)
+                    Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(if (isRecruiting) Color.Green else Color.Red)
                 )
 
                 Text(
@@ -91,12 +91,12 @@ fun CommunityHeader(
                         checked = isRecruiting,
                         onCheckedChange = onRecruitingChange,
                         colors =
-                            SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                uncheckedThumbColor = MaterialTheme.colorScheme.surface,
-                                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
-                            )
+                        SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.surface,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
                     )
                 }
             }

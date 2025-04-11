@@ -45,9 +45,9 @@ fun TimePickerDialog(
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(
@@ -63,17 +63,17 @@ fun TimePickerDialog(
                 TimePicker(
                     state = timePickerState,
                     colors =
-                        TimePickerDefaults.colors(
-                            timeSelectorSelectedContainerColor = MaterialTheme.colorScheme.primary,
-                            timeSelectorSelectedContentColor = MaterialTheme.colorScheme.onPrimary
-                        )
+                    TimePickerDefaults.colors(
+                        timeSelectorSelectedContainerColor = MaterialTheme.colorScheme.primary,
+                        timeSelectorSelectedContentColor = MaterialTheme.colorScheme.onPrimary
+                    )
                 )
 
                 Row(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) {

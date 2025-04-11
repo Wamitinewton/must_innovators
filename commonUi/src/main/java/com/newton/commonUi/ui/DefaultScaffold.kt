@@ -60,14 +60,14 @@ fun DefaultScaffold(
     ) { padding ->
         Box(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush =
-                            Brush.verticalGradient(
-                                colors = gradientColors
-                            )
+            Modifier
+                .fillMaxSize()
+                .background(
+                    brush =
+                    Brush.verticalGradient(
+                        colors = gradientColors
                     )
+                )
         )
 
         if (showOrbitals) {
@@ -85,9 +85,9 @@ fun DefaultScaffold(
 
         Box(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+            Modifier
+                .fillMaxSize()
+                .padding(padding),
             content = content
         )
 
