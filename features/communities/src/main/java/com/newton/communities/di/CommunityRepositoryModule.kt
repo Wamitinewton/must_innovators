@@ -19,8 +19,8 @@ package com.newton.communities.di
 import com.newton.network.data.remote.*
 import com.newton.network.domain.repositories.*
 import dagger.*
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.*
+import dagger.hilt.components.*
 import javax.inject.*
 
 @Module

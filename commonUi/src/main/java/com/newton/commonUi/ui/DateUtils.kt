@@ -26,16 +26,16 @@ fun Long.toFormattedDate(): String {
     val instant = Instant.ofEpochMilli(this)
     val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
     return "${localDateTime.dayOfMonth} ${
-    localDateTime.month.toString().lowercase()
-        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+        localDateTime.month.toString().lowercase()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }, ${localDateTime.year}"
 }
 
 fun LocalDateTime.toFormattedDate(): String {
     val localDateTime: LocalDateTime = this
     return "${localDateTime.dayOfMonth} ${
-    localDateTime.month.toString().lowercase()
-        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+        localDateTime.month.toString().lowercase()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }, ${localDateTime.year}"
 }
 
@@ -49,8 +49,8 @@ fun String.toFormatedDate(): String {
     val instant = Instant.parse(this)
     val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
     return "${localDateTime.dayOfMonth} ${
-    localDateTime.month.toString().lowercase()
-        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+        localDateTime.month.toString().lowercase()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }, ${localDateTime.year}"
 }
 

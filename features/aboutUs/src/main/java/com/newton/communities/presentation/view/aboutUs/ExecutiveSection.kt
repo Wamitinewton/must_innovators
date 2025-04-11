@@ -78,13 +78,13 @@ fun ExecutiveListSection(executives: List<Executive>) {
             AnimatedVisibility(
                 visible = visibleItems,
                 enter =
-                fadeIn(
-                    animationSpec =
-                    tween(
-                        durationMillis = 300,
-                        delayMillis = 100 * index
+                    fadeIn(
+                        animationSpec =
+                            tween(
+                                durationMillis = 300,
+                                delayMillis = 100 * index
+                            )
                     )
-                )
             ) {
                 ExecutiveCard(
                     executive = executive,

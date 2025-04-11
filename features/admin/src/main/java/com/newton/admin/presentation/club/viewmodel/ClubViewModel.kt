@@ -16,21 +16,16 @@
  */
 package com.newton.admin.presentation.club.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.presentation.club.event.ClubEvent
-import com.newton.admin.presentation.club.state.ClubState
-import com.newton.network.Resource
-import com.newton.network.domain.models.adminModels.Club
+import androidx.lifecycle.*
+import com.newton.admin.presentation.club.event.*
+import com.newton.admin.presentation.club.state.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
 import com.newton.network.domain.repositories.*
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
 @HiltViewModel
 class ClubViewModel @Inject constructor(

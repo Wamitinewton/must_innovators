@@ -24,7 +24,7 @@ import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.flow.*
 import timber.log.*
-import javax.inject.Inject
+import javax.inject.*
 
 class ClubBioRepositoryImpl @Inject constructor(
     private val aboutClubService: AboutClubService,
@@ -63,7 +63,6 @@ class ClubBioRepositoryImpl @Inject constructor(
                 }
             }
         }
-
 
 
     private suspend fun updateLocalClub(clubBioData: ClubBioData) {

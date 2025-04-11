@@ -49,9 +49,9 @@ fun UpdateCommunityCard(
 ) {
     var name by remember { mutableStateOf(communityData.name) }
     var description by remember { mutableStateOf(communityData.description) }
-    var lead by remember { mutableStateOf(communityData.communityLead.name) }
-    var coLead by remember { mutableStateOf(communityData.coLead.name) }
-    var secretary by remember { mutableStateOf(communityData.secretary.name) }
+    var lead by remember { mutableStateOf(communityData.communityLead.username) }
+    var coLead by remember { mutableStateOf(communityData.coLead.username) }
+    var secretary by remember { mutableStateOf(communityData.secretary.username) }
     var email by remember { mutableStateOf(communityData.email) }
     var sessions by remember { mutableStateOf(communityData.sessions) }
     var phone by remember { mutableStateOf(communityData.phoneNumber) }
@@ -61,9 +61,9 @@ fun UpdateCommunityCard(
     var sessionToEdit by remember { mutableStateOf<Session?>(null) }
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
     ) {
         CommunityHeader(
             communityName = name,
@@ -172,9 +172,9 @@ fun UpdateCommunityCard(
                     text = "No scheduled sessions",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier =
-                    Modifier
-                        .padding(vertical = 16.dp)
-                        .fillMaxWidth(),
+                        Modifier
+                            .padding(vertical = 16.dp)
+                            .fillMaxWidth(),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             } else {
@@ -317,14 +317,14 @@ fun UpdateCommunityCard(
         AnimatedVisibility(
             visible = isEditing,
             enter =
-            fadeIn() +
-                expandVertically(
-                    animationSpec =
-                    spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessMedium
-                    )
-                ),
+                fadeIn() +
+                    expandVertically(
+                        animationSpec =
+                            spring(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessMedium
+                            )
+                    ),
             exit = fadeOut() + shrinkVertically()
         ) {
             Button(
@@ -333,14 +333,14 @@ fun UpdateCommunityCard(
                     onEvent.invoke(UpdateCommunityEvent.IsEditingChange(false))
                 },
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors =
-                ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
             ) {
                 Icon(
                     imageVector = Icons.Default.Save,

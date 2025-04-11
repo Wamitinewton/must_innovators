@@ -16,7 +16,7 @@
  */
 package com.newton.auth.presentation.signUp.view.composables
 
-import android.content.Context
+import android.content.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -27,10 +27,9 @@ import com.newton.auth.presentation.signUp.event.*
 import com.newton.auth.presentation.signUp.state.*
 import com.newton.auth.presentation.utils.*
 import com.newton.commonUi.ui.*
-import com.newton.core.utils.Links
+import com.newton.core.utils.*
 import com.newton.core.utils.PackageHandlers.navigateToWebsite
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @Composable
 fun SignupContent(
@@ -43,10 +42,10 @@ fun SignupContent(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 14.dp),
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AuthHeader(
@@ -138,9 +137,9 @@ fun SignupContent(
                 Text(
                     text = "Sign up",
                     style =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                        MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                 )
             }
         )

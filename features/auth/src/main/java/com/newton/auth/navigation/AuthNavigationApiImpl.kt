@@ -20,12 +20,11 @@ import androidx.hilt.navigation.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.newton.auth.presentation.login.view.*
-import com.newton.auth.presentation.login.view.composables.UserDataLoadingScreen
+import com.newton.auth.presentation.login.view.composables.*
 import com.newton.auth.presentation.login.viewModel.*
 import com.newton.auth.presentation.resetPassword.view.*
 import com.newton.auth.presentation.resetPassword.viewModel.*
-import com.newton.auth.presentation.signUp.view.composables.SignupRoute
-import com.newton.auth.presentation.signUp.view.composables.SignupSuccessScreen
+import com.newton.auth.presentation.signUp.view.composables.*
 import com.newton.auth.presentation.signUp.viewmodel.*
 import com.newton.navigation.*
 import com.newton.onBoarding.presentation.view.*

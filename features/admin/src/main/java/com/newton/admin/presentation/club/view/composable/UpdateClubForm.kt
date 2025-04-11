@@ -16,38 +16,21 @@
  */
 package com.newton.admin.presentation.club.view.composable
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.newton.admin.presentation.club.event.ClubEvent
-import com.newton.admin.presentation.club.state.ClubState
-import com.newton.admin.presentation.club.view.SocialMediaLink
-import com.newton.commonUi.ui.CustomButton
-import com.newton.network.domain.models.admin.Socials
-import timber.log.Timber
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import com.newton.admin.presentation.club.event.*
+import com.newton.admin.presentation.club.state.*
+import com.newton.admin.presentation.club.view.*
+import com.newton.commonUi.ui.*
+import com.newton.network.domain.models.admin.*
+import timber.log.*
 
 @Composable
 fun UpdateClubForm(clubState: ClubState, onEvent: (ClubEvent) -> Unit) {

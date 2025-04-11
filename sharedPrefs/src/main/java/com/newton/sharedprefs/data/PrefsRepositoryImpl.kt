@@ -19,8 +19,7 @@ package com.newton.sharedprefs.data
 import com.newton.sharedprefs.domain.*
 import com.newton.sharedprefs.prefsManager.*
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
-import javax.inject.Singleton
+import javax.inject.*
 
 @Singleton
 class PrefsRepositoryImpl @Inject constructor(

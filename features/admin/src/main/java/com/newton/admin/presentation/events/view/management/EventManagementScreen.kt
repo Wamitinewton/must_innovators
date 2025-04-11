@@ -16,32 +16,18 @@
  */
 package com.newton.admin.presentation.events.view.management
 
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import com.newton.admin.presentation.events.events.EventEvents
-import com.newton.admin.presentation.events.view.management.composables.attendees.AttendeesTab
-import com.newton.admin.presentation.events.view.management.composables.calendar.CalendarTab
-import com.newton.admin.presentation.events.view.management.composables.feedback.FeedbackTab
-import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTab
-import com.newton.admin.presentation.events.view.management.composables.overview.OverviewTabShimmer
-import com.newton.admin.presentation.events.viewmodel.EventsViewModel
-import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.commonUi.composables.OopsError
-import com.newton.commonUi.ui.toLocalDate
-import com.newton.network.domain.models.adminModels.CalendarDay
-import com.newton.network.domain.models.adminModels.EventsData
-import java.time.LocalDate
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import com.newton.admin.presentation.events.events.*
+import com.newton.admin.presentation.events.view.management.composables.attendees.*
+import com.newton.admin.presentation.events.view.management.composables.calendar.*
+import com.newton.admin.presentation.events.view.management.composables.feedback.*
+import com.newton.admin.presentation.events.view.management.composables.overview.*
+import com.newton.admin.presentation.events.viewmodel.*
+import com.newton.commonUi.ui.*
+import com.newton.network.domain.models.adminModels.*
+import java.time.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

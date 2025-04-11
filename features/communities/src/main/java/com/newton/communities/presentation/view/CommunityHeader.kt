@@ -39,19 +39,19 @@ fun CommunityHeader(community: Community) {
         )
     Box(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .background(
-                brush =
-                Brush.linearGradient(
-                    colors = gradientColors,
-                    start = Offset(0f, 0f),
-                    end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY),
-                    tileMode = TileMode.Clamp
+            Modifier
+                .fillMaxWidth()
+                .height(180.dp)
+                .background(
+                    brush =
+                        Brush.linearGradient(
+                            colors = gradientColors,
+                            start = Offset(0f, 0f),
+                            end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY),
+                            tileMode = TileMode.Clamp
+                        )
                 )
-            )
-            .padding(16.dp)
+                .padding(16.dp)
     ) {
         Column(
             modifier = Modifier.align(Alignment.BottomStart)
@@ -66,7 +66,7 @@ fun CommunityHeader(community: Community) {
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Lead: ${community.communityLead.name}",
+                text = "Lead: ${community.communityLead.username}",
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )

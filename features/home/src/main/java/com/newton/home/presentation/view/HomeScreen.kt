@@ -16,18 +16,12 @@
  */
 package com.newton.home.presentation.view
 
-import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.shape.*
-import androidx.compose.material.icons.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.communities.presentation.view.*
 import com.newton.communities.presentation.viewModel.*
 import com.newton.network.domain.models.aboutUs.*

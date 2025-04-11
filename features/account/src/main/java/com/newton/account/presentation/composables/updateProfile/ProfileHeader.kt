@@ -39,30 +39,30 @@ fun ProfileHeader(
     ) {
         Box(
             modifier =
-            Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .padding(4.dp)
+                Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .padding(4.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = "Profile",
                 modifier =
-                Modifier
-                    .size(60.dp)
-                    .align(Alignment.Center),
+                    Modifier
+                        .size(60.dp)
+                        .align(Alignment.Center),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
 
         Box(
             modifier =
-            Modifier
-                .size(36.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(4.dp)
+                Modifier
+                    .size(36.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(4.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Edit,

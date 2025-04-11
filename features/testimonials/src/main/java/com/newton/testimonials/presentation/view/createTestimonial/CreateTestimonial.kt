@@ -25,7 +25,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.*
-import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
 import com.newton.testimonials.presentation.event.*
 import com.newton.testimonials.presentation.state.*
@@ -103,10 +102,10 @@ fun CreateTestimonial(
         ) {
             Column(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(scrollState)
-                    .padding(16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState)
+                        .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Column(
@@ -123,7 +122,7 @@ fun CreateTestimonial(
                         currentRating = rating,
                         onRatingChanged = {
                             viewModel.handleEvent(
-                                com.newton.testimonials.presentation.event.TestimonialsUiEvent.RatingChanged(
+                                TestimonialsUiEvent.RatingChanged(
                                     it
                                 )
                             )
@@ -135,13 +134,13 @@ fun CreateTestimonial(
 
                 MultilineInputField(
                     value = content,
-                    onValueChange = { viewModel.handleEvent(com.newton.testimonials.presentation.event.TestimonialsUiEvent.ContentChanged(it)) },
+                    onValueChange = { viewModel.handleEvent(TestimonialsUiEvent.ContentChanged(it)) },
                     label = "Your Testimonial",
                     placeholder = "Share your experience...",
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 150.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 150.dp),
                     maxLines = 5
                 )
 

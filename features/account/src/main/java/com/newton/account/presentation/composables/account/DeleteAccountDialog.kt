@@ -34,23 +34,23 @@ fun DeleteConsequenceCard(
 ) {
     Card(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            ),
         elevation =
-        CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        )
+            CardDefaults.cardElevation(
+                defaultElevation = 2.dp
+            )
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(

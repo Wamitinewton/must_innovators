@@ -29,7 +29,7 @@ import timber.log.*
  */
 class UserDataStateHolder(
     private val authRepository: AuthRepository,
-    private val viewModelScope: kotlinx.coroutines.CoroutineScope
+    private val viewModelScope: CoroutineScope
 ) {
     private val _state = MutableStateFlow(GetUserDataViewModelState())
     val state: StateFlow<GetUserDataViewModelState> = _state
@@ -41,7 +41,19 @@ class UserDataStateHolder(
     fun getUserData() {
         viewModelScope.launch {
             try {
-                fetchRemoteUser()
+                val localUser = authRepository.getLoggedInUser()
+
+                if (localUser != null) {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = null,
+                            userData = localUser
+                        )
+                    }
+                } else {
+                    fetchRemoteUser()
+                }
             } catch (e: Exception) {
                 _state.update {
                     it.copy(

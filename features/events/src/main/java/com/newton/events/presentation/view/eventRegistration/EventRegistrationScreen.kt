@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.*
 import androidx.lifecycle.*
 import androidx.lifecycle.compose.*
 import com.newton.auth.presentation.login.viewModel.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.events.presentation.events.*
 import com.newton.events.presentation.states.*
 import com.newton.events.presentation.viewmodel.*
@@ -65,7 +65,7 @@ fun EventRegistrationScreen(
             scope.launch {
                 snackbarHostState.showSnackbar(
                     message = error,
-                    duration = SnackbarDuration.Indefinite
+                    duration = SnackbarDuration.Short
                 )
                 eventRsvpViewmodel.onEvent(EventRsvpUiEvent.ClearError)
             }

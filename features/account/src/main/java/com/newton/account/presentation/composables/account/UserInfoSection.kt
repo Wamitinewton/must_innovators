@@ -30,9 +30,9 @@ import com.newton.network.domain.models.authModels.*
 fun UserInfoSection(user: UserData) {
     ElevatedCard(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
     ) {

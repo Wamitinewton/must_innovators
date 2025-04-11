@@ -16,16 +16,15 @@
  */
 package com.newton.sharedprefs.di
 
-import android.content.Context
-import com.newton.sharedprefs.prefsManager.*
+import android.content.*
 import com.newton.sharedprefs.data.*
 import com.newton.sharedprefs.domain.*
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.newton.sharedprefs.prefsManager.*
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.android.qualifiers.*
+import dagger.hilt.components.*
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

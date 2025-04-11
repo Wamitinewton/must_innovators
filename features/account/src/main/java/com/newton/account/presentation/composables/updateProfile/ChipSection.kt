@@ -66,18 +66,18 @@ fun ChipsSection(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add",
                         tint =
-                        if (newItemText.isNotBlank()) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
-                        }
+                            if (newItemText.isNotBlank()) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                            }
                     )
                 }
             },
             keyboardOptions =
-            KeyboardOptions(
-                imeAction = ImeAction.Done
-            )
+                KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -132,9 +132,9 @@ fun Chip(
                 imageVector = Icons.Default.Close,
                 contentDescription = "Remove",
                 modifier =
-                Modifier
-                    .size(16.dp)
-                    .clickable { onRemove() },
+                    Modifier
+                        .size(16.dp)
+                        .clickable { onRemove() },
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }

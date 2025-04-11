@@ -55,11 +55,11 @@ fun CategoryItemView(
     RowWrapper(
         horizontalArrangement = Arrangement.Center,
         modifier =
-        Modifier
-            .background(
-                MaterialTheme.colorScheme.onBackground.copy(0.3f)
-            )
-            .padding(vertical = 12.dp, horizontal = 16.dp),
+            Modifier
+                .background(
+                    MaterialTheme.colorScheme.onBackground.copy(0.3f)
+                )
+                .padding(vertical = 12.dp, horizontal = 16.dp),
         onClick = { onEvent.invoke() }
     ) {
         Text(text = category, style = MaterialTheme.typography.titleMedium)

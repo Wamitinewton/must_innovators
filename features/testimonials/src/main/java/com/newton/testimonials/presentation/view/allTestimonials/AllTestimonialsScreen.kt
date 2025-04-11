@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
 import com.newton.testimonials.presentation.state.*
 import com.newton.testimonials.presentation.viewModel.*
@@ -50,6 +49,7 @@ fun AllTestimonialsScreen(
                             targetState = when (uiState) {
                                 is GetTestimonialsUiState.Success ->
                                     "${(uiState as GetTestimonialsUiState.Success).testimonials.size} reviews from our community"
+
                                 is GetTestimonialsUiState.Loading -> "Loading reviews..."
                                 else -> "Community reviews"
                             },
@@ -108,12 +108,15 @@ fun AllTestimonialsScreen(
                         onRetry = { testimonialViewModel.retryLoadingTestimonials() }
                     )
                 }
+
                 is GetTestimonialsUiState.Initial -> {
                     Box(modifier = Modifier.fillMaxSize())
                 }
+
                 is GetTestimonialsUiState.Loading -> {
                     LoadingIndicator(text = "Loading Testimonials")
                 }
+
                 is GetTestimonialsUiState.Success -> {
                     val testimonials = (uiState as GetTestimonialsUiState.Success).testimonials
                     AllTestimonialsSection(testimonials = testimonials)

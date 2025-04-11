@@ -39,25 +39,25 @@ internal fun ImageReceiptView(
     uri?.let { safeUri ->
         Box(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(150.dp)
-                .padding(vertical = 10.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .padding(vertical = 10.dp)
         ) {
             NetworkImage(
                 modifier =
-                Modifier
-                    .fillMaxSize()
-                    .clip(MaterialTheme.shapes.small),
+                    Modifier
+                        .fillMaxSize()
+                        .clip(MaterialTheme.shapes.small),
                 imageUrl = safeUri,
                 contentDescription = "Receipt Image",
                 contentScale = ContentScale.Crop
             )
             CloseButton(
                 modifier =
-                Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(12.dp),
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(12.dp),
                 onDismiss = { onEvent.invoke(AddEventEvents.ClearImage) }
             )
         }

@@ -16,7 +16,6 @@
  */
 package com.newton.network.data.remote
 
-import com.newton.network.data.response.aboutUs.*
 import retrofit2.http.*
 
 interface AboutClubService {

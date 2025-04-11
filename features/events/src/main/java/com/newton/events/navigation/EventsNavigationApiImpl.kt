@@ -108,7 +108,10 @@ class EventsNavigationApiImpl : EventsNavigationApi {
             }
 
             composable(route = NavigationRoutes.EventRegistrationSuccessScreen.routes) {
-                val eventRegistrationSharedViewModel = hiltViewModel<RsvpSharedViewModel>()
+                val parentEntry = remember(it) {
+                    navHostController.getBackStackEntry(NavigationSubGraphRoutes.Event.route)
+                }
+                val eventRegistrationSharedViewModel = hiltViewModel<RsvpSharedViewModel>(parentEntry)
                 EventRegistrationSuccessScreen(
                     onNavigateToHome = {},
                     onViewMyTickets = {},

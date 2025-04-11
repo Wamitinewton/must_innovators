@@ -117,20 +117,20 @@ private fun EmptyImagePlaceholder(
 ) {
     Box(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .clickable(
-                enabled = isEnabled,
-                onClick = onClick
-            ),
+            Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .clickable(
+                    enabled = isEnabled,
+                    onClick = onClick
+                ),
         contentAlignment = Alignment.Center
     ) {
         Column(

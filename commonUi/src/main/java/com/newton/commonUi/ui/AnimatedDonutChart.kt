@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.commonUi.composables.chart
+package com.newton.commonUi.ui
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*

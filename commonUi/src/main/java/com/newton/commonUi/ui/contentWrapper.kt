@@ -37,9 +37,9 @@ fun RowWrapper(
     ) {
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .then(modifier),
+                Modifier
+                    .fillMaxWidth()
+                    .then(modifier),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = horizontalArrangement
         ) {
@@ -64,9 +64,9 @@ fun ColumnWrapper(
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .then(modifier),
+                Modifier
+                    .fillMaxWidth()
+                    .then(modifier),
             verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalAlignment
         ) {

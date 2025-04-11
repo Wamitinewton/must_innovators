@@ -36,9 +36,9 @@ fun ContactField(
 ) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -54,22 +54,22 @@ fun ContactField(
                 onValueChange = onValueChange,
                 label = { Text(label) },
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp),
                 singleLine = true,
                 keyboardOptions =
-                KeyboardOptions(
-                    keyboardType = keyboardType,
-                    imeAction = ImeAction.Next
-                )
+                    KeyboardOptions(
+                        keyboardType = keyboardType,
+                        imeAction = ImeAction.Next
+                    )
             )
         } else {
             Column(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp)
             ) {
                 Text(
                     text = label,

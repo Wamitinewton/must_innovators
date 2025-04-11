@@ -36,9 +36,9 @@ fun ErrorCard(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
