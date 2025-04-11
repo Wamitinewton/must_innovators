@@ -14,31 +14,16 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import com.newton.admin.presentation.community.events.UpdateCommunityEffect
-import com.newton.admin.presentation.community.events.UpdateCommunityEvent
-import com.newton.admin.presentation.community.view.composable.UpdateCommunityCard
-import com.newton.admin.presentation.community.viewmodels.CommunitySharedViewModel
-import com.newton.admin.presentation.community.viewmodels.UpdateCommunityViewModel
-import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.commonUi.composables.OopsError
-import com.newton.commonUi.ui.LoadingDialog
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.text.font.*
+import com.newton.admin.presentation.community.events.*
+import com.newton.admin.presentation.community.view.composable.*
+import com.newton.admin.presentation.community.viewmodels.*
+import com.newton.commonUi.ui.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,9 +84,11 @@ fun UpdateCommunityScreen(
             is UpdateCommunityEffect.Error -> {
                 OopsError(errorMessage = (updateCommunityEffect as UpdateCommunityEffect.Error).message)
             }
+
             UpdateCommunityEffect.Initial -> {
                 LoadingDialog()
             }
+
             is UpdateCommunityEffect.Success -> {
                 val community =
                     (updateCommunityEffect as UpdateCommunityEffect.Success).community

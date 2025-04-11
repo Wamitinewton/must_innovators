@@ -16,31 +16,19 @@
  */
 package com.newton.admin.presentation.home.view
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.newton.admin.presentation.home.events.AdminHomeEvent
-import com.newton.admin.presentation.home.view.composables.BarGraph
-import com.newton.admin.presentation.home.view.composables.DashboardCard
-import com.newton.admin.presentation.home.view.composables.EventsPieChart
-import com.newton.admin.presentation.home.view.composables.InteractiveBarGraph
-import com.newton.admin.presentation.home.view.composables.InteractiveLineGraph
-import com.newton.admin.presentation.home.viewModel.AdminHomeViewModel
-import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.commonUi.composables.MeruInnovatorsAppBar
-import com.newton.network.domain.models.admin.ToolTipData
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.*
+import androidx.navigation.*
+import com.newton.admin.presentation.home.events.*
+import com.newton.admin.presentation.home.view.composables.*
+import com.newton.admin.presentation.home.viewModel.*
+import com.newton.commonUi.ui.*
+import com.newton.network.domain.models.admin.*
+import java.time.*
+import java.time.format.*
 
 data class CommunityGroup(val name: String, val members: Int)
 data class SampleEvent(val community: String, val events: Int)

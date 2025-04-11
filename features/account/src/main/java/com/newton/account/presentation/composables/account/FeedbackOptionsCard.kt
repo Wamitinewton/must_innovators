@@ -41,46 +41,46 @@ fun FeedbackOptionCard(
     val animatedElevation by animateDpAsState(
         targetValue = if (isHovered) 8.dp else 4.dp,
         animationSpec =
-        spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        ),
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            ),
         label = "cardElevation"
     )
 
     val animatedScale by animateFloatAsState(
         targetValue = if (isHovered) 1.03f else 1f,
         animationSpec =
-        spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        ),
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            ),
         label = "cardScale"
     )
 
     ElevatedCard(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .shadow(animatedElevation, RoundedCornerShape(16.dp))
-            .scale(animatedScale)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick
-            ),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+                .shadow(animatedElevation, RoundedCornerShape(16.dp))
+                .scale(animatedScale)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClick
+                ),
         colors =
-        CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            ),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = animatedElevation)
     ) {
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -88,9 +88,9 @@ fun FeedbackOptionCard(
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier =
-                Modifier
-                    .size(48.dp)
-                    .padding(end = 16.dp)
+                    Modifier
+                        .size(48.dp)
+                        .padding(end = 16.dp)
             )
 
             Column {

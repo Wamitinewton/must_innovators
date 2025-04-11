@@ -16,24 +16,15 @@
  */
 package com.newton.admin.presentation.roleManagement.executives.view
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PersonSearch
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
-import com.newton.admin.presentation.roleManagement.executives.events.ExecutiveEvents
-import com.newton.admin.presentation.roleManagement.executives.view.composables.UsersListModalBottomSheet
-import com.newton.admin.presentation.roleManagement.executives.viewModel.ExecutiveViewModel
-import com.newton.admin.presentation.roleManagement.executives.view.composables.AddExecutiveForm
-import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.commonUi.ui.ErrorScreen
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import com.newton.admin.presentation.events.view.composables.*
+import com.newton.admin.presentation.roleManagement.executives.events.*
+import com.newton.admin.presentation.roleManagement.executives.view.composables.*
+import com.newton.admin.presentation.roleManagement.executives.viewModel.*
+import com.newton.commonUi.ui.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)

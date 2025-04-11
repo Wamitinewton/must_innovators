@@ -28,9 +28,9 @@ import androidx.compose.ui.window.*
 fun LoadingIndicator(text: String = "Loading...") {
     Box(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(200.dp),
+            Modifier
+                .fillMaxWidth()
+                .height(200.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -57,19 +57,19 @@ fun LoadingIndicator(text: String = "Loading...") {
 fun PaginationLoadingIndicator() {
     Card(
         modifier =
-        Modifier
-            .height(40.dp)
-            .wrapContentWidth(),
+            Modifier
+                .height(40.dp)
+                .wrapContentWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
-        )
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+            )
     ) {
         Row(
             modifier =
-            Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {

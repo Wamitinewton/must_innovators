@@ -30,18 +30,18 @@ fun TooltipBox(
 ) {
     Card(
         modifier =
-        Modifier
-            .offset(
-                x = tooltipData.position.x.dp,
-                y = tooltipData.position.y.dp
-            )
-            .padding(8.dp),
+            Modifier
+                .offset(
+                    x = tooltipData.position.x.dp,
+                    y = tooltipData.position.y.dp
+                )
+                .padding(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Column(
             modifier =
-            Modifier
-                .padding(8.dp)
+                Modifier
+                    .padding(8.dp)
         ) {
             Text(
                 text = tooltipData.title,

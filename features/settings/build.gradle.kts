@@ -70,6 +70,7 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
+
     // icons
     implementation(Dependencies.extendedIcons)
 
@@ -82,4 +83,5 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":sharedPrefs"))
     implementation(project(":shared"))
+    implementation(project(":database"))
 }

@@ -71,11 +71,11 @@ constructor(
                 val response =
                     apiService.registerDevice(
                         request =
-                        DeviceRegistrationRequest(
-                            userId = getUserId(),
-                            deviceToken = token,
-                            platform = Build.DEVICE
-                        )
+                            DeviceRegistrationRequest(
+                                userId = getUserId(),
+                                deviceToken = token,
+                                platform = Build.DEVICE
+                            )
                     )
                 return@withContext if (response.isSuccessful) {
                     saveToken(token)

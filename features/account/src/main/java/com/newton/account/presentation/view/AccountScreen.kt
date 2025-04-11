@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.*
 import com.newton.account.presentation.composables.account.*
 import com.newton.account.presentation.events.*
 import com.newton.account.presentation.viewmodel.*
-import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
 import kotlinx.coroutines.*
 
@@ -99,9 +98,9 @@ fun AccountScreen(
     ) {
         DefaultScaffold(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .nestedScroll(scrollBehaviour.nestedScrollConnection),
+                Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehaviour.nestedScrollConnection),
             topBar = {
                 LargeTopAppBar(
                     title = {
@@ -146,8 +145,8 @@ fun AccountScreen(
         ) {
             LazyColumn(
                 modifier =
-                Modifier
-                    .fillMaxSize(),
+                    Modifier
+                        .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {

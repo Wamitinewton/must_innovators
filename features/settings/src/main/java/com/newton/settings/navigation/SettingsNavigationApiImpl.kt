@@ -16,8 +16,10 @@
  */
 package com.newton.settings.navigation
 
+import androidx.compose.ui.platform.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
+import com.newton.core.utils.*
 import com.newton.navigation.*
 import com.newton.settings.presentation.view.*
 
@@ -28,16 +30,25 @@ class SettingsNavigationApiImpl : SettingNavigationApi {
             startDestination = NavigationRoutes.SettingsRoute.routes
         ) {
             composable(route = NavigationRoutes.SettingsRoute.routes) {
+                val context = LocalContext.current
                 SettingsScreen(
                     onBackPressed = {
                         navHostController.navigateUp()
                     },
-                    onClearCache = {},
                     onNotificationSettingsChanged = {},
-                    onPrivacyPolicyClicked = {},
-                    onTermsOfServiceClicked = {},
-                    onAboutUsClicked = {},
-                    onHelpAndSupportClicked = {}
+                    onPrivacyPolicyClicked = {
+                        PackageHandlers.navigateToWebsite(context, Links.PRIVACY_POLICY)
+                    },
+                    onTermsOfServiceClicked = {
+                        PackageHandlers.navigateToWebsite(context, Links.TERMS_AND_CONDITION)
+                    },
+                    onAboutUsClicked = {
+                        navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
+                    },
+                    onHelpAndSupportClicked = {},
+                    onAccountDeletionPolicyClicked = {
+                        PackageHandlers.navigateToWebsite(context, Links.DELETION_POLICY)
+                    }
                 )
             }
         }

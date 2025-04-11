@@ -37,20 +37,20 @@ fun EventRegistrationContent(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .verticalScroll(rememberScrollState())
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState())
     ) {
         Card(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
             colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(

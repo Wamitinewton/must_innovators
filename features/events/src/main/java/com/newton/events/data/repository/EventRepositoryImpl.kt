@@ -45,14 +45,14 @@ constructor(
     override fun getPagedEvents(): Flow<PagingData<EventsData>> {
         return Pager(
             config =
-            PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE,
-                prefetchDistance = 1,
-                enablePlaceholders = false,
-                maxSize = NETWORK_PAGE_SIZE * 5,
-                initialLoadSize = NETWORK_PAGE_SIZE * 2,
-                jumpThreshold = NETWORK_PAGE_SIZE * 4
-            ),
+                PagingConfig(
+                    pageSize = NETWORK_PAGE_SIZE,
+                    prefetchDistance = 1,
+                    enablePlaceholders = false,
+                    maxSize = NETWORK_PAGE_SIZE * 5,
+                    initialLoadSize = NETWORK_PAGE_SIZE * 2,
+                    jumpThreshold = NETWORK_PAGE_SIZE * 4
+                ),
             remoteMediator = EventRemoteMediator(api, db, eventDao),
             pagingSourceFactory = {
                 db.eventDao.getPagedEvents()
@@ -66,22 +66,17 @@ constructor(
         eventId: Int,
         registrationRequest: EventRegistrationRequest
     ): Flow<Resource<RegistrationResponse>> =
-        flow {
-            emitAll(
-                safeApiCall {
-                    val response =
-                        api.registerForEvent(
-                            eventId = eventId,
-                            registrationRequest = registrationRequest
-                        )
-                    val registrationResponse = response.data.toEventRegistration()
+        safeApiCall {
+            val response =
+                api.registerForEvent(
+                    eventId = eventId,
+                    registrationRequest = registrationRequest
+                )
+            val registrationResponse = response.data.toEventRegistration()
 
-                    ticketDao.insertTicket(registrationResponse.toTicketEntity())
+            ticketDao.insertTicket(registrationResponse.toTicketEntity())
 
-                    ticketDao.getTicketByEventId(eventId).first()?.toRegistrationResponse()
-                        ?: throw Exception("Failed to retrieve ticket from database")
-                }
-            )
+            registrationResponse
         }
 
     override suspend fun searchEvents(eventName: String): Flow<Resource<List<EventsData>>> =

@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.commonUi.composables.animation.customAnimations
+package com.newton.commonUi.animations
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -83,10 +83,10 @@ fun OrbitalsBackground(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(60000, easing = LinearEasing), // Slowed down from 40000
-            repeatMode = RepeatMode.Restart
-        ),
+            infiniteRepeatable(
+                animation = tween(60000, easing = LinearEasing), // Slowed down from 40000
+                repeatMode = RepeatMode.Restart
+            ),
         label = "rotation1"
     )
 
@@ -94,10 +94,10 @@ fun OrbitalsBackground(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(80000, easing = LinearEasing), // Slowed down from 60000
-            repeatMode = RepeatMode.Restart
-        ),
+            infiniteRepeatable(
+                animation = tween(80000, easing = LinearEasing), // Slowed down from 60000
+                repeatMode = RepeatMode.Restart
+            ),
         label = "rotation2"
     )
 
@@ -105,10 +105,10 @@ fun OrbitalsBackground(
         initialValue = 0.95f, // Reduced pulse range from 0.85f
         targetValue = 1.05f, // Reduced pulse range from 1.15f
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(10000, easing = LinearEasing), // Slowed down from 8000
-            repeatMode = RepeatMode.Reverse
-        ),
+            infiniteRepeatable(
+                animation = tween(10000, easing = LinearEasing), // Slowed down from 8000
+                repeatMode = RepeatMode.Reverse
+            ),
         label = "orbitPulse"
     )
 
@@ -116,10 +116,10 @@ fun OrbitalsBackground(
         initialValue = 0.05f, // Reduced from 0.1f
         targetValue = 0.4f, // Reduced from 0.9f
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(3000, easing = LinearEasing), // Slowed down from 2000
-            repeatMode = RepeatMode.Reverse
-        ),
+            infiniteRepeatable(
+                animation = tween(3000, easing = LinearEasing), // Slowed down from 2000
+                repeatMode = RepeatMode.Reverse
+            ),
         label = "starAlpha1"
     )
 
@@ -127,10 +127,10 @@ fun OrbitalsBackground(
         initialValue = 0.1f, // Reduced from 0.2f
         targetValue = 0.3f, // Reduced from 0.7f
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(4000, easing = LinearEasing), // Slowed down from 3000
-            repeatMode = RepeatMode.Reverse
-        ),
+            infiniteRepeatable(
+                animation = tween(4000, easing = LinearEasing), // Slowed down from 3000
+                repeatMode = RepeatMode.Reverse
+            ),
         label = "starAlpha2"
     )
 
@@ -138,10 +138,10 @@ fun OrbitalsBackground(
         initialValue = 0.02f, // Reduced from 0.05f
         targetValue = 0.25f, // Reduced from 0.6f
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(5000, easing = LinearEasing), // Slowed down from 4000
-            repeatMode = RepeatMode.Reverse
-        ),
+            infiniteRepeatable(
+                animation = tween(5000, easing = LinearEasing), // Slowed down from 4000
+                repeatMode = RepeatMode.Reverse
+            ),
         label = "starAlpha3"
     )
 
@@ -149,10 +149,10 @@ fun OrbitalsBackground(
         initialValue = 0f,
         targetValue = 30f, // Reduced from 45f for subtler rotation
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(15000, easing = LinearEasing), // Slowed down from 10000
-            repeatMode = RepeatMode.Reverse
-        ),
+            infiniteRepeatable(
+                animation = tween(15000, easing = LinearEasing), // Slowed down from 10000
+                repeatMode = RepeatMode.Reverse
+            ),
         label = "starRotation"
     )
 
@@ -262,9 +262,9 @@ fun OrbitalsBackground(
 
     Canvas(
         modifier =
-        modifier
-            .fillMaxSize()
-            .alpha(backgroundAlpha)
+            modifier
+                .fillMaxSize()
+                .alpha(backgroundAlpha)
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height
@@ -495,10 +495,10 @@ fun OrbitalsBackground(
             radius = circleRadius,
             center = circleCenter,
             style =
-            Stroke(
-                width = 1.5f, // Reduced from 2.0f
-                pathEffect = PathEffect.dashPathEffect(dashPattern2, 0f)
-            )
+                Stroke(
+                    width = 1.5f, // Reduced from 2.0f
+                    pathEffect = PathEffect.dashPathEffect(dashPattern2, 0f)
+                )
         )
 
         val pointsCount = 4 // Reduced from 5
@@ -542,10 +542,10 @@ fun OrbitalsBackground(
             path = wavePath,
             color = waveFillColor,
             style =
-            Stroke(
-                width = 1.5f, // Reduced from 2f
-                cap = StrokeCap.Round
-            )
+                Stroke(
+                    width = 1.5f, // Reduced from 2f
+                    cap = StrokeCap.Round
+                )
         )
     }
 }
@@ -610,10 +610,10 @@ private fun DrawScope.drawOrbitalEllipse(
             topLeft = Offset(center.x - radiusX, center.y - radiusY),
             size = Size(radiusX * 2, radiusY * 2),
             style =
-            Stroke(
-                width = strokeWidth,
-                pathEffect = PathEffect.dashPathEffect(dashPattern, phase = rotation % 30)
-            )
+                Stroke(
+                    width = strokeWidth,
+                    pathEffect = PathEffect.dashPathEffect(dashPattern, phase = rotation % 30)
+                )
         )
     }
 }

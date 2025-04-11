@@ -42,9 +42,9 @@ fun CollaborationDetails(
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
         ) {
             Text(
                 text = "Collaboration Details",

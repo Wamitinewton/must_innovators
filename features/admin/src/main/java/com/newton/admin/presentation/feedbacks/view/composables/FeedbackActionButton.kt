@@ -43,18 +43,18 @@ fun FeedbackActionButton(
         onClick = onClick,
         modifier = modifier.height(36.dp),
         colors =
-        ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = contentColor
-        ),
+            ButtonDefaults.buttonColors(
+                containerColor = backgroundColor,
+                contentColor = contentColor
+            ),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
         shape = RoundedCornerShape(8.dp),
         border = if (selected) BorderStroke(1.dp, color) else null,
         elevation =
-        ButtonDefaults.buttonElevation(
-            defaultElevation = 0.dp,
-            pressedElevation = 0.dp
-        )
+            ButtonDefaults.buttonElevation(
+                defaultElevation = 0.dp,
+                pressedElevation = 0.dp
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

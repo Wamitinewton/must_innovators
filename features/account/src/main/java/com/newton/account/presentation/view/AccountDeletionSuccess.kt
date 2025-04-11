@@ -42,28 +42,28 @@ fun AccountDeletedScreen(
     Scaffold { paddingValues ->
         Box(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background),
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .background(MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier =
-                Modifier
-                    .fillMaxWidth(0.9f)
-                    .verticalScroll(rememberScrollState())
-                    .padding(24.dp),
+                    Modifier
+                        .fillMaxWidth(0.9f)
+                        .verticalScroll(rememberScrollState())
+                        .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     modifier =
-                    Modifier
-                        .padding(bottom = 48.dp)
-                        .size(120.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer),
+                        Modifier
+                            .padding(bottom = 48.dp)
+                            .size(120.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primaryContainer),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -112,13 +112,13 @@ fun AccountDeletedScreen(
                 Button(
                     onClick = onCreateNewAccount,
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
                     colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
+                        ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -138,9 +138,9 @@ fun AccountDeletedScreen(
                         }
                     },
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
+                        Modifier
+                            .fillMaxWidth()
+                            .height(56.dp)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ExitToApp,

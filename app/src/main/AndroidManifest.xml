@@ -13,6 +13,7 @@
 
 
     <application
+        android:usesCleartextTraffic="true"
         android:name=".application.MeruInnovatorsApp"
         android:enableOnBackInvokedCallback="true"
         android:allowBackup="true"
@@ -54,11 +55,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove">
-        </provider>
+            tools:node="remove"></provider>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

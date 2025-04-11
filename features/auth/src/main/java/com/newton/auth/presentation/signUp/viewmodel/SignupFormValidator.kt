@@ -48,6 +48,7 @@ constructor() {
     fun validateName(name: String): ValidationResult {
         return InputValidators.validateName(name)
     }
+
     fun validateCourse(course: String): ValidationResult {
         return InputValidators.validateCourse(course)
     }

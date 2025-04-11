@@ -20,7 +20,7 @@ import androidx.compose.material.icons.*
 import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.events.presentation.viewmodel.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,9 +46,9 @@ fun RegisteredEventsScreen(
                     }
                 },
                 colors =
-                TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
             )
         }
     ) {

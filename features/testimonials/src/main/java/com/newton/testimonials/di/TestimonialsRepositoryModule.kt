@@ -23,7 +23,7 @@ import com.newton.testimonials.data.*
 import dagger.*
 import dagger.hilt.*
 import dagger.hilt.components.*
-import javax.inject.Singleton
+import javax.inject.*
 
 @Module
 @InstallIn(SingletonComponent::class)

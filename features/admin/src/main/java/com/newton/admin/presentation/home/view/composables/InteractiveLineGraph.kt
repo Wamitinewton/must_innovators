@@ -38,30 +38,30 @@ fun InteractiveLineGraph(
 
     Canvas(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(top = 16.dp)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = { offset ->
-                        val xStep = size.width / (data.size - 1)
-                        val pointIndex = (offset.x / xStep).toInt()
+            Modifier
+                .fillMaxSize()
+                .padding(top = 16.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = { offset ->
+                            val xStep = size.width / (data.size - 1)
+                            val pointIndex = (offset.x / xStep).toInt()
 
-                        if (pointIndex in data.indices) {
-                            val (date, count) = data[pointIndex]
-                            onTooltipChanged(
-                                ToolTipData(
-                                    title = date,
-                                    value = "$count active users",
-                                    position = offset
+                            if (pointIndex in data.indices) {
+                                val (date, count) = data[pointIndex]
+                                onTooltipChanged(
+                                    ToolTipData(
+                                        title = date,
+                                        value = "$count active users",
+                                        position = offset
+                                    )
                                 )
-                            )
-                            hoveredPoint = pointIndex
-                        }
-                    },
-                    onTap = { hoveredPoint = null }
-                )
-            }
+                                hoveredPoint = pointIndex
+                            }
+                        },
+                        onTap = { hoveredPoint = null }
+                    )
+                }
     ) {
         val maxUsers = data.maxOfOrNull { it.second }?.toFloat() ?: 0f
         val xStep = size.width / (data.size - 1)
@@ -116,10 +116,10 @@ fun InteractiveLineGraph(
             path = path,
             color = DashboardColors.secondary,
             style =
-            Stroke(
-                width = 3f,
-                pathEffect = PathEffect.cornerPathEffect(10f)
-            ),
+                Stroke(
+                    width = 3f,
+                    pathEffect = PathEffect.cornerPathEffect(10f)
+                ),
             alpha = 1f
         )
     }

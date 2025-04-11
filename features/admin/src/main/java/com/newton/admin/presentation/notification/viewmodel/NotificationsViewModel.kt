@@ -120,8 +120,8 @@ constructor(
                         _notificationState.value =
                             _notificationState.value.copy(
                                 errorMessage =
-                                result.message
-                                    ?: "Unknown error occured while sending newsletter"
+                                    result.message
+                                        ?: "Unknown error occured while sending newsletter"
                             )
                     }
 

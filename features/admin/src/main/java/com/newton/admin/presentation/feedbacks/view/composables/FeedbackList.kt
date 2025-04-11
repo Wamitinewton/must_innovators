@@ -48,10 +48,10 @@ fun FeedbackList(
                         fadeInSpec = null,
                         fadeOutSpec = null,
                         placementSpec =
-                        spring<IntOffset>(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
+                            spring<IntOffset>(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessMedium
+                            )
                     )
                 }
 

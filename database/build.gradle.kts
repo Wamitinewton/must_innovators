@@ -63,6 +63,10 @@ dependencies {
     implementation(Dependencies.hiltAndroid)
     ksp(Dependencies.hiltCompiler)
 
+    // coil
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.coilNetwork)
+
     // room
     implementation(Dependencies.roomKtx)
     ksp(Dependencies.roomCompiler)

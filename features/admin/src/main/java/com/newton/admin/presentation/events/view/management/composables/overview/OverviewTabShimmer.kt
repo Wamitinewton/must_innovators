@@ -25,7 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.animation.customAnimations.*
+import com.newton.commonUi.animations.*
 
 @Composable
 fun OverviewTabShimmer() {
@@ -37,25 +37,25 @@ fun OverviewTabShimmer() {
             item {
                 Row(
                     modifier =
-                    Modifier
-                        .fillMaxWidth(),
+                        Modifier
+                            .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     List(4) {
                         ShimmerWithFade(
                             modifier =
-                            Modifier
-                                .height(100.dp)
-                                .width(80.dp)
-                                .clip(RoundedCornerShape(10.dp))
+                                Modifier
+                                    .height(100.dp)
+                                    .width(80.dp)
+                                    .clip(RoundedCornerShape(10.dp))
                         ) {
                             Box(
                                 modifier =
-                                Modifier.background(
-                                    MaterialTheme.colorScheme.onSurface.copy(
-                                        alpha = .3f
+                                    Modifier.background(
+                                        MaterialTheme.colorScheme.onSurface.copy(
+                                            alpha = .3f
+                                        )
                                     )
-                                )
                             )
                         }
                     }

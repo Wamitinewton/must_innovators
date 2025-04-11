@@ -38,15 +38,15 @@ fun <T> PullToRefreshLazyColumn(
     val pullToRefreshState = rememberPullToRefreshState()
     Box(
         modifier =
-        modifier
-            .nestedScroll(pullToRefreshState.nestedScrollConnection)
+            modifier
+                .nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
         LazyColumn(
             state = lazyListState,
             contentPadding = PaddingValues(8.dp),
             modifier =
-            Modifier
-                .fillMaxSize(),
+                Modifier
+                    .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items) {
@@ -71,8 +71,8 @@ fun <T> PullToRefreshLazyColumn(
         PullToRefreshContainer(
             state = pullToRefreshState,
             modifier =
-            Modifier
-                .align(Alignment.TopCenter)
+                Modifier
+                    .align(Alignment.TopCenter)
         )
     }
 }

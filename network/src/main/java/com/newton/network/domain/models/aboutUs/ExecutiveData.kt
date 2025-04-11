@@ -16,20 +16,31 @@
  */
 package com.newton.network.domain.models.aboutUs
 
-import kotlinx.serialization.*
-
-@Serializable
 data class ExecutiveData(
     val data: List<Executive>,
     val message: String,
     val status: String
 )
 
-@Serializable
 data class Executive(
-    val bio: String?,
-    val email: String,
+    val community: Int,
+    val community_details: CommunityDetails,
     val id: Int,
-    val name: String,
-    val position: String
+    val joined_date: String,
+    val position: String,
+    val user: Int,
+    val user_details: UserDetails
+)
+
+data class CommunityDetails(
+    val id: Int,
+    val name: String
+)
+
+data class UserDetails(
+    val email: String,
+    val first_name: String,
+    val id: Int,
+    val last_name: String,
+    val username: String
 )

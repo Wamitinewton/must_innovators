@@ -67,35 +67,35 @@ fun EventTicketCard(
     ElevatedCard(
         onClick = onClick,
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .alpha(alpha)
-            .shadow(
-                elevation = 8.dp,
-                shape = RoundedCornerShape(16.dp),
-                spotColor = ticketColorScheme.primary.copy(alpha = 0.3f)
-            ),
+            Modifier
+                .fillMaxWidth()
+                .alpha(alpha)
+                .shadow(
+                    elevation = 8.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    spotColor = ticketColorScheme.primary.copy(alpha = 0.3f)
+                ),
         shape = RoundedCornerShape(16.dp),
         colors =
-        CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(
-                        Brush.horizontalGradient(
-                            colors =
-                            listOf(
-                                ticketColorScheme.primary,
-                                ticketColorScheme.secondary
+                    Modifier
+                        .fillMaxWidth()
+                        .background(
+                            Brush.horizontalGradient(
+                                colors =
+                                    listOf(
+                                        ticketColorScheme.primary,
+                                        ticketColorScheme.secondary
+                                    )
                             )
                         )
-                    )
-                    .padding(16.dp)
+                        .padding(16.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -133,32 +133,32 @@ fun EventTicketCard(
 
             Box(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .drawBehind {
-                        val strokeWidth = 2f
-                        val dashLength = 8f
-                        val gapLength = 4f
+                    Modifier
+                        .fillMaxWidth()
+                        .drawBehind {
+                            val strokeWidth = 2f
+                            val dashLength = 8f
+                            val gapLength = 4f
 
-                        var startX = 0f
-                        val y = 0f
+                            var startX = 0f
+                            val y = 0f
 
-                        while (startX < size.width) {
-                            drawLine(
-                                color = Color.LightGray,
-                                start = Offset(startX, y),
-                                end = Offset(startX + dashLength, y),
-                                strokeWidth = strokeWidth
-                            )
-                            startX += dashLength + gapLength
+                            while (startX < size.width) {
+                                drawLine(
+                                    color = Color.LightGray,
+                                    start = Offset(startX, y),
+                                    end = Offset(startX + dashLength, y),
+                                    strokeWidth = strokeWidth
+                                )
+                                startX += dashLength + gapLength
+                            }
                         }
-                    }
             ) {
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
                 ) {
                     Text(
                         text = ticket.eventDescription,
@@ -229,10 +229,10 @@ fun EventTicketCard(
 
             Box(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -242,12 +242,12 @@ fun EventTicketCard(
                     if (ticket.isUsed) {
                         Box(
                             modifier =
-                            Modifier
-                                .background(
-                                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
-                                    shape = RoundedCornerShape(16.dp)
-                                )
-                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                                Modifier
+                                    .background(
+                                        color = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
+                                        shape = RoundedCornerShape(16.dp)
+                                    )
+                                    .padding(horizontal = 12.dp, vertical = 6.dp)
                         ) {
                             Text(
                                 text = "Used",
@@ -259,12 +259,12 @@ fun EventTicketCard(
                     } else {
                         Box(
                             modifier =
-                            Modifier
-                                .background(
-                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                    shape = RoundedCornerShape(16.dp)
-                                )
-                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                                Modifier
+                                    .background(
+                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                        shape = RoundedCornerShape(16.dp)
+                                    )
+                                    .padding(horizontal = 12.dp, vertical = 6.dp)
                         ) {
                             Text(
                                 text = "Valid",

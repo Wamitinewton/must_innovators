@@ -17,7 +17,6 @@
 package com.newton.events.presentation.view.eventList
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
@@ -30,8 +29,6 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import androidx.paging.*
-import androidx.paging.compose.*
 import coil3.compose.*
 import com.newton.commonUi.ui.*
 import com.newton.network.domain.models.adminModels.*

@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.commonUi.composables
+package com.newton.commonUi.ui
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -23,8 +23,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
-import com.newton.commonUi.composables.animation.customAnimations.*
-import com.newton.commonUi.ui.*
+import com.newton.commonUi.animations.*
 
 /**
  * A reusable composable that provides a consistent space-themed background with animated
@@ -61,14 +60,14 @@ fun DefaultScaffold(
     ) { padding ->
         Box(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .background(
-                    brush =
-                    Brush.verticalGradient(
-                        colors = gradientColors
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        brush =
+                            Brush.verticalGradient(
+                                colors = gradientColors
+                            )
                     )
-                )
         )
 
         if (showOrbitals) {
@@ -86,9 +85,9 @@ fun DefaultScaffold(
 
         Box(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(padding),
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
             content = content
         )
 

@@ -41,12 +41,12 @@ fun CommunityCard(
 ) {
     CustomCard(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .clickable {
-                onSelectedCommunity()
-            },
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .clickable {
+                    onSelectedCommunity()
+                },
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
@@ -54,19 +54,19 @@ fun CommunityCard(
         ) {
             Box(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(
-                        brush =
-                        Brush.horizontalGradient(
-                            colors =
-                            listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.secondary
-                            )
+                    Modifier
+                        .fillMaxWidth()
+                        .background(
+                            brush =
+                                Brush.horizontalGradient(
+                                    colors =
+                                        listOf(
+                                            MaterialTheme.colorScheme.primary,
+                                            MaterialTheme.colorScheme.secondary
+                                        )
+                                )
                         )
-                    )
-                    .padding(20.dp)
+                        .padding(20.dp)
             ) {
                 Text(
                     text = community.name,
@@ -77,9 +77,9 @@ fun CommunityCard(
             }
             Column(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
             ) {
                 Column(modifier = Modifier.padding(bottom = 16.dp)) {
                     LabelText(text = "Tech Stack")
@@ -137,10 +137,10 @@ fun TechStackItem(techList: List<String>) {
         techList.forEach { tech ->
             Box(
                 modifier =
-                Modifier
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(MaterialTheme.colorScheme.primary)
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    Modifier
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(MaterialTheme.colorScheme.primary)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
                     text = tech,

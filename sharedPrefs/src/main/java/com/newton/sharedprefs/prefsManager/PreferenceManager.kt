@@ -16,13 +16,11 @@
  */
 package com.newton.sharedprefs.prefsManager
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import android.content.*
+import androidx.core.content.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
-import javax.inject.Singleton
+import javax.inject.*
 
 @Singleton
 class PreferenceManager @Inject constructor(context: Context) {

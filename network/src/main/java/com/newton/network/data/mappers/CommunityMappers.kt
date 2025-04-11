@@ -42,10 +42,10 @@ fun CommunityResponse.toDomain(): com.newton.network.domain.models.aboutUs.Commu
 fun CommunityLeadsResponse.toDomain(): com.newton.network.domain.models.aboutUs.CommunityLeads {
     return com.newton.network.domain.models.aboutUs.CommunityLeads(
         id = id,
-        name = name,
+        username = username,
         email = email,
-        position = position,
-        bio = bio
+        position = first_name,
+        bio = last_name
     )
 }
 
@@ -62,7 +62,7 @@ fun MemberResponse.toDomain(): com.newton.network.domain.models.aboutUs.Member {
         id = id,
         name = name,
         email = email,
-        joinedAt = joined_at
+        joinedAt = joined_date
     )
 }
 

@@ -25,7 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.*
 import com.newton.admin.presentation.community.view.composable.*
 import com.newton.admin.presentation.community.viewmodels.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.network.domain.models.aboutUs.*
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -34,7 +34,6 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
-import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
 import com.newton.core.utils.*
 import com.newton.events.presentation.states.*
@@ -69,9 +68,9 @@ fun EventDetailsScreen(
                     }
                 },
                 colors =
-                TopAppBarDefaults.largeTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
+                    TopAppBarDefaults.largeTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
             )
         }
     ) {
@@ -92,57 +91,57 @@ fun EventDetailsScreen(
                 val event = (uiState as EventDetailsState.Success).event
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .verticalScroll(scrollState)
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState)
                 ) {
                     Box(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(if (isImageExpanded) 500.dp else 250.dp)
-                            .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
-                            .animateContentSize()
+                            Modifier
+                                .fillMaxWidth()
+                                .height(if (isImageExpanded) 500.dp else 250.dp)
+                                .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+                                .animateContentSize()
                     ) {
                         AsyncImage(
                             model =
-                            ImageRequest.Builder(LocalContext.current)
-                                .data(event.imageUrl)
-                                .crossfade(true)
-                                .build(),
+                                ImageRequest.Builder(LocalContext.current)
+                                    .data(event.imageUrl)
+                                    .crossfade(true)
+                                    .build(),
                             contentDescription = "Event Image",
                             modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .clickable { isImageExpanded = !isImageExpanded }
-                                .graphicsLayer {
-                                    clip = true
-                                    shape =
-                                        RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
-                                },
+                                Modifier
+                                    .fillMaxSize()
+                                    .clickable { isImageExpanded = !isImageExpanded }
+                                    .graphicsLayer {
+                                        clip = true
+                                        shape =
+                                            RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
+                                    },
                             contentScale = ContentScale.Crop
                         )
 
                         Box(
                             modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .background(
-                                    Brush.verticalGradient(
-                                        colors =
-                                        listOf(
-                                            Color.Transparent,
-                                            Color.Black.copy(alpha = 0.7f)
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors =
+                                                listOf(
+                                                    Color.Transparent,
+                                                    Color.Black.copy(alpha = 0.7f)
+                                                )
                                         )
                                     )
-                                )
                         )
 
                         Column(
                             modifier =
-                            Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(16.dp)
+                                Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(16.dp)
                         ) {
                             Text(
                                 text = event.name,
@@ -161,9 +160,9 @@ fun EventDetailsScreen(
 
                     Column(
                         modifier =
-                        Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
+                            Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
                     ) {
                         EventDetailCard(
                             icon = Icons.Default.DateRange,
@@ -184,9 +183,9 @@ fun EventDetailsScreen(
                         Card(
                             modifier = Modifier.fillMaxWidth(),
                             colors =
-                            CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant
-                            )
+                                CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                                )
                         ) {
                             Column(
                                 modifier = Modifier.padding(16.dp)

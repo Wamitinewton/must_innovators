@@ -16,32 +16,17 @@
  */
 package com.newton.admin.presentation.community.view
 
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SelectableDates
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.newton.admin.presentation.community.events.CommunityEvent
-import com.newton.admin.presentation.community.view.composable.AddCommunityForm
-import com.newton.admin.presentation.community.view.composable.SessionDialog
-import com.newton.admin.presentation.community.view.composable.SocialDialog
-import com.newton.admin.presentation.community.viewmodels.CommunityViewModel
-import com.newton.admin.presentation.events.view.composables.AdminSuccessScreen
-import com.newton.admin.presentation.roleManagement.executives.view.composables.UsersListModalBottomSheet
-import com.newton.commonUi.composables.DefaultScaffold
-import com.newton.commonUi.composables.MeruInnovatorsAppBar
-import com.newton.commonUi.ui.ErrorScreen
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.Date
-import java.util.Locale
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import com.newton.admin.presentation.community.events.*
+import com.newton.admin.presentation.community.view.composable.*
+import com.newton.admin.presentation.community.viewmodels.*
+import com.newton.admin.presentation.events.view.composables.*
+import com.newton.admin.presentation.roleManagement.executives.view.composables.*
+import com.newton.commonUi.ui.*
+import java.text.*
+import java.time.*
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,6 +77,7 @@ fun AddCommunityScreen(
                     onRetry = { onEvent.invoke(CommunityEvent.AddCommunity) }
                 )
             }
+
             else -> {
                 AddCommunityForm(addCommunityState, onEvent)
             }

@@ -42,6 +42,7 @@ object Dependencies {
     const val zxing_qr = "com.journeyapps:zxing-android-embedded:4.1.0"
     const val initializer = "androidx.startup:startup-runtime:${Versions.initilizer}"
     const val reorderble = "org.burnoutcrew.composereorderable:reorderable:${Versions.reordable}"
+    const val chromeView = "androidx.browser:browser:1.8.0"
 }
 
 

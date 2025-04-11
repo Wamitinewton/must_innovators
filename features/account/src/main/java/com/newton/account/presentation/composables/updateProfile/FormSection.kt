@@ -33,22 +33,22 @@ fun FormSection(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
     ) {
         Surface(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)),
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)),
             color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
         ) {
             Row(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -71,16 +71,16 @@ fun FormSection(
                 topEnd = 0.dp
             ),
             colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
             elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
         ) {
             Column(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
             ) {
                 content()
             }

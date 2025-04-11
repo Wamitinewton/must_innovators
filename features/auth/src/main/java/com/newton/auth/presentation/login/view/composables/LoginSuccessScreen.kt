@@ -63,9 +63,9 @@ fun UserDataLoadingScreen(
 
     Box(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
@@ -92,9 +92,9 @@ fun UserDataLoadingScreen(
 
         Column(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -115,9 +115,9 @@ private fun LoadingAnimation(isLoading: Boolean) {
 
     Row(
         modifier =
-        Modifier
-            .height(dotSize)
-            .animateContentSize(),
+            Modifier
+                .height(dotSize)
+                .animateContentSize(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -146,12 +146,12 @@ private fun LoadingAnimation(isLoading: Boolean) {
 
             Box(
                 modifier =
-                Modifier
-                    .padding(horizontal = 4.dp)
-                    .size(dotSize)
-                    .scale(scale.value)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary)
+                    Modifier
+                        .padding(horizontal = 4.dp)
+                        .size(dotSize)
+                        .scale(scale.value)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary)
             )
         }
     }
@@ -164,15 +164,15 @@ fun AnimatedSuccessMessage(state: GetUserDataViewModelState) {
     AnimatedVisibility(
         visible = state.isLoading,
         enter =
-        fadeIn() +
-            slideInVertically {
-                with(density) { -40.dp.roundToPx() }
-            },
+            fadeIn() +
+                slideInVertically {
+                    with(density) { -40.dp.roundToPx() }
+                },
         exit =
-        fadeOut() +
-            slideOutVertically {
-                with(density) { 40.dp.roundToPx() }
-            }
+            fadeOut() +
+                slideOutVertically {
+                    with(density) { 40.dp.roundToPx() }
+                }
     ) {
         Text(
             text = "Loading your profile...",
@@ -185,17 +185,17 @@ fun AnimatedSuccessMessage(state: GetUserDataViewModelState) {
     AnimatedVisibility(
         visible = state.userData != null,
         enter =
-        fadeIn() +
-            slideInVertically {
-                with(density) { 40.dp.roundToPx() }
-            }
+            fadeIn() +
+                slideInVertically {
+                    with(density) { 40.dp.roundToPx() }
+                }
     ) {
         Text(
             text = "Welcome back, ${state.userData?.username}!",
             style =
-            MaterialTheme.typography.headlineMedium.copy(
-                fontWeight = FontWeight.Bold
-            ),
+                MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold
+                ),
             color = MaterialTheme.colorScheme.primary
         )
     }

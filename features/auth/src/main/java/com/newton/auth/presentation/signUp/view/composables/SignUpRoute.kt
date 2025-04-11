@@ -18,7 +18,7 @@ package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.runtime.*
 import com.newton.auth.presentation.signUp.event.*
-import com.newton.auth.presentation.signUp.view.SignupScreen
+import com.newton.auth.presentation.signUp.view.*
 import com.newton.auth.presentation.signUp.viewmodel.*
 import com.newton.auth.presentation.utils.*
 import com.newton.core.enums.*

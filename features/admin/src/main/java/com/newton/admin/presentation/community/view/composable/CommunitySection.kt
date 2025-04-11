@@ -37,9 +37,9 @@ fun CommunitySection(
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -62,9 +62,9 @@ fun CommunitySection(
 
             HorizontalDivider(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
             )
             content()
         }

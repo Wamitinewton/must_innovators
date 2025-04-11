@@ -34,7 +34,7 @@ import androidx.compose.ui.input.nestedscroll.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.communities.presentation.viewModel.*
 import com.newton.network.domain.models.aboutUs.*
 import kotlinx.coroutines.*
@@ -93,9 +93,9 @@ fun CommunityDetailsScreen(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style =
-                        MaterialTheme.typography.headlineMedium.copy(
-                            fontWeight = FontWeight.Bold
-                        )
+                            MaterialTheme.typography.headlineMedium.copy(
+                                fontWeight = FontWeight.Bold
+                            )
                     )
                 },
                 navigationIcon = {
@@ -120,10 +120,10 @@ fun CommunityDetailsScreen(
                 },
                 scrollBehavior = scrollBehavior,
                 colors =
-                TopAppBarDefaults.largeTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                    scrolledContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.98f)
-                )
+                    TopAppBarDefaults.largeTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                        scrolledContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.98f)
+                    )
             )
         }
     ) {
@@ -134,15 +134,15 @@ fun CommunityDetailsScreen(
                 AnimatedVisibility(
                     visible = contentVisible,
                     enter =
-                    fadeIn(animationSpec = tween(500)) +
-                        expandVertically(animationSpec = tween(500)),
+                        fadeIn(animationSpec = tween(500)) +
+                            expandVertically(animationSpec = tween(500)),
                     exit = fadeOut() + shrinkVertically()
                 ) {
                     ElevatedCard(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
                         elevation = CardDefaults.elevatedCardElevation(4.dp),
                         shape = RoundedCornerShape(16.dp)
                     ) {
@@ -152,9 +152,9 @@ fun CommunityDetailsScreen(
 
                 Surface(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
                     shape = RoundedCornerShape(24.dp),
                     color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
                     tonalElevation = 2.dp
@@ -187,11 +187,11 @@ fun CommunityDetailsScreen(
                                 icon = {
                                     Icon(
                                         imageVector =
-                                        when (index) {
-                                            0 -> Icons.Filled.Info
-                                            1 -> Icons.Filled.Group
-                                            else -> Icons.Filled.Event
-                                        },
+                                            when (index) {
+                                                0 -> Icons.Filled.Info
+                                                1 -> Icons.Filled.Group
+                                                else -> Icons.Filled.Event
+                                            },
                                         contentDescription = null,
                                         modifier = Modifier.size(20.dp)
                                     )
@@ -220,10 +220,10 @@ fun CommunityDetailsScreen(
                                 )
                     },
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(horizontal = 16.dp)
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(horizontal = 16.dp)
                 ) { targetTab ->
                     OutlinedCard(
                         modifier = Modifier.fillMaxSize(),
@@ -233,9 +233,9 @@ fun CommunityDetailsScreen(
                             MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                         ),
                         colors =
-                        CardDefaults.outlinedCardColors(
-                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f)
-                        )
+                            CardDefaults.outlinedCardColors(
+                                containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f)
+                            )
                     ) {
                         when (targetTab) {
                             0 ->
@@ -263,9 +263,9 @@ fun CommunityDetailsScreen(
                 enter = fadeIn() + slideInVertically { it },
                 exit = fadeOut() + slideOutVertically { it },
                 modifier =
-                Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(16.dp)
+                    Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp)
             ) {
                 FloatingActionButton(
                     onClick = {
@@ -276,25 +276,25 @@ fun CommunityDetailsScreen(
                         showPulseAnimation = true
                     },
                     containerColor =
-                    if (isJoined) {
-                        MaterialTheme.colorScheme.primaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.primary
-                    },
+                        if (isJoined) {
+                            MaterialTheme.colorScheme.primaryContainer
+                        } else {
+                            MaterialTheme.colorScheme.primary
+                        },
                     contentColor =
-                    if (isJoined) {
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.onPrimary
-                    },
+                        if (isJoined) {
+                            MaterialTheme.colorScheme.onPrimaryContainer
+                        } else {
+                            MaterialTheme.colorScheme.onPrimary
+                        },
                     shape = CircleShape,
                     modifier =
-                    Modifier.graphicsLayer {
-                        if (showPulseAnimation) {
-                            scaleX = 1.1f
-                            scaleY = 1.1f
+                        Modifier.graphicsLayer {
+                            if (showPulseAnimation) {
+                                scaleX = 1.1f
+                                scaleY = 1.1f
+                            }
                         }
-                    }
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,

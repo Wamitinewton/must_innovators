@@ -44,9 +44,9 @@ fun DashboardStats(events: List<EventsData>) {
 
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         StatCard(

@@ -64,6 +64,7 @@ class ThemeViewModel @Inject constructor(
                 }
                 setThemeMode(newMode)
             }
+
             is ThemeEvent.SetThemeMode -> {
                 setThemeMode(event.themeMode)
             }
@@ -88,10 +89,12 @@ class ThemeViewModel @Inject constructor(
                     prefsRepository.setSystemThemeEnabled(false)
                     prefsRepository.setDarkThemeEnabled(false)
                 }
+
                 ThemeMode.DARK -> {
                     prefsRepository.setSystemThemeEnabled(false)
                     prefsRepository.setDarkThemeEnabled(true)
                 }
+
                 ThemeMode.SYSTEM -> {
                     prefsRepository.setSystemThemeEnabled(true)
                 }

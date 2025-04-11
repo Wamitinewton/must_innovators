@@ -23,7 +23,6 @@ import androidx.compose.ui.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.*
 import com.newton.commonUi.ui.*
 
 @Composable
@@ -56,9 +55,9 @@ fun NewPasswordScreen(
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

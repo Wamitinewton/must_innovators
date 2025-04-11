@@ -28,12 +28,13 @@ import androidx.compose.ui.*
 import androidx.compose.ui.hapticfeedback.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import androidx.hilt.navigation.compose.*
-import com.newton.commonUi.composables.*
+import com.newton.commonUi.ui.*
 import com.newton.core.enums.*
+import com.newton.settings.presentation.viewModel.*
 import com.newton.sharedprefs.viewModel.*
-import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,23 +42,33 @@ fun SettingsScreen(
     onBackPressed: () -> Unit,
     appVersion: String = "1.0.0",
     viewModel: ThemeViewModel = hiltViewModel(),
-    onClearCache: () -> Unit,
+    cacheManagerViewModel: CacheManagerViewModel = hiltViewModel(),
     onNotificationSettingsChanged: (Boolean) -> Unit,
     onPrivacyPolicyClicked: () -> Unit,
     onTermsOfServiceClicked: () -> Unit,
     onAboutUsClicked: () -> Unit,
-    onHelpAndSupportClicked: () -> Unit
+    onHelpAndSupportClicked: () -> Unit,
+    onAccountDeletionPolicyClicked: () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val hapticFeedback = LocalHapticFeedback.current
-    val coroutineScope = rememberCoroutineScope()
-
     val themeState by viewModel.themeState.collectAsState()
+    val cacheUiState by cacheManagerViewModel.uiState.collectAsState()
 
     var notificationsEnabled by remember { mutableStateOf(true) }
     var showThemeDialog by remember { mutableStateOf(false) }
     var showClearCacheDialog by remember { mutableStateOf(false) }
     var cacheCleared by remember { mutableStateOf(false) }
+
+    LaunchedEffect(cacheUiState.cacheClearingSuccess) {
+        if (cacheUiState.cacheClearingSuccess && cacheUiState.cacheClearingDetails != null) {
+            cacheCleared = true
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        cacheManagerViewModel.refreshCacheSize()
+    }
 
     DefaultScaffold(
         modifier = Modifier
@@ -137,24 +148,42 @@ fun SettingsScreen(
                 SettingsItem(
                     icon = Icons.Outlined.DeleteSweep,
                     title = "Clear cache",
-                    subtitle = if (cacheCleared) "Cache cleared" else "Free up storage space",
+                    subtitle = if (cacheUiState.isCacheClearing) {
+                        "Clearing cache..."
+                    } else if (cacheUiState.cacheClearingSuccess) {
+                        "Cache cleared"
+                    } else {
+                        "Current size: ${cacheUiState.cacheSize}"
+                    },
                     onClick = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                         showClearCacheDialog = true
                     },
-                    trailingContent = if (cacheCleared) {
-                        {
-                            Icon(
-                                imageVector = Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
+                    trailingContent = when {
+                        cacheUiState.isCacheClearing -> {
+                            {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.padding(end = 8.dp),
+                                    strokeWidth = 2.dp
+                                )
+                            }
                         }
-                    } else {
-                        null
+
+                        cacheUiState.cacheClearingSuccess -> {
+                            {
+                                Icon(
+                                    imageVector = Icons.Default.CheckCircle,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+
+                        else -> null
                     }
                 )
             }
+
 
             item {
                 SettingsSectionHeader(title = "About & Legal")
@@ -173,6 +202,14 @@ fun SettingsScreen(
                     icon = Icons.Outlined.Description,
                     title = "Terms of Service",
                     onClick = onTermsOfServiceClicked
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Outlined.Delete,
+                    title = "Account Deletion Policy",
+                    onClick = onAccountDeletionPolicyClicked
                 )
             }
 
@@ -221,32 +258,56 @@ fun SettingsScreen(
     }
 
     if (showClearCacheDialog) {
-        AlertDialog(
-            onDismissRequest = { showClearCacheDialog = false },
-            icon = { Icon(Icons.Outlined.DeleteSweep, contentDescription = null) },
-            title = { Text("Clear Cache") },
-            text = { Text("This will clear all temporary files and cached data. This action cannot be undone.") },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        onClearCache()
-                        cacheCleared = true
-                        showClearCacheDialog = false
-                        coroutineScope.launch {
-                            delay(2000)
-                            cacheCleared = false
-                        }
-                    }
-                ) {
-                    Text("Clear")
-                }
+        CustomDialog(
+            title = "Clear Cache",
+            onDismiss = { showClearCacheDialog = false },
+            confirmButtonText = "Clear",
+            onConfirm = {
+                cacheManagerViewModel.clearCache()
+                showClearCacheDialog = false
             },
-            dismissButton = {
-                OutlinedButton(
-                    onClick = { showClearCacheDialog = false }
-                ) {
-                    Text("Cancel")
+            content = {
+                Column {
+                    Text(
+                        "This will clear:",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text("• Temporary files")
+                    Text("• Image cache")
+                    Text("• Network responses")
+                    Text(
+                        "\nYour personal data, settings, and saved content will not be affected.",
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                    Text(
+                        "\nCurrent cache size: ${cacheUiState.cacheSize}",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
                 }
+            }
+        )
+    }
+
+    if (cacheCleared && cacheUiState.cacheClearingDetails != null) {
+        CustomDialog(
+            title = "Cache Cleared",
+            onDismiss = {
+                cacheCleared = false
+                cacheManagerViewModel.resetCacheClearingSuccess()
+            },
+            confirmButtonText = "OK",
+            dismissButtonText = "",
+            onConfirm = {
+                cacheCleared = false
+                cacheManagerViewModel.resetCacheClearingSuccess()
+            },
+            content = {
+                Text(
+                    text = "Successfully cleared ${cacheUiState.cacheClearingDetails?.formattedSize} of cached data.",
+                    textAlign = TextAlign.Center
+                )
             }
         )
     }

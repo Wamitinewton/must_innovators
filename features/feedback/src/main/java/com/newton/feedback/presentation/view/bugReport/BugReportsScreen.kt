@@ -54,25 +54,25 @@ fun BugReportsScreen(
                     }
                 },
                 colors =
-                TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        titleContentColor = MaterialTheme.colorScheme.onSurface
+                    )
             )
         }
     ) { padding ->
         Box(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(padding)
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
         ) {
             Column(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(scrollState)
-                    .padding(16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState)
+                        .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 MultilineInputField(
@@ -81,9 +81,9 @@ fun BugReportsScreen(
                     label = "Describe the bug",
                     placeholder = "What happened? what did you expect?",
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 150.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 150.dp),
                     maxLines = 5
                 )
 

@@ -18,8 +18,8 @@ package com.newton.auth.di
 
 import com.newton.auth.data.dataStore.*
 import com.newton.auth.data.repository.*
-import com.newton.database.*
 import com.newton.database.dao.*
+import com.newton.database.dbManager.*
 import com.newton.network.data.remote.*
 import com.newton.network.domain.repositories.*
 import dagger.*
@@ -35,7 +35,7 @@ object AuthRepositoryModule {
     fun provideAuthRepository(
         authService: AuthService,
         sessionManager: SessionManager,
-        dbCleaner: DbCleaner,
+        roomDataManager: RoomDataManager,
         userDao: UserDao
-    ): AuthRepository = AuthRepositoryImpl(authService, sessionManager, userDao, dbCleaner)
+    ): AuthRepository = AuthRepositoryImpl(authService, sessionManager, userDao, roomDataManager)
 }

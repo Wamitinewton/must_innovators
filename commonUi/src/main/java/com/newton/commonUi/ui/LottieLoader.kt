@@ -51,10 +51,10 @@ fun EnhancedLottieAnimation(
             scale.animateTo(
                 targetValue = 1f,
                 animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                )
+                    spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
             )
         }
     }
@@ -66,11 +66,11 @@ fun EnhancedLottieAnimation(
         isPlaying = true,
         restartOnPlay = false,
         clipSpec =
-        if (reverseAnimation) {
-            LottieClipSpec.Progress(0f, 1f)
-        } else {
-            LottieClipSpec.Progress(0f, 1f)
-        },
+            if (reverseAnimation) {
+                LottieClipSpec.Progress(0f, 1f)
+            } else {
+                LottieClipSpec.Progress(0f, 1f)
+            },
         speed = if (reverseAnimation) -1f else 1f
     )
 
@@ -89,9 +89,9 @@ fun EnhancedLottieAnimation(
             composition = composition,
             progress = progress,
             modifier =
-            Modifier
-                .size(size.dp)
-                .scale(scale.value),
+                Modifier
+                    .size(size.dp)
+                    .scale(scale.value),
             enableMergePaths = remember { enableMergePaths },
             alignment = alignment
         )

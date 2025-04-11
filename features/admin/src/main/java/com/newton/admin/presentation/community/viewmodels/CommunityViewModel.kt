@@ -16,24 +16,23 @@
  */
 package com.newton.admin.presentation.community.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.data.mappers.User
+import androidx.lifecycle.*
+import com.newton.admin.data.mappers.*
 import com.newton.admin.data.mappers.UserDataMappers.toDomainList
-import com.newton.admin.presentation.community.events.CommunityEvent
-import com.newton.admin.presentation.community.states.CommunityState
-import com.newton.admin.presentation.community.states.UsersState
-import com.newton.network.Resource
-import com.newton.network.domain.models.adminModels.AddCommunityRequest
-import com.newton.network.domain.repositories.AdminRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import com.newton.admin.presentation.community.events.*
+import com.newton.admin.presentation.community.states.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
+import kotlin.collections.List
+import kotlin.collections.filter
+import kotlin.collections.map
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
@@ -130,6 +129,7 @@ class CommunityViewModel @Inject constructor(
             }
         }
     }
+
     private fun validate(): Boolean {
         val errors = mutableMapOf<String, String>()
         if (_communityState.value.name.isBlank()) {
@@ -160,7 +160,6 @@ class CommunityViewModel @Inject constructor(
         _communityState.value = _communityState.value.copy(errors = errors)
         return errors.isEmpty()
     }
-
 
 
     private fun addCommunity() {

@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.events.events
 
-import com.newton.network.domain.models.adminModels.EventsData
+import com.newton.network.domain.models.adminModels.*
 
 sealed class EventUpdateEvent {
     data class Update(val eventId: Int) : EventUpdateEvent()

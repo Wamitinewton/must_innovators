@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.*
 import coil3.compose.*
 import coil3.request.*
 import com.newton.commonUi.R
-import com.newton.commonUi.composables.animation.customAnimations.*
+import com.newton.commonUi.animations.*
 
 @Composable
 fun NetworkImage(
@@ -72,6 +72,7 @@ fun NetworkImage(
                     )
                 }
             }
+
             else -> SubcomposeAsyncImageContent()
         }
     }

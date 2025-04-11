@@ -16,26 +16,20 @@
  */
 package com.newton.admin.presentation.partners.viewModel
 
-import android.util.Patterns
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.newton.admin.presentation.partners.events.AddPartnersEvent
-import com.newton.admin.presentation.partners.states.AddPartnersEffect
-import com.newton.admin.presentation.partners.states.AddPartnersState
-import com.newton.network.Resource
-import com.newton.network.domain.models.adminModels.AddPartnerRequest
-import com.newton.network.domain.repositories.AdminRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
-import javax.inject.Inject
+import android.util.*
+import androidx.lifecycle.*
+import com.newton.admin.presentation.partners.events.*
+import com.newton.admin.presentation.partners.states.*
+import com.newton.network.*
+import com.newton.network.domain.models.adminModels.*
+import com.newton.network.domain.repositories.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import java.time.format.*
+import javax.inject.*
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
 
 @HiltViewModel
 class PartnersViewModel @Inject constructor(
@@ -196,7 +190,7 @@ class PartnersViewModel @Inject constructor(
         if (_addPartnersState.value.contactEmail.isBlank()) {
             errors["email"] = "Contact email is required"
         } else if (!Patterns.EMAIL_ADDRESS.matcher(_addPartnersState.value.contactEmail)
-            .matches()
+                .matches()
         ) {
             errors["email"] = "Invalid email format"
         }

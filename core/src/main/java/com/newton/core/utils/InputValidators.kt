@@ -52,12 +52,15 @@ object PasswordValidator {
             !lowercaseRegex.containsMatchIn(password) -> {
                 ValidationResult(false, "Password must contain at least one lowercase letter")
             }
+
             email != null && containsMatchingSequence(password, email) -> {
                 ValidationResult(false, "Password should not match email pattern")
             }
+
             else -> ValidationResult(true)
         }
     }
+
     private fun containsMatchingSequence(username: String, email: String): Boolean {
         if (username.length < 5 || email.length < 5) {
             return false
@@ -129,6 +132,7 @@ object InputValidators {
             }
         }
     }
+
     fun validateUsername(username: String?): ValidationResult {
         return when {
             username == null || username.trim().isEmpty() -> {
@@ -138,6 +142,7 @@ object InputValidators {
             !username.matches("[A-Za-z0-9_]+".toRegex()) -> {
                 ValidationResult(false, "Username should only contain letters, numbers, and underscores")
             }
+
             else -> {
                 ValidationResult(true)
             }
@@ -149,9 +154,11 @@ object InputValidators {
             course == null || course.trim().isEmpty() -> {
                 ValidationResult(false, "Course cannot be empty")
             }
+
             !course.matches("[A-Za-z\\s]+".toRegex()) -> {
                 ValidationResult(false, "Course should only contain letters and spaces")
             }
+
             else -> {
                 ValidationResult(true)
             }

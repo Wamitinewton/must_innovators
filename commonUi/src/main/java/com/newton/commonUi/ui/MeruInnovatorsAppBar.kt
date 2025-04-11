@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.commonUi.composables
+package com.newton.commonUi.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.*
 fun MeruInnovatorsAppBar(
     title: String,
     actions:
-        @Composable()
-        (RowScope.() -> Unit) = {}
+    @Composable()
+    (RowScope.() -> Unit) = {}
 ) {
     TopAppBar(
         actions = {

@@ -23,7 +23,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.composables.chart.*
 import com.newton.commonUi.ui.*
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -37,9 +36,9 @@ internal fun DonutChartComponentView(
     val formattedColors = colors.map { Color(it) }
     ColumnWrapper(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Box(

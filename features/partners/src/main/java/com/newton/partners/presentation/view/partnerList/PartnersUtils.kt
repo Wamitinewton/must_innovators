@@ -80,9 +80,9 @@ fun StatusChip(status: String) {
 fun QuickInfoRow(partnerData: PartnersData) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         InfoPill(
@@ -93,9 +93,9 @@ fun QuickInfoRow(partnerData: PartnersData) {
 
         VerticalDivider(
             modifier =
-            Modifier
-                .height(40.dp)
-                .width(1.dp),
+                Modifier
+                    .height(40.dp)
+                    .width(1.dp),
             color = MaterialTheme.colorScheme.outlineVariant
         )
 
@@ -107,9 +107,9 @@ fun QuickInfoRow(partnerData: PartnersData) {
 
         VerticalDivider(
             modifier =
-            Modifier
-                .height(40.dp)
-                .width(1.dp),
+                Modifier
+                    .height(40.dp)
+                    .width(1.dp),
             color = MaterialTheme.colorScheme.outlineVariant
         )
 
@@ -204,15 +204,15 @@ fun ContactInfoCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors =
-        CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-        )
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+            )
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
@@ -274,15 +274,15 @@ fun PartnershipDetailsCard(partnerData: PartnersData) {
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-        )
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+            )
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
@@ -424,10 +424,10 @@ fun SocialButton(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier =
-        Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick)
-            .padding(8.dp)
+            Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .clickable(onClick = onClick)
+                .padding(8.dp)
     ) {
         Surface(
             shape = CircleShape,

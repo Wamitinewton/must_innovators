@@ -46,44 +46,44 @@ fun RatingBarInput(
 
             val iconAlpha by animateFloatAsState(
                 targetValue =
-                when {
-                    isSelected -> 1f
-                    isHovered -> 0.7f
-                    else -> 0.5f
-                },
+                    when {
+                        isSelected -> 1f
+                        isHovered -> 0.7f
+                        else -> 0.5f
+                    },
                 animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                ),
+                    spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    ),
                 label = "starAlpha$i"
             )
 
             val iconScale by animateFloatAsState(
                 targetValue =
-                when {
-                    isSelected -> 1.2f
-                    isHovered -> 1.1f
-                    else -> 1.0f
-                },
+                    when {
+                        isSelected -> 1.2f
+                        isHovered -> 1.1f
+                        else -> 1.0f
+                    },
                 animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                ),
+                    spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    ),
                 label = "starScale$i"
             )
 
             Box(
                 modifier =
-                Modifier
-                    .size(48.dp)
-                    .scale(iconScale)
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
-                        onClick = { onRatingChanged(i) }
-                    ),
+                    Modifier
+                        .size(48.dp)
+                        .scale(iconScale)
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null,
+                            onClick = { onRatingChanged(i) }
+                        ),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -113,15 +113,15 @@ fun RatingBar(
                 imageVector = if (index < rating) Icons.Filled.StarRate else Icons.Outlined.StarRate,
                 contentDescription = null,
                 tint =
-                if (index < rating) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-                },
+                    if (index < rating) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                    },
                 modifier =
-                Modifier
-                    .size(24.dp)
-                    .padding(end = 4.dp)
+                    Modifier
+                        .size(24.dp)
+                        .padding(end = 4.dp)
             )
         }
 

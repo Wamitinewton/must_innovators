@@ -46,19 +46,19 @@ fun FeedbackTab(
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier =
-            Modifier
-                .padding(8.dp)
-                .clip(RoundedCornerShape(4.dp))
-                .background(MaterialTheme.colorScheme.surface)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(4.dp)
-                )
-                .fillMaxWidth()
-                .height(40.dp)
-                .clickable { expanded = true }
-                .padding(horizontal = 20.dp),
+                Modifier
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .clickable { expanded = true }
+                    .padding(horizontal = 20.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Text(
@@ -76,9 +76,9 @@ fun FeedbackTab(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier =
-                Modifier
-                    .padding(horizontal = 12.dp)
-                    .fillMaxWidth()
+                    Modifier
+                        .padding(horizontal = 12.dp)
+                        .fillMaxWidth()
             ) {
                 events.forEach { event ->
                     DropdownMenuItem(
@@ -118,9 +118,9 @@ fun FeedbackTab(
 
             Row(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(

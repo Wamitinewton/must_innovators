@@ -52,9 +52,9 @@ fun SuccessDialog(
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
@@ -64,9 +64,9 @@ fun SuccessDialog(
             ) {
                 Box(
                     modifier =
-                    Modifier
-                        .size(200.dp)
-                        .padding(16.dp)
+                        Modifier
+                            .size(200.dp)
+                            .padding(16.dp)
                 ) {
                     EnhancedLottieAnimation(
                         lottieFile = com.newton.commonUi.R.raw.innovators_success
@@ -111,9 +111,9 @@ fun UnsavedChangesDialog(
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
@@ -152,10 +152,10 @@ fun UnsavedChangesDialog(
                         onClick = onConfirm,
                         modifier = Modifier.weight(1f),
                         colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error,
-                            contentColor = MaterialTheme.colorScheme.onError
-                        )
+                            ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error,
+                                contentColor = MaterialTheme.colorScheme.onError
+                            )
                     ) {
                         Text("Discard")
                     }
