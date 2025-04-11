@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 
 @Composable
-fun EmptyTicketsView(modifier: Modifier = Modifier) {
+fun EmptyTicketsView(modifier: Modifier = Modifier, navigateToEventsScreen: () -> Unit) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -55,7 +55,7 @@ fun EmptyTicketsView(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(24.dp))
 
             FilledTonalButton(
-                onClick = {},
+                onClick = navigateToEventsScreen,
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Icon(

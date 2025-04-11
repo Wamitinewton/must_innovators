@@ -44,8 +44,8 @@ sealed class Screens(
             NavigationSubGraphRoutes.Event.route,
             Icons.Filled.Event,
             Icons.Outlined.Event,
-            true,
-            5,
+            false,
+            null,
             "Events"
         )
 
@@ -64,7 +64,7 @@ sealed class Screens(
             NavigationSubGraphRoutes.Account.route,
             Icons.Filled.AccountCircle,
             Icons.Outlined.AccountCircle,
-            true,
+            false,
             null,
             "Account"
         )

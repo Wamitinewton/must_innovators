@@ -24,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.platform.*
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.google.accompanist.systemuicontroller.*
 import com.newton.commonUi.theme.Theme.MeruinnovatorsTheme
@@ -31,8 +32,7 @@ import com.newton.meruinnovators.navigation.*
 import com.newton.navigation.*
 
 @Composable
-fun RootScreen(navigationSubGraphs: NavigationSubGraphs) {
-    val navController = rememberNavController()
+fun RootScreen(navigationSubGraphs: NavigationSubGraphs, navController: NavHostController) {
     val currentBackStackEntryAsState by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntryAsState?.destination
     val context = LocalContext.current

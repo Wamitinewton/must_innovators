@@ -24,6 +24,7 @@ import androidx.activity.*
 import androidx.activity.compose.*
 import androidx.activity.result.contract.*
 import androidx.core.content.*
+import androidx.navigation.compose.rememberNavController
 import com.newton.auth.data.workManager.*
 import com.newton.meruinnovators.navigation.*
 import com.newton.notifications.manager.*
@@ -60,7 +61,8 @@ class MainActivity : ComponentActivity() {
         handleNotificationIntent(intent)
 
         setContent {
-            RootScreen(navigationSubGraphs)
+            val navController = rememberNavController()
+            RootScreen(navigationSubGraphs, navController)
         }
     }
 

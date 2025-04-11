@@ -55,11 +55,18 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove"></provider>
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                tools:node="remove" />
+<!--            <meta-data-->
+<!--                android:name="com.newton.notifications.initializer.NotificationsInitializer"-->
+<!--                android:value="androidx.startup" />-->
+        </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -69,9 +76,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
 
-            <meta-data
-                android:name="com.newton.notifications.initializer.NotificationsInitializer"
-                android:value="androidx.startup" />
+<!--            <meta-data-->
+<!--                android:name="com.newton.notifications.initializer.NotificationsInitializer"-->
+<!--                android:authorities="${applicationId}.workmanager-init"-->
+<!--                android:exported="false" />-->
         </provider>
     </application>
 

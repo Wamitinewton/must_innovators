@@ -28,7 +28,8 @@ import com.newton.events.presentation.viewmodel.*
 fun RegisteredEventsScreen(
     onBackPressed: () -> Unit,
     onTicketSelected: (Int) -> Unit = {},
-    userTicketsViewModel: UserTicketsViewModel
+    userTicketsViewModel: UserTicketsViewModel,
+    onNavigateToEventsList: () -> Unit
 ) {
     val uiState by userTicketsViewModel.userTicketsUiState.collectAsState()
 
@@ -54,7 +55,8 @@ fun RegisteredEventsScreen(
     ) {
         RegisteredEventsSection(
             uiState = uiState,
-            onTicketSelected = onTicketSelected
+            onTicketSelected = onTicketSelected,
+            onNavigateToEventsList = onNavigateToEventsList
         )
     }
 }

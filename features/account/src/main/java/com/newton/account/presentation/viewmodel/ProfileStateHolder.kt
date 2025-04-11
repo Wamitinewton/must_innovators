@@ -162,18 +162,18 @@ constructor(
             }
 
         return UpdateProfileRequest(
-            first_name = formState.firstName.takeIf { it != currentUserData.first_name },
-            last_name = formState.lastName.takeIf { it != currentUserData.last_name },
-            email = formState.email.takeIf { it != currentUserData.email },
-            course = formState.course.takeIf { it.isNotBlank() && it != currentUserData.course },
-            registration_no = formState.registrationNo.takeIf { it.isNotBlank() && it != currentUserData.registration_no },
-            bio = formState.bio.takeIf { it.isNotBlank() && it != currentUserData.bio },
-            tech_stacks = formState.techStacks.takeIf { it != currentUserData.tech_stacks },
+            first_name = formState.firstName,
+            last_name = formState.lastName,
+            email = formState.email,
+            course = formState.course,
+            registration_no = formState.registrationNo,
+            bio = formState.bio,
+            tech_stacks = formState.techStacks,
             social_media = socialMediaToInclude,
-            year_of_study = formState.yearOfStudy.takeIf { it != currentUserData.year_of_study },
-            graduation_year = formState.graduationYear.takeIf { it != currentUserData.graduation_year },
-            projects = formState.projects.takeIf { it != currentUserData.projects },
-            skills = formState.skills.takeIf { it != currentUserData.skills }
+            year_of_study = formState.yearOfStudy,
+            graduation_year = formState.graduationYear,
+            projects = formState.projects,
+            skills = formState.skills
         )
     }
 

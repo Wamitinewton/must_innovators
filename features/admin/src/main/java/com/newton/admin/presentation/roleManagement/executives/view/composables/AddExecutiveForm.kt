@@ -16,16 +16,29 @@
  */
 package com.newton.admin.presentation.roleManagement.executives.view.composables
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material.icons.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.*
-import androidx.compose.ui.unit.*
-import com.newton.admin.presentation.roleManagement.executives.events.*
-import com.newton.admin.presentation.roleManagement.executives.states.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.newton.admin.presentation.roleManagement.executives.events.ExecutiveEvents
+import com.newton.admin.presentation.roleManagement.executives.states.ExecutiveState
 
 @Composable
 fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents) -> Unit) {
@@ -70,16 +83,37 @@ fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents) -> Un
         }
 
         item {
-            Text(
-                text = "Lead position",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
-            )
-            PositionDropdown(
-                positions = positions,
-                onEvent = onEvent,
-                state = execState
+//            Text(
+//                text = "Lead position",
+//                style = MaterialTheme.typography.titleSmall,
+//                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+//                modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
+//            )
+//            PositionDropdown(
+//                positions = positions,
+//                onEvent = onEvent,
+//                state = execState
+//            )
+            OutlinedTextField(
+                value = execState.position,
+                onValueChange = { onEvent.invoke(ExecutiveEvents.PositionChanged(it)) },
+                label = { Text("Lead Position") },
+                modifier = Modifier.fillMaxWidth(),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Person,
+                        contentDescription = null
+                    )
+                },
+                singleLine = true,
+                supportingText = {
+                    execState.errors["position"]?.let {
+                        Text(
+                            it,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             )
         }
         execState.selectedUser?.let { user ->
@@ -104,7 +138,7 @@ fun AddExecutiveForm(execState: ExecutiveState, onEvent: (ExecutiveEvents) -> Un
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                enabled = execState.bio.isNotEmpty() && execState.selectedUser != null && execState.position != null
+                enabled = execState.bio.isNotEmpty() && execState.selectedUser != null && execState.position.isNotEmpty()
             ) {
                 Icon(Icons.Default.Save, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))

@@ -33,7 +33,8 @@ import com.newton.network.data.response.admin.*
 @Composable
 fun RegisteredEventsSection(
     uiState: UserTicketsUiState,
-    onTicketSelected: (Int) -> Unit = {}
+    onTicketSelected: (Int) -> Unit = {},
+    onNavigateToEventsList: () -> Unit
 ) {
     when (uiState) {
         is UserTicketsUiState.Initial -> InitialView()
@@ -41,12 +42,13 @@ fun RegisteredEventsSection(
         is UserTicketsUiState.Success ->
             UserTicketsView(
                 tickets = uiState.tickets,
-                onTicketSelected = onTicketSelected
+                onTicketSelected = onTicketSelected,
+                onNavigateToEventsList = onNavigateToEventsList
             )
 
         is UserTicketsUiState.Error ->
             ErrorScreen(
-                message = uiState.message,
+                message = "Server error, Try again later",
                 onRetry = {},
                 titleText = "Could not load your EVENT TICKETS"
             )
@@ -70,7 +72,8 @@ fun InitialView() {
 @Composable
 fun UserTicketsView(
     tickets: List<RegistrationResponse>,
-    onTicketSelected: (Int) -> Unit
+    onTicketSelected: (Int) -> Unit,
+    onNavigateToEventsList: () -> Unit
 ) {
     Box(
         modifier =
@@ -87,7 +90,9 @@ fun UserTicketsView(
             )
     ) {
         if (tickets.isEmpty()) {
-            EmptyTicketsView()
+            EmptyTicketsView(
+                navigateToEventsScreen = onNavigateToEventsList
+            )
         } else {
             LazyColumn(
                 modifier =

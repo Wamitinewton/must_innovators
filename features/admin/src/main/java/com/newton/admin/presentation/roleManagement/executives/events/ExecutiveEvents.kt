@@ -24,7 +24,8 @@ sealed class ExecutiveEvents {
 
     data class SelectedUserChange(val user: User) : ExecutiveEvents()
 
-    data class PositionChanged(val position: ExecutivePosition) : ExecutiveEvents()
+//    data class PositionChanged(val position: ExecutivePosition) : ExecutiveEvents()
+    data class PositionChanged(val position: String) : ExecutiveEvents()
 
     data class BioChanged(val bio: String) : ExecutiveEvents()
 
