@@ -31,7 +31,7 @@ import javax.inject.*
 class PartnersViewModel
 @Inject
 constructor(
-    private val homeRepository: HomeRepository
+    private val partnersRepository: PartnersRepository
 ) : ViewModel() {
     private val _partnersState = MutableStateFlow<PartnersUiState>(PartnersUiState.Loading)
     val partnersState: StateFlow<PartnersUiState> = _partnersState.asStateFlow()
@@ -44,7 +44,7 @@ constructor(
         viewModelScope.launch {
             _partnersState.value = PartnersUiState.Loading
 
-            homeRepository.getPartners().collect { result ->
+            partnersRepository.getPartners().collect { result ->
                 when (result) {
                     is Resource.Loading -> {
                         if (result.isLoading) {

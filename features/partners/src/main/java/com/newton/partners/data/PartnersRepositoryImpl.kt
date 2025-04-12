@@ -14,11 +14,23 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.network.domain.repositories
+package com.newton.partners.data
 
+import com.newton.network.*
+import com.newton.network.data.remote.*
 import com.newton.network.domain.models.homeModels.*
+import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.flow.*
+import javax.inject.*
 
-interface HomeRepository {
-    suspend fun getPartners(): Flow<com.newton.network.Resource<List<PartnersData>>>
+class PartnersRepositoryImpl
+@Inject
+constructor(
+    private val partnersService: PartnersService
+) : PartnersRepository {
+    override suspend fun getPartners(): Flow<Resource<List<PartnersData>>> =
+        safeApiCall {
+            val response = partnersService.getPartners().results
+            response
+        }
 }
