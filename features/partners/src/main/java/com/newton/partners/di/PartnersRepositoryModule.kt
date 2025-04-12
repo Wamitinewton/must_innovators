@@ -31,5 +31,5 @@ object PartnersRepositoryModule {
     @Singleton
     fun providePartnersRepository(
         partnersService: PartnersService
-    ): HomeRepository = HomeRepositoryImpl(partnersService)
+    ): PartnersRepository = PartnersRepositoryImpl(partnersService)
 }
