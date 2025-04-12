@@ -123,7 +123,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Co-Lead",
-                            name = community.communityLead.username,
+                            name = community.coLead.username,
                             icon = Icons.Default.Person
                         )
 
@@ -131,7 +131,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Secretary",
-                            name = community.communityLead.username,
+                            name = community.secretary.username,
                             icon = Icons.Default.Edit
                         )
                     }
