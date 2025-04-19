@@ -34,13 +34,10 @@ fun RatingSummary(testimonials: List<TestimonialsData>) {
         .map { it.rating }
         .average()
         .let { if (it.isNaN()) 0.0 else it }
-
     val ratingCounts = IntArray(5) { i ->
         testimonials.count { it.rating == i + 1 }
     }
-
     val maxCount = ratingCounts.maxOrNull() ?: 1
-
     CustomCard(
         modifier = Modifier
             .fillMaxWidth()

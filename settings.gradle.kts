@@ -20,7 +20,7 @@ dependencyResolutionManagement {
 }
 
 include(
-    ":app",
+    ":innovators",
     ":commonUi",
     ":core",
     ":database",
@@ -42,3 +42,4 @@ include(":features:testimonials")
 include(":features:partners")
 include(":features:settings")
 include(":features:communities")
+include(":domain")
