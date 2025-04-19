@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "721922038764",
+    "project_id": "meruinnovators-7e4dd",
+    "storage_bucket": "meruinnovators-7e4dd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721922038764:android:43683ddbdceff263a53ec9",
+        "android_client_info": {
+          "package_name": "com.newton.meruinnovators"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDUryJ025Ull-RwMmdD5_swWSHfJjZVPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721922038764:android:d5751764ad27b377a53ec9",
+        "android_client_info": {
+          "package_name": "com.newton.meruinnovators.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDUryJ025Ull-RwMmdD5_swWSHfJjZVPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721922038764:android:0eb9a019b356aa36a53ec9",
+        "android_client_info": {
+          "package_name": "com.newton.meruinnovators.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDUryJ025Ull-RwMmdD5_swWSHfJjZVPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
