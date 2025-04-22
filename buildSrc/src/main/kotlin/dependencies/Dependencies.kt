@@ -6,11 +6,11 @@ object Dependencies {
     // Android Core
     const val coreKtx = "androidx.core:core-ktx:1.12.0"
     const val appCompat = "androidx.appcompat:appcompat:1.6.1"
-    const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
-    const val activityCompose = "androidx.activity:activity-compose:1.8.2"
+    const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
+    const val activityCompose = "androidx.activity:activity-compose:1.9.3"
 
     // Compose
-    const val composeBom = "androidx.compose:compose-bom:2024.03.00"
+    const val composeBom = "androidx.compose:compose-bom:2024.04.01"
     const val composeUi = "androidx.compose.ui:ui"
     const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
