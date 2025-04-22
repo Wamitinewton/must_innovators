@@ -109,6 +109,12 @@ fun DependencyHandler.addPagingDependencies() {
     implementation(Dependencies.pagingRuntime)
 }
 
+fun DependencyHandler.addFirebaseDependencies() {
+    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
+}
+
 
 /**
  * Adds Room dependencies
@@ -140,4 +146,28 @@ fun DependencyHandler.implementCoreModules() {
     implementation(project(Modules.network))
     implementation(project(Modules.sharedPrefs))
     implementation(project(Modules.shared))
+}
+
+fun DependencyHandler.addAllModules() {
+    implementation(project(Modules.core))
+    implementation(project(Modules.commonUi))
+    implementation(project(Modules.database))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.navigation))
+    implementation(project(Modules.network))
+    implementation(project(Modules.sharedPrefs))
+    implementation(project(Modules.shared))
+    implementation(project(Modules.notifications))
+    implementation(project(Modules.Features.aboutUs))
+    implementation(project(Modules.Features.account))
+    implementation(project(Modules.Features.admin))
+    implementation(project(Modules.Features.auth))
+    implementation(project(Modules.Features.blogs))
+    implementation(project(Modules.Features.communities))
+    implementation(project(Modules.Features.events))
+    implementation(project(Modules.Features.feedback))
+    implementation(project(Modules.Features.home))
+    implementation(project(Modules.Features.partners))
+    implementation(project(Modules.Features.settings))
+    implementation(project(Modules.Features.testimonials))
 }
