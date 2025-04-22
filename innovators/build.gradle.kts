@@ -14,12 +14,29 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
+import dependencies.Dependencies
+/**
+ * Copyright (c) 2025 Meru Science Innovators Club
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of Meru Science Innovators Club.
+ * You shall not disclose such confidential information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with Meru Science Innovators Club.
+ *
+ * Unauthorized copying of this file, via any medium, is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * NO WARRANTY: This software is provided "as is" without warranty of any kind,
+ * either express or implied, including but not limited to the implied warranties
+ * of merchantability and fitness for a particular purpose.
+ */
 import java.util.*
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.plugin.compose")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
@@ -27,23 +44,23 @@ plugins {
     id("com.google.gms.google-services")
 }
 
-val properties = Properties()
+val property = Properties()
 val store = rootProject.file("keys.properties")
 
 if (store.exists()) {
-    properties.load(store.inputStream())
+    property.load(store.inputStream())
 } else {
     throw GradleException("keys.properties file not found")
 }
 
 val prodBackendUrl =
-    properties.getProperty("PROD_BACKEND_URL")
+    property.getProperty("PROD_BACKEND_URL")
         ?: throw GradleException("PROD_BACKEND_URL not found in keys.properties")
 val devBackendUrl =
-    properties.getProperty("DEV_BACKEND_URL")
+    property.getProperty("DEV_BACKEND_URL")
         ?: throw GradleException("DEV_BACKEND_URL not found in keys.properties")
 val stagingBackendUrl =
-    properties.getProperty("STAGING_BACKEND_URL")
+    property.getProperty("STAGING_BACKEND_URL")
         ?: throw GradleException("STAGING_BACKEND_URL not found in keys.properties")
 
 android {
@@ -55,7 +72,7 @@ android {
         try {
             val keystoreFile = rootProject.file("keys.properties")
             if (keystoreFile.exists()) {
-                properties.load(keystoreFile.inputStream())
+                property.load(keystoreFile.inputStream())
             } else {
                 throw GradleException("keys.properties file not found")
             }
@@ -76,16 +93,16 @@ android {
 
         create("release") {
             val keystoreFile =
-                properties.getProperty("RELEASE_STORE_FILE")
+                property.getProperty("RELEASE_STORE_FILE")
                     ?: throw GradleException("store file not found in keys.properties")
             val keystorePassword =
-                properties.getProperty("RELEASE_STORE_PASSWORD")
+                property.getProperty("RELEASE_STORE_PASSWORD")
                     ?: throw GradleException("store password not found in keys.properties")
             val keyalias =
-                properties.getProperty("RELEASE_KEY_ALIAS")
+                property.getProperty("RELEASE_KEY_ALIAS")
                     ?: throw GradleException("key alias not found in keys.properties")
             val keyaliasPassword =
-                properties.getProperty("RELEASE_KEY_PASSWORD")
+                property.getProperty("RELEASE_KEY_PASSWORD")
                     ?: throw GradleException("alias pwd not found in keys.properties")
 
             storeFile = file(keystoreFile)
@@ -136,11 +153,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
@@ -179,9 +196,9 @@ dependencies {
     // Retrofit
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofit2Converter)
-    implementation(Dependencies.gsonCoverter)
+    implementation(Dependencies.gsonConverter)
     implementation(Dependencies.kotlinxSerialization)
-    implementation(Dependencies.okhttp_logger)
+    implementation(Dependencies.okhttpLogger)
 
     // worker
     implementation(Dependencies.work)

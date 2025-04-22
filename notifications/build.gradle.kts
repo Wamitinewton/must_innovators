@@ -14,63 +14,20 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
+import extensions.addRetrofitDependencies
+import extensions.implementCoreModules
+import dependencies.Dependencies
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-parcelize")
-    id("kotlinx-serialization")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
+    id("innovators.module.plugin")
 }
 
 android {
     namespace = "com.newton.notifications"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 28
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Hilt
-    implementation(Dependencies.hiltAndroid)
-    ksp(Dependencies.hiltCompiler)
-
-    // retrofit
-    implementation(Dependencies.retrofit)
-    implementation(Dependencies.retrofit2Converter)
-    implementation(Dependencies.gsonCoverter)
-    implementation(Dependencies.kotlinxSerialization)
-
+    addRetrofitDependencies()
     implementation(Dependencies.timber)
 
     // Firebase
@@ -80,7 +37,5 @@ dependencies {
 
     // Initializer
     implementation(Dependencies.initializer)
-    implementation(project(":commonUi"))
-
-    implementation(project(":database"))
+    implementCoreModules()
 }
