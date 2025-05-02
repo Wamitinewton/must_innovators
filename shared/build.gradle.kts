@@ -14,74 +14,27 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
+import extensions.addPagingDependencies
+import extensions.addRetrofitDependencies
+import dependencies.Dependencies
+import modules.Modules
+
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
-    id("kotlinx-serialization")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
+    id("innovators.module.plugin")
 }
 
 android {
     namespace = "com.newton.shared"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 28
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Hilt
-    implementation(Dependencies.hiltAndroid)
-    ksp(Dependencies.hiltCompiler)
-
-    implementation(Dependencies.hiltNavigation)
-    implementation(Dependencies.composeNavigation)
-
-    // Retrofit
-    implementation(Dependencies.retrofit)
-    implementation(Dependencies.retrofit2Converter)
-    implementation(Dependencies.gsonCoverter)
-    implementation(Dependencies.kotlinxSerialization)
-
-    // paging
-    implementation(Dependencies.pagingCompose)
-    implementation(Dependencies.pagingRuntime)
+    addRetrofitDependencies()
+    addPagingDependencies()
 
     // timber
     implementation(Dependencies.timber)
-
-    implementation(project(":core"))
-    implementation(project(":network"))
+    implementation(project(Modules.core))
+    implementation(project(Modules.network))
 }

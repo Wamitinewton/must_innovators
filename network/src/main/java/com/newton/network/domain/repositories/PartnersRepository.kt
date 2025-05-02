@@ -19,6 +19,6 @@ package com.newton.network.domain.repositories
 import com.newton.network.domain.models.homeModels.*
 import kotlinx.coroutines.flow.*
 
-interface HomeRepository {
+interface PartnersRepository {
     suspend fun getPartners(): Flow<com.newton.network.Resource<List<PartnersData>>>
 }

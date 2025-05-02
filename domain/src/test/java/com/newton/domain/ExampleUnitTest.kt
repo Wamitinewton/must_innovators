@@ -14,23 +14,20 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.partners.data
+package com.newton.domain
 
-import com.newton.network.*
-import com.newton.network.data.remote.*
-import com.newton.network.domain.models.homeModels.*
-import com.newton.network.domain.repositories.*
-import kotlinx.coroutines.flow.*
-import javax.inject.*
+import org.junit.Test
 
-class HomeRepositoryImpl
-@Inject
-constructor(
-    private val partnersService: PartnersService
-) : HomeRepository {
-    override suspend fun getPartners(): Flow<Resource<List<PartnersData>>> =
-        safeApiCall {
-            val response = partnersService.getPartners().results
-            response
-        }
+import org.junit.Assert.*
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
 }
