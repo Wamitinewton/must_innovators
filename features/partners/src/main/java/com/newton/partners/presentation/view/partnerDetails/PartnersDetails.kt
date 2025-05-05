@@ -64,7 +64,7 @@ fun PartnerDetailsScreen(
         showTopBar = scrollState.value > 250
     }
 
-    DefaultScaffold {
+    CustomScaffold {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier =

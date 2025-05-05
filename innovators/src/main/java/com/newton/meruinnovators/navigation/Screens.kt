@@ -54,9 +54,9 @@ sealed class Screens(
             NavigationSubGraphRoutes.Blogs.route,
             Icons.Filled.Collections,
             Icons.Outlined.Collections,
-            true,
-            12,
-            "Blogs"
+            false,
+            null,
+            "Communities"
         )
 
     data object Account :
@@ -104,13 +104,23 @@ sealed class Screens(
         null,
         "Actions"
     )
+
+    data object Alumni : Screens(
+        NavigationRoutes.AlumniScreen.routes,
+        Icons.Filled.School,
+        Icons.Outlined.School,
+        false,
+        null,
+        "Alumnis"
+    )
 }
 
 var bottomNavigationDestinations =
     listOf(
         Screens.Home,
+        Screens.Alumni,
         Screens.Events,
-//    Screens.Blogs,
+        Screens.Blogs,
         Screens.Account
     )
 

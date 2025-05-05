@@ -48,10 +48,9 @@ fun NewPasswordScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
-        isLoading = isLoading,
-        showOrbitals = true
+        isLoading = isLoading
     ) {
         Column(
             modifier =

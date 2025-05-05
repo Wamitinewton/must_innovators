@@ -84,10 +84,9 @@ fun DeleteAccountScreen(
         )
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
         isLoading = uiState.isLoading,
-        showOrbitals = true,
         topBar = {
             TopAppBar(
                 title = { Text("Delete Account") },

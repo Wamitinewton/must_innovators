@@ -80,7 +80,6 @@ fun TestimonialCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                TestimonialAvatar(imageUrl = "")
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Column {

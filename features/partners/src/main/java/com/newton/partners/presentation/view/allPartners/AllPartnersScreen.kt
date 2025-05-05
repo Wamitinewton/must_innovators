@@ -48,7 +48,7 @@ fun AllPartnersListScreen(
 
     val backgroundColor = MaterialTheme.colorScheme.surface
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = {

@@ -14,10 +14,10 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.data.dataStore
+package com.newton.core.enums
 
-object DataStoreKeys {
-    const val PREF_FILE_NAME = "secure_session_prefs"
-    const val KEY_ACCESS_TOKEN = "access_token"
-    const val KEY_REFRESH_TOKEN = "refresh_token"
+enum class SignupStep {
+    PERSONAL_INFO,
+    ACCOUNT_DETAILS,
+    CONFIRMATION
 }

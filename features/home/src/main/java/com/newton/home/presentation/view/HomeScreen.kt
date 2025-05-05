@@ -19,10 +19,9 @@ package com.newton.home.presentation.view
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
-import com.newton.communities.presentation.view.*
 import com.newton.communities.presentation.viewModel.*
 import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
@@ -57,38 +56,10 @@ fun HomeScreen(
         )
     }
 
-    DefaultScaffold(
-        showOrbitals = true,
+    CustomScaffold(
         topBar = {
             MeruInnovatorsAppBar(
                 title = "MUST Innovators"
-//                actions = {
-//                    Box(
-//                        modifier =
-//                        Modifier
-//                            .clip(CircleShape)
-//                            .clickable {
-//                                onNavigateToAdmin()
-//                            }
-//                            .padding(10.dp)
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.Filled.AdminPanelSettings,
-//                            contentDescription = "Admin panel"
-//                        )
-//                    }
-//
-//                    Box(
-//                        modifier =
-//                        Modifier
-//                            .clip(CircleShape)
-//                            .clickable {
-//                            }
-//                            .padding(10.dp)
-//                    ) {
-//                        Icon(Icons.Filled.NotificationsActive, contentDescription = "Notifications")
-//                    }
-//                }
             )
         }
     ) {
@@ -97,25 +68,25 @@ fun HomeScreen(
             modifier = Modifier.padding(horizontal = 16.dp)
         ) {
             item {
-                SectionHeader(
-                    title = "Our Partners",
-                    showViewAll = true,
-                    onViewAllClick = onSeeAllPartners
+                FeaturesGrid(
+                    onFeatureClick = { route ->
+                        when (route) {
+                            "partners" -> onSeeAllPartners()
+                            "testimonials" -> onSeeAllTestimonials()
+                            "communities" -> { /* Navigate to communities */ }
+                            "blogs" -> { /* Navigate to blogs */ }
+                            "innovations" -> { /* Navigate to innovations */ }
+                            "members" -> { /* Navigate to members */ }
+                            "tickets" -> { /* Navigate to tickets */ }
+                        }
+                    },
+                    modifier = Modifier.padding(top = 8.dp)
                 )
             }
-
-            item {
-                PartnersContent(
-                    partnersState = partnersState,
-                    onRetry = { partnersViewModel.refreshPartners() },
-                    onPartnerClick = onPartnerClick
-                )
-            }
-
             item {
                 SectionHeader(
                     title = "Testimonials",
-                    showViewAll = true,
+                    showViewAll = false,
                     onViewAllClick = onSeeAllTestimonials
                 )
             }
@@ -129,22 +100,6 @@ fun HomeScreen(
                     onTestimonialClick = { testimonial ->
                         selectedTestimonial = testimonial
                     }
-                )
-            }
-            item {
-                SectionHeader(
-                    title = "Communities",
-                    showViewAll = true,
-                    onViewAllClick = { }
-                )
-            }
-
-
-            item {
-                CommunityContent(
-                    uiState = communitiesState,
-                    onCommunityDetailsClick = onNavigateToCommunityDetails,
-                    communitiesViewModel = communitiesViewModel
                 )
             }
 

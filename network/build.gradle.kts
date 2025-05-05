@@ -18,6 +18,7 @@ import extensions.addPagingDependencies
 import extensions.addRetrofitDependencies
 import extensions.addWorkManagerDependencies
 import dependencies.Dependencies
+import extensions.addDataStoreDependencies
 import modules.Modules
 
 plugins {
@@ -32,7 +33,7 @@ dependencies {
     addRetrofitDependencies()
     addWorkManagerDependencies()
     addPagingDependencies()
-
+    addDataStoreDependencies()
     // timber
     implementation(Dependencies.timber)
     implementation(project(Modules.core))

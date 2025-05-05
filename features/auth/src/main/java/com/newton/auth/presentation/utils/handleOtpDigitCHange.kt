@@ -26,7 +26,7 @@ fun handleOtpDigitChange(
     onOtpChanged: (String) -> Unit,
     focusRequesters: List<FocusRequester>,
     coroutineScope: CoroutineScope,
-    focusManager: androidx.compose.ui.focus.FocusManager
+    focusManager: FocusManager
 ) {
     when {
         newValue.isEmpty() -> {

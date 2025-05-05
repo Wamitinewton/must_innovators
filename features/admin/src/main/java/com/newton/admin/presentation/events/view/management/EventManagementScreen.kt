@@ -61,7 +61,7 @@ fun EventManagementScreen(
             listState.isScrollInProgress
         }
     }
-    DefaultScaffold(
+    CustomScaffold(
 
         topBar = {
             TopAppBar(

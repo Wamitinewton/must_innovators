@@ -45,7 +45,7 @@ fun ModifyEvent(
     }
 
     var isEditing by remember { mutableStateOf(false) }
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Event Details") },

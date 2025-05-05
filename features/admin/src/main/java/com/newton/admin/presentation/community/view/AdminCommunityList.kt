@@ -35,7 +35,7 @@ fun AdminCommunityList(
     onCommunitySelected: (Community) -> Unit
 ) {
     val communityState by viewModel.updateCommunityState.collectAsState()
-    DefaultScaffold(topBar = {
+    CustomScaffold(topBar = {
         TopAppBar(title = { Text("Select Community to update") })
     }, isLoading = communityState.isLoading) {
         when {

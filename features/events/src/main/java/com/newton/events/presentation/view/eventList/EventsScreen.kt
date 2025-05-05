@@ -62,8 +62,7 @@ fun EventsScreen(
     val isError = pagingItems.loadState.refresh is LoadState.Error
     val isRefreshing = pagingItems.loadState.refresh is LoadState.Loading && pagingItems.itemCount > 0
 
-    DefaultScaffold(
-        showOrbitals = true,
+    CustomScaffold(
         topBar = {
             EventsTopBar(
                 selectedTabIndex = selectedTabIndex,

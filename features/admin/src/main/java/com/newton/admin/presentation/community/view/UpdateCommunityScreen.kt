@@ -41,7 +41,7 @@ fun UpdateCommunityScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = {

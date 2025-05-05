@@ -31,59 +31,59 @@ object Theme {
     )
 
     object ThemeColors {
-        val Primary = Color(0xFF53B175)
-        val PrimaryVariant = Color(0xFF429A5E)
-        val Secondary = Color(0xFF03DAC5)
-        val SecondaryVariant = Color(0xFF018786)
+        val Primary = Color(0xFF3B82F6)
+        val PrimaryVariant = Color(0xFF2563EB)
 
-        val Background =
-            ThemeColorPair(
-                light = Color(0xFFF8F8F8),
-                dark = Color(0xFF121212)
-            )
+        val Secondary = Color(0xFF8B5CF6)
+        val SecondaryVariant = Color(0xFF7C3AED)
 
-        val Surface =
-            ThemeColorPair(
-                light = Color.White,
-                dark = Color(0xFF1E1E1E)
-            )
+        val Background = ThemeColorPair(
+            light = Color(0xFFF0F5F3),
+            dark = Color(0xFF1A2238)
+        )
 
-        val ElevatedSurface =
-            ThemeColorPair(
-                light = Color(0xFFFAFAFA),
-                dark = Color(0xFF2C2C2C)
-            )
+        val Surface = ThemeColorPair(
+            light = Color(0xFFF0F5F3),
+            dark = Color(0xFF1E293B)
+        )
 
-        val Text =
-            ThemeColorPair(
-                light = Color(0xFF121212),
-                dark = Color(0xFFF1F1F1)
-            )
 
-        val InvertedText =
-            ThemeColorPair(
-                dark = Color(0xFF121212),
-                light = Color(0xFFF1F1F1)
-            )
+        val ElevatedSurface = ThemeColorPair(
+            light = Color(0xFFF1F5F9),
+            dark = Color(0xFF334155)
+        )
 
-        val SecondaryText =
-            ThemeColorPair(
-                light = Color(0xFF555555),
-                dark = Color(0xFFBBBBBB)
-            )
+        val Text = ThemeColorPair(
+            light = Color(0xFF0F172A),
+            dark = Color(0xFFF8FAFC)
+        )
 
-        val Divider =
-            ThemeColorPair(
-                light = Color(0xFFE0E0E0),
-                dark = Color(0xFF2A2A2A)
-            )
+        val InvertedText = ThemeColorPair(
+            light = Color(0xFFF8FAFC),
+            dark = Color(0xFF0F172A)
+        )
 
-        val Error = Color(0xFFB00020)
-        val Success = Color(0xFF43A047)
+        val SecondaryText = ThemeColorPair(
+            light = Color(0xFF64748B),
+            dark = Color(0xFFCBD5E1)
+        )
 
-        val Accent1 = Color(0xFF6200EE)
-        val Accent2 = Color(0xFFFF8F00)
+        val Divider = ThemeColorPair(
+            light = Color(0xFFE2E8F0),
+            dark = Color(0xFF334155)
+        )
+
+        val Error = Color(0xFFEF4444)
+        val Success = Color(0xFF22C55E)
+        val Warning = Color(0xFFF59E0B)
+        val Info = Color(0xFF0EA5E9)
+
+        val Accent1 = Color(0xFF06B6D4)
+        val Accent2 = Color(0xFFFACC15)
+        val Accent3 = Color(0xFFA855F7)
+        val Accent4 = Color(0xFF64748B)
     }
+
 
     private val DarkColorPalette =
         darkColorScheme(
@@ -94,11 +94,13 @@ object Theme {
             background = ThemeColors.Background.dark,
             surface = ThemeColors.Surface.dark,
             onPrimary = Color.White,
-            onSecondary = Color.Black,
+            onSecondary = Color.White,
             onBackground = ThemeColors.Text.dark,
             onSurface = ThemeColors.Text.dark,
             error = ThemeColors.Error,
-            onError = Color.White
+            onError = Color.White,
+            tertiary = ThemeColors.Accent1,
+            tertiaryContainer = ThemeColors.Accent3
         )
 
     private val LightColorPalette =
@@ -110,11 +112,13 @@ object Theme {
             background = ThemeColors.Background.light,
             surface = ThemeColors.Surface.light,
             onPrimary = Color.White,
-            onSecondary = Color.Black,
+            onSecondary = Color.White,
             onBackground = ThemeColors.Text.light,
             onSurface = ThemeColors.Text.light,
             error = ThemeColors.Error,
-            onError = Color.White
+            onError = Color.White,
+            tertiary = ThemeColors.Accent1,
+            tertiaryContainer = ThemeColors.Accent3
         )
 
     private val LocalThemeMode = staticCompositionLocalOf { false }
@@ -143,5 +147,14 @@ object Theme {
                 content = content
             )
         }
+    }
+
+    /**
+     * Extension function to get appropriate color based on current theme
+     */
+    @Composable
+    fun ThemeColorPair.current(): Color {
+        val darkTheme = LocalThemeMode.current
+        return if (darkTheme) dark else light
     }
 }

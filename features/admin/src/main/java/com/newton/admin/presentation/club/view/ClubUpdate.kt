@@ -32,7 +32,7 @@ fun AddClubScreen(
 ) {
     val clubState by viewmodel.clubState.collectAsState()
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Update Club") }

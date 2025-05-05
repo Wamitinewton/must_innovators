@@ -27,5 +27,6 @@ object Modules {
         const val partners = ":features:partners"
         const val settings = ":features:settings"
         const val testimonials = ":features:testimonials"
+        const val alumni = ":features:alumni"
     }
 }

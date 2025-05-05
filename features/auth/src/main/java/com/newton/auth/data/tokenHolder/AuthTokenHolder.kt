@@ -16,7 +16,7 @@
  */
 package com.newton.auth.data.tokenHolder
 
-import com.newton.auth.data.dataStore.*
+import com.newton.network.data.dataStore.SessionManager
 
 object AuthTokenHolder {
     var accessToken: String? = null

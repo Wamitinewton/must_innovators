@@ -141,21 +141,6 @@ fun PagedTestimonials(
 
 
 @Composable
-fun TestimonialAvatar(imageUrl: String?) {
-    Box(
-        modifier =
-        Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
-    ) {
-        NetworkImage(
-            imageUrl = imageUrl
-        )
-    }
-}
-
-@Composable
 fun PagerIndicator(
     modifier: Modifier = Modifier,
     pagerState: PagerState,

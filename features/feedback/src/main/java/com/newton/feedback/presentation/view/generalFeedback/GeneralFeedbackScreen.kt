@@ -41,7 +41,7 @@ fun GeneralFeedbackScreen(
     val isSubmitSuccess by viewModel.isSubmitSuccess.collectAsState()
     val scrollState = rememberScrollState()
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("General Feedback") },

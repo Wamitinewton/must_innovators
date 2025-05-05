@@ -40,4 +40,6 @@ sealed class NavigationSubGraphRoutes(val route: String) {
     data object Testimonials : NavigationSubGraphRoutes(route = "/testimonials_")
 
     data object Partners : NavigationSubGraphRoutes(route = "/partners_")
+
+    data object Alumni : NavigationSubGraphRoutes(route = "/alumni_")
 }

@@ -96,7 +96,7 @@ fun AccountScreen(
             )
         }
     ) {
-        DefaultScaffold(
+        CustomScaffold(
             modifier =
             Modifier
                 .fillMaxSize()

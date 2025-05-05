@@ -100,7 +100,7 @@ fun ProfileUpdateScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackBarHostState,
         isLoading = updateProfileState.isLoading,
         topBar = {

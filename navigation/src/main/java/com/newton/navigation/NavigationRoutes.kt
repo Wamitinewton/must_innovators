@@ -94,4 +94,6 @@ sealed class NavigationRoutes(val routes: String) {
     data object AllTestimonialsRoute : NavigationRoutes("all_testimonials")
 
     data object AllPartnersRoute : NavigationRoutes("all_partners")
+
+    data object AlumniScreen : NavigationRoutes("alumni")
 }

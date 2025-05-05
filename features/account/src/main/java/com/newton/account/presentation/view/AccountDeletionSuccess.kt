@@ -40,7 +40,7 @@ fun AccountDeletedScreen(
 ) {
     val currentContext = LocalContext.current
 
-    DefaultScaffold {
+    CustomScaffold {
         Box(
             modifier = Modifier
                 .fillMaxSize()

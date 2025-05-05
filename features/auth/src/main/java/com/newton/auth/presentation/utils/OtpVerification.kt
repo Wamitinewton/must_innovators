@@ -92,10 +92,9 @@ fun OtpVerificationScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
         isLoading = isLoading,
-        showOrbitals = true,
         topBar = {
             TopAppBar(
                 title = { /* Empty title */ },

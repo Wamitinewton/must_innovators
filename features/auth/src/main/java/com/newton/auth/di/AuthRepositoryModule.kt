@@ -16,10 +16,10 @@
  */
 package com.newton.auth.di
 
-import com.newton.auth.data.dataStore.*
 import com.newton.auth.data.repository.*
 import com.newton.database.dao.*
 import com.newton.database.dbManager.*
+import com.newton.network.data.dataStore.SessionManager
 import com.newton.network.data.remote.*
 import com.newton.network.domain.repositories.*
 import dagger.*

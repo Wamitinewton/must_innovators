@@ -35,7 +35,7 @@ fun AddEvents(
     val state by viewModel.state.collectAsState()
 
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             MeruInnovatorsAppBar(
                 title = "Add Event"

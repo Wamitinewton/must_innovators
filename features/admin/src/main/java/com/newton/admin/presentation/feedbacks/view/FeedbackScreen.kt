@@ -41,7 +41,7 @@ fun FeedbackScreen(
     val listState = rememberLazyListState()
     var isSearchVisible by remember { mutableStateOf(false) }
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             MeruInnovatorsAppBar(
                 title = "Feedback Screen",

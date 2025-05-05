@@ -33,8 +33,7 @@ fun RegisteredEventsScreen(
 ) {
     val uiState by userTicketsViewModel.userTicketsUiState.collectAsState()
 
-    DefaultScaffold(
-        showOrbitals = true,
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("My Event Tickets") },

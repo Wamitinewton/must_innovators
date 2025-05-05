@@ -17,12 +17,12 @@
 package com.newton.auth.data.repository
 
 import coil3.network.*
-import com.newton.auth.data.dataStore.*
 import com.newton.auth.data.tokenHolder.*
 import com.newton.database.dao.*
 import com.newton.database.dbManager.*
 import com.newton.database.mappers.*
 import com.newton.network.*
+import com.newton.network.data.dataStore.SessionManager
 import com.newton.network.data.remote.*
 import com.newton.network.data.response.auth.*
 import com.newton.network.domain.models.authModels.*
@@ -91,9 +91,6 @@ constructor(
             AuthTokenHolder.accessToken = accessToken
             AuthTokenHolder.refreshToken = refreshToken
             sessionManager.saveTokens(accessToken, refreshToken)
-
-            // Verify token persistence
-            verifyTokenPersistence()
         } catch (e: Exception) {
             Timber.e(e, "Failed to store auth tokens")
             throw TokenStorageException("Failed to store authentication tokens", e)
@@ -108,8 +105,6 @@ constructor(
             AuthTokenHolder.accessToken = accessToken
             AuthTokenHolder.refreshToken = refreshToken
             sessionManager.updateTokens(accessToken, refreshToken)
-
-            verifyTokenPersistence()
         } catch (e: Exception) {
             Timber.e(e, "Failed to update auth tokens")
             throw TokenStorageException("Failed to update authentication tokens", e)
@@ -188,18 +183,6 @@ constructor(
         userDao.observeUser().map { userEntity ->
             userEntity?.toAuthedUser()
         }
-
-    private fun verifyTokenPersistence() {
-        val savedAccessToken = sessionManager.fetchAccessToken()
-        val savedRefreshToken = sessionManager.fetchRefreshToken()
-
-        if (savedAccessToken != AuthTokenHolder.accessToken || savedRefreshToken != AuthTokenHolder.refreshToken) {
-            Timber.e("Token persistence verification failed")
-            throw TokenStorageException("Token persistence verification failed")
-        }
-
-        Timber.d("Tokens saved successfully: AccessToken=$savedAccessToken, RefreshToken=$savedRefreshToken")
-    }
 
     private class TokenRefreshException(message: String) : Exception(message)
 
