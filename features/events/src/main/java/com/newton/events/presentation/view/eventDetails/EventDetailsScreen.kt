@@ -55,7 +55,7 @@ fun EventDetailsScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Event Details") },

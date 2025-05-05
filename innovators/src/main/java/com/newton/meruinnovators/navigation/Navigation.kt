@@ -88,5 +88,9 @@ fun MeruInnovatorsNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
+        navigationSubGraphs.alumniNavigationApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
     }
 }

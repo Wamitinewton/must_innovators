@@ -30,11 +30,8 @@ import androidx.compose.ui.unit.*
 fun Modifier.shimmerEffect(
     colors: List<Color> =
         listOf(
-            Color(0xFF222222),
             Color(0xFF3D3D3D),
-            Color(0xFF4D4D4D),
-            Color(0xFF3D3D3D),
-            Color(0xFF222222)
+            Color(0xFF4D4D4D)
         ),
     durationMillis: Int = 1400
 ): Modifier =
@@ -72,9 +69,7 @@ fun ShimmerWithFade(
         listOf(
             Color(0xFF222222),
             Color(0xFF3D3D3D),
-            Color(0xFF4D4D4D),
-            Color(0xFF3D3D3D),
-            Color(0xFF222222)
+            Color(0xFF4D4D4D)
         ),
     content: @Composable () -> Unit
 ) {

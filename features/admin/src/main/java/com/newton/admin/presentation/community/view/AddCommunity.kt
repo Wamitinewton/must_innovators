@@ -55,7 +55,7 @@ fun AddCommunityScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             MeruInnovatorsAppBar("Add New Community")
         },

@@ -80,7 +80,7 @@ fun CreateTestimonial(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         isLoading = uiState is CreateTestimonialsUiState.Loading,
         snackbarHostState = snackbarHostState,
         topBar = {

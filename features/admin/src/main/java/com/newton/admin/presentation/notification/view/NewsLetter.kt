@@ -35,7 +35,7 @@ fun NewsletterAdminScreen(
     onEvent: (NotificationEvent) -> Unit
 ) {
     val newsState by viewModel.notificationState.collectAsState()
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             MeruInnovatorsAppBar("Compose a Newsletter")
         }

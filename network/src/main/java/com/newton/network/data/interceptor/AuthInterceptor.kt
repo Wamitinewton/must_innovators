@@ -14,17 +14,17 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.authInterceptor
+package com.newton.network.data.interceptor
 
 import android.content.*
-import com.newton.auth.authInterceptor.HeadersManager.AUTHORIZATION_HEADER
-import com.newton.auth.authInterceptor.HeadersManager.BEARER_PREFIX
-import com.newton.auth.authInterceptor.HeadersManager.NEW_ACCESS_TOKEN_HEADER
-import com.newton.auth.authInterceptor.HeadersManager.REFRESH_HEADER
-import com.newton.auth.authInterceptor.HeadersManager.TAG
-import com.newton.auth.data.dataStore.*
-import com.newton.auth.data.dataStore.DataStoreKeys.KEY_ACCESS_TOKEN
-import com.newton.auth.data.dataStore.DataStoreKeys.KEY_REFRESH_TOKEN
+import com.newton.network.data.interceptor.HeadersManager.AUTHORIZATION_HEADER
+import com.newton.network.data.interceptor.HeadersManager.BEARER_PREFIX
+import com.newton.network.data.interceptor.HeadersManager.NEW_ACCESS_TOKEN_HEADER
+import com.newton.network.data.interceptor.HeadersManager.REFRESH_HEADER
+import com.newton.network.data.interceptor.HeadersManager.TAG
+import com.newton.network.data.dataStore.DataStoreKeys.KEY_ACCESS_TOKEN
+import com.newton.network.data.dataStore.DataStoreKeys.KEY_REFRESH_TOKEN
+import com.newton.network.data.dataStore.SessionManager
 import okhttp3.*
 import timber.log.*
 

@@ -45,7 +45,7 @@ fun ActionsScreen(
     val notificationList: List<NotificationItem> = listOf(
         NotificationItem("Send Newsletter", NavigationRoutes.SendNewsLetter.routes)
     )
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Actions Center", style = MaterialTheme.typography.headlineMedium) }

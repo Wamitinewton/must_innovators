@@ -23,7 +23,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
-import com.newton.commonUi.animations.*
 
 /**
  * A reusable composable that provides a consistent space-themed background with animated
@@ -32,18 +31,16 @@ import com.newton.commonUi.animations.*
  * @param modifier Modifier to be applied to the container
  * @param snackbarHostState Optional SnackbarHostState for displaying snackbars
  * @param topBar Optional composable for displaying a top app bar
- * @param showOrbitals Whether to show the space-themed animated background
  * @param isLoading Whether to show a loading dialog
  * @param gradientColors List of colors to use for the gradient background (defaults to theme colors)
  * @param content The content to display on top of the gradient background
  */
 @Composable
-fun DefaultScaffold(
+fun CustomScaffold(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState? = null,
     topBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
-    showOrbitals: Boolean = true,
     isLoading: Boolean = false,
     gradientColors: List<Color> = getDefaultGradientColors(),
     bottomBar: @Composable () -> Unit = {},
@@ -69,19 +66,6 @@ fun DefaultScaffold(
                     )
                 )
         )
-
-        if (showOrbitals) {
-            OrbitalsBackground(
-                primaryColor = MaterialTheme.colorScheme.primary,
-                secondaryColor = MaterialTheme.colorScheme.secondary,
-                tertiaryColor = MaterialTheme.colorScheme.tertiary,
-                primaryAlpha = 0.35f,
-                secondaryAlpha = 0.25f,
-                tertiaryAlpha = 0.3f,
-                backgroundAlpha = 1f,
-                showStars = true
-            )
-        }
 
         Box(
             modifier =

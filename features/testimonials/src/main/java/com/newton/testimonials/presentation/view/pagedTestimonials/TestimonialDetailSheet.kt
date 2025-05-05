@@ -59,7 +59,6 @@ fun TestimonialDetailSheet(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TestimonialAvatar(imageUrl = null)
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Column(modifier = Modifier.weight(1f)) {

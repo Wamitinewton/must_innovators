@@ -36,7 +36,7 @@ fun AllTestimonialsScreen(
 ) {
     val uiState by testimonialViewModel.uiState.collectAsState()
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = {

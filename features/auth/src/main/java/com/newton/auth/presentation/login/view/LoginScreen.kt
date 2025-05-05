@@ -69,10 +69,9 @@ fun LoginScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
-        isLoading = uiState.isLoading,
-        showOrbitals = true
+        isLoading = uiState.isLoading
     ) {
         LoginContent(
             uiState = uiState,

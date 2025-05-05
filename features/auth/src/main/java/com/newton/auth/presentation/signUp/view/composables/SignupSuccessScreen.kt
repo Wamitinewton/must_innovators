@@ -18,14 +18,19 @@ package com.newton.auth.presentation.signUp.view.composables
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.R
 import com.newton.commonUi.ui.*
 import kotlinx.coroutines.*
 
@@ -34,115 +39,138 @@ fun SignupSuccessScreen(
     modifier: Modifier = Modifier,
     onContinueClick: () -> Unit
 ) {
-    var animationState by remember { mutableStateOf<LottieAnimationState>(LottieAnimationState.Playing) }
+    // Animation states
+    var showCheck by remember { mutableStateOf(false) }
     var showContent by remember { mutableStateOf(false) }
     var showButton by remember { mutableStateOf(false) }
 
-    DefaultScaffold(
-        modifier = modifier,
-        showOrbitals = true
+    val checkScale = animateFloatAsState(
+        targetValue = if (showCheck) 1f else 0f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "checkScale"
+    )
+
+    LaunchedEffect(Unit) {
+        showCheck = true
+        delay(500)
+        showContent = true
+        delay(300)
+        showButton = true
+    }
+
+    CustomScaffold(
+        modifier = modifier
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(24.dp)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            contentAlignment = Alignment.Center
         ) {
-            EnhancedLottieAnimation(
-                lottieFile = R.raw.innovators_success,
-                animateEntry = true,
-                iterations = 1,
-                onAnimationFinish = {
-                    animationState = LottieAnimationState.Completed
-                    showContent = true
-                }
-            )
-
-            Spacer(
-                modifier = Modifier.height(32.dp)
-            )
-
-            AnimatedVisibility(
-                visible = showContent,
-                enter =
-                fadeIn(
-                    initialAlpha = 0f,
-                    animationSpec = tween(durationMillis = 500)
-                ) +
-                    slideInVertically(
-                        initialOffsetY = { 50 },
-                        animationSpec =
-                        spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessLow
-                        )
-                    )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(24.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Account Verified Successfully!",
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = "Login in with your credentials to continue",
-                        style = MaterialTheme.typography.bodyLarge,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.CheckCircle,
+                        contentDescription = "Success",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .scale(checkScale.value)
                     )
                 }
-            }
 
-            Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            LaunchedEffect(showContent) {
-                if (showContent) {
-                    delay(500)
-                    showButton = true
-                }
-            }
-
-            AnimatedVisibility(
-                visible = showButton,
-                enter =
-                fadeIn(
-                    initialAlpha = 0f,
-                    animationSpec = tween(durationMillis = 500)
-                ) +
-                    expandVertically(
-                        animationSpec =
-                        spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessLow
-                        )
-                    )
-            ) {
-                Button(
-                    onClick = {
-                        onContinueClick()
-                    },
-                    modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                AnimatedVisibility(
+                    visible = showContent,
+                    enter = fadeIn(
+                        initialAlpha = 0f,
+                        animationSpec = tween(durationMillis = 500)
+                    ) + expandVertically(
+                        animationSpec = tween(durationMillis = 500)
                     )
                 ) {
-                    Text(
-                        text = "Proceed to Login",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            text = "Congratulations!",
+                            style = MaterialTheme.typography.displaySmall,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+
+                        Text(
+                            text = "Account Verified Successfully",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = "Your account has been created and is ready to use. Login with your credentials to continue.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                AnimatedVisibility(
+                    visible = showButton,
+                    enter = fadeIn() + expandVertically()
+                ) {
+                    ElevatedButton(
+                        onClick = onContinueClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        shape = MaterialTheme.shapes.medium,
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ),
+                        elevation = ButtonDefaults.elevatedButtonElevation(
+                            defaultElevation = 6.dp
+                        )
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Proceed to Login",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Icon(
+                                imageVector = Icons.Rounded.ArrowForward,
+                                contentDescription = "Continue",
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

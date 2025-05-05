@@ -71,7 +71,7 @@ fun AddPartnerScreen(
             }
         }
     }
-    DefaultScaffold(
+    CustomScaffold(
         isLoading = partnersState.isLoading,
         topBar = {
             TopAppBar(

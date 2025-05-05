@@ -83,8 +83,7 @@ fun EventRegistrationScreen(
             }
     }
 
-    DefaultScaffold(
-        showOrbitals = true,
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
         isLoading = uiState.isLoading,
         topBar = {

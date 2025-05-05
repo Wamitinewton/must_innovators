@@ -18,6 +18,7 @@ package com.newton.meruinnovators.navigation
 
 import com.newton.account.navigation.*
 import com.newton.admin.navigation.*
+import com.newton.alumni.navigation.AlumniNavigationApi
 import com.newton.auth.navigation.*
 import com.newton.blogs.navigation.*
 import com.newton.communities.navigation.*
@@ -40,5 +41,6 @@ data class NavigationSubGraphs(
     val settingNavigationApi: SettingNavigationApi,
     val communityNavigationApi: CommunityNavigationApi,
     val testimonialsNavigationApi: TestimonialsNavigationApi,
-    val partnersNavigationApi: PartnersNavigationApi
+    val partnersNavigationApi: PartnersNavigationApi,
+    val alumniNavigationApi: AlumniNavigationApi
 )

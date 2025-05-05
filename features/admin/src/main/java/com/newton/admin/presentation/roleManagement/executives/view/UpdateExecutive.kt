@@ -43,7 +43,7 @@ fun UpdateExecutiveScreen(
     }
 
 
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             TopAppBar(
                 title = { Text(if (executiveId != null) "Update Executive" else "Add Executive") },

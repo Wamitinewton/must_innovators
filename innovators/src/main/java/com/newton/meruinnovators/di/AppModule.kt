@@ -19,7 +19,7 @@ package com.newton.meruinnovators.di
 import android.content.*
 import com.newton.account.navigation.*
 import com.newton.admin.navigation.*
-import com.newton.auth.authInterceptor.*
+import com.newton.alumni.navigation.AlumniNavigationApi
 import com.newton.auth.navigation.*
 import com.newton.blogs.navigation.*
 import com.newton.communities.navigation.*
@@ -28,6 +28,7 @@ import com.newton.feedback.navigation.*
 import com.newton.home.navigation.*
 import com.newton.meruinnovators.*
 import com.newton.meruinnovators.navigation.*
+import com.newton.network.data.interceptor.AuthInterceptor
 import com.newton.partners.navigation.*
 import com.newton.settings.navigation.*
 import com.newton.testimonials.navigation.*
@@ -63,7 +64,8 @@ object AppModule {
         settingNavigationApi: SettingNavigationApi,
         communityNavigationApi: CommunityNavigationApi,
         testimonialsNavigationApi: TestimonialsNavigationApi,
-        partnersNavigationApi: PartnersNavigationApi
+        partnersNavigationApi: PartnersNavigationApi,
+        alumniNavigationApi: AlumniNavigationApi
     ): NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi,
@@ -77,7 +79,8 @@ object AppModule {
             settingNavigationApi,
             communityNavigationApi,
             testimonialsNavigationApi,
-            partnersNavigationApi
+            partnersNavigationApi,
+            alumniNavigationApi
         )
     }
 

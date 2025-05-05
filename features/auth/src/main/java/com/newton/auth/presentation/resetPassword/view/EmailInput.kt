@@ -65,7 +65,7 @@ fun EmailInput(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
         isLoading = isLoading,
         topBar = {

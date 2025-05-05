@@ -41,9 +41,8 @@ fun AboutUsScreen(
     var isAboutExpanded by remember { mutableStateOf(false) }
 
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackBarHostState,
-        showOrbitals = true,
         topBar = {
             TopAppBar(
                 title = {

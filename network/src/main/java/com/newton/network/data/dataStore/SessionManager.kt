@@ -14,13 +14,14 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.auth.data.dataStore
+package com.newton.network.data.dataStore
 
 import android.content.*
+import androidx.core.content.*
 import androidx.security.crypto.*
-import com.newton.auth.data.dataStore.DataStoreKeys.KEY_ACCESS_TOKEN
-import com.newton.auth.data.dataStore.DataStoreKeys.KEY_REFRESH_TOKEN
-import com.newton.auth.data.dataStore.DataStoreKeys.PREF_FILE_NAME
+import com.newton.network.data.dataStore.DataStoreKeys.KEY_ACCESS_TOKEN
+import com.newton.network.data.dataStore.DataStoreKeys.KEY_REFRESH_TOKEN
+import com.newton.network.data.dataStore.DataStoreKeys.PREF_FILE_NAME
 import dagger.hilt.android.qualifiers.*
 import javax.inject.*
 
@@ -45,8 +46,9 @@ constructor(
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
         } catch (e: Exception) {
-            context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE).edit().clear()
-                .apply()
+            context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE).edit {
+                clear()
+            }
             EncryptedSharedPreferences.create(
                 context,
                 PREF_FILE_NAME,
@@ -102,6 +104,6 @@ constructor(
     }
 
     fun clearTokens() {
-        securePreferences.edit().clear().apply()
+        securePreferences.edit { clear() }
     }
 }

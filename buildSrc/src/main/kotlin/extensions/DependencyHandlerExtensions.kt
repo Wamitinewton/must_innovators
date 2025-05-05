@@ -170,4 +170,5 @@ fun DependencyHandler.addAllModules() {
     implementation(project(Modules.Features.partners))
     implementation(project(Modules.Features.settings))
     implementation(project(Modules.Features.testimonials))
+    implementation(project(Modules.Features.alumni))
 }

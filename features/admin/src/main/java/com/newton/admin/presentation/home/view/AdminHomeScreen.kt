@@ -93,7 +93,7 @@ fun AdminHome(
 
         formattedDate to userCount
     }
-    DefaultScaffold(
+    CustomScaffold(
         topBar = {
             MeruInnovatorsAppBar(title = "Admin Dashboard")
         }

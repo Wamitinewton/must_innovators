@@ -112,9 +112,7 @@ fun OnboardingScreen(
         label = "logo-scale"
     )
 
-    DefaultScaffold(
-        showOrbitals = true
-    ) {
+    CustomScaffold() {
         Column(
             modifier =
             Modifier

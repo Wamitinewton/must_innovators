@@ -56,10 +56,9 @@ fun SignupScreen(
         }
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         snackbarHostState = snackbarHostState,
-        isLoading = uiState.isLoading,
-        showOrbitals = true
+        isLoading = uiState.isLoading
     ) {
         SignupContent(
             uiState = uiState,

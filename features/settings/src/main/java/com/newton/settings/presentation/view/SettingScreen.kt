@@ -70,7 +70,7 @@ fun SettingsScreen(
         cacheManagerViewModel.refreshCacheSize()
     }
 
-    DefaultScaffold(
+    CustomScaffold(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {

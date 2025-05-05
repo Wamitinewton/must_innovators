@@ -82,9 +82,8 @@ fun CommunityDetailsScreen(
 
     val isFabVisible by remember { derivedStateOf { scrollBehavior.state.collapsedFraction < 0.5f } }
 
-    DefaultScaffold(
+    CustomScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        showOrbitals = true,
         topBar = {
             LargeTopAppBar(
                 title = {
