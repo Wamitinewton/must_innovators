@@ -83,7 +83,7 @@ fun HomeScreen(
             }
             item {
                 SectionHeader(
-                    title = "Testimonials",
+                    title = "Testimonials"
                 )
             }
 
@@ -101,7 +101,7 @@ fun HomeScreen(
 
             item {
                 SectionHeader(
-                    title = "About Us",
+                    title = "About Us"
                 )
             }
 

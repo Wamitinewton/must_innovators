@@ -51,9 +51,9 @@ sealed class Screens(
 
     data object Blogs :
         Screens(
-            NavigationSubGraphRoutes.Blogs.route,
-            Icons.Filled.Collections,
-            Icons.Outlined.Collections,
+            NavigationSubGraphRoutes.Communities.route,
+            Icons.Filled.Groups,
+            Icons.Outlined.Groups,
             false,
             null,
             "Communities"

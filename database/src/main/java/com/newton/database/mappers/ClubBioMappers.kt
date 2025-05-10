@@ -28,12 +28,12 @@ fun ClubBioEntity.toDomain(): ClubBioData {
         mission = mission,
         vision = vision,
         social_media =
-            socialMedia.map {
-                SocialMediaX(
-                    platform = it.platform,
-                    url = it.url
-                )
-            }
+        socialMedia.map {
+            SocialMediaX(
+                platform = it.platform,
+                url = it.url
+            )
+        }
     )
 }
 

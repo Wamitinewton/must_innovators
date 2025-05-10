@@ -23,9 +23,9 @@ fun CommunityResponse.toDomain(): com.newton.network.domain.models.aboutUs.Commu
     return com.newton.network.domain.models.aboutUs.Community(
         id = id,
         name = name,
-        communityLead = community_lead_details.toDomain(),
-        coLead = co_lead_details.toDomain(),
-        secretary = secretary_details.toDomain(),
+        communityLead = community_lead_details?.toDomain(),
+        coLead = co_lead_details?.toDomain(),
+        secretary = secretary_details?.toDomain(),
         email = email,
         phoneNumber = phone_number,
         description = description,

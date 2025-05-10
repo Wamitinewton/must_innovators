@@ -42,7 +42,7 @@ fun ExecutivesSection(uiState: ExecutiveUiState) {
         Text(
             text = "The talented individuals who lead our technology initiatives",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
         )
 
         when (uiState) {

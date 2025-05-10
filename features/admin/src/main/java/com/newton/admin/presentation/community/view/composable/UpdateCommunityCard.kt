@@ -49,9 +49,9 @@ fun UpdateCommunityCard(
 ) {
     var name by remember { mutableStateOf(communityData.name) }
     var description by remember { mutableStateOf(communityData.description) }
-    var lead by remember { mutableStateOf(communityData.communityLead.username) }
-    var coLead by remember { mutableStateOf(communityData.coLead.username) }
-    var secretary by remember { mutableStateOf(communityData.secretary.username) }
+    var lead by remember { mutableStateOf(communityData.communityLead?.username) }
+    var coLead by remember { mutableStateOf(communityData.coLead?.username) }
+    var secretary by remember { mutableStateOf(communityData.secretary?.username) }
     var email by remember { mutableStateOf(communityData.email) }
     var sessions by remember { mutableStateOf(communityData.sessions) }
     var phone by remember { mutableStateOf(communityData.phoneNumber) }

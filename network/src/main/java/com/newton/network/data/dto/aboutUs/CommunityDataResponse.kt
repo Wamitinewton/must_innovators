@@ -37,9 +37,9 @@ data class CommunitiesResponse(
 data class CommunityResponse(
     val id: Int,
     val name: String,
-    val community_lead_details: CommunityLeadsResponse,
-    val co_lead_details: CommunityLeadsResponse,
-    val secretary_details: CommunityLeadsResponse,
+    val community_lead_details: CommunityLeadsResponse?,
+    val co_lead_details: CommunityLeadsResponse?,
+    val secretary_details: CommunityLeadsResponse?,
     val email: String,
     val phone_number: String,
     val description: String,
