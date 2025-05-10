@@ -25,7 +25,7 @@ import com.newton.events.data.paging.PagingConstants.NETWORK_PAGE_SIZE
 import com.newton.network.*
 import com.newton.network.data.mappers.*
 import com.newton.network.data.remote.*
-import com.newton.network.data.response.admin.*
+import com.newton.network.data.dto.admin.*
 import com.newton.network.domain.models.adminModels.*
 import com.newton.network.domain.models.eventModels.*
 import com.newton.network.domain.repositories.*

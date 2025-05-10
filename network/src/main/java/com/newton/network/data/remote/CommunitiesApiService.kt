@@ -16,7 +16,7 @@
  */
 package com.newton.network.data.remote
 
-import com.newton.network.data.response.aboutUs.*
+import com.newton.network.data.dto.aboutUs.*
 import retrofit2.http.*
 
 interface CommunitiesApiService {

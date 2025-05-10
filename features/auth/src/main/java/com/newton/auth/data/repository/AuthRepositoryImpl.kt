@@ -24,7 +24,7 @@ import com.newton.database.mappers.*
 import com.newton.network.*
 import com.newton.network.data.dataStore.SessionManager
 import com.newton.network.data.remote.*
-import com.newton.network.data.response.auth.*
+import com.newton.network.data.dto.auth.*
 import com.newton.network.domain.models.authModels.*
 import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.*

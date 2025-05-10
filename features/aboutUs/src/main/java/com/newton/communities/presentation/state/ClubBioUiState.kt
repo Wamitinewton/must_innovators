@@ -16,7 +16,7 @@
  */
 package com.newton.communities.presentation.state
 
-import com.newton.network.domain.models.aboutUs.*
+import com.newton.network.data.dto.aboutUs.ClubBioData
 
 sealed class ClubBioUiState {
     data object Loading : ClubBioUiState()

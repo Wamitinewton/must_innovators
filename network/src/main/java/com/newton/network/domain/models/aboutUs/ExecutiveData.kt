@@ -29,7 +29,7 @@ data class Executive(
     val joined_date: String,
     val position: String,
     val user: Int,
-    val user_details: UserDetails
+    val user_details: ExecutiveDetails
 )
 
 data class CommunityDetails(
@@ -37,7 +37,7 @@ data class CommunityDetails(
     val name: String
 )
 
-data class UserDetails(
+data class ExecutiveDetails(
     val email: String,
     val first_name: String,
     val id: Int,

@@ -16,7 +16,7 @@
  */
 package com.newton.network.domain.repositories
 
-import com.newton.network.data.response.auth.*
+import com.newton.network.data.dto.auth.*
 import com.newton.network.domain.models.authModels.*
 import kotlinx.coroutines.flow.*
 

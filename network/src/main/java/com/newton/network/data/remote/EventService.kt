@@ -16,7 +16,7 @@
  */
 package com.newton.network.data.remote
 
-import com.newton.network.data.response.events.*
+import com.newton.network.data.dto.events.*
 import retrofit2.http.*
 
 interface EventService {

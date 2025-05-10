@@ -23,11 +23,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.*
-import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
-import com.newton.commonUi.animations.*
 import com.newton.network.domain.models.aboutUs.*
 
 @Composable
@@ -35,56 +33,28 @@ fun ExecutiveCard(
     executive: Executive,
     modifier: Modifier = Modifier
 ) {
-    val gradientColors = listOf(
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.05f),
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-    )
-
     Card(
         modifier = modifier
-            .width(200.dp)
-            .padding(8.dp)
-            .shadow(
-                elevation = 6.dp,
-                shape = RoundedCornerShape(16.dp),
-                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
-            ),
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
         shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(32.dp)
-                .background(
-                    brush = Brush.horizontalGradient(gradientColors)
-                )
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = executive.community_details.name,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = 8.dp),
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
-        ) {
+            // Profile Initial Circle
             Surface(
-                modifier = Modifier.size(90.dp),
+                modifier = Modifier.size(64.dp),
                 shape = CircleShape,
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
             ) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -92,169 +62,90 @@ fun ExecutiveCard(
                 ) {
                     Text(
                         text = "${executive.user_details.first_name.first()}${executive.user_details.last_name.first()}",
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
-            Text(
-                text = "${executive.user_details.first_name} ${executive.user_details.last_name}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+            // Executive Information
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
+                Text(
+                    text = "${executive.user_details.first_name} ${executive.user_details.last_name}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // Position Chip
                 Surface(
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(8.dp),
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                    modifier = Modifier.padding(vertical = 4.dp)
+                    modifier = Modifier.padding(vertical = 2.dp)
                 ) {
                     Text(
                         text = executive.position,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.primary,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-            }
 
-            Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                // Community name
                 Text(
-                    text = "Member since ",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    text = executive.community_details.name,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    text = executive.joined_date,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
-                )
-            }
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
-            Text(
-                text = executive.user_details.email,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(horizontal = 4.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun ExecutiveCardShimmer() {
-    Card(
-        modifier =
-        Modifier
-            .width(180.dp)
-            .padding(8.dp)
-            .shadow(
-                elevation = 4.dp,
-                shape = RoundedCornerShape(16.dp),
-                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-            ),
-        shape = RoundedCornerShape(16.dp),
-        colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
-        )
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Surface(
-                modifier = Modifier.size(80.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-            ) {
-                Box(
-                    modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .shimmerEffect(
-                            colors =
-                            listOf(
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                            )
-                        )
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Box(
-                modifier =
-                Modifier
-                    .width(120.dp)
-                    .height(20.dp)
-                    .shimmerEffect()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Box(
-                modifier =
-                Modifier
-                    .width(100.dp)
-                    .height(16.dp)
-                    .shimmerEffect(
-                        colors =
-                        listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                        )
+                // Additional info row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Member since ${executive.joined_date}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
-            )
 
-            Spacer(modifier = Modifier.height(8.dp))
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                repeat(3) {
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    // Email indicator dot
                     Box(
-                        modifier =
-                        Modifier
-                            .width(if (it == 2) 80.dp else 140.dp)
-                            .height(12.dp)
-                            .padding(vertical = 2.dp)
-                            .shimmerEffect()
+                        modifier = Modifier
+                            .size(4.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Text(
+                        text = executive.user_details.email,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }

@@ -17,7 +17,7 @@
 package com.newton.network.data.remote
 
 import com.newton.network.*
-import com.newton.network.data.response.auth.*
+import com.newton.network.data.dto.auth.*
 import retrofit2.http.*
 
 interface AuthService {

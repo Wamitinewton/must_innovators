@@ -19,8 +19,8 @@ package com.newton.communities.data.repository
 import com.newton.database.dao.*
 import com.newton.database.mappers.*
 import com.newton.network.*
+import com.newton.network.data.dto.aboutUs.ClubBioData
 import com.newton.network.data.remote.*
-import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.repositories.*
 import kotlinx.coroutines.flow.*
 import timber.log.*

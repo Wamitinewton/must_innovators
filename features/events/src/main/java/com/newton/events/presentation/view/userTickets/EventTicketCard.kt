@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.*
 import com.newton.commonUi.ui.*
 import com.newton.core.utils.*
 import com.newton.events.ticketPdf.*
-import com.newton.network.data.response.admin.*
+import com.newton.network.data.dto.admin.*
 import com.newton.network.domain.models.eventModels.*
 
 @Composable

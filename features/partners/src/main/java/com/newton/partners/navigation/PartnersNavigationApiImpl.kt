@@ -23,9 +23,8 @@ import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.newton.core.utils.*
 import com.newton.navigation.*
-import com.newton.partners.data.*
-import com.newton.partners.presentation.view.allPartners.*
 import com.newton.partners.presentation.view.partnerDetails.*
+import com.newton.partners.presentation.view.partnersList.*
 import com.newton.partners.presentation.viewModel.*
 
 class PartnersNavigationApiImpl : PartnersNavigationApi {
@@ -45,9 +44,6 @@ class PartnersNavigationApiImpl : PartnersNavigationApi {
                     partnersSharedViewModel = partnersSharedViewModel,
                     onBackPressed = {
                         navHostController.navigateUp()
-                    },
-                    onSharePartner = { partner ->
-                        PartnerContentUtils.sharePartner(context, partner)
                     },
                     onNavigateToWebsite = { url ->
                         PackageHandlers.navigateToWebsite(context, url)

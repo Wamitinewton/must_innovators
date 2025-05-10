@@ -17,7 +17,7 @@
 package com.newton.network.domain.repositories
 
 import com.newton.network.*
-import com.newton.network.domain.models.aboutUs.*
+import com.newton.network.data.dto.aboutUs.ClubBioData
 import kotlinx.coroutines.flow.*
 
 interface ClubBioRepository {

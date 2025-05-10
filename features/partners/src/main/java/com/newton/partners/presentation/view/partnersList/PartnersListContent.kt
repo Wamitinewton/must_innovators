@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.partners.presentation.view.allPartners
+package com.newton.partners.presentation.view.partnersList
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -35,9 +35,7 @@ fun PartnersListContent(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.fillMaxSize()
     ) {
-        item {
-            PartnerDashboard(partners)
-        }
+
 
         items(partners) { partner ->
             PartnerCard(

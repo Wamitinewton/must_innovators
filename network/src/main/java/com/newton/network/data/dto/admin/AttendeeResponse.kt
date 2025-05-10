@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.network.data.response.admin
+package com.newton.network.data.dto.admin
 
 /**
 {

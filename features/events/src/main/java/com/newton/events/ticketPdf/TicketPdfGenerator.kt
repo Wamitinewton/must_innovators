@@ -21,7 +21,7 @@ import android.graphics.*
 import android.graphics.pdf.*
 import android.graphics.pdf.PdfDocument.PageInfo
 import com.newton.core.utils.*
-import com.newton.network.data.response.admin.*
+import com.newton.network.data.dto.admin.*
 import java.io.*
 
 /**

@@ -16,8 +16,8 @@
  */
 package com.newton.network.data.mappers
 
-import com.newton.network.data.response.admin.*
-import com.newton.network.data.response.events.*
+import com.newton.network.data.dto.admin.*
+import com.newton.network.data.dto.events.*
 
 fun EventDto.toDomainEvent(): com.newton.network.domain.models.adminModels.EventsData {
     return com.newton.network.domain.models.adminModels.EventsData(

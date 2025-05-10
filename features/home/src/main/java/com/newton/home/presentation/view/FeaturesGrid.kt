@@ -78,6 +78,12 @@ fun FeaturesGrid(
             icon = Icons.AutoMirrored.Rounded.MenuBook,
             color = MaterialTheme.colorScheme.primary,
             route = "resources"
+        ),
+        FeatureItem(
+            title = "Leadership",
+            icon = Icons.Rounded.Leaderboard,
+            color = MaterialTheme.colorScheme.primary,
+            route = "executives"
         )
     )
 

@@ -26,14 +26,12 @@ import com.newton.communities.presentation.viewModel.*
 import com.newton.network.domain.models.aboutUs.*
 import com.newton.network.domain.models.homeModels.*
 import com.newton.network.domain.models.testimonials.*
-import com.newton.partners.presentation.view.partnerList.*
 import com.newton.partners.presentation.viewModel.*
 import com.newton.testimonials.presentation.view.pagedTestimonials.*
 import com.newton.testimonials.presentation.viewModel.*
 
 @Composable
 fun HomeScreen(
-    partnersViewModel: PartnersViewModel,
     getTestimonialsViewModel: GetTestimonialsViewModel,
     onNavigateToAdmin: () -> Unit,
     onNavigateToCommunityDetails: (Community) -> Unit,
@@ -41,11 +39,10 @@ fun HomeScreen(
     communitiesViewModel: CommunitiesViewModel,
     onSeeAllTestimonials: () -> Unit,
     onSeeAllPartners: () -> Unit,
-    onNavigateToAboutUs: () -> Unit
+    onNavigateToAboutUs: () -> Unit,
+    onNavigateToExecutives: () -> Unit
 ) {
-    val partnersState by partnersViewModel.partnersState.collectAsState()
     val testimonialsUiState by getTestimonialsViewModel.uiState.collectAsState()
-    val communitiesState by communitiesViewModel.uiState.collectAsState()
 
     var selectedTestimonial by remember { mutableStateOf<TestimonialsData?>(null) }
 
@@ -78,6 +75,7 @@ fun HomeScreen(
                             "innovations" -> { /* Navigate to innovations */ }
                             "members" -> { /* Navigate to members */ }
                             "tickets" -> { /* Navigate to tickets */ }
+                            "executives" -> onNavigateToExecutives()
                         }
                     },
                     modifier = Modifier.padding(top = 8.dp)
@@ -86,8 +84,6 @@ fun HomeScreen(
             item {
                 SectionHeader(
                     title = "Testimonials",
-                    showViewAll = false,
-                    onViewAllClick = onSeeAllTestimonials
                 )
             }
 
@@ -106,7 +102,6 @@ fun HomeScreen(
             item {
                 SectionHeader(
                     title = "About Us",
-                    showViewAll = false
                 )
             }
 

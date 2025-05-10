@@ -16,9 +16,12 @@
  */
 package com.newton.network.domain.repositories
 
+import com.newton.network.Resource
 import com.newton.network.domain.models.homeModels.*
 import kotlinx.coroutines.flow.*
 
 interface PartnersRepository {
     suspend fun getPartners(): Flow<com.newton.network.Resource<List<PartnersData>>>
+
+    suspend fun getPartnersDetails(id: Int): Flow<Resource<PartnersData>>
 }
