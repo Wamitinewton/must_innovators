@@ -30,6 +30,5 @@ fun PartnerDetailsScreen(
     onNavigateToTwitter: (String) -> Unit,
     onContactEmail: (String) -> Unit
 ) {
-
 }
 

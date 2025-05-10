@@ -115,7 +115,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Community Lead",
-                            name = community.communityLead.username,
+                            name = community.communityLead?.username,
                             icon = Icons.Default.Stars
                         )
 
@@ -123,7 +123,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Co-Lead",
-                            name = community.communityLead.username,
+                            name = community.communityLead?.username,
                             icon = Icons.Default.Person
                         )
 
@@ -131,7 +131,7 @@ fun OverviewTab(community: Community) {
 
                         LeadershipItem(
                             title = "Secretary",
-                            name = community.communityLead.username,
+                            name = community.communityLead?.username,
                             icon = Icons.Default.Edit
                         )
                     }
@@ -286,7 +286,7 @@ fun OverviewTab(community: Community) {
 @Composable
 fun LeadershipItem(
     title: String,
-    name: String,
+    name: String?,
     icon: androidx.compose.ui.graphics.vector.ImageVector
 ) {
     Row(
@@ -304,11 +304,13 @@ fun LeadershipItem(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Text(
-                text = name,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium
-            )
+            if (name != null) {
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
     }
 }

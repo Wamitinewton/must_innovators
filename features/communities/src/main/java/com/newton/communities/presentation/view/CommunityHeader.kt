@@ -66,7 +66,7 @@ fun CommunityHeader(community: Community) {
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Lead: ${community.communityLead.username}",
+                text = "Lead: ${community.communityLead?.username}",
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )

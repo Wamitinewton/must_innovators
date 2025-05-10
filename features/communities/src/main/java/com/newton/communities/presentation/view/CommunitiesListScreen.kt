@@ -14,46 +14,42 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.communities.presentation.view.aboutUs
+package com.newton.communities.presentation.view
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import com.newton.commonUi.ui.CustomScaffold
-import com.newton.communities.presentation.state.ExecutiveUiState
+import com.newton.commonUi.ui.*
+import com.newton.communities.presentation.state.*
 import com.newton.communities.presentation.viewModel.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExecutivesScreen(
-    viewModel: ExecutiveViewModel,
+fun CommunitiesListScreen(
+    viewModel: CommunitiesViewModel,
     onBackPressed: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     CustomScaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Column {
                         Text(
-                            text = "Executive Members",
+                            text = "Testimonials",
                             style = MaterialTheme.typography.titleLarge
                         )
 
                         AnimatedContent(
                             targetState = when (uiState) {
-                                is ExecutiveUiState.Loading -> "Loading Executives..."
-                                is ExecutiveUiState.Success ->
-                                    "${(uiState as ExecutiveUiState.Success).executives.size} executives"
-                                else -> "Community executives"
+                                is CommunitiesUiState.Loading -> "Loading Communities..."
+                                is CommunitiesUiState.Success ->
+                                    "${(uiState as CommunitiesUiState.Success).communities.size} communities"
+                                else -> "Our Communities"
                             },
                             transitionSpec = { fadeIn() togetherWith fadeOut() },
                             label = "subtitle"
@@ -73,7 +69,11 @@ fun ExecutivesScreen(
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
+                )
             )
         }
     ) {
@@ -81,7 +81,11 @@ fun ExecutivesScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            ExecutivesSection(uiState = uiState)
+            CommunityContent(
+                uiState = uiState,
+                onCommunityDetailsClick = {},
+                communitiesViewModel = viewModel
+            )
         }
     }
 }

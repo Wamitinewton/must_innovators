@@ -46,7 +46,10 @@ class AboutUsNavigationImpl : AboutUsNavigationApi {
             composable(route = NavigationRoutes.ExecutivesScreen.routes) {
                 val executiveViewModel = hiltViewModel<ExecutiveViewModel>()
                 ExecutivesScreen(
-                    viewModel = executiveViewModel
+                    viewModel = executiveViewModel,
+                    onBackPressed = {
+                        navHostController.navigateUp()
+                    }
                 )
             }
         }

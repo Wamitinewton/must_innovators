@@ -34,5 +34,5 @@ constructor(
             response
         }
 
-    override suspend fun getPartnersDetails(id: Int): Flow<Resource<PartnersData>> = flow {  }
+    override suspend fun getPartnersDetails(id: Int): Flow<Resource<PartnersData>> = flow { }
 }

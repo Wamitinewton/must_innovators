@@ -39,7 +39,7 @@ fun RootScreen(navigationSubGraphs: NavigationSubGraphs, navController: NavHostC
 
     val isShowBottomBar =
         when (currentDestination?.route) {
-            NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.BlogsRoute.routes,
+            NavigationRoutes.HomeRoute.routes, NavigationRoutes.EventsRoute.routes, NavigationRoutes.CommunitiesListRoute.routes,
             NavigationRoutes.AdminDashboard.routes, NavigationRoutes.AdminEvents.routes, NavigationRoutes.AdminFeedbacks.routes,
             NavigationRoutes.AccountRoute.routes, NavigationRoutes.AdminActions.routes
             -> true

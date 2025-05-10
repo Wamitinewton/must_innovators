@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.*
 @Composable
 fun LeadershipField(
     label: String,
-    value: String,
+    value: String?,
     isEditing: Boolean,
     onValueChange: (String) -> Unit
 ) {
@@ -47,7 +47,7 @@ fun LeadershipField(
 
         if (isEditing) {
             OutlinedTextField(
-                value = value,
+                value = value ?: "",
                 onValueChange = onValueChange,
                 label = { Text(label) },
                 modifier =
@@ -70,7 +70,7 @@ fun LeadershipField(
                 )
 
                 Text(
-                    text = value,
+                    text = value ?: "",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

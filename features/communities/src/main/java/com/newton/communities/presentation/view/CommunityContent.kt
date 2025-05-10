@@ -33,7 +33,7 @@ fun CommunityContent(
 ) {
     when (uiState) {
         is CommunitiesUiState.Loading -> {
-            CommunityCardShimmer()
+            CommunitiesColumnShimmer()
         }
 
         is CommunitiesUiState.Success -> {

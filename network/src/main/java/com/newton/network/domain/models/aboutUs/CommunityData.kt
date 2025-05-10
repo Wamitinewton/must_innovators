@@ -22,9 +22,9 @@ import kotlinx.serialization.*
 data class Community(
     val id: Int,
     val name: String,
-    val communityLead: CommunityLeads,
-    val coLead: CommunityLeads,
-    val secretary: CommunityLeads,
+    val communityLead: CommunityLeads?,
+    val coLead: CommunityLeads?,
+    val secretary: CommunityLeads?,
     val email: String,
     val phoneNumber: String,
     val description: String,

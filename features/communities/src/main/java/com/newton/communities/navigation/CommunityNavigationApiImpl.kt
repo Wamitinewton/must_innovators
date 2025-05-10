@@ -28,8 +28,17 @@ class CommunityNavigationApiImpl : CommunityNavigationApi {
     override fun registerGraph(navGraphBuilder: NavGraphBuilder, navHostController: NavHostController) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoutes.Communities.route,
-            startDestination = NavigationRoutes.CommunitiesDetailsRoute.routes
+            startDestination = NavigationRoutes.CommunitiesListRoute.routes
         ) {
+            composable(route = NavigationRoutes.CommunitiesListRoute.routes) {
+                val viewModel = hiltViewModel<CommunitiesViewModel>()
+                CommunitiesListScreen(
+                    viewModel = viewModel,
+                    onBackPressed = {
+                        navHostController.navigateUp()
+                    }
+                )
+            }
             composable(
                 route = NavigationRoutes.CommunitiesDetailsRoute.routes
             ) {
