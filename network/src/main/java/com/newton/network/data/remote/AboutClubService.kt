@@ -16,6 +16,7 @@
  */
 package com.newton.network.data.remote
 
+import com.newton.network.data.dto.aboutUs.ClubBioDto
 import retrofit2.http.*
 
 interface AboutClubService {
@@ -23,5 +24,5 @@ interface AboutClubService {
     suspend fun getExecutives(): com.newton.network.domain.models.aboutUs.ExecutiveData
 
     @GET(ApiEndpoints.GET_CLUB_BIO)
-    suspend fun getClubBio(): com.newton.network.domain.models.aboutUs.ClubBio
+    suspend fun getClubBio(): ClubBioDto
 }

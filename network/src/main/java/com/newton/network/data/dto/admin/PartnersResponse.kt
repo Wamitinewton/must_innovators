@@ -14,25 +14,27 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.network.data.response.admin
+package com.newton.network.data.dto.admin
 
-import kotlinx.serialization.*
-
-@Serializable
-data class RegistrationResponse(
-    val eventName: String,
-    val eventDescription: String,
-    val eventLocation: String,
-    val course: String,
-    val educationalLevel: String,
-    val email: String,
-    val event: Int,
-    val expectations: String,
-    val fullName: String,
-    val phoneNumber: String,
-    val registrationTimestamp: String,
-    val ticketNumber: String,
-    val uid: String,
-    val eventDate: String,
-    val isUsed: Boolean = false
+data class PartnersResponse(
+    val achievements: String,
+    val benefits: String,
+    val contact_email: String,
+    val contact_person: String,
+    val description: String,
+    val end_date: String,
+    val events_supported: String,
+    val id: Int,
+    val linked_in: String,
+    val logo: String,
+    val name: String,
+    val ongoing: Boolean,
+    val resources: String,
+    val scope: String,
+    val start_date: String,
+    val status: String,
+    val target_audience: String,
+    val twitter: String,
+    val type: String,
+    val web_url: String
 )

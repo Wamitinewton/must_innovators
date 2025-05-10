@@ -16,7 +16,7 @@
  */
 package com.newton.admin.presentation.club.state
 
-import com.newton.network.domain.models.aboutUs.*
+import com.newton.network.data.dto.aboutUs.ClubBioData
 import com.newton.network.domain.models.admin.*
 
 data class ClubState(

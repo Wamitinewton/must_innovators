@@ -33,4 +33,6 @@ constructor(
             val response = partnersService.getPartners().results
             response
         }
+
+    override suspend fun getPartnersDetails(id: Int): Flow<Resource<PartnersData>> = flow {  }
 }

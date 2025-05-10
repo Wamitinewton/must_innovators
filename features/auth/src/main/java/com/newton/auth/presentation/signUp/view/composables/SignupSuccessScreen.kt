@@ -22,8 +22,10 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -165,7 +167,7 @@ fun SignupSuccessScreen(
                                 fontWeight = FontWeight.Medium
                             )
                             Icon(
-                                imageVector = Icons.Rounded.ArrowForward,
+                                imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
                                 contentDescription = "Continue",
                                 modifier = Modifier.size(20.dp)
                             )

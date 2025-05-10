@@ -37,11 +37,16 @@ class AboutUsNavigationImpl : AboutUsNavigationApi {
                 remember(it) {
                     navHostController.getBackStackEntry(NavigationSubGraphRoutes.AboutUs.route)
                 }
-                val executiveViewModel = hiltViewModel<ExecutiveViewModel>()
                 val clubBioViewModel = hiltViewModel<ClubBioViewModel>()
                 AboutUsScreen(
-                    executiveViewModel = executiveViewModel,
                     clubBioViewModel = clubBioViewModel
+                )
+            }
+
+            composable(route = NavigationRoutes.ExecutivesScreen.routes) {
+                val executiveViewModel = hiltViewModel<ExecutiveViewModel>()
+                ExecutivesScreen(
+                    viewModel = executiveViewModel
                 )
             }
         }

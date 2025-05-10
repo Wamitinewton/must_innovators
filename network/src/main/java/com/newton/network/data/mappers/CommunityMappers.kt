@@ -16,7 +16,7 @@
  */
 package com.newton.network.data.mappers
 
-import com.newton.network.data.response.aboutUs.*
+import com.newton.network.data.dto.aboutUs.*
 import com.newton.network.domain.models.admin.Session as AdminSession
 
 fun CommunityResponse.toDomain(): com.newton.network.domain.models.aboutUs.Community {

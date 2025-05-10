@@ -31,11 +31,9 @@ import com.newton.communities.presentation.viewModel.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutUsScreen(
-    executiveViewModel: ExecutiveViewModel,
     clubBioViewModel: ClubBioViewModel
 ) {
     val clubBioUiState by clubBioViewModel.uiState.collectAsState()
-    val executiveUiState by executiveViewModel.uiState.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
     val communityName = "Meru Science Innovators Club"
     var isAboutExpanded by remember { mutableStateOf(false) }
@@ -67,19 +65,6 @@ fun AboutUsScreen(
                     onReadMoreClick = { isAboutExpanded = !isAboutExpanded },
                     uiState = clubBioUiState,
                     isAboutExpanded = isAboutExpanded
-                )
-            }
-
-            item {
-                SectionHeading(
-                    title = "Executive Team",
-                    icon = Icons.Filled.Person
-                )
-            }
-
-            item {
-                ExecutivesSection(
-                    uiState = executiveUiState
                 )
             }
 

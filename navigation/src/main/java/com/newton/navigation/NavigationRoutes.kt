@@ -61,6 +61,8 @@ sealed class NavigationRoutes(val routes: String) {
 
     data object AboutUsRoute : NavigationRoutes("about_us")
 
+    data object ExecutivesScreen : NavigationRoutes("executives_screen")
+
     data object UpdateCommunity : NavigationRoutes("update_community")
 
     data object AdminCommunityList : NavigationRoutes("admin_community_list")

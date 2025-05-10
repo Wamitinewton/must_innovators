@@ -17,7 +17,7 @@
 package com.newton.database.mappers
 
 import com.newton.database.entities.*
-import com.newton.network.data.response.admin.*
+import com.newton.network.data.dto.admin.*
 import com.newton.network.domain.models.adminModels.*
 
 fun EventEntity.toDomainEvent() =

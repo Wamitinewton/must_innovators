@@ -17,7 +17,7 @@
 package com.newton.network.domain.repositories
 
 import androidx.paging.*
-import com.newton.network.data.response.admin.*
+import com.newton.network.data.dto.admin.*
 import com.newton.network.domain.models.adminModels.*
 import com.newton.network.domain.models.eventModels.*
 import kotlinx.coroutines.flow.*

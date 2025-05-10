@@ -16,17 +16,6 @@
  */
 package com.newton.network.domain.models.adminModels
 
-/**
-{
-"id": 3,
-"username": "piexie3bett",
-"email": "checktix92@gmail.com",
-"first_name": "Manu",
-"last_name": "Bett",
-"course": "checktix92@gmail.com",
-"photo":""
-}
- */
 data class UserData(
     val course: String = "",
     val email: String = "",

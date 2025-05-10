@@ -28,11 +28,9 @@ class ExecutiveRepositoryImpl
 constructor(
     private val executiveApi: AboutClubService
 ) : ExecutiveRepository {
-    override suspend fun getExecutives(): Flow<Resource<List<Executive>>> = fetchRemoteExecutives()
+    override suspend fun getExecutives(): Flow<Resource<List<Executive>>> =safeApiCall {
+        val response = executiveApi.getExecutives().data
+        response
+    }
 
-    private fun fetchRemoteExecutives(): Flow<Resource<List<Executive>>> =
-        safeApiCall {
-            val response = executiveApi.getExecutives().data
-            response
-        }
 }

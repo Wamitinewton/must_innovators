@@ -39,13 +39,11 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                 val parentEntry = remember(it) {
                     navHostController.getBackStackEntry(NavigationSubGraphRoutes.Home.route)
                 }
-                val partnersViewModel = hiltViewModel<PartnersViewModel>()
                 val getTestimonialsViewModel = hiltViewModel<GetTestimonialsViewModel>()
                 val partnersSharedViewModel = hiltViewModel<PartnersSharedViewModel>(parentEntry)
                 val communitiesViewModel = hiltViewModel<CommunitiesViewModel>()
                 val communitySharedViewModel = hiltViewModel<CommunitySharedViewModel>(parentEntry)
                 HomeScreen(
-                    partnersViewModel = partnersViewModel,
                     getTestimonialsViewModel = getTestimonialsViewModel,
                     onNavigateToAdmin = {
                         navHostController.navigate(NavigationRoutes.AdminDashboard.routes)
@@ -67,6 +65,9 @@ class HomeNavigationApiImpl : HomeNavigationApi {
                     },
                     onNavigateToAboutUs = {
                         navHostController.navigate(NavigationRoutes.AboutUsRoute.routes)
+                    },
+                    onNavigateToExecutives = {
+                        navHostController.navigate(NavigationRoutes.ExecutivesScreen.routes)
                     }
                 )
             }

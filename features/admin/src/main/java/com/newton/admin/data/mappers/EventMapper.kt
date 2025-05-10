@@ -17,7 +17,7 @@
 package com.newton.admin.data.mappers
 
 import com.newton.database.entities.*
-import com.newton.network.data.response.events.*
+import com.newton.network.data.dto.events.*
 import com.newton.network.domain.models.adminModels.*
 
 object EventMapper {

@@ -21,7 +21,7 @@ import com.google.zxing.*
 import com.google.zxing.qrcode.*
 import com.google.zxing.qrcode.decoder.*
 import com.newton.core.utils.*
-import com.newton.network.data.response.admin.*
+import com.newton.network.data.dto.admin.*
 
 class TicketQrGenerator {
     fun generateQrCode(

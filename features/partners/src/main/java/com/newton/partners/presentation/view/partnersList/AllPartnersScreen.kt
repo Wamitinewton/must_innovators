@@ -14,7 +14,7 @@
  * either express or implied, including but not limited to the implied warranties
  * of merchantability and fitness for a particular purpose.
  */
-package com.newton.partners.presentation.view.allPartners
+package com.newton.partners.presentation.view.partnersList
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -53,7 +53,7 @@ fun AllPartnersListScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Partners Network",
+                        "Our Partners",
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold
                         )
