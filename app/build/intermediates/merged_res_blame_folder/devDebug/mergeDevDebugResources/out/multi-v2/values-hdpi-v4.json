@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.newton.meruinnovators.app-mergeDevDebugResources-94:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\KORRYR\\.gradle\\caches\\8.9\\transforms\\58c9fbede7d1022bfcf6f78b3ddc394a\\transformed\\appcompat-1.7.0\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

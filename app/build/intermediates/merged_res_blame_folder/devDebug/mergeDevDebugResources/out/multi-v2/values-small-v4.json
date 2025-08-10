@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.newton.meruinnovators.app-mergeDevDebugResources-94:/values-small-v4/values-small-v4.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\KORRYR\\.gradle\\caches\\8.9\\transforms\\6f1dc838e4e1f3246bde5be99a52b72f\\transformed\\material-1.10.0\\res\\values-small-v4\\values-small-v4.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,128,198,270",
+                        "endColumns": "72,69,71,69",
+                        "endOffsets": "123,193,265,335"
+                    }
+                }
+            ]
+        }
+    ]
+}

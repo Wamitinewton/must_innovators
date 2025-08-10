@@ -56,7 +56,8 @@ fun LoginForm(
             },
             label = "password",
             isError = isPasswordError,
-            imeAction = ImeAction.Next
+            imeAction = ImeAction.Done,
+            onImeAction = { focusManager.clearFocus() },
         )
     }
 }

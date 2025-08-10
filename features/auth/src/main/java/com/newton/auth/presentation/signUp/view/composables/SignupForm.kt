@@ -130,6 +130,7 @@ fun SignupForm(
             label = "password",
             isError = isPasswordError,
             imeAction = ImeAction.Next,
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             supportingText = {
                 uiState.passwordError?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
             }
@@ -141,7 +142,8 @@ fun SignupForm(
             },
             label = "confirm password",
             isError = isConfirmPwdError,
-            imeAction = ImeAction.Next,
+            imeAction = ImeAction.Done,
+            onImeAction = { focusManager.clearFocus() },
             supportingText = {
                 uiState.confirmPasswordError?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
             }

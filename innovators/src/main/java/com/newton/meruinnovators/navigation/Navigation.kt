@@ -37,6 +37,7 @@ fun MeruInnovatorsNavigation(
         if (isUserLoggedIn) {
             NavigationSubGraphRoutes.Home.route
         } else {
+            //NavigationSubGraphRoutes.Home.route
             NavigationSubGraphRoutes.Auth.route
         }
     ) {

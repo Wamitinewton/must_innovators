@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.newton.meruinnovators.app-mergeDevDebugResources-94:/values-v18/values-v18.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\KORRYR\\.gradle\\caches\\8.9\\transforms\\58c9fbede7d1022bfcf6f78b3ddc394a\\transformed\\appcompat-1.7.0\\res\\values-v18\\values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        }
+    ]
+}
