@@ -21,8 +21,8 @@ object ApiEndpoints {
     const val GET_EXECUTIVES = "api/executives/"
     const val GET_CLUB_BIO = "api/club/"
 
-    const val REGISTER = "api/account/register/"
-    const val LOGIN = "api/account/login/"
+    const val REGISTER = "auth/register"
+    const val LOGIN = "auth/login"
     const val CHANGE_PWD = "api/account/change-password/"
     const val REFRESH_TOKEN = "api/account/token/refresh/"
     const val GET_USER_DATA = "api/account/get-user-data/"
