@@ -19,7 +19,7 @@ package com.newton.network.domain.models.authModels
 import kotlinx.serialization.*
 
 @Serializable
-data class LoginResultData(
-    val refreshToken: String,
-    val token: String
+data class LoginRequest(
+    val email: String,
+    val password: String
 )
