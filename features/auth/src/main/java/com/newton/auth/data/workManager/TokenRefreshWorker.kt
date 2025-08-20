@@ -43,8 +43,8 @@ constructor(
 
             freshTokens?.let {
                 authRepository.updateAuthTokens(
-                    accessToken = it.data.access,
-                    refreshToken = it.data.refresh
+                    accessToken = it.data.token,
+                    refreshToken = it.data.refreshToken
                 )
             }
 

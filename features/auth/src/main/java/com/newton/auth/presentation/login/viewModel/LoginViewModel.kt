@@ -86,8 +86,8 @@ constructor(
     private suspend fun handleLoginSuccess(loginResultData: LoginResultData) {
         try {
             authRepository.storeAuthTokens(
-                accessToken = loginResultData.access,
-                refreshToken = loginResultData.refresh
+                accessToken = loginResultData.token,
+                refreshToken = loginResultData.refreshToken
             )
             stateHolder.setLoggedInStatus(true)
             stateHolder.clearLoginForm()

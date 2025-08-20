@@ -26,6 +26,11 @@ data class LoginResponse(
 
 @Serializable
 data class LoginResultData(
-    val refresh: String,
-    val access: String
+    val refreshToken: String,
+    val token: String
 )
+//@Serializable
+//data class LoginResultDattta(
+//    val refreshToken: String,
+//    val token: String
+//)
